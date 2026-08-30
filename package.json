@@ -1,0 +1,22 @@
+{
+  "name": "sda-bootstrap",
+  "version": "0.1.0",
+  "description": "Portable bootstrap CLI for SideFX capability capsule estates",
+  "type": "module",
+  "bin": {
+    "sda-bootstrap": "./src/capsule-manager.mjs"
+  },
+  "files": [
+    "src/capsule-manager.mjs"
+  ],
+  "scripts": {
+    "test": "node --test tests/capsule-manager.test.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BPMSoftwareSolutions/sda-bootstrap.git"
+  }
+}
