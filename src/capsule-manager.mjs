@@ -1697,11 +1697,15 @@ async function runSterileProof() {
     copyTree(path.join(repositoryRoot, "capsules"), path.join(sterileRoot, "capsules"));
     for (const relative of bootstrapManifest.repositoryBootstrapRoots) copyTree(path.join(repositoryRoot, relative), path.join(sterileRoot, relative));
     if (fs.existsSync(path.join(sterileRoot, "capabilities"))) throw new Error("STERILE_STAGE_CONTAINS_EXPANDED_CAPABILITIES");
-    const child = spawnSync(process.execPath, [path.join(sterileRoot, "bootstrap", "capsule-manager.mjs"), "proof"], {
+    const child = spawnSync(process.execPath, [bootstrapEntryPath, "proof"], {
       cwd: sterileRoot,
       encoding: "utf8",
       maxBuffer: 128 * 1024 * 1024,
-      env: { ...process.env, SIDEFX_PLATFORM_ROOT: resolvePlatformRoot() }
+      env: {
+        ...process.env,
+        CAPSULE_SOURCE_REPOSITORY_ROOT: sterileRoot,
+        SIDEFX_PLATFORM_ROOT: resolvePlatformRoot()
+      }
     });
     process.stdout.write(child.stdout ?? "");
     process.stderr.write(child.stderr ?? "");
