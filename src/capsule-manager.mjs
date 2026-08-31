@@ -1615,13 +1615,10 @@ function runNodeTests(targetRoot, references, emit = true) {
   return summary;
 }
 
-function aggregateProof(estate, targetRoot) {
+async function aggregateProof(estate) {
   const selection = estate.manifest.proofSelection;
-  const pretestRefs = selection.pretestCapabilityIds.map((id) => `capabilities/${id}/projected/node/capability.projected.test.mjs`);
-  const aggregateRefs = selection.aggregateCapabilityIds
-    .map((id) => `capabilities/${id}/projected/node/capability.projected.test.mjs`);
-  const pretest = runNodeTests(targetRoot, pretestRefs);
-  const aggregate = runNodeTests(targetRoot, aggregateRefs);
+  const pretest = await proveDirectExecution(estate, new Set(selection.pretestCapabilityIds));
+  const aggregate = await proveDirectExecution(estate, new Set(selection.aggregateCapabilityIds));
   if (pretest.tests !== selection.expectedPretestCount || pretest.failed !== 0) throw new Error(`PRETEST_COUNT_DIVERGED: '${JSON.stringify(pretest)}'.`);
   if (aggregate.tests !== selection.expectedAggregateCount || aggregate.failed !== 0) throw new Error(`AGGREGATE_COUNT_DIVERGED: '${JSON.stringify(aggregate)}'.`);
   return { pretest, aggregate };
@@ -1655,7 +1652,7 @@ async function proveCapsuleFirst() {
   const directExecution = await proveDirectExecution(estate);
   const expansion = expandEstate(estate, repositoryRoot);
   const projection = await projectEstate(estate, repositoryRoot);
-  const proof = aggregateProof(estate, repositoryRoot);
+  const proof = await aggregateProof(estate);
   return {
     proofType: "capsule-first-sterile-checkout-proof.v1",
     capsuleCount: verify.capabilityCount,
