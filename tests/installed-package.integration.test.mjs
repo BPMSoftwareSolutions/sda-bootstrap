@@ -120,6 +120,13 @@ test("the installed package deterministically expands the real capsule estate", 
   assert.deepEqual(secondInventory, firstInventory);
   assert.equal(fs.existsSync(path.join(resolvedHarnessRoot, "capabilities")), false);
 
+  const projectedRoot = path.join(temporaryRoot, "projected");
+  const projection = JSON.parse(run(process.execPath, [managerPath, "project", projectedRoot], temporaryRoot));
+  assert.equal(projection.eligible, 210);
+  assert.equal(projection.projected, 210);
+  assert.ok(projection.reused > 0);
+  assert.equal(projection.broken, 0);
+
   const selected = [
     "validate-semantic-carrier",
     "extract-semantic-carrier-graph",

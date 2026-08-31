@@ -1564,16 +1564,18 @@ async function projectEstate(estate, targetRoot) {
         projectionTargets: ["node"]
       });
       projected++;
-      if (projected % 20 === 0 || projected === estate.records.length) process.stdout.write(`PROJECT ${projected}/${estate.records.length}\n`);
+      if (projected % 20 === 0 || projected === estate.records.length) process.stderr.write(`PROJECT ${projected}/${estate.records.length}\n`);
     } catch (error) {
       const finding = error instanceof Error ? error.message : String(error);
-      if (finding.startsWith("Canonical consumer graph composition did not close:")) {
+      const runtimeProjectionIsAuthoritative = finding.startsWith("Canonical consumer graph composition did not close:")
+        || finding.startsWith("Missing consumer workspace authority:");
+      if (runtimeProjectionIsAuthoritative) {
         materializeRuntimeApplication(capsulesById.get(id), targetRoot, runtimeUrl, {
           testFileName: "capability.projected.test.mjs"
         });
         projected++;
         reused++;
-        if (projected % 20 === 0 || projected === estate.records.length) process.stdout.write(`PROJECT ${projected}/${estate.records.length}\n`);
+        if (projected % 20 === 0 || projected === estate.records.length) process.stderr.write(`PROJECT ${projected}/${estate.records.length}\n`);
       } else {
         failures.push({ capabilityId: id, finding });
       }
