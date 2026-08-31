@@ -1360,6 +1360,26 @@ function materializeSharedAuthority(estate, targetRoot) {
   return materializeEntries(estate, targetRoot, (reference) => !reference.startsWith("capabilities/"));
 }
 
+function materializeCapsuleEstate(estate, targetRoot) {
+  const manifestRef = normalizedRef(bootstrapManifest.capsuleEstateRef);
+  if (!safeEntryRef(manifestRef)) throw new Error(`CAPSULE_ESTATE_REFERENCE_REJECTED: '${manifestRef}'.`);
+  const targetEstateManifestPath = path.resolve(targetRoot, ...manifestRef.split("/"));
+  const targetCapsuleRoot = path.dirname(targetEstateManifestPath);
+  fs.mkdirSync(targetCapsuleRoot, { recursive: true });
+  fs.writeFileSync(targetEstateManifestPath, fs.readFileSync(estateManifestPath));
+  for (const { record, bytes } of estate.records) {
+    const capsuleRef = normalizedRef(record.file);
+    if (!safeEntryRef(capsuleRef)) throw new Error(`CAPSULE_FILE_REFERENCE_REJECTED: '${capsuleRef}'.`);
+    const destination = path.resolve(targetCapsuleRoot, ...capsuleRef.split("/"));
+    if (!(destination + path.sep).startsWith(targetCapsuleRoot + path.sep)) {
+      throw new Error(`CAPSULE_FILE_ESCAPES_TARGET: '${capsuleRef}'.`);
+    }
+    fs.mkdirSync(path.dirname(destination), { recursive: true });
+    fs.writeFileSync(destination, bytes);
+  }
+  return estate.records.length;
+}
+
 function expandEstate(estate, targetRoot) {
   const entryCount = materializeEntries(estate, targetRoot, () => true);
   const capabilityRoot = path.join(targetRoot, bootstrapManifest.ephemeralCapabilityRoot);
@@ -1485,6 +1505,7 @@ async function invokeCapability(capabilityId, input, estate = loadEstate()) {
   fs.writeFileSync(marker, JSON.stringify({ root: targetRoot }), "utf8");
   try {
     materializeEntries(estate, targetRoot, () => true);
+    materializeCapsuleEstate(estate, targetRoot);
     const invokeOverlayRoot = process.env.CAPSULE_INVOKE_OVERLAY_ROOT;
     const replacementIds = new Set((process.env.CAPSULE_INVOKE_REPLACEMENT_IDS ?? "")
       .split(",")
@@ -1832,7 +1853,7 @@ export {
   verifyEstate
 };
 
-if (process.argv[1] && path.resolve(process.argv[1]) === bootstrapEntryPath) {
+if (process.argv[1] && fs.realpathSync(process.argv[1]) === fs.realpathSync(bootstrapEntryPath)) {
   main().catch((error) => {
     process.stderr.write(`${error instanceof Error ? error.stack ?? error.message : String(error)}\n`);
     process.exitCode = 1;

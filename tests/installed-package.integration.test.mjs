@@ -80,6 +80,9 @@ test("the installed package deterministically expands the real capsule estate", 
     name: "sda-bootstrap-integration-consumer",
     version: "0.0.0",
     private: true,
+    scripts: {
+      verify: "sda-bootstrap verify",
+    },
   });
   runNpm(["install", "--save-exact", "--ignore-scripts", "--no-audit", "--no-fund", tarball], temporaryRoot);
 
@@ -105,6 +108,7 @@ test("the installed package deterministically expands the real capsule estate", 
     toolRootsDeclared: 0,
     toolRootsPresent: 0,
   });
+  assert.deepEqual(JSON.parse(runNpm(["run", "verify", "--silent"], temporaryRoot)), verification);
   const expectedMaterializedEntryCount = uniqueCapsuleEntryCount(temporaryRoot);
 
   const firstRoot = path.join(temporaryRoot, "expanded-a");
@@ -159,6 +163,24 @@ test("the installed package deterministically expands the real capsule estate", 
   assert.equal(invocation.disposition, "terminated");
   assert.equal(invocation.outcome.disposition, "CONFORMANT");
 
+  const observation = JSON.parse(run(
+    process.execPath,
+    [managerPath, "invoke", "observe-capability-change", JSON.stringify({
+      contractId: "capability-change-status-request.v1",
+      payload: {
+        changeId: "change-validate-semantic-carrier-0.3.1",
+        reasonRef: "reason:installed-package-integration",
+        rootCapabilityId: "validate-semantic-carrier",
+      },
+    })],
+    temporaryRoot,
+  ));
+  assert.equal(observation.disposition, "terminated");
+  assert.equal(observation.outcome.payload.state, "PUBLISHED");
+  assert.equal(observation.outcome.payload.stage, "CAPSULE_ESTATE_ADMITTED");
+  assert.equal(observation.outcome.payload.lifecycleDisposition, "SUCCEEDED");
+  assert.deepEqual(observation.outcome.payload.findings, []);
+
   context.diagnostic(JSON.stringify({
     package: `${packed[0].name}@${packed[0].version}`,
     packageIntegrity: packed[0].integrity,
@@ -170,5 +192,6 @@ test("the installed package deterministically expands the real capsule estate", 
     portablePlatform: "INSTALLED_PACKAGE",
     directTests: direct.tests,
     invocationDisposition: invocation.outcome.disposition,
+    observationDisposition: observation.outcome.payload.state,
   }));
 });
