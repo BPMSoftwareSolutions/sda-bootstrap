@@ -20,7 +20,7 @@
     "compatibilityAuthorityCommit": "398e4c6a9c8726829c9b58339a706d8afad4322c"
   },
   "scripts": {
-    "test": "node --test tests/capsule-manager.test.mjs",
+    "test": "node --test tests/capsule-manager.test.mjs tests/execute-bounded-process.test.mjs",
     "test:integration": "node --test tests/installed-package.integration.test.mjs"
   },
   "engines": {

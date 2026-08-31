@@ -23,27 +23,95 @@ function boundedPositiveInteger(value, code, maximum) {
   return value;
 }
 
+function isInside(root, candidate) {
+  const relative = path.relative(root, candidate);
+  return relative === "" || (relative !== ".." && !relative.startsWith(`..${path.sep}`) && !path.isAbsolute(relative));
+}
+
+function rootRelativePosixPath(value) {
+  if (typeof value !== "string" || value.length === 0 || value.includes("\0") || value.includes("\\") ||
+      value.startsWith("/") || /^[A-Za-z]:/u.test(value) || value.startsWith("//")) {
+    throw new Error("CONTAINED_EXECUTABLE_NOT_ROOT_RELATIVE");
+  }
+  const segments = value.split("/");
+  if (segments.some((segment) => segment === "" || segment === "." || segment === "..")) {
+    throw new Error(segments.includes("..") ? "CONTAINED_EXECUTABLE_ESCAPES_ROOT" : "CONTAINED_EXECUTABLE_NOT_ROOT_RELATIVE");
+  }
+  return segments;
+}
+
+function environmentManifestDigest(root, environmentAuthority) {
+  if (!environmentAuthority || typeof environmentAuthority !== "object" || Array.isArray(environmentAuthority) ||
+      typeof environmentAuthority.authorityId !== "string" || environmentAuthority.authorityId.length === 0 ||
+      !SHA256_PATTERN.test(environmentAuthority.digest) || !Array.isArray(environmentAuthority.manifest) ||
+      environmentAuthority.manifest.length === 0) {
+    throw new Error("ENVIRONMENT_MANIFEST_INCOMPLETE");
+  }
+  const aggregate = crypto.createHash("sha256");
+  for (const item of environmentAuthority.manifest) {
+    if (!item || typeof item !== "object" || Array.isArray(item) || !SHA256_PATTERN.test(item.digest)) {
+      throw new Error("ENVIRONMENT_MANIFEST_INCOMPLETE");
+    }
+    let segments;
+    try {
+      segments = rootRelativePosixPath(item.relativePath);
+    } catch {
+      throw new Error("ENVIRONMENT_MANIFEST_INCOMPLETE");
+    }
+    const lexicalPath = path.resolve(root, ...segments);
+    if (!isInside(root, lexicalPath) || !fs.existsSync(lexicalPath) || !fs.statSync(lexicalPath).isFile()) {
+      throw new Error("ENVIRONMENT_MANIFEST_INCOMPLETE");
+    }
+    const realPath = fs.realpathSync(lexicalPath);
+    if (!isInside(root, realPath)) throw new Error("ENVIRONMENT_MANIFEST_INCOMPLETE");
+    const bytes = fs.readFileSync(realPath);
+    if (sha256Bytes(bytes) !== item.digest) throw new Error("ENVIRONMENT_MANIFEST_INCOMPLETE");
+    aggregate.update(bytes);
+  }
+  const observed = `sha256:${aggregate.digest("hex")}`;
+  if (observed !== environmentAuthority.digest) throw new Error("ENVIRONMENT_AUTHORITY_DIGEST_MISMATCH");
+  return observed;
+}
+
 function admittedProcessRequest({ bindingUrl, input, configuration, options }) {
-  const candidate = input?.contractId === "mechanic:execute-bounded-process:input.v1" ? input.payload : input;
+  const candidate = ["mechanic:execute-bounded-process:input.v1", "mechanic:execute-bounded-process:input.v2"].includes(input?.contractId)
+    ? input.payload
+    : input;
   if (!candidate || typeof candidate !== "object" || Array.isArray(candidate)) {
     throw new Error("BOUNDED_PROCESS_REQUEST_REQUIRED");
   }
   const authority = candidate.executableAuthority;
   if (!authority || typeof authority !== "object" || Array.isArray(authority) ||
       typeof authority.authorityId !== "string" || authority.authorityId.length === 0 ||
-      !SHA256_PATTERN.test(authority.digest) || !Array.isArray(authority.executables) ||
-      authority.executables.some((item) => typeof item !== "string" || item.length === 0 || item.includes("\0"))) {
+      !SHA256_PATTERN.test(authority.digest)) {
     throw new Error("EXECUTABLE_AUTHORITY_INVALID");
   }
-  const authorityDigest = canonicalDigest({ authorityId: authority.authorityId, executables: authority.executables });
+  const v2 = Array.isArray(authority.admittedExecutables);
+  const declarations = v2 ? authority.admittedExecutables : authority.executables;
+  if (!Array.isArray(declarations) || declarations.length === 0 || declarations.some((item) => v2
+    ? (!item || typeof item !== "object" || Array.isArray(item) || !["SYSTEM", "CONTAINED"].includes(item.form) || typeof item.name !== "string" || item.name.length === 0 || item.name.includes("\0"))
+    : (typeof item !== "string" || item.length === 0 || item.includes("\0")))) {
+    throw new Error("EXECUTABLE_AUTHORITY_INVALID");
+  }
+  const authorityDigest = canonicalDigest(v2
+    ? { authorityId: authority.authorityId, admittedExecutables: declarations }
+    : { authorityId: authority.authorityId, executables: declarations });
   if (authority.digest !== authorityDigest || !Array.isArray(configuration.executableAuthorityDigests) ||
       !configuration.executableAuthorityDigests.includes(authority.digest)) {
     throw new Error("EXECUTABLE_AUTHORITY_NOT_ADMITTED");
   }
   const executable = candidate.executable;
-  if (typeof executable !== "string" || executable.length === 0 || executable.includes("\0") ||
-      !authority.executables.includes(executable) || SHELL_EXECUTABLES.has(path.basename(executable).toLowerCase())) {
+  if (typeof executable !== "string" || executable.length === 0 || executable.includes("\0")) {
     throw new Error("EXECUTABLE_NOT_ADMITTED");
+  }
+  const executableForm = v2 ? candidate.executableForm : "SYSTEM";
+  const declaration = v2
+    ? declarations.find((item) => item.name === executable)
+    : declarations.includes(executable) ? { form: "SYSTEM", name: executable } : null;
+  if (!declaration) throw new Error("EXECUTABLE_NOT_ADMITTED");
+  if (declaration.form !== executableForm) throw new Error("EXECUTABLE_FORM_MISMATCH");
+  if (SHELL_EXECUTABLES.has(path.basename(executable).toLowerCase())) {
+    throw new Error(v2 ? "SHELL_EXECUTABLE_REFUSED" : "EXECUTABLE_NOT_ADMITTED");
   }
   const args = candidate.arguments;
   if (!Array.isArray(args) || args.some((argument) => typeof argument !== "string" || argument.includes("\0"))) {
@@ -65,14 +133,26 @@ function admittedProcessRequest({ bindingUrl, input, configuration, options }) {
   if (realRelative === ".." || realRelative.startsWith(`..${path.sep}`) || path.isAbsolute(realRelative)) {
     throw new Error("PROCESS_WORKING_DIRECTORY_OUTSIDE_ADMITTED_ROOT");
   }
-  if (path.isAbsolute(executable)) {
-    const resolvedExecutable = path.resolve(executable);
-    const executableRelative = path.relative(root, resolvedExecutable);
-    if (executableRelative === ".." || executableRelative.startsWith(`..${path.sep}`) || path.isAbsolute(executableRelative)) {
-      throw new Error("EXECUTABLE_OUTSIDE_ADMITTED_ROOT");
+  let resolvedExecutable = executable;
+  let environmentAuthorityDigest = null;
+  if (executableForm === "SYSTEM") {
+    if (path.basename(executable) !== executable || executable.includes("/") || executable.includes("\\")) {
+      throw new Error("EXECUTABLE_PATH_INVALID");
     }
-  } else if (path.basename(executable) !== executable) {
-    throw new Error("EXECUTABLE_PATH_INVALID");
+  } else if (executableForm === "CONTAINED") {
+    const segments = rootRelativePosixPath(executable);
+    const lexicalExecutable = path.resolve(root, ...segments);
+    if (!isInside(root, lexicalExecutable)) throw new Error("CONTAINED_EXECUTABLE_ESCAPES_ROOT");
+    if (fs.existsSync(lexicalExecutable)) {
+      const realExecutable = fs.realpathSync(lexicalExecutable);
+      if (!isInside(root, realExecutable)) throw new Error("CONTAINED_EXECUTABLE_ESCAPES_ROOT");
+      resolvedExecutable = realExecutable;
+    } else {
+      resolvedExecutable = lexicalExecutable;
+    }
+    environmentAuthorityDigest = environmentManifestDigest(root, declaration.environmentAuthority);
+  } else {
+    throw new Error("EXECUTABLE_FORM_MISMATCH");
   }
   const timeoutMaximum = configuration.timeoutMaximumMilliseconds ?? 300000;
   const outputMaximum = configuration.outputMaximumBytes ?? 16 * 1024 * 1024;
@@ -83,8 +163,10 @@ function admittedProcessRequest({ bindingUrl, input, configuration, options }) {
     throw new Error("PROCESS_EFFECT_LINEAGE_INVALID");
   }
   return Object.freeze({
-    executable,
+    executable: resolvedExecutable,
+    executableForm,
     executableAuthorityDigest: authorityDigest,
+    environmentAuthorityDigest,
     arguments: Object.freeze([...args]),
     argumentDigest: sha256Bytes(Buffer.from(JSON.stringify(args))),
     workingDirectory,
