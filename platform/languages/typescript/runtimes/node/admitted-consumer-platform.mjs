@@ -671,7 +671,7 @@ bind.tests = (baseUrl, bindingRef) => {
       if (application.plan.executionEmbodimentPlanType === "consumer-execution-embodiment-plan.v3" && fixture.expected.scenarioSequence.length === 1) {
         assert.equal(observedScenarios[0], fixture.expected.scenarioSequence[0]);
         assert.ok(result.graphExecution.edgeTestimony.some((item) => item.groupId), "Graph-native fixture must testify to grouped topology.");
-      } else assert.deepEqual(observedScenarios, fixture.expected.scenarioSequence);
+      } else assert.deepEqual(observedScenarios, fixture.expected.scenarioSequence, result.errorCode ?? JSON.stringify(result.outcome ?? null));
       for (const expectation of fixture.expected.outcomeAssertions ?? []) {
         const actual = valueAt(result.outcome, expectation.path);
         if (expectation.operator === "equals") assert.deepEqual(actual, expectation.value);

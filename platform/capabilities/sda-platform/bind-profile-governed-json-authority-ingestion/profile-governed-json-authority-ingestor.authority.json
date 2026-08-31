@@ -6,7 +6,7 @@
   "authorityVersion": "1.0.0",
   "lifecycle": "ADMITTED",
   "platformCapabilityId": "sda-json-authority-ingestion-port.v1",
-  "authorityDigest": "sha256:c8ae8f56a11b3dc6cc7501edab37e589de3053edeff618c4e0f22f6e4c4e4a1f",
+  "authorityDigest": "sha256:d1e595cbb627fc74baa5e25ff89616f21a2694e3188f6b4e794ee0e19a2111dd",
   "authorityDigestAlgorithm": "sha256 of canonical recursive-key-order JSON excluding authorityDigest",
   "inputContracts": [
     "lossless-json-parse-request.v1",
@@ -57,7 +57,7 @@
       },
       {
         "sourceRef": "languages/typescript/runtimes/node/node-mechanic-registry-loader.mjs",
-        "sourceDigest": "sha256:9a29843fac88fefaeb9308c14a661904d41744f5c9e1a43ab98d7f1646d12704"
+        "sourceDigest": "sha256:627c6de3adcf0c45a984dde303c371e568367bdc18b5078b1f5d1dc3a0820c84"
       }
     ],
     "implementationVersion": "1.0.0",
@@ -66,7 +66,7 @@
   },
   "runtimeDependencies": {
     "packageLockRef": "package-lock.json",
-    "packageLockDigest": "sha256:57d058a1f9924b7a6f283f2a1704b485c4eb321a1011544fba97999126878b0f",
+    "packageLockDigest": "sha256:ad3d3ccce5a1840d1944ba92f1eea5b89f7c56316627aeca87d96cce76f3c60a",
     "packages": [
       {
         "packageName": "ajv",

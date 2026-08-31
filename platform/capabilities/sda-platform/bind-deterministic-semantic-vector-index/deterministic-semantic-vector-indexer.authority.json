@@ -39,11 +39,11 @@
     "providerSourceSet": [
       {
         "sourceRef": "languages/typescript/runtimes/node/semantic-vector-index-provider.mjs",
-        "sourceDigest": "sha256:753cb10ae8b4dadaaca56c0c0a15bce0d8a69b9b9fb35ed630a53efc30f32261"
+        "sourceDigest": "sha256:b64990927223d8a0f1e0f6d7a29692503f3d8ffb11ea6822d77b41002da79784"
       },
       {
         "sourceRef": "languages/typescript/runtimes/node/node-mechanic-registry-loader.mjs",
-        "sourceDigest": "sha256:9a29843fac88fefaeb9308c14a661904d41744f5c9e1a43ab98d7f1646d12704"
+        "sourceDigest": "sha256:627c6de3adcf0c45a984dde303c371e568367bdc18b5078b1f5d1dc3a0820c84"
       }
     ],
     "implementationVersion": "1.0.0",
@@ -52,7 +52,7 @@
   },
   "runtimeDependencies": {
     "packageLockRef": "package-lock.json",
-    "packageLockDigest": "sha256:57d058a1f9924b7a6f283f2a1704b485c4eb321a1011544fba97999126878b0f",
+    "packageLockDigest": "sha256:ad3d3ccce5a1840d1944ba92f1eea5b89f7c56316627aeca87d96cce76f3c60a",
     "packages": [
       {
         "packageName": "ajv",
@@ -70,5 +70,5 @@
     "separateEmbeddingCapabilityAdmitted": false,
     "dispatchRegistrationAdmitted": true
   },
-  "authorityDigest": "sha256:af37a8c8a8678ced4c859ed8caa02b3feede2122e287839407ece25aed1a008b"
+  "authorityDigest": "sha256:09257724542df6afeedc0c2cf75ab1fab83bec8eabea22aa987918ebd3039293"
 }

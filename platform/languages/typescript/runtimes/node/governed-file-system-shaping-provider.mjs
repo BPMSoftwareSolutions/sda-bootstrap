@@ -21,6 +21,9 @@ function localRoot(reference, bindingUrl) {
   if (typeof reference !== "string" || reference.length === 0) throw new Error("ROOT_AUTHORITY_MISSING");
   const url = new URL(reference, bindingUrl);
   if (url.protocol !== "file:") throw new Error("LOCAL_FILE_AUTHORITY_REQUIRED");
+  if (process.platform === "win32" && url.hostname === "" && !/^\/[A-Za-z]:\//u.test(url.pathname)) {
+    return path.resolve(path.sep, ...decodeURIComponent(url.pathname).split("/").filter(Boolean));
+  }
   return path.resolve(fileURLToPath(url));
 }
 

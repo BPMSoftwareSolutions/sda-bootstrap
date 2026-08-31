@@ -1,0 +1,30 @@
+{
+  "bindingType": "responsibility-provider-bindings.v1",
+  "bindings": [
+    {
+      "responsibilityId": "enumerate-declared-binding-manifests",
+      "providerId": "typescript-language-binding-discovery-provider.v1",
+      "implementationRef": "artifacts/tools/dist/capabilities/workspace-governance/discover-language-bindings/provider.js",
+      "requires": ["language-binding-repository"]
+    },
+    {
+      "responsibilityId": "classify-binding-as-active-or-informational",
+      "providerId": "projected-node-determine-active-language-obligations-provider.v1",
+      "implementationRef": "capabilities/sda-tooling/projected-tools/language-obligations/projected/node/capability-runtime.generated.mjs",
+      "requires": ["language-binding-repository"],
+      "protocol": "projected-consumer-runtime-v2"
+    },
+    {
+      "responsibilityId": "evaluate-placement-and-reference-integrity",
+      "providerId": "typescript-governed-placement-provider.v1",
+      "implementationRef": "artifacts/tools/dist/capabilities/workspace-governance/verify-governed-placement/provider.js",
+      "requires": ["workspace-governance-repository", "schema-admission"]
+    },
+    {
+      "responsibilityId": "validate-declared-implementation-identity-and-claim",
+      "providerId": "typescript-language-declaration-provider.v1",
+      "implementationRef": "artifacts/tools/dist/capabilities/workspace-governance/admit-language-declaration/provider.js",
+      "requires": ["workspace-governance-repository", "schema-admission"]
+    }
+  ]
+}

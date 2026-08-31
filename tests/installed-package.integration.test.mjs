@@ -97,7 +97,7 @@ test("the installed package deterministically expands the real capsule estate", 
 
   const verification = JSON.parse(run(process.execPath, [managerPath, "verify"], temporaryRoot));
   assert.equal(verification.capabilityCount, 210);
-  assert.equal(verification.entryCount, 6675);
+  assert.equal(verification.entryCount, 6678);
   assert.equal(verification.durableLayout.expandedCapabilityRoot, "ABSENT");
   assert.deepEqual(JSON.parse(run(process.execPath, [managerPath, "resolve"], temporaryRoot)), {
     declaredDependencies: 69,
@@ -120,14 +120,23 @@ test("the installed package deterministically expands the real capsule estate", 
   assert.deepEqual(secondInventory, firstInventory);
   assert.equal(fs.existsSync(path.join(resolvedHarnessRoot, "capabilities")), false);
 
-  const selected = "validate-semantic-carrier,extract-semantic-carrier-graph";
+  const selected = [
+    "validate-semantic-carrier",
+    "extract-semantic-carrier-graph",
+    "audit-controlled-tooling-migration-batch",
+    "author-canonical-feature",
+    "read-authorized-file",
+    "read-authorized-file-through-capability",
+    "retrieve-sidefx-semantic-candidates",
+    "shape-governed-file-system-batch",
+  ].join(",");
   const direct = JSON.parse(run(process.execPath, [managerPath, "direct", selected], temporaryRoot));
   assert.deepEqual(direct, {
-    eligible: 2,
+    eligible: 8,
     reconstructedEntryCount: expectedMaterializedEntryCount,
-    fixtureCount: 6,
-    tests: 8,
-    passed: 8,
+    fixtureCount: 33,
+    tests: 41,
+    passed: 41,
     failed: 0,
     skipped: 0,
     todo: 0,
