@@ -1815,7 +1815,10 @@ async function main() {
     if (targetRoot === repositoryRoot) throw new Error("PROJECTION_TARGET_MUST_NOT_BE_DURABLE_REPOSITORY");
     result = await projectEstate(loadEstate(), targetRoot);
   }
-  else if (command === "proof") result = await proveCapsuleFirst();
+  else if (command === "proof") {
+    const marker = path.join(repositoryRoot, ".capsule-first-sterile-root.json");
+    result = fs.existsSync(marker) ? await proveCapsuleFirst() : await runSterileProof();
+  }
   else if (command === "sterile-proof") result = await runSterileProof();
   else throw new Error("Usage: capsule-manager <migrate-legacy|verify|resolve|list [query]|inspect <id>|test [ids]|direct [ids]|invoke <id> [json]|expand <root>|project <root>|proof|sterile-proof>");
   process.stdout.write(`${JSON.stringify(result, null, 2)}\n`);
