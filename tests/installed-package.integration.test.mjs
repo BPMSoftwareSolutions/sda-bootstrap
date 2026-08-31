@@ -5,25 +5,27 @@ import os from "node:os";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
 import test from "node:test";
+import { pathToFileURL } from "node:url";
 
 const packageRoot = path.resolve(import.meta.dirname, "..");
 const harnessRoot = process.env.AGENTIC_HARNESS_FIXTURE_ROOT;
 const npmCli = process.env.npm_execpath;
 
-function run(command, args, cwd) {
+function run(command, args, cwd, options = {}) {
   const result = spawnSync(command, args, {
     cwd,
     env: process.env,
     encoding: "utf8",
     maxBuffer: 256 * 1024 * 1024,
+    ...options,
   });
   assert.equal(result.status, 0, result.error?.stack || result.stderr || result.stdout);
   return result.stdout;
 }
 
-function runNpm(args, cwd) {
+function runNpm(args, cwd, options = {}) {
   assert.ok(npmCli, "NPM_EXECUTABLE_REQUIRED");
-  return run(process.execPath, [npmCli, ...args], cwd);
+  return run(process.execPath, [npmCli, ...args], cwd, options);
 }
 
 function readJson(file) {
@@ -50,8 +52,7 @@ function inventory(root, current = root) {
 
 function uniqueCapsuleEntryCount(repositoryRoot) {
   const manifest = readJson(path.join(repositoryRoot, "capsules", "capsule-estate.manifest.json"));
-  const bootstrap = readJson(path.join(repositoryRoot, "bootstrap", "bootstrap.manifest.json"));
-  const runtimeEntryRoot = `${bootstrap.runtimeEntryRoot}/`;
+  const runtimeEntryRoot = "capsule-runtime/";
   const entries = new Map();
   for (const record of manifest.capsules) {
     const capsule = readJson(path.join(repositoryRoot, "capsules", record.file));
@@ -66,7 +67,7 @@ function uniqueCapsuleEntryCount(repositoryRoot) {
   return entries.size;
 }
 
-test("the installed package deterministically expands the real capsule estate", (context) => {
+test("the installed package deterministically expands and delivers the real capsule estate", async (context) => {
   assert.ok(harnessRoot, "AGENTIC_HARNESS_FIXTURE_ROOT_REQUIRED");
   const resolvedHarnessRoot = path.resolve(harnessRoot);
   assert.ok(fs.statSync(resolvedHarnessRoot).isDirectory());
@@ -81,22 +82,15 @@ test("the installed package deterministically expands the real capsule estate", 
     version: "0.0.0",
     private: true,
     scripts: {
+      mcp: "sidefx-capsules-mcp",
       verify: "sda-bootstrap verify",
     },
   });
   runNpm(["install", "--save-exact", "--ignore-scripts", "--no-audit", "--no-fund", tarball], temporaryRoot);
 
   fs.cpSync(path.join(resolvedHarnessRoot, "capsules"), path.join(temporaryRoot, "capsules"), { recursive: true });
-  fs.mkdirSync(path.join(temporaryRoot, "bootstrap"), { recursive: true });
-  const manifestPath = path.join(temporaryRoot, "bootstrap", "bootstrap.manifest.json");
-  fs.copyFileSync(path.join(resolvedHarnessRoot, "bootstrap", "bootstrap.manifest.json"), manifestPath);
-
   const managerPath = path.join(temporaryRoot, "node_modules", "sda-bootstrap", "src", "capsule-manager.mjs");
-  const manifest = readJson(manifestPath);
-  manifest.languageResolver.entryRef = "package:sda-bootstrap";
-  manifest.languageResolver.entryDigest = sha256(fs.readFileSync(managerPath));
-  manifest.platform.rootRef = "package:sda-bootstrap/platform";
-  writeJson(manifestPath, manifest);
+  assert.equal(fs.existsSync(path.join(temporaryRoot, "bootstrap")), false);
 
   const verification = JSON.parse(run(process.execPath, [managerPath, "verify"], temporaryRoot));
   assert.equal(verification.capabilityCount, 210);
@@ -181,10 +175,52 @@ test("the installed package deterministically expands the real capsule estate", 
   assert.equal(observation.outcome.payload.lifecycleDisposition, "SUCCEEDED");
   assert.deepEqual(observation.outcome.payload.findings, []);
 
+  const mcpInput = [
+    { jsonrpc: "2.0", id: 1, method: "initialize", params: { protocolVersion: "2025-11-25", capabilities: {}, clientInfo: { name: "installed-package-proof", version: "1.0.0" } } },
+    { jsonrpc: "2.0", method: "notifications/initialized" },
+    { jsonrpc: "2.0", id: 2, method: "tools/list", params: {} },
+    { jsonrpc: "2.0", id: 3, method: "tools/call", params: { name: "sidefx_capsules_list", arguments: { query: "deliver-capsule-estate-mcp" } } },
+  ].map((message) => JSON.stringify(message)).join("\n") + "\n";
+  const mcpOutput = runNpm(["run", "mcp", "--silent"], temporaryRoot, {
+    input: mcpInput,
+    env: { ...process.env, CAPSULE_SOURCE_REPOSITORY_ROOT: temporaryRoot },
+  });
+  const mcpMessages = mcpOutput.trim().split(/\r?\n/).map((line) => JSON.parse(line));
+  assert.equal(mcpMessages.find((message) => message.id === 1)?.result?.serverInfo?.name, "sidefx-capsule-estate");
+  assert.equal(mcpMessages.find((message) => message.id === 2)?.result?.tools?.length, 5);
+  const mcpCall = mcpMessages.find((message) => message.id === 3)?.result;
+  assert.equal(mcpCall?.isError, false);
+  assert.equal(mcpCall?.structuredContent?.result?.[0]?.capabilityId, "deliver-capsule-estate-mcp");
+  assert.match(mcpCall?.content?.[0]?.text, /^Tool execution succeeded:/);
+
+  const priorRepositoryRoot = process.env.CAPSULE_SOURCE_REPOSITORY_ROOT;
+  const priorApiPort = process.env.SIDEFX_API_PORT;
+  process.env.CAPSULE_SOURCE_REPOSITORY_ROOT = temporaryRoot;
+  process.env.SIDEFX_API_PORT = "0";
+  try {
+    const apiPath = path.join(temporaryRoot, "node_modules", "sda-bootstrap", "src", "realization-api.mjs");
+    const { startServer } = await import(`${pathToFileURL(apiPath).href}?proof=${crypto.randomUUID()}`);
+    const running = await startServer();
+    try {
+      const response = await fetch(`http://${running.host}:${running.port}/capabilities?query=deliver-realization-api`);
+      const capabilities = await response.json();
+      assert.equal(response.status, 200);
+      assert.equal(capabilities.length, 1);
+      assert.equal(capabilities[0].capabilityId, "deliver-realization-api");
+    } finally {
+      await running.close();
+    }
+  } finally {
+    if (priorRepositoryRoot === undefined) delete process.env.CAPSULE_SOURCE_REPOSITORY_ROOT;
+    else process.env.CAPSULE_SOURCE_REPOSITORY_ROOT = priorRepositoryRoot;
+    if (priorApiPort === undefined) delete process.env.SIDEFX_API_PORT;
+    else process.env.SIDEFX_API_PORT = priorApiPort;
+  }
+
   context.diagnostic(JSON.stringify({
     package: `${packed[0].name}@${packed[0].version}`,
     packageIntegrity: packed[0].integrity,
-    managerDigest: manifest.languageResolver.entryDigest,
+    managerDigest: sha256(fs.readFileSync(managerPath)),
     capabilityCount: first.capabilityCount,
     entryCount: first.entryCount,
     materializedFileCount: firstInventory.length,
@@ -193,5 +229,7 @@ test("the installed package deterministically expands the real capsule estate", 
     directTests: direct.tests,
     invocationDisposition: invocation.outcome.disposition,
     observationDisposition: observation.outcome.payload.state,
+    mcpToolCount: 5,
+    httpDelivery: "LIVE_LOOPBACK",
   }));
 });

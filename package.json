@@ -1,13 +1,17 @@
 {
   "name": "sda-bootstrap",
   "version": "0.1.0",
-  "description": "Portable bootstrap CLI for SideFX capability capsule estates",
+  "description": "Single portable bootstrap for SideFX capsule estate CLI, MCP, and HTTP delivery",
   "type": "module",
   "bin": {
-    "sda-bootstrap": "./src/capsule-manager.mjs"
+    "sda-bootstrap": "./src/capsule-manager.mjs",
+    "sidefx-capsules-mcp": "./src/capsule-mcp.mjs",
+    "sidefx-api": "./src/realization-api.mjs"
   },
   "files": [
     "src/capsule-manager.mjs",
+    "src/capsule-mcp.mjs",
+    "src/realization-api.mjs",
     "platform/"
   ],
   "sdaPlatform": {
@@ -29,6 +33,7 @@
   "dependencies": {
     "@cucumber/gherkin": "42.0.1",
     "@cucumber/messages": "34.2.1",
+    "@modelcontextprotocol/server": "2.0.0",
     "ajv": "8.20.0",
     "mammoth": "1.12.1",
     "pdf-parse": "1.1.1",

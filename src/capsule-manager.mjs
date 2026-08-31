@@ -1080,15 +1080,23 @@ const bootstrapEntryPath = fileURLToPath(import.meta.url);
 const bootstrapRoot = path.dirname(bootstrapEntryPath);
 const installedPackageRoot = path.resolve(bootstrapRoot, "..");
 const repositoryRoot = path.resolve(process.env.CAPSULE_SOURCE_REPOSITORY_ROOT || process.cwd());
-const bootstrapManifestPath = path.join(repositoryRoot, "bootstrap", "bootstrap.manifest.json");
-const bootstrapManifest = readJson(bootstrapManifestPath);
-const observedBootstrapDigest = sha256(fs.readFileSync(bootstrapEntryPath));
-if (bootstrapManifest.languageResolver?.entryDigest !== observedBootstrapDigest) {
-  throw new Error(`BOOTSTRAP_LANGUAGE_RESOLVER_DIGEST_DIVERGED: expected '${bootstrapManifest.languageResolver?.entryDigest}' observed '${observedBootstrapDigest}'.`);
-}
-const capsuleRoot = path.resolve(repositoryRoot, path.dirname(bootstrapManifest.capsuleEstateRef));
-const estateManifestPath = path.resolve(repositoryRoot, bootstrapManifest.capsuleEstateRef);
-const runtimeEntryRoot = `${bootstrapManifest.runtimeEntryRoot}/`;
+const capsuleEstateRef = "capsules/capsule-estate.manifest.json";
+const capsuleRoot = path.resolve(repositoryRoot, "capsules");
+const estateManifestPath = path.resolve(repositoryRoot, capsuleEstateRef);
+const runtimeEntryRoot = "capsule-runtime/";
+const ephemeralCapabilityRoot = "capabilities";
+const platformRuntimeModuleRef = "languages/typescript/runtimes/node/admitted-consumer-platform.mjs";
+const platformProjectorModuleRef = "artifacts/tools/dist/interfaces/consumer-projection/project.js";
+const externalBindings = [
+  {
+    bindingRef: "package:sda-bootstrap/platform/capabilities/sda-platform/bind-os-environment-credential/projected/application-binding.node.json",
+    projectedRootRef: "capabilities/sda-platform/bind-os-environment-credential/projected"
+  },
+  {
+    bindingRef: "package:sda-bootstrap/platform/capabilities/sda-tooling/projected-tools/decide-tooling-migration/projected/application-binding.node.json",
+    projectedRootRef: "capabilities/sda-tooling/projected-tools/decide-tooling-migration/projected"
+  }
+];
 
 function readJson(file) {
   return JSON.parse(fs.readFileSync(file, "utf8"));
@@ -1142,7 +1150,7 @@ function capabilityIdFromBindingRef(bindingRef) {
 function loadEstate() {
   const manifest = readJson(estateManifestPath);
   if (manifest.estateManifestType !== "sidefx-capsule-estate-manifest.v1") throw new Error("CAPSULE_ESTATE_MANIFEST_NOT_ADMITTED");
-  if (manifest.capabilityCount !== bootstrapManifest.eligibleCapabilityCount) throw new Error("CAPSULE_ESTATE_COUNT_DIVERGED");
+  if (manifest.capabilityCount !== manifest.capsules?.length) throw new Error("CAPSULE_ESTATE_COUNT_DIVERGED");
   const records = manifest.capsules.map((record) => {
     const file = path.resolve(capsuleRoot, record.file);
     const bytes = fs.readFileSync(file);
@@ -1271,7 +1279,7 @@ function resolveEstate(estate = loadEstate()) {
         present++;
         continue;
       }
-      const external = bootstrapManifest.platform.externalBindings.find((item) => normalizedRef(item.bindingRef) === normalizedRef(dependency.bindingRef));
+      const external = externalBindings.find((item) => normalizedRef(item.bindingRef) === normalizedRef(dependency.bindingRef));
       if (!external) throw new Error(`DEPENDENCY_MISSING: '${capsule.capabilityId}' -> '${dependency.bindingRef}'.`);
       const binding = readJson(path.resolve(platformRoot, external.projectedRootRef, "application-binding.node.json"));
       if (canonicalDigest(binding) !== dependency.bindingDigest) throw new Error(`DEPENDENCY_BINDING_WRONG_DIGEST: '${capsule.capabilityId}' -> '${targetId}'.`);
@@ -1289,15 +1297,11 @@ function resolveEstate(estate = loadEstate()) {
 
 function resolvePlatformRoot() {
   const override = process.env.SIDEFX_PLATFORM_ROOT;
-  const configured = override || bootstrapManifest.platform.rootRef;
-  const packagePrefix = "package:sda-bootstrap/";
-  const root = !override && configured.startsWith(packagePrefix)
-    ? path.resolve(installedPackageRoot, configured.slice(packagePrefix.length))
-    : path.resolve(repositoryRoot, configured);
-  if (!override && configured.startsWith(packagePrefix)) {
+  const root = override ? path.resolve(repositoryRoot, override) : path.resolve(installedPackageRoot, "platform");
+  if (!override) {
     const relative = path.relative(installedPackageRoot, root);
     if (relative.startsWith("..") || path.isAbsolute(relative)) {
-      throw new Error(`SIDEFX_PACKAGE_PLATFORM_ROOT_ESCAPES_PACKAGE: '${configured}'.`);
+      throw new Error(`SIDEFX_PACKAGE_PLATFORM_ROOT_ESCAPES_PACKAGE: '${root}'.`);
     }
   }
   if (!fs.existsSync(root)) throw new Error(`SIDEFX_PLATFORM_ROOT_MISSING: '${root}'.`);
@@ -1305,8 +1309,7 @@ function resolvePlatformRoot() {
 }
 
 function usesInstalledPackagePlatform() {
-  return !process.env.SIDEFX_PLATFORM_ROOT
-    && bootstrapManifest.platform.rootRef.startsWith("package:sda-bootstrap/");
+  return !process.env.SIDEFX_PLATFORM_ROOT;
 }
 
 function createExecutionWorkspace(kind) {
@@ -1361,7 +1364,7 @@ function materializeSharedAuthority(estate, targetRoot) {
 }
 
 function materializeCapsuleEstate(estate, targetRoot) {
-  const manifestRef = normalizedRef(bootstrapManifest.capsuleEstateRef);
+  const manifestRef = normalizedRef(capsuleEstateRef);
   if (!safeEntryRef(manifestRef)) throw new Error(`CAPSULE_ESTATE_REFERENCE_REJECTED: '${manifestRef}'.`);
   const targetEstateManifestPath = path.resolve(targetRoot, ...manifestRef.split("/"));
   const targetCapsuleRoot = path.dirname(targetEstateManifestPath);
@@ -1382,9 +1385,9 @@ function materializeCapsuleEstate(estate, targetRoot) {
 
 function expandEstate(estate, targetRoot) {
   const entryCount = materializeEntries(estate, targetRoot, () => true);
-  const capabilityRoot = path.join(targetRoot, bootstrapManifest.ephemeralCapabilityRoot);
+  const capabilityRoot = path.join(targetRoot, ephemeralCapabilityRoot);
   const capabilities = fs.readdirSync(capabilityRoot).filter((item) => fs.existsSync(path.join(capabilityRoot, item, "capability.authority.json")));
-  if (capabilities.length !== bootstrapManifest.eligibleCapabilityCount) throw new Error(`EXPANSION_COUNT_DIVERGED: '${capabilities.length}'.`);
+  if (capabilities.length !== estate.manifest.capabilityCount) throw new Error(`EXPANSION_COUNT_DIVERGED: '${capabilities.length}'.`);
   return { capabilityCount: capabilities.length, entryCount };
 }
 
@@ -1500,7 +1503,7 @@ async function invokeCapability(capabilityId, input, estate = loadEstate()) {
   capsuleRecord(estate, capabilityId);
   const workspace = createExecutionWorkspace("capsule-invoke");
   const { targetRoot, platformRoot } = workspace;
-  const runtimeUrl = pathToFileURL(path.resolve(platformRoot, bootstrapManifest.platform.runtimeModuleRef)).href;
+  const runtimeUrl = pathToFileURL(path.resolve(platformRoot, platformRuntimeModuleRef)).href;
   const marker = path.join(targetRoot, ".capsule-invoke-root.json");
   fs.writeFileSync(marker, JSON.stringify({ root: targetRoot }), "utf8");
   try {
@@ -1538,7 +1541,7 @@ async function invokeCapability(capabilityId, input, estate = loadEstate()) {
 async function proveDirectExecution(estate, selectedIds = null) {
   const workspace = createExecutionWorkspace("capsule-runtime");
   const { targetRoot, platformRoot } = workspace;
-  const runtimeUrl = pathToFileURL(path.resolve(platformRoot, bootstrapManifest.platform.runtimeModuleRef)).href;
+  const runtimeUrl = pathToFileURL(path.resolve(platformRoot, platformRuntimeModuleRef)).href;
   const marker = path.join(targetRoot, ".capsule-runtime-root.json");
   fs.writeFileSync(marker, JSON.stringify({ root: targetRoot }), "utf8");
   try {
@@ -1571,8 +1574,8 @@ async function proveDirectExecution(estate, selectedIds = null) {
 
 async function projectEstate(estate, targetRoot) {
   const platformRoot = resolvePlatformRoot();
-  const runtimeUrl = pathToFileURL(path.resolve(platformRoot, bootstrapManifest.platform.runtimeModuleRef)).href;
-  const projectorUrl = pathToFileURL(path.resolve(platformRoot, bootstrapManifest.platform.projectorModuleRef)).href;
+  const runtimeUrl = pathToFileURL(path.resolve(platformRoot, platformRuntimeModuleRef)).href;
+  const projectorUrl = pathToFileURL(path.resolve(platformRoot, platformProjectorModuleRef)).href;
   const { projectConsumerCapability } = await import(projectorUrl);
   const capsulesById = new Map(estate.records.map(({ capsule }) => [capsule.capabilityId, capsule]));
   let projected = 0;
@@ -1764,7 +1767,7 @@ function migrateLegacyEstate() {
 }
 
 function assertCollapsedRepository() {
-  const expandedRoot = path.join(repositoryRoot, bootstrapManifest.ephemeralCapabilityRoot);
+  const expandedRoot = path.join(repositoryRoot, ephemeralCapabilityRoot);
   if (fs.existsSync(expandedRoot)) throw new Error(`DURABLE_REPOSITORY_CONTAINS_EXPANDED_CAPABILITIES: '${expandedRoot}'.`);
   return { expandedCapabilityRoot: "ABSENT" };
 }
@@ -1777,9 +1780,8 @@ async function runSterileProof() {
   const marker = path.join(sterileRoot, ".capsule-first-sterile-root.json");
   fs.writeFileSync(marker, JSON.stringify({ proofType: "capsule-first-sterile-root.v1", root: sterileRoot }), "utf8");
   try {
-    copyTree(path.join(repositoryRoot, "bootstrap"), path.join(sterileRoot, "bootstrap"));
     copyTree(path.join(repositoryRoot, "capsules"), path.join(sterileRoot, "capsules"));
-    for (const relative of bootstrapManifest.repositoryBootstrapRoots) copyTree(path.join(repositoryRoot, relative), path.join(sterileRoot, relative));
+    if (fs.existsSync(path.join(sterileRoot, "bootstrap"))) throw new Error("STERILE_STAGE_CONTAINS_BOOTSTRAP_DIRECTORY");
     if (fs.existsSync(path.join(sterileRoot, "capabilities"))) throw new Error("STERILE_STAGE_CONTAINS_EXPANDED_CAPABILITIES");
     const child = spawnSync(process.execPath, [bootstrapEntryPath, "proof"], {
       cwd: sterileRoot,
@@ -1844,10 +1846,13 @@ async function main() {
 
 export {
   assertCollapsedRepository,
+  capabilityIdFromBindingRef,
+  expandEstate,
   inspectCapsule,
   invokeCapability,
   listCapsules,
   loadEstate,
+  projectEstate,
   proveDirectExecution,
   resolveEstate,
   verifyEstate

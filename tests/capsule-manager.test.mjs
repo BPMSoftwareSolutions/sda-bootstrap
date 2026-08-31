@@ -1,5 +1,4 @@
 import assert from "node:assert/strict";
-import crypto from "node:crypto";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -8,7 +7,6 @@ import test from "node:test";
 
 const packageRoot = path.resolve(import.meta.dirname, "..");
 const managerSource = path.join(packageRoot, "src", "capsule-manager.mjs");
-const sha256 = (bytes) => `sha256:${crypto.createHash("sha256").update(bytes).digest("hex")}`;
 const writeJson = (file, value) => {
   fs.mkdirSync(path.dirname(file), { recursive: true });
   fs.writeFileSync(file, `${JSON.stringify(value, null, 2)}\n`, "utf8");
@@ -18,21 +16,6 @@ test("verifies an internally consistent empty capsule estate", (context) => {
   const repositoryRoot = fs.mkdtempSync(path.join(os.tmpdir(), "sda-bootstrap-unit-"));
   context.after(() => fs.rmSync(repositoryRoot, { recursive: true, force: true }));
 
-  writeJson(path.join(repositoryRoot, "bootstrap", "bootstrap.manifest.json"), {
-    languageResolver: {
-      entryRef: "package:sda-bootstrap",
-      entryDigest: sha256(fs.readFileSync(managerSource)),
-    },
-    capsuleEstateRef: "capsules/capsule-estate.manifest.json",
-    runtimeEntryRoot: "capsule-runtime",
-    ephemeralCapabilityRoot: "capabilities",
-    eligibleCapabilityCount: 0,
-    platform: {
-      rootRef: ".",
-      externalBindings: [],
-    },
-    repositoryBootstrapRoots: [],
-  });
   writeJson(path.join(repositoryRoot, "capsules", "capsule-estate.manifest.json"), {
     estateManifestType: "sidefx-capsule-estate-manifest.v1",
     capabilityCount: 0,
@@ -51,4 +34,5 @@ test("verifies an internally consistent empty capsule estate", (context) => {
     entryCount: 0,
     durableLayout: { expandedCapabilityRoot: "ABSENT" },
   });
+  assert.equal(fs.existsSync(path.join(repositoryRoot, "bootstrap")), false);
 });
