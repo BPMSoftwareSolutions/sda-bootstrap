@@ -1,0 +1,12 @@
+{
+  "authorityType": "execution-authorities.v1",
+  "executionAuthorities": [
+    {
+      "id": "semantic-corpus-derivation.v1",
+      "owningScenarioId": "derive-semantic-corpus-records",
+      "operations": [
+        {"kind": "invoke-port", "portId": "derive-semantic-corpus-records"}
+      ]
+    }
+  ]
+}

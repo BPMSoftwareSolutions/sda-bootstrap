@@ -1,0 +1,44 @@
+{
+  "$schema": "../../../kernel/schemas/projection-authoring-context.schema.json",
+  "contextType": "projection-authoring-context.v1",
+  "lifecycle": "FROZEN_CANDIDATE_AUTHORITY",
+  "capabilityId": "sda-semantic-corpus-artifact-repository.v1",
+  "sourceFeature": {
+    "ref": "capability.feature",
+    "digest": "sha256:72d5e9528e8156c08b53ab20b041de70e79a806cc89de51205a3717f8772f8ce"
+  },
+  "retainedAuthorities": [
+    {"role": "CONTRACT_CATALOG", "ref": "contracts/contract-catalog.json", "digest": "sha256:0f22e4fce679d35bf718154fd68298fa0353f60f516681266c69def29c5a927d", "status": "FROZEN_CANDIDATE_AUTHORITY"},
+    {"role": "PUBLICATION_REQUEST_CONTRACT", "ref": "contracts/semantic-corpus-artifact-publication-request.v1.schema.json", "digest": "sha256:62dc7cac389181ebfb39741bf23868b2fbbc9c38c9090f07e77594fcc4cc66f2", "status": "FROZEN_CANDIDATE_AUTHORITY"},
+    {"role": "PUBLICATION_EVIDENCE_CONTRACT", "ref": "contracts/semantic-corpus-artifact-publication-evidence.v1.schema.json", "digest": "sha256:e0cd6d218628e51aacb36f8abf9d2cf4e6267a23399bd6785888b36ac363c4ee", "status": "FROZEN_CANDIDATE_AUTHORITY"},
+    {"role": "READ_REQUEST_CONTRACT", "ref": "contracts/semantic-corpus-artifact-read-request.v1.schema.json", "digest": "sha256:f3d78d877a46d019634d8a9c78570c634b12d3622655f23a797d218740a79f51", "status": "FROZEN_CANDIDATE_AUTHORITY"},
+    {"role": "READ_EVIDENCE_CONTRACT", "ref": "contracts/semantic-corpus-artifact-read-evidence.v1.schema.json", "digest": "sha256:38bc51f086c7ca55190e342e678803b8f22c2a894b932ce4414c7aa724f6a3e9", "status": "FROZEN_CANDIDATE_AUTHORITY"},
+    {"role": "POINTER_UPDATE_REQUEST_CONTRACT", "ref": "contracts/semantic-corpus-current-pointer-update-request.v1.schema.json", "digest": "sha256:2cd64314d587bf8e880810741e6642db92708a29bd7b57ed220294f3bb2f6e0e", "status": "FROZEN_CANDIDATE_AUTHORITY"},
+    {"role": "POINTER_UPDATE_EVIDENCE_CONTRACT", "ref": "contracts/semantic-corpus-current-pointer-update-evidence.v1.schema.json", "digest": "sha256:83a8dcc99f0a071428ab894ceed8cd4d63f01d93cc6fc11c74902c30aed2a247", "status": "FROZEN_CANDIDATE_AUTHORITY"},
+    {"role": "CLOSURE_RECEIPT_CONTRACT", "ref": "contracts/semantic-corpus-closure-receipt.v1.schema.json", "digest": "sha256:87979e12c84bb20bc27723c74fc36890c64c65e67b664283a878f18e12f2732a", "status": "FROZEN_CANDIDATE_AUTHORITY"},
+    {"role": "REPOSITORY_AUTHORITY_CONTRACT", "ref": "semantic-corpus-artifact-repository.authority.schema.json", "digest": "sha256:f16b18bbfeb24a35607303dfae8d0dcfda2a3d9936e941080f456c7447eb65ac", "status": "FROZEN_CANDIDATE_AUTHORITY"},
+    {"role": "FIXTURE_MANIFEST", "ref": "fixtures/fixture-manifest.authority.json", "digest": "sha256:845df972363407ca6a3ccab982ad81d0abe825ce77bbbaabc776b58a7a5bb362", "status": "FROZEN_FIXTURE_AUTHORITY"},
+    {"role": "GENERIC_REPOSITORY_AUTHORITY", "ref": "fixtures/repository-authority.v1.json", "digest": "sha256:eb1b0446beefc6d5f180668272f3dbb00aaa53b581f8984d4a90194369395317", "status": "ADMITTED_SOURCE_AUTHORITY"}
+  ],
+  "requiredMechanics": [
+    {"mechanicId": "canonical-json-byte-validation", "kind": "PURE", "status": "ADMITTED", "proves": ["CANONICAL_INPUT_BYTES", "DETERMINISTIC_CONTENT_ADDRESS"], "admissionReceiptRef": "../verify-durable-store-mechanic-admission/conformance/durable-store-mechanic-admission.v1.json"},
+    {"mechanicId": "digest-verified-artifact-reading", "kind": "EFFECT", "status": "ADMITTED", "proves": ["EXACT_BOUNDED_READ", "MISSING_AND_DIGEST_MISMATCH_FINDINGS"]},
+    {"mechanicId": "exclusive-create-or-exact-match", "kind": "EFFECT", "status": "ADMITTED", "proves": ["NO_OVERWRITE", "IDEMPOTENT_REPLAY", "CROSS_PROCESS_SINGLE_WINNER"], "admissionReceiptRef": "../verify-durable-store-mechanic-admission/conformance/durable-store-mechanic-admission.v1.json"},
+    {"mechanicId": "atomic-current-pointer-compare-and-swap", "kind": "EFFECT", "status": "ADMITTED", "proves": ["EXPECTED_CURRENT_MATCH", "SINGLE_GENERATION_ADVANCE", "CROSS_PROCESS_CAS"], "admissionReceiptRef": "../verify-durable-store-mechanic-admission/conformance/durable-store-mechanic-admission.v1.json"},
+    {"mechanicId": "retained-lineage-authorization", "kind": "PURE", "status": "ADMITTED", "proves": ["RETAINED_SNAPSHOT_READ_AUTHORITY", "NO_CURRENT_POINTER_FALLBACK"], "admissionReceiptRef": "../verify-durable-store-mechanic-admission/conformance/durable-store-mechanic-admission.v1.json"}
+  ],
+  "executablePolicy": {
+    "generatedExecutableOnly": true,
+    "consumerSeam": "sda-projected-capability-invocation-port.v2",
+    "forbiddenDomainRuntimeRefs": [
+      "languages/typescript/runtimes/node/semantic-corpus-artifact-repository-provider.mjs",
+      "languages/typescript/runtimes/node/node-native-mechanic-providers.mjs#sda-semantic-corpus-artifact-repository.v1"
+    ]
+  },
+  "disposition": "GENERIC_MECHANICS_ADMITTED_AWAITING_PROVIDER_BINDING",
+  "claims": {
+    "providerAdmission": "NOT_CLAIMED",
+    "projectionConformance": "NOT_CLAIMED",
+    "runtimeAdmission": "NOT_CLAIMED"
+  }
+}

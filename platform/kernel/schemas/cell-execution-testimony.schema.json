@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/cell-execution-testimony.v1.schema.json",
+  "title": "SDA cell execution testimony v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["testimonyType", "graphId", "canonicalGraphDigest", "realizedGraphDigest", "cellId", "cellAltitude", "cellExecutionId", "rootExecutionId", "parentCellExecutionId", "occurrenceId", "inputContractId", "inputDigest", "executionAuthorityId", "authorityDigest", "outcomeContractId", "outcomeDigest", "outcomeVariant", "disposition", "selectedEdgeIds", "logicalOrder"],
+  "properties": {
+    "testimonyType": { "const": "cell-execution-testimony.v1" },
+    "graphId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "canonicalGraphDigest": { "$ref": "semantic-primitives.schema.json#/$defs/digest" },
+    "realizedGraphDigest": { "$ref": "semantic-primitives.schema.json#/$defs/digest" },
+    "cellId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "cellAltitude": { "type": "string", "enum": ["scenario", "mechanic", "provider", "physical"] },
+    "cellExecutionId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "rootExecutionId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "parentCellExecutionId": { "oneOf": [{ "$ref": "semantic-primitives.schema.json#/$defs/semanticId" }, { "type": "null" }] },
+    "iterationId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "occurrenceId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "inputContractId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "inputDigest": { "$ref": "semantic-primitives.schema.json#/$defs/digest" },
+    "executionAuthorityId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "authorityDigest": { "$ref": "semantic-primitives.schema.json#/$defs/digest" },
+    "providerProfileId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "providerProfileDigest": { "$ref": "semantic-primitives.schema.json#/$defs/digest" },
+    "outcomeContractId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "outcomeDigest": { "$ref": "semantic-primitives.schema.json#/$defs/digest" },
+    "outcomeVariant": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$" },
+    "disposition": { "type": "string", "enum": ["completed", "rejected", "failed", "cancelled", "held", "skipped"] },
+    "selectedEdgeIds": { "type": "array", "uniqueItems": true, "items": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" } },
+    "logicalOrder": { "type": "integer", "minimum": 0 }
+  }
+}

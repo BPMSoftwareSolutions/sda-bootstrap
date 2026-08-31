@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/gherkin/canonical-gherkin-case-compilation-evidence.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contractId", "sourceDigest", "astDigest", "grammarDigest", "compiledCases", "caseLineage", "diagnostics", "caseDigest", "disposition"],
+  "properties": {
+    "contractId": {"const": "canonical-gherkin-case-compilation-evidence.v1"},
+    "sourceDigest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "astDigest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "grammarDigest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "compiledCases": {"type": "array", "items": {"type": "object"}},
+    "caseLineage": {"type": "array", "items": {"type": "object", "required": ["caseId", "astNodeIds", "sourceLocations"]}},
+    "diagnostics": {"type": "array", "items": {"type": "object"}},
+    "caseDigest": {"oneOf": [{"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"}, {"type": "null"}]},
+    "disposition": {"enum": ["COMPILED", "REJECTED"]}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"disposition": {"const": "COMPILED"}}, "required": ["disposition"]},
+      "then": {"properties": {"caseDigest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"}}}
+    },
+    {
+      "if": {"properties": {"disposition": {"const": "REJECTED"}}, "required": ["disposition"]},
+      "then": {"properties": {"diagnostics": {"minItems": 1}}}
+    }
+  ]
+}

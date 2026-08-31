@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/scenario-execution-vector-expectation.v1.schema.json",
+  "title": "Scenario Execution Vector Expectation",
+  "description": "A canonical behavioral conformance vector's then half: the disposition every conforming language embodiment must produce for the paired fixture (fixtureId), which lives separately under conformance/corpus/. Kept independent from the fixture so the given and the then are independently authored and checkable, not two facts that can drift together inside one edit. See K006A/K006B/K006E in governance/workspace/governance-rules.json.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["expectationId", "fixtureId", "expected"],
+  "properties": {
+    "expectationId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "fixtureId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "expected": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["disposition"],
+      "properties": {
+        "disposition": {
+          "type": "string",
+          "enum": ["completed", "terminated", "rejected", "failed"]
+        }
+      }
+    }
+  }
+}

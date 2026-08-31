@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/semantic-transformation-authority.v1.schema.json",
+  "title": "Semantic Transformation Authority",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["authorityType", "transformations"],
+  "properties": {
+    "authorityType": { "const": "semantic-transformation-authority.v1" },
+    "transformations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "expression"],
+        "properties": {
+          "id": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "expression": { "$ref": "#/$defs/expression" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "expression": {
+      "type": "object",
+      "required": ["op"],
+      "properties": {
+        "op": {
+          "type": "string",
+          "enum": ["literal", "path", "object", "array", "object-values", "merge", "map", "flat-map", "filter", "find", "some", "every", "includes", "intersects", "equals", "length", "greater-than", "if", "unique", "join", "format", "trim", "lower-case", "escape-html", "sha256", "base64-decode-utf8", "json-stringify", "canonicalize", "directed-graph-closure", "parse-json", "try-parse-json", "let"]
+        },
+        "from": {},
+        "path": { "type": "string" },
+        "value": {},
+        "values": {},
+        "fields": { "type": "object" },
+        "items": { "type": "array" },
+        "as": { "type": "string" },
+        "where": {},
+        "in": {},
+        "left": {},
+        "right": {},
+        "when": {},
+        "then": {},
+        "else": {},
+        "separator": { "type": "string" },
+        "template": { "type": "string" },
+        "bindings": { "type": "object" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/gherkin-binding.v1.schema.json",
+  "title": "Gherkin Binding",
+  "description": "Binds a scenario's Given/When/Then to canonical semantic addresses.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["given", "when", "then"],
+  "properties": {
+    "featureId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "given": { "$ref": "#/$defs/step" },
+    "when": { "$ref": "#/$defs/step" },
+    "then": { "$ref": "#/$defs/step" }
+  },
+  "$defs": {
+    "step": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["semanticRef", "text"],
+      "properties": {
+        "semanticRef": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+        "text": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

@@ -1,0 +1,649 @@
+{
+  "fixtureType": "consumer-capability-fixtures.v1",
+  "fixtures": [
+    {
+      "fixtureId": "publish-canonical-snapshot",
+      "input": {
+        "contractId": "semantic-corpus-artifact-publication-request.v1",
+        "repositoryAuthorityRef": "repository-authority.v1.json",
+        "repositoryAuthorityDigest": "sha256:4f1eae11041c8ce43b0c7b0aa7d3ecb48bf12073cf727b8b9ba3950c2da1269e",
+        "artifactKind": "CORPUS_SNAPSHOT",
+        "artifactBytesBase64": "eyJjb250cmFjdElkIjoic2VtYW50aWMtY29ycHVzLXNuYXBzaG90LWZpeHR1cmUudjEiLCJyZXNvdXJjZXMiOlsic291cmNlOmFscGhhIl0sInNuYXBzaG90SWQiOiJhbHBoYSJ9",
+        "byteLength": 102,
+        "expectedDigest": "sha256:15ec0b65d3bd9e18030633def91fad03d05735c706f05c4bdb0c9d56cccb8197",
+        "canonicalizationAuthorityId": "canonical-recursive-key-order-json.v1",
+        "canonicalizationAuthorityDigest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+      },
+      "portOutcomes": {
+        "authority-driven-composition": {
+          "authority": "interfaces.authority.json"
+        }
+      },
+      "expected": {
+        "disposition": "terminated",
+        "terminalScenarioId": "publish-immutable-semantic-corpus-artifact",
+        "scenarioSequence": [
+          "publish-immutable-semantic-corpus-artifact"
+        ],
+        "outcomeAssertions": [
+          {
+            "conditionId": "publication-holds-on-missing-address-planner",
+            "path": "disposition",
+            "operator": "equals",
+            "value": "REJECTED"
+          },
+          {
+            "conditionId": "missing-mechanic-named",
+            "path": "findingCodes.0",
+            "operator": "equals",
+            "value": "CANONICAL_ARTIFACT_ADDRESS_PLANNING_UNAVAILABLE"
+          },
+          {
+            "conditionId": "digest-recomputed-exactly",
+            "path": "recomputedDigest",
+            "operator": "equals",
+            "value": "sha256:15ec0b65d3bd9e18030633def91fad03d05735c706f05c4bdb0c9d56cccb8197"
+          },
+          {
+            "conditionId": "no-publication-claimed",
+            "path": "authorityClaims.publication",
+            "operator": "equals",
+            "value": "NOT_CLAIMED"
+          }
+        ]
+      }
+    },
+    {
+      "fixtureId": "match-idempotent-publication",
+      "input": {
+        "contractId": "semantic-corpus-artifact-publication-request.v1",
+        "repositoryAuthorityRef": "repository-authority.v1.json",
+        "repositoryAuthorityDigest": "sha256:4f1eae11041c8ce43b0c7b0aa7d3ecb48bf12073cf727b8b9ba3950c2da1269e",
+        "artifactKind": "CORPUS_SNAPSHOT",
+        "artifactBytesBase64": "eyJjb250cmFjdElkIjoic2VtYW50aWMtY29ycHVzLXNuYXBzaG90LWZpeHR1cmUudjEiLCJyZXNvdXJjZXMiOlsic291cmNlOmFscGhhIl0sInNuYXBzaG90SWQiOiJhbHBoYSJ9",
+        "byteLength": 102,
+        "expectedDigest": "sha256:15ec0b65d3bd9e18030633def91fad03d05735c706f05c4bdb0c9d56cccb8197",
+        "canonicalizationAuthorityId": "canonical-recursive-key-order-json.v1",
+        "canonicalizationAuthorityDigest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+      },
+      "portOutcomes": {
+        "authority-driven-composition": {
+          "authority": "interfaces.authority.json"
+        }
+      },
+      "expected": {
+        "disposition": "terminated",
+        "terminalScenarioId": "publish-immutable-semantic-corpus-artifact",
+        "scenarioSequence": [
+          "publish-immutable-semantic-corpus-artifact"
+        ],
+        "outcomeAssertions": [
+          {
+            "conditionId": "idempotent-republish-holds",
+            "path": "disposition",
+            "operator": "equals",
+            "value": "REJECTED"
+          },
+          {
+            "conditionId": "missing-mechanic-named",
+            "path": "findingCodes.0",
+            "operator": "equals",
+            "value": "CANONICAL_ARTIFACT_ADDRESS_PLANNING_UNAVAILABLE"
+          }
+        ]
+      }
+    },
+    {
+      "fixtureId": "reject-input-digest-mismatch",
+      "input": {
+        "contractId": "semantic-corpus-artifact-publication-request.v1",
+        "repositoryAuthorityRef": "repository-authority.v1.json",
+        "repositoryAuthorityDigest": "sha256:4f1eae11041c8ce43b0c7b0aa7d3ecb48bf12073cf727b8b9ba3950c2da1269e",
+        "artifactKind": "CORPUS_SNAPSHOT",
+        "artifactBytesBase64": "eyJjb250cmFjdElkIjoic2VtYW50aWMtY29ycHVzLXNuYXBzaG90LWZpeHR1cmUudjEiLCJyZXNvdXJjZXMiOlsic291cmNlOmFscGhhIl0sInNuYXBzaG90SWQiOiJhbHBoYSJ9",
+        "byteLength": 102,
+        "expectedDigest": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+        "canonicalizationAuthorityId": "canonical-recursive-key-order-json.v1",
+        "canonicalizationAuthorityDigest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+      },
+      "portOutcomes": {
+        "authority-driven-composition": {
+          "authority": "interfaces.authority.json"
+        }
+      },
+      "expected": {
+        "disposition": "terminated",
+        "terminalScenarioId": "reject-semantic-corpus-artifact-publication-conflict",
+        "scenarioSequence": [
+          "reject-semantic-corpus-artifact-publication-conflict"
+        ],
+        "outcomeAssertions": [
+          {
+            "conditionId": "digest-mismatch-rejected",
+            "path": "disposition",
+            "operator": "equals",
+            "value": "REJECTED"
+          },
+          {
+            "conditionId": "mismatch-named",
+            "path": "findingCodes.0",
+            "operator": "equals",
+            "value": "ARTIFACT_DIGEST_MISMATCH"
+          }
+        ]
+      }
+    },
+    {
+      "fixtureId": "reject-occupied-address-conflict",
+      "input": {
+        "contractId": "semantic-corpus-artifact-publication-request.v1",
+        "repositoryAuthorityRef": "repository-authority.v1.json",
+        "repositoryAuthorityDigest": "sha256:4f1eae11041c8ce43b0c7b0aa7d3ecb48bf12073cf727b8b9ba3950c2da1269e",
+        "artifactKind": "CORPUS_SNAPSHOT",
+        "artifactBytesBase64": "eyJjb250cmFjdElkIjoic2VtYW50aWMtY29ycHVzLXNuYXBzaG90LWZpeHR1cmUudjEiLCJyZXNvdXJjZXMiOlsic291cmNlOmFscGhhIl0sInNuYXBzaG90SWQiOiJhbHBoYSJ9",
+        "byteLength": 102,
+        "expectedDigest": "sha256:15ec0b65d3bd9e18030633def91fad03d05735c706f05c4bdb0c9d56cccb8197",
+        "canonicalizationAuthorityId": "canonical-recursive-key-order-json.v1",
+        "canonicalizationAuthorityDigest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+      },
+      "portOutcomes": {
+        "authority-driven-composition": {
+          "authority": "interfaces.authority.json"
+        }
+      },
+      "expected": {
+        "disposition": "terminated",
+        "terminalScenarioId": "reject-semantic-corpus-artifact-publication-conflict",
+        "scenarioSequence": [
+          "reject-semantic-corpus-artifact-publication-conflict"
+        ],
+        "outcomeAssertions": [
+          {
+            "conditionId": "occupancy-check-holds-on-missing-read",
+            "path": "disposition",
+            "operator": "equals",
+            "value": "REJECTED"
+          },
+          {
+            "conditionId": "missing-mechanic-named",
+            "path": "findingCodes.0",
+            "operator": "equals",
+            "value": "CANONICAL_ARTIFACT_ADDRESS_PLANNING_UNAVAILABLE"
+          }
+        ]
+      }
+    },
+    {
+      "fixtureId": "read-exact-published-snapshot",
+      "input": {
+        "contractId": "semantic-corpus-artifact-read-request.v1",
+        "repositoryAuthorityRef": "repository-authority.v1.json",
+        "repositoryAuthorityDigest": "sha256:4f1eae11041c8ce43b0c7b0aa7d3ecb48bf12073cf727b8b9ba3950c2da1269e",
+        "artifactKind": "CORPUS_SNAPSHOT",
+        "artifactDigest": "sha256:15ec0b65d3bd9e18030633def91fad03d05735c706f05c4bdb0c9d56cccb8197",
+        "canonicalizationAuthorityId": "canonical-recursive-key-order-json.v1",
+        "canonicalizationAuthorityDigest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "readPurpose": "DIRECT",
+        "retentionEvidence": []
+      },
+      "portOutcomes": {
+        "authority-driven-composition": {
+          "authority": "interfaces.authority.json"
+        }
+      },
+      "expected": {
+        "disposition": "terminated",
+        "terminalScenarioId": "read-immutable-semantic-corpus-artifact",
+        "scenarioSequence": [
+          "read-immutable-semantic-corpus-artifact"
+        ],
+        "outcomeAssertions": [
+          {
+            "conditionId": "read-holds-on-missing-address-planner",
+            "path": "disposition",
+            "operator": "equals",
+            "value": "MISSING"
+          },
+          {
+            "conditionId": "missing-mechanic-named",
+            "path": "findingCodes.0",
+            "operator": "equals",
+            "value": "CANONICAL_ARTIFACT_ADDRESS_PLANNING_UNAVAILABLE"
+          },
+          {
+            "conditionId": "no-read-claimed",
+            "path": "authorityClaims.read",
+            "operator": "equals",
+            "value": "NOT_CLAIMED"
+          }
+        ]
+      }
+    },
+    {
+      "fixtureId": "report-missing-artifact",
+      "input": {
+        "contractId": "semantic-corpus-artifact-read-request.v1",
+        "repositoryAuthorityRef": "repository-authority.v1.json",
+        "repositoryAuthorityDigest": "sha256:4f1eae11041c8ce43b0c7b0aa7d3ecb48bf12073cf727b8b9ba3950c2da1269e",
+        "artifactKind": "CORPUS_SNAPSHOT",
+        "artifactDigest": "sha256:9999999999999999999999999999999999999999999999999999999999999999",
+        "canonicalizationAuthorityId": "canonical-recursive-key-order-json.v1",
+        "canonicalizationAuthorityDigest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "readPurpose": "DIRECT",
+        "retentionEvidence": []
+      },
+      "portOutcomes": {
+        "authority-driven-composition": {
+          "authority": "interfaces.authority.json"
+        }
+      },
+      "expected": {
+        "disposition": "terminated",
+        "terminalScenarioId": "read-immutable-semantic-corpus-artifact",
+        "scenarioSequence": [
+          "read-immutable-semantic-corpus-artifact"
+        ],
+        "outcomeAssertions": [
+          {
+            "conditionId": "absence-never-fabricated",
+            "path": "disposition",
+            "operator": "equals",
+            "value": "MISSING"
+          },
+          {
+            "conditionId": "missing-mechanic-named",
+            "path": "findingCodes.0",
+            "operator": "equals",
+            "value": "CANONICAL_ARTIFACT_ADDRESS_PLANNING_UNAVAILABLE"
+          }
+        ]
+      }
+    },
+    {
+      "fixtureId": "report-corrupted-artifact",
+      "input": {
+        "contractId": "semantic-corpus-artifact-read-request.v1",
+        "repositoryAuthorityRef": "repository-authority.v1.json",
+        "repositoryAuthorityDigest": "sha256:4f1eae11041c8ce43b0c7b0aa7d3ecb48bf12073cf727b8b9ba3950c2da1269e",
+        "artifactKind": "CORPUS_SNAPSHOT",
+        "artifactDigest": "sha256:15ec0b65d3bd9e18030633def91fad03d05735c706f05c4bdb0c9d56cccb8197",
+        "canonicalizationAuthorityId": "canonical-recursive-key-order-json.v1",
+        "canonicalizationAuthorityDigest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "readPurpose": "DIRECT",
+        "retentionEvidence": []
+      },
+      "portOutcomes": {
+        "authority-driven-composition": {
+          "authority": "interfaces.authority.json"
+        }
+      },
+      "expected": {
+        "disposition": "terminated",
+        "terminalScenarioId": "read-immutable-semantic-corpus-artifact",
+        "scenarioSequence": [
+          "read-immutable-semantic-corpus-artifact"
+        ],
+        "outcomeAssertions": [
+          {
+            "conditionId": "integrity-check-holds-on-missing-read",
+            "path": "disposition",
+            "operator": "equals",
+            "value": "MISSING"
+          },
+          {
+            "conditionId": "missing-mechanic-named",
+            "path": "findingCodes.0",
+            "operator": "equals",
+            "value": "CANONICAL_ARTIFACT_ADDRESS_PLANNING_UNAVAILABLE"
+          }
+        ]
+      }
+    },
+    {
+      "fixtureId": "reject-unauthorized-read",
+      "input": {
+        "contractId": "semantic-corpus-artifact-read-request.v1",
+        "repositoryAuthorityRef": "repository-authority.v1.json",
+        "repositoryAuthorityDigest": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "artifactKind": "CORPUS_SNAPSHOT",
+        "artifactDigest": "sha256:15ec0b65d3bd9e18030633def91fad03d05735c706f05c4bdb0c9d56cccb8197",
+        "canonicalizationAuthorityId": "canonical-recursive-key-order-json.v1",
+        "canonicalizationAuthorityDigest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "readPurpose": "DIRECT",
+        "retentionEvidence": []
+      },
+      "portOutcomes": {
+        "authority-driven-composition": {
+          "authority": "interfaces.authority.json"
+        }
+      },
+      "expected": {
+        "disposition": "terminated",
+        "terminalScenarioId": "read-immutable-semantic-corpus-artifact",
+        "scenarioSequence": [
+          "read-immutable-semantic-corpus-artifact"
+        ],
+        "outcomeAssertions": [
+          {
+            "conditionId": "unbound-authority-refused",
+            "path": "disposition",
+            "operator": "equals",
+            "value": "UNAUTHORIZED"
+          },
+          {
+            "conditionId": "authority-finding-named",
+            "path": "findingCodes.0",
+            "operator": "equals",
+            "value": "REPOSITORY_AUTHORITY_NOT_AUTHORIZED"
+          }
+        ]
+      }
+    },
+    {
+      "fixtureId": "read-retained-non-current-snapshot",
+      "input": {
+        "contractId": "semantic-corpus-artifact-read-request.v1",
+        "repositoryAuthorityRef": "repository-authority.v1.json",
+        "repositoryAuthorityDigest": "sha256:4f1eae11041c8ce43b0c7b0aa7d3ecb48bf12073cf727b8b9ba3950c2da1269e",
+        "artifactKind": "CORPUS_SNAPSHOT",
+        "artifactDigest": "sha256:15ec0b65d3bd9e18030633def91fad03d05735c706f05c4bdb0c9d56cccb8197",
+        "canonicalizationAuthorityId": "canonical-recursive-key-order-json.v1",
+        "canonicalizationAuthorityDigest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "readPurpose": "RETAINED",
+        "retentionEvidence": [
+          {
+            "receiptDigest": "sha256:15ec0b65d3bd9e18030633def91fad03d05735c706f05c4bdb0c9d56cccb8197"
+          }
+        ]
+      },
+      "portOutcomes": {
+        "authority-driven-composition": {
+          "authority": "interfaces.authority.json"
+        }
+      },
+      "expected": {
+        "disposition": "terminated",
+        "terminalScenarioId": "retain-referenced-semantic-corpus-snapshot",
+        "scenarioSequence": [
+          "retain-referenced-semantic-corpus-snapshot"
+        ],
+        "outcomeAssertions": [
+          {
+            "conditionId": "lineage-declared-but-read-holds",
+            "path": "disposition",
+            "operator": "equals",
+            "value": "MISSING"
+          },
+          {
+            "conditionId": "missing-mechanic-named",
+            "path": "findingCodes.0",
+            "operator": "equals",
+            "value": "CANONICAL_ARTIFACT_ADDRESS_PLANNING_UNAVAILABLE"
+          }
+        ]
+      }
+    },
+    {
+      "fixtureId": "advance-pointer-with-current-closure",
+      "input": {
+        "contractId": "semantic-corpus-current-pointer-update-request.v1",
+        "repositoryAuthorityRef": "repository-authority.v1.json",
+        "repositoryAuthorityDigest": "sha256:4f1eae11041c8ce43b0c7b0aa7d3ecb48bf12073cf727b8b9ba3950c2da1269e",
+        "pointerId": "CurrentSemanticCorpus",
+        "expectedGeneration": 0,
+        "expectedCurrentSnapshotDigest": null,
+        "candidateArtifactKind": "CORPUS_SNAPSHOT",
+        "candidateSnapshotDigest": "sha256:15ec0b65d3bd9e18030633def91fad03d05735c706f05c4bdb0c9d56cccb8197",
+        "closureReceiptRef": "objects/d9/d9fd08b6555d835b1728e8191abc1d9f06f4f1aaf604607d7a3608e39588a021.json",
+        "closureReceiptDigest": "sha256:d9fd08b6555d835b1728e8191abc1d9f06f4f1aaf604607d7a3608e39588a021",
+        "closureReceiptContractId": "semantic-corpus-closure-receipt.v1"
+      },
+      "portOutcomes": {
+        "authority-driven-composition": {
+          "authority": "interfaces.authority.json"
+        }
+      },
+      "expected": {
+        "disposition": "terminated",
+        "terminalScenarioId": "update-current-semantic-corpus-pointer",
+        "scenarioSequence": [
+          "update-current-semantic-corpus-pointer"
+        ],
+        "outcomeAssertions": [
+          {
+            "conditionId": "cas-holds-on-missing-port",
+            "path": "disposition",
+            "operator": "equals",
+            "value": "REJECTED"
+          },
+          {
+            "conditionId": "missing-port-named",
+            "path": "findingCodes.0",
+            "operator": "equals",
+            "value": "ATOMIC_POINTER_CAS_PORT_UNAVAILABLE"
+          },
+          {
+            "conditionId": "no-update-claimed",
+            "path": "authorityClaims.pointerUpdate",
+            "operator": "equals",
+            "value": "NOT_CLAIMED"
+          }
+        ]
+      }
+    },
+    {
+      "fixtureId": "reject-stale-compare-and-swap",
+      "input": {
+        "contractId": "semantic-corpus-current-pointer-update-request.v1",
+        "repositoryAuthorityRef": "repository-authority.v1.json",
+        "repositoryAuthorityDigest": "sha256:4f1eae11041c8ce43b0c7b0aa7d3ecb48bf12073cf727b8b9ba3950c2da1269e",
+        "pointerId": "CurrentSemanticCorpus",
+        "expectedGeneration": 1,
+        "expectedCurrentSnapshotDigest": "sha256:15ec0b65d3bd9e18030633def91fad03d05735c706f05c4bdb0c9d56cccb8197",
+        "candidateArtifactKind": "CORPUS_SNAPSHOT",
+        "candidateSnapshotDigest": "sha256:ed0522802c9d5d94c90559b3a12da57926c3520fd64cc38cddde3ad0f129b2b6",
+        "closureReceiptRef": "objects/d9/d9fd08b6555d835b1728e8191abc1d9f06f4f1aaf604607d7a3608e39588a021.json",
+        "closureReceiptDigest": "sha256:d9fd08b6555d835b1728e8191abc1d9f06f4f1aaf604607d7a3608e39588a021",
+        "closureReceiptContractId": "semantic-corpus-closure-receipt.v1"
+      },
+      "portOutcomes": {
+        "authority-driven-composition": {
+          "authority": "interfaces.authority.json"
+        }
+      },
+      "expected": {
+        "disposition": "terminated",
+        "terminalScenarioId": "update-current-semantic-corpus-pointer",
+        "scenarioSequence": [
+          "update-current-semantic-corpus-pointer"
+        ],
+        "outcomeAssertions": [
+          {
+            "conditionId": "cas-holds-on-missing-port",
+            "path": "disposition",
+            "operator": "equals",
+            "value": "REJECTED"
+          },
+          {
+            "conditionId": "missing-port-named",
+            "path": "findingCodes.0",
+            "operator": "equals",
+            "value": "ATOMIC_POINTER_CAS_PORT_UNAVAILABLE"
+          }
+        ]
+      }
+    },
+    {
+      "fixtureId": "reject-open-closure",
+      "input": {
+        "contractId": "semantic-corpus-current-pointer-update-request.v1",
+        "repositoryAuthorityRef": "repository-authority.v1.json",
+        "repositoryAuthorityDigest": "sha256:4f1eae11041c8ce43b0c7b0aa7d3ecb48bf12073cf727b8b9ba3950c2da1269e",
+        "pointerId": "CurrentSemanticCorpus",
+        "expectedGeneration": 0,
+        "expectedCurrentSnapshotDigest": null,
+        "candidateArtifactKind": "CORPUS_SNAPSHOT",
+        "candidateSnapshotDigest": "sha256:15ec0b65d3bd9e18030633def91fad03d05735c706f05c4bdb0c9d56cccb8197",
+        "closureReceiptRef": "objects/5c/5c4c3ad479d11f634181c2e74218fdd6d86b62756489c078e5187467c041d3d1.json",
+        "closureReceiptDigest": "sha256:5c4c3ad479d11f634181c2e74218fdd6d86b62756489c078e5187467c041d3d1",
+        "closureReceiptContractId": "semantic-corpus-closure-receipt.v1"
+      },
+      "portOutcomes": {
+        "authority-driven-composition": {
+          "authority": "interfaces.authority.json"
+        }
+      },
+      "expected": {
+        "disposition": "terminated",
+        "terminalScenarioId": "reject-open-semantic-corpus-pointer-update",
+        "scenarioSequence": [
+          "reject-open-semantic-corpus-pointer-update"
+        ],
+        "outcomeAssertions": [
+          {
+            "conditionId": "unobservable-closure-rejects",
+            "path": "disposition",
+            "operator": "equals",
+            "value": "REJECTED"
+          },
+          {
+            "conditionId": "closure-observation-gap-named",
+            "path": "findingCodes.0",
+            "operator": "equals",
+            "value": "CLOSURE_RECEIPT_DOCUMENT_NOT_OBSERVABLE"
+          }
+        ]
+      }
+    },
+    {
+      "fixtureId": "reject-stale-closure",
+      "input": {
+        "contractId": "semantic-corpus-current-pointer-update-request.v1",
+        "repositoryAuthorityRef": "repository-authority.v1.json",
+        "repositoryAuthorityDigest": "sha256:4f1eae11041c8ce43b0c7b0aa7d3ecb48bf12073cf727b8b9ba3950c2da1269e",
+        "pointerId": "CurrentSemanticCorpus",
+        "expectedGeneration": 0,
+        "expectedCurrentSnapshotDigest": null,
+        "candidateArtifactKind": "CORPUS_SNAPSHOT",
+        "candidateSnapshotDigest": "sha256:15ec0b65d3bd9e18030633def91fad03d05735c706f05c4bdb0c9d56cccb8197",
+        "closureReceiptRef": "objects/20/206ff381c2463ed422cc3d6f65d96539fac1cc146b20abf59cf6ed351c611082.json",
+        "closureReceiptDigest": "sha256:206ff381c2463ed422cc3d6f65d96539fac1cc146b20abf59cf6ed351c611082",
+        "closureReceiptContractId": "semantic-corpus-closure-receipt.v1"
+      },
+      "portOutcomes": {
+        "authority-driven-composition": {
+          "authority": "interfaces.authority.json"
+        }
+      },
+      "expected": {
+        "disposition": "terminated",
+        "terminalScenarioId": "reject-open-semantic-corpus-pointer-update",
+        "scenarioSequence": [
+          "reject-open-semantic-corpus-pointer-update"
+        ],
+        "outcomeAssertions": [
+          {
+            "conditionId": "unobservable-closure-rejects",
+            "path": "disposition",
+            "operator": "equals",
+            "value": "REJECTED"
+          },
+          {
+            "conditionId": "closure-observation-gap-named",
+            "path": "findingCodes.0",
+            "operator": "equals",
+            "value": "CLOSURE_RECEIPT_DOCUMENT_NOT_OBSERVABLE"
+          }
+        ]
+      }
+    },
+    {
+      "fixtureId": "admit-one-concurrent-pointer-winner",
+      "input": {
+        "contractId": "semantic-corpus-current-pointer-update-request.v1",
+        "repositoryAuthorityRef": "repository-authority.v1.json",
+        "repositoryAuthorityDigest": "sha256:4f1eae11041c8ce43b0c7b0aa7d3ecb48bf12073cf727b8b9ba3950c2da1269e",
+        "pointerId": "CurrentSemanticCorpus",
+        "expectedGeneration": 0,
+        "expectedCurrentSnapshotDigest": null,
+        "candidateArtifactKind": "CORPUS_SNAPSHOT",
+        "candidateSnapshotDigest": "sha256:15ec0b65d3bd9e18030633def91fad03d05735c706f05c4bdb0c9d56cccb8197",
+        "closureReceiptRef": "objects/d9/d9fd08b6555d835b1728e8191abc1d9f06f4f1aaf604607d7a3608e39588a021.json",
+        "closureReceiptDigest": "sha256:d9fd08b6555d835b1728e8191abc1d9f06f4f1aaf604607d7a3608e39588a021",
+        "closureReceiptContractId": "semantic-corpus-closure-receipt.v1"
+      },
+      "portOutcomes": {
+        "authority-driven-composition": {
+          "authority": "interfaces.authority.json"
+        }
+      },
+      "expected": {
+        "disposition": "terminated",
+        "terminalScenarioId": "update-current-semantic-corpus-pointer",
+        "scenarioSequence": [
+          "update-current-semantic-corpus-pointer"
+        ],
+        "outcomeAssertions": [
+          {
+            "conditionId": "cas-holds-on-missing-port",
+            "path": "disposition",
+            "operator": "equals",
+            "value": "REJECTED"
+          },
+          {
+            "conditionId": "missing-port-named",
+            "path": "findingCodes.0",
+            "operator": "equals",
+            "value": "ATOMIC_POINTER_CAS_PORT_UNAVAILABLE"
+          }
+        ]
+      }
+    },
+    {
+      "fixtureId": "reproduce-content-address",
+      "input": {
+        "contractId": "semantic-corpus-artifact-publication-request.v1",
+        "repositoryAuthorityRef": "repository-authority.v1.json",
+        "repositoryAuthorityDigest": "sha256:4f1eae11041c8ce43b0c7b0aa7d3ecb48bf12073cf727b8b9ba3950c2da1269e",
+        "artifactKind": "CORPUS_SNAPSHOT",
+        "artifactBytesBase64": "eyJjb250cmFjdElkIjoic2VtYW50aWMtY29ycHVzLXNuYXBzaG90LWZpeHR1cmUudjEiLCJyZXNvdXJjZXMiOlsic291cmNlOmFscGhhIl0sInNuYXBzaG90SWQiOiJhbHBoYSJ9",
+        "byteLength": 102,
+        "expectedDigest": "sha256:15ec0b65d3bd9e18030633def91fad03d05735c706f05c4bdb0c9d56cccb8197",
+        "canonicalizationAuthorityId": "canonical-recursive-key-order-json.v1",
+        "canonicalizationAuthorityDigest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+      },
+      "portOutcomes": {
+        "authority-driven-composition": {
+          "authority": "interfaces.authority.json"
+        }
+      },
+      "expected": {
+        "disposition": "terminated",
+        "terminalScenarioId": "reproduce-semantic-corpus-artifact-address",
+        "scenarioSequence": [
+          "reproduce-semantic-corpus-artifact-address"
+        ],
+        "outcomeAssertions": [
+          {
+            "conditionId": "digest-reproduces-exactly",
+            "path": "recomputedDigest",
+            "operator": "equals",
+            "value": "sha256:15ec0b65d3bd9e18030633def91fad03d05735c706f05c4bdb0c9d56cccb8197"
+          },
+          {
+            "conditionId": "address-layout-holds-on-missing-planner",
+            "path": "disposition",
+            "operator": "equals",
+            "value": "REJECTED"
+          },
+          {
+            "conditionId": "missing-mechanic-named",
+            "path": "findingCodes.0",
+            "operator": "equals",
+            "value": "CANONICAL_ARTIFACT_ADDRESS_PLANNING_UNAVAILABLE"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "scenarioId": "reproduce-semantic-corpus-artifact-address",
+  "input": {
+    "inputId": "semantic-corpus-artifact-publication-request",
+    "contract": {
+      "contractId": "semantic-corpus-artifact-publication-request.v1"
+    }
+  },
+  "event": {
+    "eventId": "semantic-corpus-artifact-address-reproduction-requested",
+    "executionAuthorityId": "reproduce-semantic-corpus-artifact-address.v1"
+  },
+  "outcome": {
+    "outcomeId": "semantic-corpus-artifact-publication-evidence",
+    "contract": {
+      "contractId": "semantic-corpus-artifact-publication-evidence.v1"
+    },
+    "experience": {
+      "statement": "artifact digests and immutable address identities are identical without timestamp, machine, user, or path input"
+    },
+    "terminal": true
+  },
+  "gherkin": {
+    "given": {
+      "semanticRef": "reproduce-semantic-corpus-artifact-address.given",
+      "text": "byte-identical canonical artifacts are published in different process and discovery orders"
+    },
+    "when": {
+      "semanticRef": "reproduce-semantic-corpus-artifact-address.when",
+      "text": "their content addresses and publication evidence are derived"
+    },
+    "then": {
+      "semanticRef": "reproduce-semantic-corpus-artifact-address.then",
+      "text": "artifact digests and immutable address identities are identical without timestamp, machine, user, or path input"
+    }
+  },
+  "name": "Reproduce one content address from identical canonical bytes"
+}

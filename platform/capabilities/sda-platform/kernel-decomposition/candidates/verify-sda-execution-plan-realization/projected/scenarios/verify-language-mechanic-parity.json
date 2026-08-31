@@ -1,0 +1,37 @@
+{
+  "scenarioId": "verify-language-mechanic-parity",
+  "input": {
+    "inputId": "language-mechanic-parity-verification-request",
+    "contract": {
+      "contractId": "language-mechanic-parity-verification-request.v1"
+    }
+  },
+  "event": {
+    "eventId": "verify-language-mechanic-parity",
+    "executionAuthorityId": "verify-language-mechanic-parity.v1"
+  },
+  "outcome": {
+    "outcomeId": "language-mechanic-parity-conformance",
+    "contract": {
+      "contractId": "language-mechanic-parity-conformance.v1"
+    },
+    "experience": {
+      "statement": "one cross-language mechanic-parity disposition is established"
+    }
+  },
+  "gherkin": {
+    "given": {
+      "semanticRef": "verify-language-mechanic-parity.given",
+      "text": "canonical mechanic authority and the required language projections"
+    },
+    "when": {
+      "semanticRef": "verify-language-mechanic-parity.when",
+      "text": "language mechanic parity is evaluated"
+    },
+    "then": {
+      "semanticRef": "verify-language-mechanic-parity.then",
+      "text": "one cross-language mechanic-parity disposition is established"
+    }
+  },
+  "name": "Verify language mechanic parity"
+}

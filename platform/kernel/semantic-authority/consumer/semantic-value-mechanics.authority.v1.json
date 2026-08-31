@@ -1,0 +1,1092 @@
+{
+  "authorityType": "semantic-value-mechanics-authority.v1",
+  "authorityId": "semantic-value-mechanics.v1",
+  "authorityVersion": "1.0.0",
+  "lifecycle": "ADMITTED",
+  "family": "Pure semantic mechanics: operations over admitted values with no external effects. Every operation is deterministic and target-neutral; each language projector lowers it to the native equivalent.",
+  "mechanics": [
+    {
+      "mechanicId": "path",
+      "meaning": "Read a value at a dotted path within a supplied carrier.",
+      "input": "carrier and dotted path",
+      "output": "value or absent",
+      "inputContractId": "mechanic:path:input.v1",
+      "outcomeContractId": "mechanic:path:outcome.v1",
+      "determinism": "deterministic",
+      "effectClassification": "pure",
+      "sourceProfiles": [
+        "semantic-value-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/path.v1"
+      ],
+      "nativeFloor": false,
+      "authoringForm": {
+        "expressedAs": "semantic-transformation-expression.v1",
+        "operation": "path",
+        "required": [
+          "path"
+        ],
+        "optional": [
+          "from"
+        ],
+        "arguments": {
+          "from": "binding-identity",
+          "path": "literal-text"
+        },
+        "authoringNote": "An absent or empty path returns the bound value itself. 'from' defaults to the input binding."
+      }
+    },
+    {
+      "mechanicId": "bind-path",
+      "meaning": "Write a value at a dotted path within a cloned carrier, rejecting prototype-pollution segments.",
+      "input": "carrier, dotted path, value",
+      "output": "cloned carrier with bound value",
+      "inputContractId": "mechanic:bind-path:input.v1",
+      "outcomeContractId": "mechanic:bind-path:outcome.v1",
+      "determinism": "deterministic",
+      "effectClassification": "pure",
+      "sourceProfiles": [
+        "semantic-value-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/bind-path.v1"
+      ],
+      "nativeFloor": false,
+      "authoringForm": {
+        "expressedAs": "semantic-transformation-expression.v1",
+        "operation": "bind-path",
+        "required": [
+          "path",
+          "value"
+        ],
+        "optional": [
+          "from"
+        ],
+        "arguments": {
+          "from": "binding-identity",
+          "path": "literal-text",
+          "value": "semantic-expression"
+        },
+        "authoringNote": "Returns a clone of the carrier with the value bound at the dotted path; the source carrier is never mutated. Derived from the admitted input \"carrier, dotted path, value\"."
+      }
+    },
+    {
+      "mechanicId": "literal",
+      "meaning": "Return the declared literal value.",
+      "input": "declared literal",
+      "output": "value",
+      "inputContractId": "mechanic:literal:input.v1",
+      "outcomeContractId": "mechanic:literal:outcome.v1",
+      "determinism": "deterministic",
+      "effectClassification": "pure",
+      "sourceProfiles": [
+        "semantic-value-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/literal.v1"
+      ],
+      "nativeFloor": false,
+      "authoringForm": {
+        "expressedAs": "semantic-transformation-expression.v1",
+        "operation": "literal",
+        "required": [
+          "value"
+        ],
+        "optional": [],
+        "arguments": {
+          "value": "admitted-value"
+        }
+      }
+    },
+    {
+      "mechanicId": "object",
+      "meaning": "Construct an object from evaluated fields.",
+      "input": "field expressions",
+      "output": "object",
+      "inputContractId": "mechanic:object:input.v1",
+      "outcomeContractId": "mechanic:object:outcome.v1",
+      "determinism": "deterministic",
+      "effectClassification": "pure",
+      "sourceProfiles": [
+        "semantic-value-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/object.v1"
+      ],
+      "nativeFloor": false,
+      "authoringForm": {
+        "expressedAs": "semantic-transformation-expression.v1",
+        "operation": "object",
+        "required": [
+          "fields"
+        ],
+        "optional": [],
+        "arguments": {
+          "fields": "expression-map"
+        }
+      }
+    },
+    {
+      "mechanicId": "array",
+      "meaning": "Construct an array from evaluated items.",
+      "input": "item expressions",
+      "output": "array",
+      "inputContractId": "mechanic:array:input.v1",
+      "outcomeContractId": "mechanic:array:outcome.v1",
+      "determinism": "deterministic",
+      "effectClassification": "pure",
+      "sourceProfiles": [
+        "semantic-value-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/array.v1"
+      ],
+      "nativeFloor": false,
+      "authoringForm": {
+        "expressedAs": "semantic-transformation-expression.v1",
+        "operation": "array",
+        "required": [
+          "items"
+        ],
+        "optional": [],
+        "arguments": {
+          "items": "expression-list"
+        }
+      }
+    },
+    {
+      "mechanicId": "object-values",
+      "meaning": "Enumerate an object's values in lexical key order.",
+      "input": "object",
+      "output": "array of values ordered by lexical key identity",
+      "inputContractId": "mechanic:object-values:input.v1",
+      "outcomeContractId": "mechanic:object-values:outcome.v1",
+      "determinism": "deterministic",
+      "effectClassification": "pure",
+      "sourceProfiles": [
+        "semantic-value-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/object-values.v1"
+      ],
+      "nativeFloor": false,
+      "authoringForm": {
+        "expressedAs": "semantic-transformation-expression.v1",
+        "operation": "object-values",
+        "required": [
+          "value"
+        ],
+        "optional": [],
+        "arguments": {
+          "value": "semantic-expression"
+        },
+        "authoringNote": "Lexical key ordering makes catalog traversal stable across target runtimes and source insertion orders."
+      }
+    },
+    {
+      "mechanicId": "merge",
+      "meaning": "Merge evaluated objects left-to-right.",
+      "input": "object expressions",
+      "output": "merged object",
+      "inputContractId": "mechanic:merge:input.v1",
+      "outcomeContractId": "mechanic:merge:outcome.v1",
+      "determinism": "deterministic",
+      "effectClassification": "pure",
+      "sourceProfiles": [
+        "semantic-value-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/merge.v1"
+      ],
+      "nativeFloor": false,
+      "authoringForm": {
+        "expressedAs": "semantic-transformation-expression.v1",
+        "operation": "merge",
+        "required": [
+          "values"
+        ],
+        "optional": [],
+        "arguments": {
+          "values": "expression-list"
+        }
+      }
+    },
+    {
+      "mechanicId": "map",
+      "meaning": "Transform each item of an evaluated array with item-scoped evaluation.",
+      "input": "array and per-item expression",
+      "output": "transformed array",
+      "inputContractId": "mechanic:map:input.v1",
+      "outcomeContractId": "mechanic:map:outcome.v1",
+      "determinism": "deterministic",
+      "effectClassification": "pure",
+      "sourceProfiles": [
+        "semantic-value-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/map.v1"
+      ],
+      "nativeFloor": false,
+      "authoringForm": {
+        "expressedAs": "semantic-transformation-expression.v1",
+        "operation": "map",
+        "required": [
+          "from",
+          "as",
+          "value"
+        ],
+        "optional": [],
+        "arguments": {
+          "from": "semantic-expression",
+          "as": "binding-identity",
+          "value": "semantic-expression"
+        }
+      }
+    },
+    {
+      "mechanicId": "flat-map",
+      "meaning": "Map each item and flatten one level.",
+      "input": "array and per-item expression",
+      "output": "flattened array",
+      "inputContractId": "mechanic:flat-map:input.v1",
+      "outcomeContractId": "mechanic:flat-map:outcome.v1",
+      "determinism": "deterministic",
+      "effectClassification": "pure",
+      "sourceProfiles": [
+        "semantic-value-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/flat-map.v1"
+      ],
+      "nativeFloor": false,
+      "authoringForm": {
+        "expressedAs": "semantic-transformation-expression.v1",
+        "operation": "flat-map",
+        "required": [
+          "from",
+          "as",
+          "value"
+        ],
+        "optional": [],
+        "arguments": {
+          "from": "semantic-expression",
+          "as": "binding-identity",
+          "value": "semantic-expression"
+        }
+      }
+    },
+    {
+      "mechanicId": "filter",
+      "meaning": "Keep items whose predicate evaluates truthy.",
+      "input": "array and predicate",
+      "output": "filtered array",
+      "inputContractId": "mechanic:filter:input.v1",
+      "outcomeContractId": "mechanic:filter:outcome.v1",
+      "determinism": "deterministic",
+      "effectClassification": "pure",
+      "sourceProfiles": [
+        "semantic-value-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/filter.v1"
+      ],
+      "nativeFloor": false,
+      "authoringForm": {
+        "expressedAs": "semantic-transformation-expression.v1",
+        "operation": "filter",
+        "required": [
+          "from",
+          "as",
+          "where"
+        ],
+        "optional": [],
+        "arguments": {
+          "from": "semantic-expression",
+          "as": "binding-identity",
+          "where": "semantic-expression"
+        },
+        "authoringNote": "'where' is evaluated per item under the 'as' binding; a truthy result keeps the item."
+      }
+    },
+    {
+      "mechanicId": "find",
+      "meaning": "Return the first item whose predicate evaluates truthy.",
+      "input": "array and predicate",
+      "output": "item or absent",
+      "inputContractId": "mechanic:find:input.v1",
+      "outcomeContractId": "mechanic:find:outcome.v1",
+      "determinism": "deterministic",
+      "effectClassification": "pure",
+      "sourceProfiles": [
+        "semantic-value-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/find.v1"
+      ],
+      "nativeFloor": false,
+      "authoringForm": {
+        "expressedAs": "semantic-transformation-expression.v1",
+        "operation": "find",
+        "required": [
+          "from",
+          "as",
+          "where"
+        ],
+        "optional": [],
+        "arguments": {
+          "from": "semantic-expression",
+          "as": "binding-identity",
+          "where": "semantic-expression"
+        }
+      }
+    },
+    {
+      "mechanicId": "some",
+      "meaning": "True when any item satisfies the predicate.",
+      "input": "array and predicate",
+      "output": "boolean",
+      "inputContractId": "mechanic:some:input.v1",
+      "outcomeContractId": "mechanic:some:outcome.v1",
+      "determinism": "deterministic",
+      "effectClassification": "pure",
+      "sourceProfiles": [
+        "semantic-value-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/some.v1"
+      ],
+      "nativeFloor": false,
+      "authoringForm": {
+        "expressedAs": "semantic-transformation-expression.v1",
+        "operation": "some",
+        "required": [
+          "from",
+          "as",
+          "where"
+        ],
+        "optional": [],
+        "arguments": {
+          "from": "semantic-expression",
+          "as": "binding-identity",
+          "where": "semantic-expression"
+        }
+      }
+    },
+    {
+      "mechanicId": "every",
+      "meaning": "True when every item satisfies the predicate.",
+      "input": "array and predicate",
+      "output": "boolean",
+      "inputContractId": "mechanic:every:input.v1",
+      "outcomeContractId": "mechanic:every:outcome.v1",
+      "determinism": "deterministic",
+      "effectClassification": "pure",
+      "sourceProfiles": [
+        "semantic-value-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/every.v1"
+      ],
+      "nativeFloor": false,
+      "authoringForm": {
+        "expressedAs": "semantic-transformation-expression.v1",
+        "operation": "every",
+        "required": [
+          "from",
+          "as",
+          "where"
+        ],
+        "optional": [],
+        "arguments": {
+          "from": "semantic-expression",
+          "as": "binding-identity",
+          "where": "semantic-expression"
+        },
+        "authoringNote": "Conjunction is expressed as 'every' over an array of values; there is no boolean-and mechanic."
+      }
+    },
+    {
+      "mechanicId": "includes",
+      "meaning": "True when the evaluated array contains the evaluated value.",
+      "input": "array and value",
+      "output": "boolean",
+      "inputContractId": "mechanic:includes:input.v1",
+      "outcomeContractId": "mechanic:includes:outcome.v1",
+      "determinism": "deterministic",
+      "effectClassification": "pure",
+      "sourceProfiles": [
+        "semantic-value-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/includes.v1"
+      ],
+      "nativeFloor": false,
+      "authoringForm": {
+        "expressedAs": "semantic-transformation-expression.v1",
+        "operation": "includes",
+        "required": [
+          "in",
+          "value"
+        ],
+        "optional": [],
+        "arguments": {
+          "in": "semantic-expression",
+          "value": "semantic-expression"
+        }
+      }
+    },
+    {
+      "mechanicId": "intersects",
+      "meaning": "True when two evaluated arrays share at least one element.",
+      "input": "two arrays",
+      "output": "boolean",
+      "inputContractId": "mechanic:intersects:input.v1",
+      "outcomeContractId": "mechanic:intersects:outcome.v1",
+      "determinism": "deterministic",
+      "effectClassification": "pure",
+      "sourceProfiles": [
+        "semantic-value-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/intersects.v1"
+      ],
+      "nativeFloor": false,
+      "authoringForm": {
+        "expressedAs": "semantic-transformation-expression.v1",
+        "operation": "intersects",
+        "required": [
+          "left",
+          "right"
+        ],
+        "optional": [],
+        "arguments": {
+          "left": "semantic-expression",
+          "right": "semantic-expression"
+        }
+      }
+    },
+    {
+      "mechanicId": "equals",
+      "meaning": "Strict equality of evaluated operands.",
+      "input": "two values",
+      "output": "boolean",
+      "inputContractId": "mechanic:equals:input.v1",
+      "outcomeContractId": "mechanic:equals:outcome.v1",
+      "determinism": "deterministic",
+      "effectClassification": "pure",
+      "sourceProfiles": [
+        "semantic-value-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/equals.v1"
+      ],
+      "nativeFloor": false,
+      "authoringForm": {
+        "expressedAs": "semantic-transformation-expression.v1",
+        "operation": "equals",
+        "required": [
+          "left",
+          "right"
+        ],
+        "optional": [],
+        "arguments": {
+          "left": "semantic-expression",
+          "right": "semantic-expression"
+        }
+      }
+    },
+    {
+      "mechanicId": "length",
+      "meaning": "Length of the evaluated array or string.",
+      "input": "array or string",
+      "output": "integer",
+      "inputContractId": "mechanic:length:input.v1",
+      "outcomeContractId": "mechanic:length:outcome.v1",
+      "determinism": "deterministic",
+      "effectClassification": "pure",
+      "sourceProfiles": [
+        "semantic-value-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/length.v1"
+      ],
+      "nativeFloor": false,
+      "authoringForm": {
+        "expressedAs": "semantic-transformation-expression.v1",
+        "operation": "length",
+        "required": [
+          "value"
+        ],
+        "optional": [],
+        "arguments": {
+          "value": "semantic-expression"
+        }
+      }
+    },
+    {
+      "mechanicId": "greater-than",
+      "meaning": "Numeric ordering of evaluated operands.",
+      "input": "two values",
+      "output": "boolean",
+      "inputContractId": "mechanic:greater-than:input.v1",
+      "outcomeContractId": "mechanic:greater-than:outcome.v1",
+      "determinism": "deterministic",
+      "effectClassification": "pure",
+      "sourceProfiles": [
+        "semantic-value-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/greater-than.v1"
+      ],
+      "nativeFloor": false,
+      "authoringForm": {
+        "expressedAs": "semantic-transformation-expression.v1",
+        "operation": "greater-than",
+        "required": [
+          "left",
+          "right"
+        ],
+        "optional": [],
+        "arguments": {
+          "left": "semantic-expression",
+          "right": "semantic-expression"
+        }
+      }
+    },
+    {
+      "mechanicId": "if",
+      "meaning": "Evaluate the predicate and return the then or else branch.",
+      "input": "predicate and two branch expressions",
+      "output": "branch value",
+      "inputContractId": "mechanic:if:input.v1",
+      "outcomeContractId": "mechanic:if:outcome.v1",
+      "determinism": "deterministic",
+      "effectClassification": "pure",
+      "sourceProfiles": [
+        "semantic-value-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/if.v1"
+      ],
+      "nativeFloor": false,
+      "authoringForm": {
+        "expressedAs": "semantic-transformation-expression.v1",
+        "operation": "if",
+        "required": [
+          "when",
+          "then",
+          "else"
+        ],
+        "optional": [],
+        "arguments": {
+          "when": "semantic-expression",
+          "then": "semantic-expression",
+          "else": "semantic-expression"
+        },
+        "authoringNote": "Branch selection is by truthiness of 'when'; an empty string, zero, and an empty value are false."
+      }
+    },
+    {
+      "mechanicId": "let",
+      "meaning": "Sequential named bindings followed by a body evaluated in the extended scope.",
+      "input": "binding expressions and body",
+      "output": "body value",
+      "inputContractId": "mechanic:let:input.v1",
+      "outcomeContractId": "mechanic:let:outcome.v1",
+      "determinism": "deterministic",
+      "effectClassification": "pure",
+      "sourceProfiles": [
+        "semantic-value-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/let.v1"
+      ],
+      "nativeFloor": false,
+      "authoringForm": {
+        "expressedAs": "semantic-transformation-expression.v1",
+        "operation": "let",
+        "required": [
+          "bindings",
+          "value"
+        ],
+        "optional": [],
+        "arguments": {
+          "bindings": "expression-map",
+          "value": "semantic-expression"
+        },
+        "authoringNote": "Each binding is evaluated in order and is visible to the bindings that follow it and to 'value'."
+      }
+    },
+    {
+      "mechanicId": "unique",
+      "meaning": "Deduplicate an evaluated array preserving first occurrence.",
+      "input": "array",
+      "output": "deduplicated array",
+      "inputContractId": "mechanic:unique:input.v1",
+      "outcomeContractId": "mechanic:unique:outcome.v1",
+      "determinism": "deterministic",
+      "effectClassification": "pure",
+      "sourceProfiles": [
+        "semantic-value-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/unique.v1"
+      ],
+      "nativeFloor": false,
+      "authoringForm": {
+        "expressedAs": "semantic-transformation-expression.v1",
+        "operation": "unique",
+        "required": [
+          "value"
+        ],
+        "optional": [],
+        "arguments": {
+          "value": "semantic-expression"
+        }
+      }
+    },
+    {
+      "mechanicId": "join",
+      "meaning": "Concatenate evaluated items with a separator.",
+      "input": "array and separator",
+      "output": "string",
+      "inputContractId": "mechanic:join:input.v1",
+      "outcomeContractId": "mechanic:join:outcome.v1",
+      "determinism": "deterministic",
+      "effectClassification": "pure",
+      "sourceProfiles": [
+        "semantic-value-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/join.v1"
+      ],
+      "nativeFloor": false,
+      "authoringForm": {
+        "expressedAs": "semantic-transformation-expression.v1",
+        "operation": "join",
+        "required": [
+          "value"
+        ],
+        "optional": [
+          "separator"
+        ],
+        "arguments": {
+          "value": "semantic-expression",
+          "separator": "literal-text"
+        },
+        "authoringNote": "'separator' defaults to the empty string when omitted."
+      }
+    },
+    {
+      "mechanicId": "format",
+      "meaning": "Substitute evaluated values into a declared template.",
+      "input": "template and value expressions",
+      "output": "string",
+      "inputContractId": "mechanic:format:input.v1",
+      "outcomeContractId": "mechanic:format:outcome.v1",
+      "determinism": "deterministic",
+      "effectClassification": "pure",
+      "sourceProfiles": [
+        "semantic-value-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/format.v1"
+      ],
+      "nativeFloor": false,
+      "authoringForm": {
+        "expressedAs": "semantic-transformation-expression.v1",
+        "operation": "format",
+        "required": [
+          "template",
+          "values"
+        ],
+        "optional": [],
+        "arguments": {
+          "template": "literal-text",
+          "values": "expression-map"
+        }
+      }
+    },
+    {
+      "mechanicId": "trim",
+      "meaning": "Remove leading and trailing Unicode whitespace from an evaluated string without changing interior content.",
+      "input": "string",
+      "output": "trimmed string",
+      "inputContractId": "mechanic:trim:input.v1",
+      "outcomeContractId": "mechanic:trim:outcome.v1",
+      "determinism": "deterministic",
+      "effectClassification": "pure",
+      "sourceProfiles": [
+        "semantic-value-provider.v1"
+      ],
+      "conformanceRefs": [
+        "languages/typescript/runtimes/node/semantic-transformation-evaluator.conformance.test.mjs"
+      ],
+      "nativeFloor": false,
+      "authoringForm": {
+        "expressedAs": "semantic-transformation-expression.v1",
+        "operation": "trim",
+        "required": [
+          "value"
+        ],
+        "optional": [],
+        "arguments": {
+          "value": "semantic-expression"
+        }
+      }
+    },
+    {
+      "mechanicId": "lower-case",
+      "meaning": "Normalize an evaluated string to its locale-independent lower-case form.",
+      "input": "string",
+      "output": "lower-case string",
+      "inputContractId": "mechanic:lower-case:input.v1",
+      "outcomeContractId": "mechanic:lower-case:outcome.v1",
+      "determinism": "deterministic",
+      "effectClassification": "pure",
+      "sourceProfiles": [
+        "semantic-value-provider.v1"
+      ],
+      "conformanceRefs": [
+        "languages/typescript/runtimes/node/semantic-transformation-evaluator.conformance.test.mjs"
+      ],
+      "nativeFloor": false,
+      "authoringForm": {
+        "expressedAs": "semantic-transformation-expression.v1",
+        "operation": "lower-case",
+        "required": [
+          "value"
+        ],
+        "optional": [],
+        "arguments": {
+          "value": "semantic-expression"
+        }
+      }
+    },
+    {
+      "mechanicId": "escape-html",
+      "meaning": "HTML-escape a string for safe embedding.",
+      "input": "string",
+      "output": "escaped string",
+      "inputContractId": "mechanic:escape-html:input.v1",
+      "outcomeContractId": "mechanic:escape-html:outcome.v1",
+      "determinism": "deterministic",
+      "effectClassification": "pure",
+      "sourceProfiles": [
+        "semantic-value-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/escape-html.v1"
+      ],
+      "nativeFloor": false,
+      "authoringForm": {
+        "expressedAs": "semantic-transformation-expression.v1",
+        "operation": "escape-html",
+        "required": [
+          "value"
+        ],
+        "optional": [],
+        "arguments": {
+          "value": "semantic-expression"
+        }
+      }
+    },
+    {
+      "mechanicId": "base64-decode-utf8",
+      "meaning": "Decode base64 text as UTF-8.",
+      "input": "base64 text",
+      "output": "utf8 string",
+      "inputContractId": "mechanic:base64-decode-utf8:input.v1",
+      "outcomeContractId": "mechanic:base64-decode-utf8:outcome.v1",
+      "determinism": "deterministic",
+      "effectClassification": "pure",
+      "sourceProfiles": [
+        "semantic-value-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/base64-decode-utf8.v1"
+      ],
+      "nativeFloor": false,
+      "authoringForm": {
+        "expressedAs": "semantic-transformation-expression.v1",
+        "operation": "base64-decode-utf8",
+        "required": [
+          "value"
+        ],
+        "optional": [],
+        "arguments": {
+          "value": "semantic-expression"
+        }
+      }
+    },
+    {
+      "mechanicId": "json-stringify",
+      "meaning": "Serialize the evaluated value as JSON text.",
+      "input": "value",
+      "output": "JSON text",
+      "inputContractId": "mechanic:json-stringify:input.v1",
+      "outcomeContractId": "mechanic:json-stringify:outcome.v1",
+      "determinism": "deterministic",
+      "effectClassification": "pure",
+      "sourceProfiles": [
+        "semantic-value-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/json-stringify.v1"
+      ],
+      "nativeFloor": false,
+      "authoringForm": {
+        "expressedAs": "semantic-transformation-expression.v1",
+        "operation": "json-stringify",
+        "required": [
+          "value"
+        ],
+        "optional": [],
+        "arguments": {
+          "value": "semantic-expression"
+        }
+      }
+    },
+    {
+      "mechanicId": "parse-json",
+      "meaning": "Parse JSON text into a value.",
+      "input": "JSON text",
+      "output": "value",
+      "inputContractId": "mechanic:parse-json:input.v1",
+      "outcomeContractId": "mechanic:parse-json:outcome.v1",
+      "determinism": "deterministic",
+      "effectClassification": "pure",
+      "sourceProfiles": [
+        "semantic-value-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/parse-json.v1"
+      ],
+      "nativeFloor": false,
+      "authoringForm": {
+        "expressedAs": "semantic-transformation-expression.v1",
+        "operation": "parse-json",
+        "required": [
+          "value"
+        ],
+        "optional": [],
+        "arguments": {
+          "value": "semantic-expression"
+        }
+      }
+    },
+    {
+      "mechanicId": "canonicalize",
+      "meaning": "Recursive sorted-key canonical form of the evaluated value.",
+      "input": "value",
+      "output": "canonical value",
+      "inputContractId": "mechanic:canonicalize:input.v1",
+      "outcomeContractId": "mechanic:canonicalize:outcome.v1",
+      "determinism": "deterministic",
+      "effectClassification": "pure",
+      "sourceProfiles": [
+        "semantic-value-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/canonicalize.v1"
+      ],
+      "nativeFloor": false,
+      "authoringForm": {
+        "expressedAs": "semantic-transformation-expression.v1",
+        "operation": "canonicalize",
+        "required": [
+          "value"
+        ],
+        "optional": [],
+        "arguments": {
+          "value": "semantic-expression"
+        },
+        "authoringNote": "Unary form consistent with the other single-argument mechanics. Observed behaviour applies canonicalisation to the bound value."
+      }
+    },
+    {
+      "mechanicId": "directed-graph-closure",
+      "meaning": "Derive deterministic reachability, traversal, terminal reachability, cycle components, and fixed-point closure for an explicitly identified directed multigraph, rejecting duplicate or unresolved graph identities.",
+      "input": "node identities, directed edge identities and endpoints, root node identities, and terminal node identities",
+      "output": "canonical closure testimony with reachability pairs, traversal order, terminal reachability, cycle components, fixed-point passes, and exact graph findings",
+      "inputContractId": "mechanic:directed-graph-closure:input.v1",
+      "outcomeContractId": "mechanic:directed-graph-closure:outcome.v1",
+      "determinism": "deterministic",
+      "effectClassification": "pure",
+      "sourceProfiles": [
+        "semantic-value-provider.v1"
+      ],
+      "conformanceRefs": [
+        "languages/typescript/runtimes/node/semantic-transformation-evaluator.conformance.test.mjs"
+      ],
+      "nativeFloor": false,
+      "authoringForm": {
+        "expressedAs": "semantic-transformation-expression.v1",
+        "operation": "directed-graph-closure",
+        "required": [
+          "value"
+        ],
+        "optional": [],
+        "arguments": {
+          "value": "semantic-expression"
+        },
+        "authoringNote": "The expression yields nodeIds, edges, rootNodeIds, and terminalNodeIds. Input and output ordering is lexical by stable identity and never inferred from presentation ordinal or source insertion order. Reachability includes the zero-length path from each node to itself."
+      }
+    },
+    {
+      "mechanicId": "sha256",
+      "meaning": "SHA-256 hex digest over the string form of the evaluated value.",
+      "input": "value",
+      "output": "hex digest",
+      "inputContractId": "mechanic:sha256:input.v1",
+      "outcomeContractId": "mechanic:sha256:outcome.v1",
+      "determinism": "deterministic",
+      "effectClassification": "pure",
+      "sourceProfiles": [
+        "semantic-value-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/sha256.v1"
+      ],
+      "nativeFloor": false,
+      "authoringForm": {
+        "expressedAs": "semantic-transformation-expression.v1",
+        "operation": "sha256",
+        "required": [
+          "value"
+        ],
+        "optional": [],
+        "arguments": {
+          "value": "semantic-expression"
+        }
+      }
+    },
+    {
+      "mechanicId": "canonical-json-byte-validation",
+      "meaning": "Admit or refuse declared bytes as canonical JSON text satisfying a declared schema, returning one typed disposition without reinterpreting content.",
+      "input": "exact bytes, declared schema reference, declared schema digest",
+      "output": "typed admission disposition",
+      "inputContractId": "mechanic:canonical-json-byte-validation:input.v1",
+      "outcomeContractId": "mechanic:canonical-json-byte-validation:outcome.v1",
+      "determinism": "deterministic",
+      "effectClassification": "pure",
+      "sourceProfiles": [
+        "semantic-value-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/canonical-json-byte-validation.v1"
+      ],
+      "nativeFloor": false,
+      "authoringForm": {
+        "expressedAs": "semantic-transformation-expression.v1",
+        "operation": "canonical-json-byte-validation",
+        "required": [
+          "bytes",
+          "schemaReference",
+          "schemaDigest"
+        ],
+        "optional": [],
+        "arguments": {
+          "bytes": "semantic-expression",
+          "schemaReference": "literal-text",
+          "schemaDigest": "literal-text"
+        },
+        "authoringNote": "Argument names derive from the admitted input \"exact bytes, declared schema reference, declared schema digest\". No embodiment observes this mechanic; this form is the contract any embodiment must satisfy."
+      }
+    },
+    {
+      "mechanicId": "retained-lineage-authorization",
+      "meaning": "Authorize a read of retained snapshot or receipt bytes against declared lineage references, refusing undeclared or current-pointer-fallback reads.",
+      "input": "declared lineage references and one requested subject digest",
+      "output": "typed authorization disposition",
+      "inputContractId": "mechanic:retained-lineage-authorization:input.v1",
+      "outcomeContractId": "mechanic:retained-lineage-authorization:outcome.v1",
+      "determinism": "deterministic",
+      "effectClassification": "pure",
+      "sourceProfiles": [
+        "semantic-value-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/retained-lineage-authorization.v1"
+      ],
+      "nativeFloor": false,
+      "authoringForm": {
+        "expressedAs": "semantic-transformation-expression.v1",
+        "operation": "retained-lineage-authorization",
+        "required": [
+          "lineageReferences",
+          "subjectDigest"
+        ],
+        "optional": [],
+        "arguments": {
+          "lineageReferences": "semantic-expression",
+          "subjectDigest": "literal-text"
+        },
+        "authoringNote": "Argument names derive from the admitted input \"declared lineage references and one requested subject digest\". No embodiment observes this mechanic; this form is the contract any embodiment must satisfy."
+      }
+    },
+    {
+      "mechanicId": "try-parse-json",
+      "meaning": "Classify JSON text as parsed or not parsed without allowing malformed testimony to escape as a runtime exception.",
+      "input": "JSON text",
+      "output": "typed parse disposition and parsed value when available",
+      "inputContractId": "mechanic:try-parse-json:input.v1",
+      "outcomeContractId": "mechanic:try-parse-json:outcome.v1",
+      "determinism": "deterministic",
+      "effectClassification": "pure",
+      "sourceProfiles": [
+        "semantic-value-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/try-parse-json.v1"
+      ],
+      "nativeFloor": false,
+      "authoringForm": {
+        "expressedAs": "semantic-transformation-expression.v1",
+        "operation": "try-parse-json",
+        "required": [
+          "value"
+        ],
+        "optional": [],
+        "arguments": {
+          "value": "semantic-expression"
+        },
+        "authoringNote": "Returns PARSED with the parsed value or NOT_PARSED with null; provider-specific parser messages never enter semantic testimony."
+      }
+    },
+    {
+      "mechanicId": "canonical-artifact-byte-planning",
+      "meaning": "Derive the canonical content address of exact artifact bytes: SHA-256 digest with the declared digest prefix plus the admitted objects layout shard, independent of process, discovery order, timestamp, machine, user, or path.",
+      "input": "exact artifact bytes and declared address layout",
+      "output": "canonical content address",
+      "inputContractId": "mechanic:canonical-artifact-byte-planning:input.v1",
+      "outcomeContractId": "mechanic:canonical-artifact-byte-planning:outcome.v1",
+      "determinism": "deterministic",
+      "effectClassification": "pure",
+      "sourceProfiles": [
+        "semantic-value-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/canonical-artifact-byte-planning.v1"
+      ],
+      "nativeFloor": false,
+      "authoringForm": {
+        "expressedAs": "semantic-transformation-expression.v1",
+        "operation": "canonical-artifact-byte-planning",
+        "required": [
+          "artifactBytes",
+          "addressLayout"
+        ],
+        "optional": [],
+        "arguments": {
+          "artifactBytes": "semantic-expression",
+          "addressLayout": "semantic-expression"
+        },
+        "authoringNote": "Argument names derive from the admitted input \"exact artifact bytes and declared address layout\". No embodiment observes this mechanic; this form is the contract any embodiment must satisfy."
+      }
+    }
+  ],
+  "digestAlgorithm": "sha256 of canonical recursive-key-order JSON excluding authorityDigest",
+  "authorityDigest": "sha256:533b856ded71d2e6334dd2f4911b1ec5edb265c4cdc3e79620584fe4cdca1877"
+}

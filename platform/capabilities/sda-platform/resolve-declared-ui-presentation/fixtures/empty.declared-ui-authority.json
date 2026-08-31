@@ -1,0 +1,15 @@
+{
+  "authorityType": "declared-ui-authority.v1",
+  "authorityId": "fixture.empty-ui",
+  "authorityDigest": "sha256:a8a3822f0e53f495da6cb0d9eda2b5e226093ece4fa9a0ad98f91974143ba833",
+  "promisedExperiences": [
+    {
+      "experienceRef": "experience.no-observable-presentation",
+      "presentationRequirement": "NO_OBSERVABLE_PRESENTATION"
+    }
+  ],
+  "elements": [],
+  "relationships": [],
+  "adaptationIntents": [],
+  "presentationProfileRefs": []
+}

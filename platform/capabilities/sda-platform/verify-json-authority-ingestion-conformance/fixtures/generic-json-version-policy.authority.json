@@ -1,0 +1,17 @@
+{
+  "policyType": "generic-json-version-policy.v1",
+  "lifecycle": "PROPOSED",
+  "documentTypePointer": "/documentType",
+  "supportedVersions": [
+    {
+      "documentType": "generic-json-authority.v1",
+      "declaredVersion": "1.0.0",
+      "schemaRef": "schema:generic-json-authority.v1"
+    }
+  ],
+  "unsupportedDisposition": "OPEN",
+  "diagnosticCode": "JSON_VERSION_UNSUPPORTED",
+  "admissionClaims": {
+    "platformAdmission": "NOT_OBSERVABLE"
+  }
+}

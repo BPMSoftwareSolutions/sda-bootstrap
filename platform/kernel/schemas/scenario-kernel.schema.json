@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/scenario-kernel.v1.schema.json",
+  "title": "Scenario Kernel Specification",
+  "description": "Root language-neutral specification manifest for the Scenario Kernel contract family.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["kernelSpecification", "objects", "executionLaws", "executionVector"],
+  "properties": {
+    "kernelSpecification": {
+      "const": "scenario-kernel.v1"
+    },
+    "executionVector": {
+      "const": "scenario-kernel-execution-vector.v1"
+    },
+    "objects": {
+      "type": "array",
+      "minItems": 6,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": [
+          "capability",
+          "scenario",
+          "scenario-input",
+          "scenario-event",
+          "scenario-outcome",
+          "scenario-transition",
+          "scenario-execution",
+          "language-binding"
+        ]
+      }
+    },
+    "executionLaws": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scenarioComposition", "outcomeMeaning", "transitionProgress", "bindingAuthority"],
+      "properties": {
+        "scenarioComposition": {
+          "const": "input+event+outcome"
+        },
+        "outcomeMeaning": {
+          "const": "experience-realized-through-observable-state",
+          "description": "Outcome denotes the promised resulting reality. Outcome data represents observable state that can establish whether that experience became true."
+        },
+        "transitionProgress": {
+          "type": "array",
+          "minItems": 2,
+          "uniqueItems": true,
+          "contains": { "const": "narrowing" },
+          "items": {
+            "type": "string",
+            "enum": ["narrowing", "termination"]
+          }
+        },
+        "bindingAuthority": {
+          "const": "required-unless-direct-match",
+          "description": "A scenario-transition's bindingAuthorityId is optional only when its from.contractId and to.contractId resolve to the identical contract (a direct pass-through). Any transition that projects, transforms, or reshapes data across distinct contracts must supply a bindingAuthorityId resolving to an admitted binding authority. Not structurally enforceable in portable JSON Schema — requires cross-document contract-identity resolution, which draft 2020-12 has no cross-property equality keyword for. Enforced at the semantic-authority/conformance layer; see kernel/semantic-authority/transitions/binding-authority.semantic-authority.json."
+        }
+      }
+    }
+  }
+}

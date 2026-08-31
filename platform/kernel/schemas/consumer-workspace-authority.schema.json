@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/consumer-workspace-authority.v1.schema.json",
+  "title": "Consumer Workspace Authority",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["workspaceType", "consumerId", "kernel", "governance", "conformanceQuery", "telemetryAuthority", "platformCapabilityCatalog", "projectionTargets", "capabilities"],
+  "properties": {
+    "workspaceType": { "const": "consumer-workspace-authority.v1" },
+    "consumerId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "kernel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["specificationId", "version", "executionVector"],
+      "properties": {
+        "specificationId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+        "version": { "$ref": "semantic-primitives.schema.json#/$defs/semanticVersion" },
+        "executionVector": { "type": "string", "minLength": 1 }
+      }
+    },
+    "governance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authority", "conformancePolicy"],
+      "properties": {
+        "authority": { "type": "string", "minLength": 1 },
+        "conformancePolicy": { "const": "all-closures-must-conform" }
+      }
+    },
+    "conformanceQuery": { "type": "string", "minLength": 1 },
+    "telemetryAuthority": { "type": "string", "minLength": 1 },
+    "platformCapabilityCatalog": { "type": "string", "minLength": 1 },
+    "queryCatalog": { "type": "string", "minLength": 1 },
+    "projectionTargets": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "enum": ["node", "csharp", "python"] }
+    },
+    "capabilities": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["featureId", "feature", "capability", "semanticGraph", "executionAuthorities", "projectionAuthorities", "interfaces", "fixtures"],
+        "properties": {
+          "featureId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "feature": { "type": "string", "minLength": 1 },
+          "capability": { "type": "string", "minLength": 1 },
+          "semanticGraph": { "type": "string", "minLength": 1 },
+          "executionAuthorities": { "type": "string", "minLength": 1 },
+          "projectionAuthorities": { "type": "string", "minLength": 1 },
+          "interfaces": { "type": "string", "minLength": 1 },
+          "fixtures": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  }
+}

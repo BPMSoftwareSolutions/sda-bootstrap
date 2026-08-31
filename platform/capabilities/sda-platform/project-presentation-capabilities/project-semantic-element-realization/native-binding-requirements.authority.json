@@ -1,0 +1,107 @@
+{
+  "authorityType": "semantic-element-native-binding-requirements.v1",
+  "capabilityId": "project-semantic-element-realization",
+  "derivation": {
+    "kind": "FROZEN_ORACLE_OBSERVATION",
+    "oracleManifestRef": "../legacy-oracles.v1.json",
+    "semanticInferenceFromPhysicalStructure": false
+  },
+  "semanticKinds": [
+    "INFORMATION",
+    "ACTION",
+    "INPUT",
+    "NAVIGATION",
+    "FEEDBACK",
+    "REGION"
+  ],
+  "targetProfiles": {
+    "browser-dom-web": {
+      "language": "typescript",
+      "constructionApi": "document.createElement",
+      "nativeRoleBySemanticKind": {
+        "INFORMATION": "p",
+        "ACTION": "button",
+        "INPUT": "input",
+        "NAVIGATION": "a",
+        "FEEDBACK": "output",
+        "REGION": "section"
+      },
+      "contentBinding": "textContent",
+      "eventBindingByTrigger": {
+        "ACTIVATE": "click",
+        "CHANGE": "change",
+        "COMMIT": "submit",
+        "NAVIGATE": "click",
+        "DISMISS": "click"
+      }
+    },
+    "react-web": {
+      "language": "typescript",
+      "constructionApi": "React.createElement",
+      "nativeRoleBySemanticKind": {
+        "INFORMATION": "p",
+        "ACTION": "button",
+        "INPUT": "input",
+        "NAVIGATION": "a",
+        "FEEDBACK": "output",
+        "REGION": "section"
+      },
+      "contentBinding": "child",
+      "eventBindingByTrigger": {
+        "ACTIVATE": "onClick",
+        "CHANGE": "onChange",
+        "COMMIT": "onSubmit",
+        "NAVIGATE": "onClick",
+        "DISMISS": "onClick"
+      }
+    },
+    "wpf": {
+      "language": "csharp",
+      "constructionApi": "System.Windows.Controls",
+      "nativeRoleBySemanticKind": {
+        "INFORMATION": "TextBlock",
+        "ACTION": "Button",
+        "INPUT": "TextBox",
+        "NAVIGATION": "Button",
+        "FEEDBACK": "TextBlock",
+        "REGION": "Border<TextBlock>"
+      },
+      "contentBindingByNativeRole": {
+        "Button": "Content",
+        "TextBox": "Text",
+        "TextBlock": "Text",
+        "Border<TextBlock>": "Child.Text"
+      },
+      "eventBindingByTrigger": {
+        "ACTIVATE": "Button.Click",
+        "CHANGE": "TextBox.TextChanged",
+        "NAVIGATE": "Button.Click",
+        "DISMISS": "Button.Click"
+      }
+    },
+    "avalonia": {
+      "language": "csharp",
+      "constructionApi": "Avalonia.Controls",
+      "nativeRoleBySemanticKind": {
+        "INFORMATION": "TextBlock",
+        "ACTION": "Button",
+        "INPUT": "TextBox",
+        "NAVIGATION": "Button",
+        "FEEDBACK": "TextBlock",
+        "REGION": "Border<TextBlock>"
+      },
+      "contentBindingByNativeRole": {
+        "Button": "Content",
+        "TextBox": "Text",
+        "TextBlock": "Text",
+        "Border<TextBlock>": "Child.Text"
+      },
+      "eventBindingByTrigger": {
+        "ACTIVATE": "Button.Click",
+        "CHANGE": "TextBox.TextChanged",
+        "NAVIGATE": "Button.Click",
+        "DISMISS": "Button.Click"
+      }
+    }
+  }
+}

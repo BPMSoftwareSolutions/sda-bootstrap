@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/gherkin/gherkin-semantic-ingestion-conformance.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contractId", "compilerDigest", "grammarDigest", "profileDigest", "fixtureSetDigest", "partitions", "findings", "disposition", "receiptDigest"],
+  "properties": {
+    "contractId": {"const": "gherkin-semantic-ingestion-conformance.v1"},
+    "compilerDigest": {"$ref": "#/$defs/digest"},
+    "grammarDigest": {"$ref": "#/$defs/digest"},
+    "profileDigest": {"$ref": "#/$defs/digest"},
+    "fixtureSetDigest": {"$ref": "#/$defs/digest"},
+    "partitions": {
+      "type": "array",
+      "minItems": 12,
+      "maxItems": 12,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["partitionId", "disposition", "evidenceDigests"],
+        "properties": {
+          "partitionId": {"$ref": "#/$defs/partitionId"},
+          "disposition": {"enum": ["SATISFIED", "NOT_SATISFIED", "NOT_OBSERVABLE"]},
+          "evidenceDigests": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/digest"}}
+        }
+      },
+      "allOf": [
+        {"contains": {"type": "object", "properties": {"partitionId": {"const": "EXACT_BYTES"}}, "required": ["partitionId"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "properties": {"partitionId": {"const": "FEATURE_IDENTITY"}}, "required": ["partitionId"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "properties": {"partitionId": {"const": "SCENARIO_IDENTITY"}}, "required": ["partitionId"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "properties": {"partitionId": {"const": "ORDERED_STEPS"}}, "required": ["partitionId"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "properties": {"partitionId": {"const": "STEP_ARGUMENTS"}}, "required": ["partitionId"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "properties": {"partitionId": {"const": "COMMENTS_AND_NARRATIVE"}}, "required": ["partitionId"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "properties": {"partitionId": {"const": "DIALECT_AND_ADVANCED_CONSTRUCTS"}}, "required": ["partitionId"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "properties": {"partitionId": {"const": "CONNECTOR_REFERENCES"}}, "required": ["partitionId"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "properties": {"partitionId": {"const": "COMPILER_IDENTITIES"}}, "required": ["partitionId"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "properties": {"partitionId": {"const": "AST_CASE_COMPILATION_DIGESTS"}}, "required": ["partitionId"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "properties": {"partitionId": {"const": "TYPED_DIAGNOSTICS"}}, "required": ["partitionId"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "properties": {"partitionId": {"const": "REORDERED_REPRODUCTION"}}, "required": ["partitionId"]}, "minContains": 1, "maxContains": 1}
+      ]
+    },
+    "findings": {"type": "array", "items": {"$ref": "#/$defs/finding"}},
+    "disposition": {"enum": ["GHERKIN_SEMANTIC_INGESTION_CONFORMANT", "GHERKIN_SEMANTIC_INGESTION_OPEN", "GHERKIN_SEMANTIC_INGESTION_REJECTED"]},
+    "receiptDigest": {"$ref": "#/$defs/digest"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"disposition": {"const": "GHERKIN_SEMANTIC_INGESTION_CONFORMANT"}}, "required": ["disposition"]},
+      "then": {
+        "properties": {
+          "partitions": {
+            "type": "array",
+            "items": {"type": "object", "properties": {"disposition": {"const": "SATISFIED"}}}
+          },
+          "findings": {"type": "array", "maxItems": 0}
+        }
+      }
+    },
+    {
+      "if": {"properties": {"disposition": {"const": "GHERKIN_SEMANTIC_INGESTION_OPEN"}}, "required": ["disposition"]},
+      "then": {
+        "properties": {
+          "partitions": {
+            "type": "array",
+            "allOf": [
+              {"contains": {"type": "object", "properties": {"disposition": {"const": "NOT_OBSERVABLE"}}, "required": ["disposition"]}, "minContains": 1},
+              {"contains": {"type": "object", "properties": {"disposition": {"const": "NOT_SATISFIED"}}, "required": ["disposition"]}, "minContains": 0, "maxContains": 0}
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {"properties": {"disposition": {"const": "GHERKIN_SEMANTIC_INGESTION_REJECTED"}}, "required": ["disposition"]},
+      "then": {
+        "properties": {
+          "partitions": {
+            "type": "array",
+            "contains": {"type": "object", "properties": {"disposition": {"const": "NOT_SATISFIED"}}, "required": ["disposition"]},
+            "minContains": 1
+          },
+          "findings": {"type": "array", "minItems": 1}
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "digest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "partitionId": {
+      "enum": [
+        "EXACT_BYTES",
+        "FEATURE_IDENTITY",
+        "SCENARIO_IDENTITY",
+        "ORDERED_STEPS",
+        "STEP_ARGUMENTS",
+        "COMMENTS_AND_NARRATIVE",
+        "DIALECT_AND_ADVANCED_CONSTRUCTS",
+        "CONNECTOR_REFERENCES",
+        "COMPILER_IDENTITIES",
+        "AST_CASE_COMPILATION_DIGESTS",
+        "TYPED_DIAGNOSTICS",
+        "REORDERED_REPRODUCTION"
+      ]
+    },
+    "finding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "subjectRef", "message"],
+      "properties": {
+        "code": {"type": "string", "minLength": 1},
+        "subjectRef": {"type": "string", "minLength": 1},
+        "message": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/sda-platform/os-environment-credential-binding-evidence.v1.schema.json",
+  "title": "OS environment credential binding evidence v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contractId", "disposition", "opaqueBindingId", "referenceName", "invocationIdentity", "requestingCapabilityId", "endpointAuthorityDigest", "resolutionScope", "credentialInjectionRuleId", "nonDisclosureVerified", "effectLineage"],
+  "properties": {
+    "contractId": { "const": "os-environment-credential-binding-evidence.v1" },
+    "disposition": { "enum": ["BOUND", "CREDENTIAL_NOT_AVAILABLE", "UNAUTHORIZED_REFERENCE", "IDENTITY_MISMATCH"] },
+    "opaqueBindingId": { "type": "string", "minLength": 1 },
+    "referenceName": { "type": "string", "pattern": "^[A-Za-z0-9_-]+$" },
+    "invocationIdentity": { "type": "string", "minLength": 1 },
+    "requestingCapabilityId": { "type": "string", "minLength": 1 },
+    "endpointAuthorityDigest": { "type": ["string", "null"], "pattern": "^(sha256:[a-f0-9]{64}|null)$" },
+    "resolutionScope": { "enum": ["PROCESS_ENVIRONMENT", "OS_USER_SCOPE", "OS_MACHINE_SCOPE", "NONE"] },
+    "credentialInjectionRuleId": { "type": "string", "minLength": 1 },
+    "nonDisclosureVerified": { "const": true },
+    "effectLineage": { "type": "array", "items": { "type": "string" } }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "authorityType": "execution-authorities.v1",
+  "executionAuthorities": [
+    {
+      "id": "semantic-element-realization-projection.v1",
+      "owningScenarioId": "project-semantic-element-realization",
+      "operations": [
+        {
+          "kind": "invoke-port",
+          "portId": "project-semantic-element-realization"
+        }
+      ]
+    }
+  ]
+}

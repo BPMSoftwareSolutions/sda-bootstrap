@@ -1,0 +1,74 @@
+{
+  "interfaceAuthorityType": "consumer-interface-authority.v1",
+  "contractValidatorCapabilityId": "sda-schema-contract-admission.v1",
+  "contractCatalog": "contracts/contract-catalog.json",
+  "requiredPlatformObligations": ["dynamic-semantic-execution", "domain-contract-admission"],
+  "interfaces": [
+    {
+      "interfaceId": "semantic-corpus-artifact-repository-cli",
+      "kind": "cli",
+      "rootScenarioId": "publish-immutable-semantic-corpus-artifact",
+      "platformCapabilityId": "sda-json-cli.v1",
+      "projectionTargets": ["node"]
+    }
+  ],
+  "portBindings": [
+    {
+      "portId": "publish-immutable-semantic-corpus-artifact-port",
+      "platformCapabilityId": "sda-authority-transformation-port.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "publish-immutable-semantic-corpus-artifact.v1"
+      }
+    },
+    {
+      "portId": "reject-semantic-corpus-artifact-publication-conflict-port",
+      "platformCapabilityId": "sda-authority-transformation-port.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "reject-semantic-corpus-artifact-publication-conflict.v1"
+      }
+    },
+    {
+      "portId": "read-immutable-semantic-corpus-artifact-port",
+      "platformCapabilityId": "sda-authority-transformation-port.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "read-immutable-semantic-corpus-artifact.v1"
+      }
+    },
+    {
+      "portId": "retain-referenced-semantic-corpus-snapshot-port",
+      "platformCapabilityId": "sda-authority-transformation-port.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "retain-referenced-semantic-corpus-snapshot.v1"
+      }
+    },
+    {
+      "portId": "update-current-semantic-corpus-pointer-port",
+      "platformCapabilityId": "sda-authority-transformation-port.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "update-current-semantic-corpus-pointer.v1"
+      }
+    },
+    {
+      "portId": "reject-open-semantic-corpus-pointer-update-port",
+      "platformCapabilityId": "sda-authority-transformation-port.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "reject-open-semantic-corpus-pointer-update.v1"
+      }
+    },
+    {
+      "portId": "reproduce-semantic-corpus-artifact-address-port",
+      "platformCapabilityId": "sda-authority-transformation-port.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "reproduce-semantic-corpus-artifact-address.v1"
+      }
+    }
+  ],
+  "projectionBindings": []
+}

@@ -1,0 +1,15 @@
+{
+  "transitionId": "execute-migration-to-project-registry",
+  "from": {
+    "scenarioId": "execute-governed-tooling-migration-operation",
+    "outcomeId": "governed-tooling-migration-operation-evidence",
+    "contractId": "governed-tooling-migration-operation-evidence.v1"
+  },
+  "to": {
+    "scenarioId": "project-language-mechanic-registry",
+    "inputId": "language-mechanic-registry-projection-request",
+    "contractId": "language-mechanic-registry-projection-request.v1"
+  },
+  "semanticProgress": "monotonic",
+  "bindingAuthorityId": "project-execute-migration-to-project-registry"
+}

@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/execution-edge.v1.schema.json",
+  "title": "SDA execution edge v1",
+  "description": "A declared, typed movement of an admitted outcome into a downstream input or parent return.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["edgeId", "kind", "from", "to", "edgeContractId", "authorityDigest", "sourcePointers"],
+  "properties": {
+    "edgeId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "kind": { "type": "string", "enum": ["sequence", "selection", "broadcast", "join", "recurrence", "return", "failure", "cancellation", "testimony"] },
+    "from": { "$ref": "#/$defs/endpoint" },
+    "to": { "$ref": "#/$defs/endpoint" },
+    "selectsVariant": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$" },
+    "bindingAuthorityId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "edgeContractId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "groupId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "joinSlotId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "recurrenceAuthorityId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "authorityDigest": { "$ref": "semantic-primitives.schema.json#/$defs/digest" },
+    "sourcePointers": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "kind": { "const": "selection" } }, "required": ["kind"] },
+      "then": { "required": ["selectsVariant", "groupId"] }
+    },
+    {
+      "if": { "properties": { "kind": { "const": "broadcast" } }, "required": ["kind"] },
+      "then": { "required": ["groupId"] }
+    },
+    {
+      "if": { "properties": { "kind": { "const": "join" } }, "required": ["kind"] },
+      "then": { "required": ["groupId", "joinSlotId"] }
+    },
+    {
+      "if": { "properties": { "kind": { "const": "recurrence" } }, "required": ["kind"] },
+      "then": { "required": ["selectsVariant", "groupId", "recurrenceAuthorityId"] }
+    }
+  ],
+  "$defs": {
+    "endpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["cellId", "portId"],
+      "properties": {
+        "cellId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+        "portId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" }
+      }
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/gherkin/gherkin-compiler-conformance-request.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contractId", "compilerAuthority", "grammarAuthority", "profileAuthority", "fixtureCorpus", "requiredPartitions", "reproductionRuns"],
+  "properties": {
+    "contractId": {"const": "gherkin-compiler-conformance-request.v1"},
+    "compilerAuthority": {"$ref": "#/$defs/authority"},
+    "grammarAuthority": {"$ref": "#/$defs/authority"},
+    "profileAuthority": {"$ref": "#/$defs/authority"},
+    "fixtureCorpus": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fixtureSetRef", "fixtureSetDigest", "fixtureDigests"],
+      "properties": {
+        "fixtureSetRef": {"type": "string", "minLength": 1},
+        "fixtureSetDigest": {"$ref": "#/$defs/digest"},
+        "fixtureDigests": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/digest"}}
+      }
+    },
+    "requiredPartitions": {
+      "type": "array",
+      "minItems": 12,
+      "uniqueItems": true,
+      "items": {"enum": ["EXACT_BYTES", "FEATURE_IDENTITY", "SCENARIO_IDENTITY", "ORDERED_STEPS", "STEP_ARGUMENTS", "COMMENTS_AND_NARRATIVE", "DIALECT_AND_ADVANCED_CONSTRUCTS", "CONNECTOR_REFERENCES", "COMPILER_IDENTITIES", "AST_CASE_COMPILATION_DIGESTS", "TYPED_DIAGNOSTICS", "REORDERED_REPRODUCTION"]}
+    },
+    "reproductionRuns": {"type": "integer", "minimum": 2}
+  },
+  "$defs": {
+    "digest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authorityRef", "authorityId", "authorityDigest"],
+      "properties": {
+        "authorityRef": {"type": "string", "minLength": 1},
+        "authorityId": {"type": "string", "minLength": 1},
+        "authorityDigest": {"$ref": "#/$defs/digest"}
+      }
+    }
+  }
+}

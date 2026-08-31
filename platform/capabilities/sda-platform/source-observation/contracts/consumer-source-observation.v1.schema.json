@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/platform/source-observation/consumer-source-observation.v1.schema.json",
+  "title": "Consumer source observation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["observationType", "sourceType", "sourceRole", "fileName", "mediaType", "byteLength", "contentDigest", "text"],
+  "properties": {
+    "observationType": { "const": "consumer-source-observation.v1" },
+    "sourceType": { "const": "ui-file-source-envelope.v1" },
+    "sourceRole": { "type": "string", "minLength": 1 },
+    "fileName": { "type": "string", "minLength": 1 },
+    "mediaType": { "type": "string", "minLength": 3, "pattern": "^[^/\\s]+/[^\\s]+$" },
+    "byteLength": { "type": "integer", "minimum": 0 },
+    "contentDigest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "text": { "type": "string" }
+  }
+}

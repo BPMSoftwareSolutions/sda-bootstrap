@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/tooling/canonical-consumer-scenario-graph-evidence.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["evidenceType", "capability", "scenarios", "transitions", "sourceRefs"],
+  "properties": {
+    "evidenceType": { "const": "canonical-consumer-scenario-graph-evidence.v1" },
+    "capability": { "type": "object" },
+    "scenarios": { "type": "array", "minItems": 1 },
+    "transitions": { "type": "array" },
+    "sourceRefs": { "type": "array", "minItems": 1 }
+  }
+}

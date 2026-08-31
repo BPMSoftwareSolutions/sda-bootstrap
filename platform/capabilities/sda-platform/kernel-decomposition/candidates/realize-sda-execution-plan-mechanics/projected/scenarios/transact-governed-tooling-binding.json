@@ -1,0 +1,37 @@
+{
+  "scenarioId": "transact-governed-tooling-binding",
+  "input": {
+    "inputId": "governed-tooling-binding-transaction-request",
+    "contract": {
+      "contractId": "governed-tooling-binding-transaction-request.v1"
+    }
+  },
+  "event": {
+    "eventId": "transact-governed-tooling-binding",
+    "executionAuthorityId": "transact-governed-tooling-binding.v1"
+  },
+  "outcome": {
+    "outcomeId": "governed-tooling-binding-transaction-evidence",
+    "contract": {
+      "contractId": "governed-tooling-binding-transaction-evidence.v1"
+    },
+    "experience": {
+      "statement": "one retained-or-restored transaction disposition is established"
+    }
+  },
+  "gherkin": {
+    "given": {
+      "semanticRef": "transact-governed-tooling-binding.given",
+      "text": "an admitted provider-binding change request"
+    },
+    "when": {
+      "semanticRef": "transact-governed-tooling-binding.when",
+      "text": "the governed binding transaction is executed"
+    },
+    "then": {
+      "semanticRef": "transact-governed-tooling-binding.then",
+      "text": "one retained-or-restored transaction disposition is established"
+    }
+  },
+  "name": "Transact a governed tooling binding"
+}

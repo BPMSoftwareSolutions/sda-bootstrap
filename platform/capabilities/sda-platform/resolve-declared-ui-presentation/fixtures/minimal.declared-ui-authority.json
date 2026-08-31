@@ -1,0 +1,105 @@
+{
+  "authorityType": "declared-ui-authority.v1",
+  "authorityId": "fixture.minimal-ui",
+  "authorityDigest": "sha256:c680b39c2ca2197b053b1a0c20adf6228c739ae50e0883decdffe1c73298341a",
+  "promisedExperiences": [
+    {
+      "experienceRef": "experience.observable-result",
+      "presentationRequirement": "OBSERVABLE_OR_OPERABLE"
+    }
+  ],
+  "elements": [
+    {
+      "elementId": "information.result",
+      "semanticKind": "INFORMATION",
+      "semanticRole": "PRIMARY",
+      "content": { "readModelRef": "read-model.result" },
+      "informationRefs": ["information.result"],
+      "interactionRefs": [],
+      "feedbackRefs": [],
+      "stateRefs": ["state.result"],
+      "eventRefs": [],
+      "accessibilityObligations": [
+        { "obligationRef": "accessibility.result-name", "kind": "NAME" }
+      ],
+      "lineage": [
+        {
+          "originType": "PROMISED_EXPERIENCE",
+          "originRef": "experience.observable-result",
+          "authorityDigest": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+        },
+        {
+          "originType": "INFORMATION",
+          "originRef": "information.result",
+          "authorityDigest": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+        }
+      ]
+    },
+    {
+      "elementId": "action.resolve",
+      "semanticKind": "ACTION",
+      "semanticRole": "PRIMARY",
+      "content": { "literal": "Resolve" },
+      "informationRefs": [],
+      "interactionRefs": ["interaction.resolve"],
+      "feedbackRefs": [],
+      "stateRefs": [],
+      "eventRefs": ["event.resolve"],
+      "accessibilityObligations": [
+        { "obligationRef": "accessibility.resolve-operable", "kind": "OPERABLE_ACTION" }
+      ],
+      "lineage": [
+        {
+          "originType": "INTERACTION",
+          "originRef": "interaction.resolve",
+          "authorityDigest": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+        }
+      ]
+    },
+    {
+      "elementId": "feedback.resolution-status",
+      "semanticKind": "FEEDBACK",
+      "semanticRole": "STATUS",
+      "content": { "readModelRef": "read-model.resolution-status" },
+      "informationRefs": [],
+      "interactionRefs": [],
+      "feedbackRefs": ["feedback.resolution-status"],
+      "stateRefs": ["state.resolution-status"],
+      "eventRefs": [],
+      "accessibilityObligations": [
+        { "obligationRef": "accessibility.status-live", "kind": "LIVE_FEEDBACK" }
+      ],
+      "lineage": [
+        {
+          "originType": "FEEDBACK",
+          "originRef": "feedback.resolution-status",
+          "authorityDigest": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+        }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipId": "relationship.action-before-feedback",
+      "kind": "FOLLOWS",
+      "sourceElementId": "action.resolve",
+      "targetElementId": "feedback.resolution-status",
+      "lineage": [
+        {
+          "originType": "RELATIONSHIP",
+          "originRef": "relationship.action-before-feedback",
+          "authorityDigest": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+        }
+      ]
+    }
+  ],
+  "adaptationIntents": [
+    {
+      "adaptationId": "adaptation.compact-wide",
+      "contextRef": "context.available-space",
+      "allowedChangeKinds": ["ORDER", "GROUPING"],
+      "invariantRefs": ["experience.observable-result"]
+    }
+  ],
+  "presentationProfileRefs": []
+}

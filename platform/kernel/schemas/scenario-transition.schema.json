@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/scenario-transition.v1.schema.json",
+  "title": "Scenario Transition",
+  "description": "Canonical governed transition between one scenario's outcome and another scenario's input, addressed both semantically and by contract. Kernel law bindingAuthority (required-unless-direct-match) governs bindingAuthorityId; see kernel/semantic-authority/transitions/binding-authority.semantic-authority.json.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["transitionId", "from", "to", "semanticProgress"],
+  "properties": {
+    "transitionId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "from": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scenarioId", "outcomeId", "contractId"],
+      "properties": {
+        "scenarioId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+        "outcomeId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+        "contractId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" }
+      }
+    },
+    "to": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scenarioId", "inputId", "contractId"],
+      "properties": {
+        "scenarioId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+        "inputId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+        "contractId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" }
+      }
+    },
+    "bindingAuthorityId": {
+      "$ref": "semantic-primitives.schema.json#/$defs/semanticId",
+      "description": "Optional only when from.contractId and to.contractId resolve to the identical contract (a direct pass-through transition). Mandatory whenever the transition projects, transforms, or reshapes data across distinct contracts, and must then resolve to an admitted binding authority. Not enforceable in structural JSON Schema alone (requires cross-document contract-identity resolution) — see kernel/semantic-authority/transitions/binding-authority.semantic-authority.json for the full rule and its conformance-layer enforcement."
+    },
+    "semanticProgress": {
+      "type": "string",
+      "enum": ["narrowing", "termination"]
+    }
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/language-binding.v1.schema.json",
+  "title": "Scenario Kernel Language Binding",
+  "description": "Manifest proving that one language implementation claims conformance to an admitted Scenario Kernel specification.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "bindingType",
+    "kernelSpecification",
+    "language",
+    "implementationId",
+    "implements",
+    "conformanceCorpus"
+  ],
+  "properties": {
+    "bindingType": {
+      "const": "scenario-kernel-language-binding.v1"
+    },
+    "kernelSpecification": {
+      "type": "string",
+      "minLength": 1
+    },
+    "language": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$",
+      "description": "Open target identity. Admission is resolved through language-target-registration.v1 rather than a closed schema enum."
+    },
+    "implementationId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": ["DECLARED", "IMPLEMENTING"],
+      "description": "Declared lifecycle INTENT only — a human/team decision about whether work on this language has started, nothing more. DECLARED bindings are intent only and are not yet active conformance obligations. Deliberately excludes CONFORMING/ADMITTED: whether an implementation has actually reached those states is a PROVEN fact computed by the conformance harness, not something hand-set here — see artifacts/conformance/<language>.conformance-result.json's admissionDisposition for the authoritative, computed answer. A prior version of this schema allowed CONFORMING/ADMITTED here and a binding manifest drifted out of sync with computed reality as a result; narrowed to prevent that recurring."
+    },
+    "implementationVersion": {
+      "type": "string",
+      "minLength": 1
+    },
+    "implementationDigest": { "$ref": "semantic-primitives.schema.json#/$defs/digest" },
+    "implements": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": [
+          "capability.v1",
+          "scenario.v1",
+          "scenario-input.v1",
+          "scenario-event.v1",
+          "scenario-outcome.v1",
+          "scenario-transition.v1",
+          "scenario-execution.v1"
+        ]
+      }
+    },
+    "conformanceCorpus": {
+      "type": "string",
+      "minLength": 1
+    },
+    "projectReferences": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "contracts": { "type": "string", "minLength": 1 },
+        "kernel": { "type": "string", "minLength": 1 },
+        "execution": { "type": "string", "minLength": 1 },
+        "adapters": { "type": "string", "minLength": 1 },
+        "generated": { "type": "string", "minLength": 1 },
+        "conformanceTests": { "type": "string", "minLength": 1 }
+      }
+    },
+    "created": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    }
+  }
+}

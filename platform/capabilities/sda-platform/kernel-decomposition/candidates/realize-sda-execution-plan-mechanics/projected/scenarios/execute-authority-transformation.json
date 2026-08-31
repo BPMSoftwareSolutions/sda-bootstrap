@@ -1,0 +1,37 @@
+{
+  "scenarioId": "execute-authority-transformation",
+  "input": {
+    "inputId": "authority-transformation-request",
+    "contract": {
+      "contractId": "authority-transformation-request.v1"
+    }
+  },
+  "event": {
+    "eventId": "execute-authority-transformation",
+    "executionAuthorityId": "execute-authority-transformation.v1"
+  },
+  "outcome": {
+    "outcomeId": "authority-transformation-result",
+    "contract": {
+      "contractId": "authority-transformation-result.v1"
+    },
+    "experience": {
+      "statement": "one transformed value satisfying the declared outcome contract is available"
+    }
+  },
+  "gherkin": {
+    "given": {
+      "semanticRef": "execute-authority-transformation.given",
+      "text": "admitted input and semantic transformation authority"
+    },
+    "when": {
+      "semanticRef": "execute-authority-transformation.when",
+      "text": "the declared transformation is executed"
+    },
+    "then": {
+      "semanticRef": "execute-authority-transformation.then",
+      "text": "one transformed value satisfying the declared outcome contract is available"
+    }
+  },
+  "name": "Execute an authority-driven transformation"
+}

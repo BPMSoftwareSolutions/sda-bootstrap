@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/language-execution-graph-conformance.v1.schema.json",
+  "title": "Language execution graph v1 conformance authority",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["conformanceType", "fixtureRef", "canonicalGraphDigest", "expectedObservedPathDigest", "targets"],
+  "properties": {
+    "conformanceType": { "const": "language-execution-graph-conformance.v1" },
+    "fixtureRef": { "type": "string", "minLength": 1 },
+    "canonicalGraphDigest": { "$ref": "semantic-primitives.schema.json#/$defs/digest" },
+    "expectedObservedPathDigest": { "$ref": "semantic-primitives.schema.json#/$defs/digest" },
+    "targets": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["targetId", "status", "schedulerRef", "testRef"],
+        "properties": {
+          "targetId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "status": { "type": "string", "enum": ["ADMITTED", "HELD"] },
+          "schedulerRef": { "type": "string", "minLength": 1 },
+          "testRef": { "type": "string", "minLength": 1 },
+          "reason": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  }
+}

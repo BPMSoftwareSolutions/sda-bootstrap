@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/scenario-outcome.v2.schema.json",
+  "title": "Scenario Outcome v2",
+  "description": "An outcome defined by its obligation, admitted evidence, and promised experience.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["outcomeId", "obligation", "evidence", "experience"],
+  "properties": {
+    "outcomeId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "obligation": { "$ref": "scenario-obligation.v2.schema.json" },
+    "evidence": { "$ref": "scenario-evidence.v2.schema.json" },
+    "experience": { "$ref": "promised-experience.v2.schema.json" },
+    "semanticType": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "terminal": { "type": "boolean", "default": false }
+  }
+}

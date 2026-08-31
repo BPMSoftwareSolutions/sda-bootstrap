@@ -1,0 +1,306 @@
+{
+  "interfaceAuthorityType": "consumer-interface-authority.v1",
+  "contractValidatorCapabilityId": "sda-schema-contract-admission.v1",
+  "contractCatalog": "contracts/contract-catalog.json",
+  "requiredPlatformObligations": [
+    "dynamic-semantic-execution",
+    "domain-contract-admission"
+  ],
+  "interfaces": [
+    {
+      "interfaceId": "realize-sda-execution-plan-mechanics-cli",
+      "kind": "cli",
+      "rootScenarioId": "realize-sda-execution-plan-mechanics",
+      "platformCapabilityId": "sda-json-cli.v1",
+      "projectionTargets": [
+        "node",
+        "csharp",
+        "python"
+      ]
+    }
+  ],
+  "portBindings": [
+    {
+      "portId": "admit-contract-value",
+      "platformCapabilityId": "sda-authority-transformation-port.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "admit-contract-value.v1"
+      }
+    },
+    {
+      "portId": "bind-external-credential-reference",
+      "platformCapabilityId": "sda-authority-transformation-port.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "bind-external-credential-reference.v1"
+      }
+    },
+    {
+      "portId": "evaluate-bounded-schema",
+      "platformCapabilityId": "sda-authority-transformation-port.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "evaluate-bounded-schema.v1"
+      }
+    },
+    {
+      "portId": "execute-authority-transformation",
+      "platformCapabilityId": "sda-authority-transformation-port.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "execute-authority-transformation.v1"
+      }
+    },
+    {
+      "portId": "execute-governed-capability-sequence",
+      "platformCapabilityId": "sda-authority-transformation-port.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "execute-governed-capability-sequence.v1"
+      }
+    },
+    {
+      "portId": "execute-governed-http-exchange",
+      "platformCapabilityId": "sda-authority-transformation-port.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "execute-governed-http-exchange.v1"
+      }
+    },
+    {
+      "portId": "execute-governed-tooling-migration-operation",
+      "platformCapabilityId": "sda-authority-transformation-port.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "execute-governed-tooling-migration-operation.v1"
+      }
+    },
+    {
+      "portId": "invoke-governed-model",
+      "platformCapabilityId": "sda-authority-transformation-port.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "invoke-governed-model.v1"
+      }
+    },
+    {
+      "portId": "invoke-projected-capability",
+      "platformCapabilityId": "sda-authority-transformation-port.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "invoke-projected-capability.v1"
+      }
+    },
+    {
+      "portId": "materialize-governed-artifact",
+      "platformCapabilityId": "sda-authority-transformation-port.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "materialize-governed-artifact.v1"
+      }
+    },
+    {
+      "portId": "observe-external-representation",
+      "platformCapabilityId": "sda-authority-transformation-port.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "observe-external-representation.v1"
+      }
+    },
+    {
+      "portId": "observe-governed-repository",
+      "platformCapabilityId": "sda-authority-transformation-port.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "observe-governed-repository.v1"
+      }
+    },
+    {
+      "portId": "observe-governed-target-execution",
+      "platformCapabilityId": "sda-authority-transformation-port.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "observe-governed-target-execution.v1"
+      }
+    },
+    {
+      "portId": "project-language-mechanic-registry",
+      "platformCapabilityId": "sda-authority-transformation-port.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "project-language-mechanic-registry.v1"
+      }
+    },
+    {
+      "portId": "realize-sda-execution-plan-mechanics",
+      "platformCapabilityId": "sda-authority-transformation-port.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "realize-sda-execution-plan-mechanics.v1"
+      }
+    },
+    {
+      "portId": "resolve-canonical-capability-feature",
+      "platformCapabilityId": "sda-authority-transformation-port.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "resolve-canonical-capability-feature.v1"
+      }
+    },
+    {
+      "portId": "shape-file-system-batch",
+      "platformCapabilityId": "sda-authority-transformation-port.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "shape-file-system-batch.v1"
+      }
+    },
+    {
+      "portId": "transact-governed-tooling-binding",
+      "platformCapabilityId": "sda-authority-transformation-port.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "transact-governed-tooling-binding.v1"
+      }
+    }
+  ],
+  "projectionBindings": [
+    {
+      "projectionId": "project-realization-to-admission",
+      "platformCapabilityId": "sda-authority-state-projection.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "project-realization-to-admission.v1"
+      }
+    },
+    {
+      "projectionId": "project-admission-to-transformation",
+      "platformCapabilityId": "sda-authority-state-projection.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "project-admission-to-transformation.v1"
+      }
+    },
+    {
+      "projectionId": "project-transformation-to-schema-evaluation",
+      "platformCapabilityId": "sda-authority-state-projection.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "project-transformation-to-schema-evaluation.v1"
+      }
+    },
+    {
+      "projectionId": "project-evaluate-to-materialize",
+      "platformCapabilityId": "sda-authority-state-projection.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "project-evaluate-to-materialize.v1"
+      }
+    },
+    {
+      "projectionId": "project-materialize-to-repository",
+      "platformCapabilityId": "sda-authority-state-projection.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "project-materialize-to-repository.v1"
+      }
+    },
+    {
+      "projectionId": "project-repository-to-external",
+      "platformCapabilityId": "sda-authority-state-projection.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "project-repository-to-external.v1"
+      }
+    },
+    {
+      "projectionId": "project-external-to-credential",
+      "platformCapabilityId": "sda-authority-state-projection.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "project-external-to-credential.v1"
+      }
+    },
+    {
+      "projectionId": "project-credential-to-http",
+      "platformCapabilityId": "sda-authority-state-projection.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "project-credential-to-http.v1"
+      }
+    },
+    {
+      "projectionId": "project-http-to-model",
+      "platformCapabilityId": "sda-authority-state-projection.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "project-http-to-model.v1"
+      }
+    },
+    {
+      "projectionId": "project-model-to-shape",
+      "platformCapabilityId": "sda-authority-state-projection.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "project-model-to-shape.v1"
+      }
+    },
+    {
+      "projectionId": "project-shape-to-target-execution",
+      "platformCapabilityId": "sda-authority-state-projection.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "project-shape-to-target-execution.v1"
+      }
+    },
+    {
+      "projectionId": "project-target-execution-to-invoke-capability",
+      "platformCapabilityId": "sda-authority-state-projection.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "project-target-execution-to-invoke-capability.v1"
+      }
+    },
+    {
+      "projectionId": "project-invoke-capability-to-sequence",
+      "platformCapabilityId": "sda-authority-state-projection.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "project-invoke-capability-to-sequence.v1"
+      }
+    },
+    {
+      "projectionId": "project-sequence-to-resolve-feature",
+      "platformCapabilityId": "sda-authority-state-projection.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "project-sequence-to-resolve-feature.v1"
+      }
+    },
+    {
+      "projectionId": "project-resolve-feature-to-transact-binding",
+      "platformCapabilityId": "sda-authority-state-projection.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "project-resolve-feature-to-transact-binding.v1"
+      }
+    },
+    {
+      "projectionId": "project-transact-binding-to-execute-migration",
+      "platformCapabilityId": "sda-authority-state-projection.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "project-transact-binding-to-execute-migration.v1"
+      }
+    },
+    {
+      "projectionId": "project-execute-migration-to-project-registry",
+      "platformCapabilityId": "sda-authority-state-projection.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "project-execute-migration-to-project-registry.v1"
+      }
+    }
+  ]
+}

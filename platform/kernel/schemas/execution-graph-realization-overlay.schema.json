@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/execution-graph-realization-overlay.v1.schema.json",
+  "title": "SDA execution graph realization overlay v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["overlayType", "overlayId", "graphId", "canonicalGraphDigest", "targetId", "providerBindings", "physicalCells", "physicalEdges"],
+  "properties": {
+    "overlayType": { "const": "execution-graph-realization-overlay.v1" },
+    "overlayId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "graphId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "canonicalGraphDigest": { "$ref": "semantic-primitives.schema.json#/$defs/digest" },
+    "targetId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "providerBindings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["slotId", "cellId", "mechanicId", "providerProfileId", "providerProfileDigest", "implementationRef"],
+        "properties": {
+          "slotId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "cellId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "mechanicId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "providerProfileId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "providerProfileDigest": { "$ref": "semantic-primitives.schema.json#/$defs/digest" },
+          "implementationRef": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "physicalCells": { "type": "array", "items": { "$ref": "execution-cell.schema.json" } },
+    "physicalEdges": { "type": "array", "items": { "$ref": "execution-edge.schema.json" } },
+    "overlayDigest": { "$ref": "semantic-primitives.schema.json#/$defs/digest" }
+  }
+}

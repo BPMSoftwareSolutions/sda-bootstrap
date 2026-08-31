@@ -1,0 +1,149 @@
+{
+  "fixtureType": "consumer-capability-fixtures.v1",
+  "fixtures": [
+    {
+      "fixtureId": "inventory-classifies-every-migration-state",
+      "input": {
+        "decisionType": "CLASSIFY_INVENTORY",
+        "candidates": [
+          { "capabilityId": "feature", "groupId": "group", "responsibilityId": "feature-responsibility", "providerId": "legacy-feature", "protocol": "responsibility-provider-v1", "featureRef": "feature.feature", "workspaceRef": "feature", "featureExists": false, "workspaceExists": false },
+          { "capabilityId": "workspace", "groupId": "group", "responsibilityId": "workspace-responsibility", "providerId": "legacy-workspace", "protocol": "responsibility-provider-v1", "featureRef": "workspace.feature", "workspaceRef": "workspace", "featureExists": true, "workspaceExists": false },
+          { "capabilityId": "candidate", "groupId": "group", "responsibilityId": "candidate-responsibility", "providerId": "legacy-candidate", "protocol": "responsibility-provider-v1", "featureRef": "candidate.feature", "workspaceRef": "candidate", "featureExists": true, "workspaceExists": true },
+          { "capabilityId": "promoted", "groupId": "group", "responsibilityId": "promoted-responsibility", "providerId": "projected-provider", "protocol": "projected-consumer-runtime-v2", "featureRef": "promoted.feature", "workspaceRef": "promoted", "featureExists": true, "workspaceExists": true }
+        ],
+        "bindingDocument": { "bindingType": "responsibility-provider-bindings.v1", "bindings": [] },
+        "capability": { "responsibilityId": "unused", "replacement": { "providerId": "unused-provider", "implementationRef": "unused.mjs", "protocol": "projected-consumer-runtime-v2" } },
+        "gateExitCode": 0,
+        "promote": false,
+        "verificationPassed": true,
+        "runResults": []
+      },
+      "portOutcomes": { "authority-driven-composition": { "authority": "interfaces.authority.json" } },
+      "expected": {
+        "disposition": "terminated",
+        "terminalScenarioId": "decide-tooling-migration",
+        "scenarioSequence": ["decide-tooling-migration"],
+        "outcomeAssertions": [
+          { "conditionId": "feature-state", "path": "inventory.entries.0.state", "operator": "equals", "value": "FEATURE_REQUIRED" },
+          { "conditionId": "workspace-state", "path": "inventory.entries.1.state", "operator": "equals", "value": "WORKSPACE_REQUIRED" },
+          { "conditionId": "candidate-state", "path": "inventory.entries.2.state", "operator": "equals", "value": "CANDIDATE_READY" },
+          { "conditionId": "promoted-state", "path": "inventory.entries.3.state", "operator": "equals", "value": "PROMOTED" },
+          { "conditionId": "all-states-counted", "path": "inventory.summary.PROMOTED", "operator": "equals", "value": 1 }
+        ]
+      }
+    },
+    {
+      "fixtureId": "replacement-changes-only-selected-binding",
+      "input": {
+        "decisionType": "PLAN_BINDING_REPLACEMENT",
+        "candidates": [],
+        "bindingDocument": {
+          "bindingType": "responsibility-provider-bindings.v1",
+          "bindings": [
+            { "responsibilityId": "selected", "providerId": "legacy-selected", "implementationRef": "legacy/selected.mjs", "requires": ["filesystem"] },
+            { "responsibilityId": "other", "providerId": "other-provider", "implementationRef": "other.mjs", "requires": [] }
+          ]
+        },
+        "capability": { "responsibilityId": "selected", "replacement": { "providerId": "projected-selected", "implementationRef": "projected/selected.mjs", "protocol": "projected-consumer-runtime-v2" } },
+        "gateExitCode": 0,
+        "promote": true,
+        "verificationPassed": true,
+        "runResults": []
+      },
+      "portOutcomes": { "authority-driven-composition": { "authority": "interfaces.authority.json" } },
+      "expected": {
+        "disposition": "terminated",
+        "terminalScenarioId": "decide-tooling-migration",
+        "scenarioSequence": ["decide-tooling-migration"],
+        "outcomeAssertions": [
+          { "conditionId": "selected-provider-replaced", "path": "replacementDocument.bindings.0.providerId", "operator": "equals", "value": "projected-selected" },
+          { "conditionId": "selected-requirements-preserved", "path": "replacementDocument.bindings.0.requires.0", "operator": "equals", "value": "filesystem" },
+          { "conditionId": "other-provider-preserved", "path": "replacementDocument.bindings.1.providerId", "operator": "equals", "value": "other-provider" }
+        ]
+      }
+    },
+    {
+      "fixtureId": "passing-gate-keeps-projected-binding",
+      "input": {
+        "decisionType": "EVALUATE_GATE", "candidates": [],
+        "bindingDocument": { "bindingType": "responsibility-provider-bindings.v1", "bindings": [] },
+        "capability": { "responsibilityId": "unused", "replacement": { "providerId": "unused-provider", "implementationRef": "unused.mjs", "protocol": "projected-consumer-runtime-v2" } },
+        "gateExitCode": 0, "promote": true, "verificationPassed": true, "runResults": []
+      },
+      "portOutcomes": { "authority-driven-composition": { "authority": "interfaces.authority.json" } },
+      "expected": {
+        "disposition": "terminated", "terminalScenarioId": "decide-tooling-migration", "scenarioSequence": ["decide-tooling-migration"],
+        "outcomeAssertions": [
+          { "conditionId": "promotion-admitted", "path": "promotionDisposition", "operator": "equals", "value": "PROMOTED" },
+          { "conditionId": "replacement-kept", "path": "bindingAction", "operator": "equals", "value": "KEEP_REPLACEMENT" }
+        ]
+      }
+    },
+    {
+      "fixtureId": "failing-gate-restores-original-binding",
+      "input": {
+        "decisionType": "EVALUATE_GATE", "candidates": [],
+        "bindingDocument": { "bindingType": "responsibility-provider-bindings.v1", "bindings": [] },
+        "capability": { "responsibilityId": "unused", "replacement": { "providerId": "unused-provider", "implementationRef": "unused.mjs", "protocol": "projected-consumer-runtime-v2" } },
+        "gateExitCode": 1, "promote": true, "verificationPassed": true, "runResults": []
+      },
+      "portOutcomes": { "authority-driven-composition": { "authority": "interfaces.authority.json" } },
+      "expected": {
+        "disposition": "terminated", "terminalScenarioId": "decide-tooling-migration", "scenarioSequence": ["decide-tooling-migration"],
+        "outcomeAssertions": [
+          { "conditionId": "promotion-rejected", "path": "promotionDisposition", "operator": "equals", "value": "ROLLED_BACK" },
+          { "conditionId": "original-restored", "path": "bindingAction", "operator": "equals", "value": "RESTORE_ORIGINAL" }
+        ]
+      }
+    },
+    {
+      "fixtureId": "verified-candidate-publishes-verified-evidence",
+      "input": {
+        "decisionType": "DETERMINE_EVIDENCE_DISPOSITION", "candidates": [],
+        "bindingDocument": { "bindingType": "responsibility-provider-bindings.v1", "bindings": [] },
+        "capability": { "responsibilityId": "unused", "replacement": { "providerId": "unused-provider", "implementationRef": "unused.mjs", "protocol": "projected-consumer-runtime-v2" } },
+        "gateExitCode": 0, "promote": false, "verificationPassed": true, "runResults": []
+      },
+      "portOutcomes": { "authority-driven-composition": { "authority": "interfaces.authority.json" } },
+      "expected": {
+        "disposition": "terminated", "terminalScenarioId": "decide-tooling-migration", "scenarioSequence": ["decide-tooling-migration"],
+        "outcomeAssertions": [{ "conditionId": "verification-visible", "path": "evidenceDisposition", "operator": "equals", "value": "VERIFIED" }]
+      }
+    },
+    {
+      "fixtureId": "failed-verification-publishes-rejected-evidence",
+      "input": {
+        "decisionType": "DETERMINE_EVIDENCE_DISPOSITION", "candidates": [],
+        "bindingDocument": { "bindingType": "responsibility-provider-bindings.v1", "bindings": [] },
+        "capability": { "responsibilityId": "unused", "replacement": { "providerId": "unused-provider", "implementationRef": "unused.mjs", "protocol": "projected-consumer-runtime-v2" } },
+        "gateExitCode": 0, "promote": true, "verificationPassed": false, "runResults": []
+      },
+      "portOutcomes": { "authority-driven-composition": { "authority": "interfaces.authority.json" } },
+      "expected": {
+        "disposition": "terminated", "terminalScenarioId": "decide-tooling-migration", "scenarioSequence": ["decide-tooling-migration"],
+        "outcomeAssertions": [{ "conditionId": "rejection-visible", "path": "evidenceDisposition", "operator": "equals", "value": "REJECTED" }]
+      }
+    },
+    {
+      "fixtureId": "run-continues-independent-candidates-after-rejection",
+      "input": {
+        "decisionType": "FINALIZE_RUN", "candidates": [],
+        "bindingDocument": { "bindingType": "responsibility-provider-bindings.v1", "bindings": [] },
+        "capability": { "responsibilityId": "unused", "replacement": { "providerId": "unused-provider", "implementationRef": "unused.mjs", "protocol": "projected-consumer-runtime-v2" } },
+        "gateExitCode": 1, "promote": true, "verificationPassed": true,
+        "runResults": [
+          { "capabilityId": "alpha", "disposition": "REJECTED" },
+          { "capabilityId": "beta", "disposition": "PROMOTED" }
+        ]
+      },
+      "portOutcomes": { "authority-driven-composition": { "authority": "interfaces.authority.json" } },
+      "expected": {
+        "disposition": "terminated", "terminalScenarioId": "decide-tooling-migration", "scenarioSequence": ["decide-tooling-migration"],
+        "outcomeAssertions": [
+          { "conditionId": "aggregate-rejection-visible", "path": "runDisposition", "operator": "equals", "value": "COMPLETED_WITH_REJECTIONS" },
+          { "conditionId": "continuation-required", "path": "continueIndependentCandidates", "operator": "equals", "value": true }
+        ]
+      }
+    }
+  ]
+}

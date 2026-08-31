@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/consumer-ui-object-model.v1.schema.json",
+  "title": "Consumer UI Canonical Semantic Object Model",
+  "description": "Framework-neutral object topology that every admitted UI embodiment must preserve using language-native representation.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["objectModelType", "modelId", "concepts", "targetRules"],
+  "properties": {
+    "objectModelType": { "const": "consumer-ui-object-model.v1" },
+    "modelId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "concepts": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/concept" }
+    },
+    "targetRules": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["languageNativeRepresentation", "rawAuthorityAccess", "targetOwnedSemanticConcepts"],
+      "properties": {
+        "languageNativeRepresentation": { "const": "ALLOWED" },
+        "rawAuthorityAccess": { "const": "ADMISSION_BOUNDARY_ONLY" },
+        "targetOwnedSemanticConcepts": { "const": "FORBIDDEN" }
+      }
+    }
+  },
+  "$defs": {
+    "conceptId": { "type": "string", "pattern": "^[A-Z][A-Za-z0-9]*$" },
+    "memberId": { "type": "string", "pattern": "^[a-z][A-Za-z0-9]*$" },
+    "relationship": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["targetConceptId", "cardinality"],
+      "properties": {
+        "targetConceptId": { "$ref": "#/$defs/conceptId" },
+        "cardinality": { "type": "string", "enum": ["one", "optional", "many"] }
+      }
+    },
+    "concept": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["conceptId", "layer", "requiredMembers", "relationships", "requiredBehaviors"],
+      "properties": {
+        "conceptId": { "$ref": "#/$defs/conceptId" },
+        "layer": { "type": "string", "enum": ["authority", "runtime", "evidence"] },
+        "requiredMembers": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/memberId" } },
+        "relationships": { "type": "array", "items": { "$ref": "#/$defs/relationship" } },
+        "requiredBehaviors": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/memberId" } }
+      }
+    }
+  }
+}

@@ -1,0 +1,181 @@
+{
+  "$schema": "fixture-manifest.authority.schema.json",
+  "fixtureType": "gherkin-compiler-conformance-fixture-manifest.v1",
+  "fixtureSetDigest": "sha256:f852639c84b73fb26af55f706f9b35bddee37953ce5c2d003c3065bf5d1bf8b3",
+  "fixtures": [
+    {
+      "fixtureId": "basic-annotated-sda",
+      "path": "basic-annotated-sda.feature",
+      "sourceDigest": "sha256:9a0fd460f11414b92dc8b4fdaaf4f8c93bd59a3f98e010f8566bbdf4f15d88de",
+      "mediaType": "text/x.cucumber.gherkin+plain",
+      "declaredDialect": "en",
+      "expectedProofPartitions": ["EXACT_BYTES", "FEATURE_IDENTITY", "SCENARIO_IDENTITY", "ORDERED_STEPS", "CONNECTOR_REFERENCES", "AST_CASE_COMPILATION_DIGESTS"],
+      "expectedParseDisposition": "PARSE_SUCCEEDED",
+      "expectedProfileDisposition": "PROFILE_ADMITTED",
+      "expectedDiagnosticCodes": []
+    },
+    {
+      "fixtureId": "markdown-annotated-sda",
+      "path": "markdown-annotated-sda.feature.md",
+      "sourceDigest": "sha256:b455212c76b20d59ca558e9a4088ed522e3e6d5d5f947198ef6929efa958739a",
+      "mediaType": "text/x.cucumber.gherkin+markdown",
+      "declaredDialect": "en",
+      "expectedProofPartitions": [
+        "EXACT_BYTES",
+        "FEATURE_IDENTITY",
+        "SCENARIO_IDENTITY",
+        "ORDERED_STEPS",
+        "CONNECTOR_REFERENCES",
+        "COMPILER_IDENTITIES",
+        "AST_CASE_COMPILATION_DIGESTS"
+      ],
+      "expectedParseDisposition": "PARSE_SUCCEEDED",
+      "expectedProfileDisposition": "PROFILE_ADMITTED",
+      "expectedDiagnosticCodes": []
+    },
+    {
+      "fixtureId": "advanced-official-gherkin",
+      "path": "advanced-official-gherkin.feature",
+      "sourceDigest": "sha256:0c26cb2aab66046fb3f0f313b02fd5bca55057e0e8e24b59e17e8eba8f870c9f",
+      "mediaType": "text/x.cucumber.gherkin+plain",
+      "declaredDialect": "en",
+      "expectedProofPartitions": ["EXACT_BYTES", "ORDERED_STEPS", "STEP_ARGUMENTS", "COMMENTS_AND_NARRATIVE", "DIALECT_AND_ADVANCED_CONSTRUCTS", "AST_CASE_COMPILATION_DIGESTS"],
+      "expectedParseDisposition": "PARSE_SUCCEEDED",
+      "expectedProfileDisposition": "PROFILE_HELD",
+      "expectedDiagnosticCodes": ["PROFILE_CONSTRUCT_HELD"]
+    },
+    {
+      "fixtureId": "localized-french",
+      "path": "localized-french.feature",
+      "sourceDigest": "sha256:629934a1deb4c6b883eb27c135d8486843ee0416a9a3ddf3dfecfea0b75f263f",
+      "mediaType": "text/x.cucumber.gherkin+plain",
+      "declaredDialect": "fr",
+      "expectedProofPartitions": ["EXACT_BYTES", "DIALECT_AND_ADVANCED_CONSTRUCTS", "AST_CASE_COMPILATION_DIGESTS"],
+      "expectedParseDisposition": "PARSE_SUCCEEDED",
+      "expectedProfileDisposition": "PROFILE_HELD",
+      "expectedDiagnosticCodes": ["PROFILE_CONSTRUCT_HELD"]
+    },
+    {
+      "fixtureId": "malformed-syntax",
+      "path": "malformed-syntax.feature",
+      "sourceDigest": "sha256:8c165948d08bec40da206b540e6438501909131f98f19bb7a2cda80dceef6d3a",
+      "mediaType": "text/x.cucumber.gherkin+plain",
+      "declaredDialect": "en",
+      "expectedProofPartitions": ["EXACT_BYTES", "TYPED_DIAGNOSTICS"],
+      "expectedParseDisposition": "PARSE_REJECTED",
+      "expectedProfileDisposition": "NOT_EVALUATED",
+      "expectedDiagnosticCodes": ["GHERKIN_PARSE_ERROR"]
+    },
+    {
+      "fixtureId": "missing-required-sda-tag",
+      "path": "missing-required-sda-tag.feature",
+      "sourceDigest": "sha256:3e1caf57043aedffbce399f20a9830d8534b0b04e948325c2203ea3f6834da06",
+      "mediaType": "text/x.cucumber.gherkin+plain",
+      "declaredDialect": "en",
+      "expectedProofPartitions": ["CONNECTOR_REFERENCES", "TYPED_DIAGNOSTICS"],
+      "expectedParseDisposition": "PARSE_SUCCEEDED",
+      "expectedProfileDisposition": "REJECTED",
+      "expectedDiagnosticCodes": ["MISSING_REQUIRED_TAG"]
+    },
+    {
+      "fixtureId": "repeated-required-sda-tag",
+      "path": "repeated-required-sda-tag.feature",
+      "sourceDigest": "sha256:c0b3017e015d62eb4f4e60bf2ab670af60426299cc7aed2661343dba482d1fc0",
+      "mediaType": "text/x.cucumber.gherkin+plain",
+      "declaredDialect": "en",
+      "expectedProofPartitions": ["CONNECTOR_REFERENCES", "TYPED_DIAGNOSTICS"],
+      "expectedParseDisposition": "PARSE_SUCCEEDED",
+      "expectedProfileDisposition": "REJECTED",
+      "expectedDiagnosticCodes": ["REPEATED_REQUIRED_TAG"]
+    },
+    {
+      "fixtureId": "owner-scoped-local-identities",
+      "path": "owner-scoped-local-identities.feature",
+      "sourceDigest": "sha256:2070a152d4f34b17592aac8e2abc30796a5231b38a381cc2ce32779cb5c8cbc1",
+      "mediaType": "text/x.cucumber.gherkin+plain",
+      "declaredDialect": "en",
+      "expectedProofPartitions": ["FEATURE_IDENTITY", "SCENARIO_IDENTITY", "CONNECTOR_REFERENCES", "AST_CASE_COMPILATION_DIGESTS"],
+      "expectedParseDisposition": "PARSE_SUCCEEDED",
+      "expectedProfileDisposition": "PROFILE_ADMITTED",
+      "expectedDiagnosticCodes": []
+    },
+    {
+      "fixtureId": "forbidden-semantic-tags",
+      "path": "forbidden-semantic-tags.feature",
+      "sourceDigest": "sha256:04f00113e39e366fa5a946f0699f21c8102a52ae8b269d8e82642081535164e7",
+      "mediaType": "text/x.cucumber.gherkin+plain",
+      "declaredDialect": "en",
+      "expectedProofPartitions": ["CONNECTOR_REFERENCES", "TYPED_DIAGNOSTICS"],
+      "expectedParseDisposition": "PARSE_SUCCEEDED",
+      "expectedProfileDisposition": "REJECTED",
+      "expectedDiagnosticCodes": ["FORBIDDEN_SEMANTIC_CONTENT"]
+    },
+    {
+      "fixtureId": "reordered-discovery-a",
+      "path": "reordered-discovery-a.feature",
+      "sourceDigest": "sha256:559113e798dc4bdc7d12ec2013b4b4d4ac19a11f054200b2192a0b5ae3663477",
+      "mediaType": "text/x.cucumber.gherkin+plain",
+      "declaredDialect": "en",
+      "expectedProofPartitions": ["EXACT_BYTES", "COMPILER_IDENTITIES", "AST_CASE_COMPILATION_DIGESTS", "REORDERED_REPRODUCTION"],
+      "expectedParseDisposition": "PARSE_SUCCEEDED",
+      "expectedProfileDisposition": "PROFILE_ADMITTED",
+      "expectedDiagnosticCodes": [],
+      "reproductionSetId": "reordered-discovery"
+    },
+    {
+      "fixtureId": "reordered-discovery-b",
+      "path": "reordered-discovery-b.feature",
+      "sourceDigest": "sha256:88423f17ec818dd218bb5b6673a02b64d01270ccd30411606644e8410aec29ec",
+      "mediaType": "text/x.cucumber.gherkin+plain",
+      "declaredDialect": "en",
+      "expectedProofPartitions": ["EXACT_BYTES", "COMPILER_IDENTITIES", "AST_CASE_COMPILATION_DIGESTS", "REORDERED_REPRODUCTION"],
+      "expectedParseDisposition": "PARSE_SUCCEEDED",
+      "expectedProfileDisposition": "PROFILE_ADMITTED",
+      "expectedDiagnosticCodes": [],
+      "reproductionSetId": "reordered-discovery"
+    }
+  ],
+  "invalidCarrierCases": [
+    {
+      "carrierCaseId": "non-canonical-base64",
+      "basisFixtureId": "basic-annotated-sda",
+      "mutation": "NON_CANONICAL_BASE64",
+      "expectedDiagnosticCode": "INVALID_SOURCE_BASE64"
+    },
+    {
+      "carrierCaseId": "invalid-utf8",
+      "basisFixtureId": "basic-annotated-sda",
+      "mutation": "INVALID_UTF8",
+      "expectedDiagnosticCode": "INVALID_UTF8"
+    },
+    {
+      "carrierCaseId": "unsupported-media-type",
+      "basisFixtureId": "basic-annotated-sda",
+      "mutation": "UNSUPPORTED_MEDIA_TYPE",
+      "expectedDiagnosticCode": "UNSUPPORTED_MEDIA_TYPE"
+    },
+    {
+      "carrierCaseId": "unsupported-dialect",
+      "basisFixtureId": "basic-annotated-sda",
+      "mutation": "UNSUPPORTED_DIALECT",
+      "expectedDiagnosticCode": "UNSUPPORTED_DIALECT"
+    },
+    {
+      "carrierCaseId": "stale-grammar-binding",
+      "basisFixtureId": "basic-annotated-sda",
+      "mutation": "STALE_GRAMMAR_BINDING",
+      "expectedDiagnosticCode": "STALE_GRAMMAR_BINDING"
+    }
+  ],
+  "reproductionSets": [
+    {
+      "reproductionSetId": "reordered-discovery",
+      "fixtureIds": ["reordered-discovery-a", "reordered-discovery-b"],
+      "discoveryOrders": [
+        ["reordered-discovery-a", "reordered-discovery-b"],
+        ["reordered-discovery-b", "reordered-discovery-a"]
+      ],
+      "expectedProofPartitions": ["COMPILER_IDENTITIES", "AST_CASE_COMPILATION_DIGESTS", "REORDERED_REPRODUCTION"]
+    }
+  ]
+}

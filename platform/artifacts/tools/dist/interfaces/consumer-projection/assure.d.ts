@@ -1,0 +1,15 @@
+import type { ConsumerCompilationResult } from "../../consumer-projection/application/consumer-capability-compiler.js";
+import type { ConsumerProjectionTarget } from "../../consumer-projection/model/consumer-workspace-facts.js";
+import type { ConsumerPlatformObservation } from "../../consumer-projection/model/platform-mechanic-conformance.js";
+export { canonicalize } from "../../consumer-projection/proof/projection-equivalence-observer.js";
+export { satisfies, valueAt } from "../../consumer-projection/proof/assertion-evaluator.js";
+export { evaluateMechanicalSterility, FORBIDDEN_EXECUTABLE_MECHANICS } from "../../consumer-projection/proof/mechanical-sterility-evaluator.js";
+export { DomainIsolationEvaluator, BANNED_DOMAIN_ALGORITHM_MARKERS, BANNED_DOMAIN_TERMS } from "../../consumer-projection/proof/domain-isolation-evaluator.js";
+export { MechanicConformanceObserver } from "../../consumer-projection/proof/mechanic-conformance-observer.js";
+export { consumerPlatformInputDigest, consumerProofIsCurrent } from "../../adapters/consumer-projection/consumer-platform-input-digest.js";
+export declare function observeConsumerPlatformConformance(repositoryRoot: string, observations?: Readonly<Record<string, ConsumerPlatformObservation>>): Promise<import("../../consumer-projection/application/consumer-assurance-service.js").AttributedAssurance<unknown>>;
+export declare function validateNoDomainLeakage(repositoryRoot: string): Promise<import("../../consumer-projection/application/consumer-assurance-service.js").AttributedAssurance<unknown>>;
+export declare function validateProjectedMechanicalSterility(repositoryRoot: string, compilation: ConsumerCompilationResult): Promise<import("../../consumer-projection/application/consumer-assurance-service.js").AttributedAssurance<unknown>>;
+export declare function observeConsumerProjectionEquivalence(repositoryRoot: string, workspaceRoot: string, compilation: ConsumerCompilationResult, targets?: readonly ConsumerProjectionTarget[]): Promise<import("../../consumer-projection/application/consumer-assurance-service.js").AttributedAssurance<unknown>>;
+export declare function observeConsumerQueryCatalog(repositoryRoot: string, workspaceRoot: string, compilation: ConsumerCompilationResult, catalogReference: string): Promise<import("../../consumer-projection/application/consumer-assurance-service.js").AttributedAssurance<unknown>>;
+export declare function observeConsumerExperienceClosure(repositoryRoot: string, workspaceRoot: string, compilation: ConsumerCompilationResult): Promise<import("../../consumer-projection/application/consumer-assurance-service.js").AttributedAssurance<unknown>>;

@@ -1,0 +1,57 @@
+{
+  "$schema": "contracts/profile-governed-proof-binding-evaluator.authority.schema.json",
+  "authorityType": "profile-governed-proof-binding-evaluator-authority.v1",
+  "authorityId": "profile-governed-proof-binding-evaluator.v1",
+  "authorityRef": "capabilities/sda-platform/bind-profile-governed-proof-binding-evaluation/profile-governed-proof-binding-evaluator.authority.json",
+  "authorityVersion": "1.0.0",
+  "lifecycle": "ADMITTED",
+  "platformCapabilityId": "sda-proof-binding-evaluation-port.v1",
+  "authorityDigest": "sha256:0008ade2e1edb10fb04f0c7c288c0d85c13420c19998a88252d63eda585c6349",
+  "authorityDigestAlgorithm": "sha256 of canonical recursive-key-order JSON excluding authorityDigest",
+  "inputContracts": [
+    "profile-governed-proof-binding-evaluation-input.v1"
+  ],
+  "outputContracts": [
+    "profile-governed-proof-binding-evaluation-record.v1",
+    "proof-binding-evaluation-provider-conformance.v1"
+  ],
+  "subordinateAuthorities": [],
+  "compositionRules": [
+    "all-authority-digests-recomputed-before-evaluation",
+    "profile-obligation-dispositions-read-from-admitted-profile",
+    "profile-binding-rules-evaluation-order-and-declared-rule-identities-validated",
+    "canonical-json-used-only-for-derived-identity-and-reproduction-material",
+    "prohibited-basis-rejects-without-deriving-relationship",
+    "stale-or-mixed-lineage-rejects-without-combining-evidence",
+    "absence-means-not-observable-never-failure",
+    "exactly-one-disposition-per-obligation",
+    "operational-record-does-not-claim-provider-conformance"
+  ],
+  "providerObservation": {
+    "disposition": "SATISFIED",
+    "providerSourceSet": [
+      {
+        "sourceRef": "languages/typescript/runtimes/node/proof-binding-evaluation-provider.mjs",
+        "sourceDigest": "sha256:7e4bb359fa4ecac4b76837a0ccb672b7d589f0e4720940dfca50e0b18d286eab"
+      },
+      {
+        "sourceRef": "languages/typescript/runtimes/node/node-mechanic-registry-loader.mjs",
+        "sourceDigest": "sha256:9a29843fac88fefaeb9308c14a661904d41744f5c9e1a43ab98d7f1646d12704"
+      }
+    ],
+    "implementationVersion": "1.0.0",
+    "registryBindingRef": "kernel/semantic-authority/consumer/node-mechanic-registrations/proof-binding-evaluation.registration.authority.json",
+    "registryBindingDigest": "sha256:3149812f05dec95a5a8db991b9834a263af0cfc6e4a6d42fb2aab1947fd2d4a0"
+  },
+  "runtimeDependencies": {
+    "packageLockRef": "package-lock.json",
+    "packageLockDigest": "sha256:57d058a1f9924b7a6f283f2a1704b485c4eb321a1011544fba97999126878b0f",
+    "packages": [
+      {
+        "packageName": "ajv",
+        "packageVersion": "8.20.0",
+        "integrity": "sha512-Thbli+OlOj+iMPYFBVBfJ3OmCAnaSyNn4M1vz9T6Gka5Jt9ba/HIR56joy65tY6kx/FCF5VXNB819Y7/GUrBGA=="
+      }
+    ]
+  }
+}

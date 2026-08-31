@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/sda-semantic-execution-graph.v1.schema.json",
+  "title": "SDA semantic execution graph v1",
+  "description": "The only target-neutral authority for executable semantic and mechanic topology.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["graphType", "graphId", "graphVersion", "rootCellId", "authority", "cells", "edges", "decompositions", "edgeGroups", "recurrenceAuthorities", "requiredProviderSlots"],
+  "properties": {
+    "graphType": { "const": "sda-semantic-execution-graph.v1" },
+    "graphId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "graphVersion": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "rootCellId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["capabilityId", "authorityDigest", "sourceRefs"],
+      "properties": {
+        "capabilityId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+        "authorityDigest": { "$ref": "semantic-primitives.schema.json#/$defs/digest" },
+        "sourceRefs": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } }
+      }
+    },
+    "cells": { "type": "array", "minItems": 1, "items": { "$ref": "execution-cell.schema.json" } },
+    "edges": { "type": "array", "items": { "$ref": "execution-edge.schema.json" } },
+    "decompositions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["parentCellId", "entryCellIds", "exitCellIds", "returnBindingAuthorityId"],
+        "properties": {
+          "parentCellId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "entryCellIds": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" } },
+          "exitCellIds": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" } },
+          "returnBindingAuthorityId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" }
+        }
+      }
+    },
+    "edgeGroups": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["groupId", "kind", "edgeIds"],
+        "properties": {
+          "groupId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "kind": { "type": "string", "enum": ["selection", "broadcast", "join", "recurrence", "failure", "cancellation"] },
+          "edgeIds": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" } },
+          "policy": { "type": "string", "enum": ["exactly-one", "all", "all-required", "first-admitted", "bounded", "first-match", "priority"] },
+          "exhaustive": { "type": "boolean" },
+          "exclusive": { "type": "boolean" },
+          "defaultEdgeId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "joinCellId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "requiredSlotIds": { "type": "array", "uniqueItems": true, "items": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" } }
+        }
+      }
+    },
+    "recurrenceAuthorities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["recurrenceAuthorityId", "continuationVariant", "stopVariant", "maximumIterations", "cancellationPolicy", "authorityDigest"],
+        "properties": {
+          "recurrenceAuthorityId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "continuationVariant": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$" },
+          "continuationVariants": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$" }
+          },
+          "stopVariant": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$" },
+          "maximumIterations": { "type": "integer", "minimum": 1 },
+          "budgetContractId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "budgetValuePath": { "type": "string", "minLength": 1 },
+          "cancellationPolicy": { "type": "string", "enum": ["route-cancelled", "complete-current", "immediate"] },
+          "authorityDigest": { "$ref": "semantic-primitives.schema.json#/$defs/digest" }
+        }
+      }
+    },
+    "requiredProviderSlots": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["slotId", "cellId", "mechanicId", "profileConstraints"],
+        "properties": {
+          "slotId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "cellId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "mechanicId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "profileConstraints": { "type": "array", "uniqueItems": true, "items": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" } },
+          "equivalenceClassId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" }
+        }
+      }
+    }
+  }
+}

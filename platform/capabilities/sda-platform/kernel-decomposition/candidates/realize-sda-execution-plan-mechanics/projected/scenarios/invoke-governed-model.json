@@ -1,0 +1,37 @@
+{
+  "scenarioId": "invoke-governed-model",
+  "input": {
+    "inputId": "governed-model-invocation-request",
+    "contract": {
+      "contractId": "governed-model-invocation-request.v1"
+    }
+  },
+  "event": {
+    "eventId": "invoke-governed-model",
+    "executionAuthorityId": "invoke-governed-model.v1"
+  },
+  "outcome": {
+    "outcomeId": "governed-model-response-evidence",
+    "contract": {
+      "contractId": "governed-model-response-evidence.v1"
+    },
+    "experience": {
+      "statement": "one attributable model-response testimony is available"
+    }
+  },
+  "gherkin": {
+    "given": {
+      "semanticRef": "invoke-governed-model.given",
+      "text": "an admitted model request and provider authority"
+    },
+    "when": {
+      "semanticRef": "invoke-governed-model.when",
+      "text": "the governed model is invoked"
+    },
+    "then": {
+      "semanticRef": "invoke-governed-model.then",
+      "text": "one attributable model-response testimony is available"
+    }
+  },
+  "name": "Invoke a governed model"
+}

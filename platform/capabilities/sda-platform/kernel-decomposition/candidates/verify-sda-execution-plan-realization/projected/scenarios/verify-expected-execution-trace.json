@@ -1,0 +1,37 @@
+{
+  "scenarioId": "verify-expected-execution-trace",
+  "input": {
+    "inputId": "expected-and-observed-execution",
+    "contract": {
+      "contractId": "expected-and-observed-execution.v1"
+    }
+  },
+  "event": {
+    "eventId": "verify-expected-execution-trace",
+    "executionAuthorityId": "verify-expected-execution-trace.v1"
+  },
+  "outcome": {
+    "outcomeId": "execution-trace-conformance",
+    "contract": {
+      "contractId": "execution-trace-conformance.v1"
+    },
+    "experience": {
+      "statement": "one execution-trace conformance disposition is established"
+    }
+  },
+  "gherkin": {
+    "given": {
+      "semanticRef": "verify-expected-execution-trace.given",
+      "text": "expected semantic telemetry and observed execution testimony"
+    },
+    "when": {
+      "semanticRef": "verify-expected-execution-trace.when",
+      "text": "execution trace conformance is evaluated"
+    },
+    "then": {
+      "semanticRef": "verify-expected-execution-trace.then",
+      "text": "one execution-trace conformance disposition is established"
+    }
+  },
+  "name": "Verify the expected execution trace is observed"
+}

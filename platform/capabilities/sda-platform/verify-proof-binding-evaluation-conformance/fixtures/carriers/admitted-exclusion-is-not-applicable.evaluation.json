@@ -1,0 +1,19 @@
+{
+  "contractId": "profile-governed-proof-binding-evaluation-input.v1",
+  "payload": {
+    "evaluationCaseId": "admitted-exclusion-is-not-applicable",
+    "profileId": "generic-proof-binding-evaluation-conformance-profile.v1",
+    "snapshotDigest": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "proofObligationId": "obligation:excluded",
+    "subjectSemanticObjectId": "scenario:excluded",
+    "authorityApplicability": "EXCLUDED_BY_ADMITTED_AUTHORITY",
+    "bindingCandidates": [],
+    "evidenceState": "ABSENT",
+    "reproduction": {
+      "orderedInputDigest": "sha256:fe4ecdda04cb3c3b9586a8d97093491d40781a20de600e1922b2fead7dcc4d4f",
+      "evaluationRuleIds": [
+        "evaluation-order.v1"
+      ]
+    }
+  }
+}

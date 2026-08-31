@@ -1,0 +1,12 @@
+{
+  "$schema": "../../../schemas/node-mechanic-registration-authority.v1.schema.json",
+  "registrationAuthorityType": "node-mechanic-registration-authority.v1",
+  "authorityId": "node-json-authority-ingestion-registration.v1",
+  "platformCapabilityId": "sda-json-authority-ingestion-port.v1",
+  "kind": "direct",
+  "providerModule": "json-authority-ingestion-provider.mjs",
+  "providerExport": "invokeJsonAuthorityIngestion",
+  "invocation": "url-context",
+  "authorityDigestAlgorithm": "sha256 of canonical recursive-key-order JSON excluding authorityDigest",
+  "authorityDigest": "sha256:73de4c88d82771a331450155b7a5ed36f66d24c72ace05b5f44bcb3b5c6499e0"
+}

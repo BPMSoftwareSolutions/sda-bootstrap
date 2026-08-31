@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/tooling/resolve-platform-responsibilities-input.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["sourceAdmission", "graph", "targets"],
+  "properties": {
+    "sourceAdmission": { "type": "object" },
+    "graph": { "type": "object" },
+    "targets": { "type": "array", "minItems": 1, "items": { "enum": ["node", "csharp", "python"] } }
+  }
+}

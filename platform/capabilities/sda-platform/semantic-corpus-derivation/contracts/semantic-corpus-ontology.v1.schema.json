@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/semantic-corpus/semantic-corpus-ontology.v1.schema.json",
+  "title": "Semantic corpus ontology",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["ontologyType", "authorityId", "authorityVersion", "lifecycle", "objectKinds", "relationshipKinds", "sourceClasses", "relationshipDispositions", "laws"],
+  "properties": {
+    "ontologyType": {"const": "semantic-corpus-ontology.v1"},
+    "authorityId": {"type": "string", "minLength": 1},
+    "authorityVersion": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "lifecycle": {"const": "ADMITTED"},
+    "objectKinds": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]*$"}},
+    "relationshipKinds": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]*$"}},
+    "sourceClasses": {"const": ["CANONICAL_AUTHORITY", "ADMITTED_EVIDENCE", "PROJECTION_EVIDENCE"]},
+    "relationshipDispositions": {"const": ["DECLARED_RELATIONSHIP", "DETERMINISTIC_DERIVATION"]},
+    "laws": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["topLevelIdentity", "ownedIdentity", "pathIsStableSemanticIdentity", "digestIsStableSemanticIdentity", "absentRelationshipMayBeInvented"],
+      "properties": {
+        "topLevelIdentity": {"const": "kind + canonical local ID"},
+        "ownedIdentity": {"const": "kind + owning semantic object ID + canonical local ID"},
+        "pathIsStableSemanticIdentity": {"const": false},
+        "digestIsStableSemanticIdentity": {"const": false},
+        "absentRelationshipMayBeInvented": {"const": false}
+      }
+    }
+  }
+}

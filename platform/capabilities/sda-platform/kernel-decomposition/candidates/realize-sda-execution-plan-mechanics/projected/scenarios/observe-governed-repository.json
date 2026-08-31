@@ -1,0 +1,37 @@
+{
+  "scenarioId": "observe-governed-repository",
+  "input": {
+    "inputId": "bounded-governed-repository-observation-context",
+    "contract": {
+      "contractId": "bounded-governed-repository-observation-context.v1"
+    }
+  },
+  "event": {
+    "eventId": "observe-governed-repository",
+    "executionAuthorityId": "observe-governed-repository.v1"
+  },
+  "outcome": {
+    "outcomeId": "governed-repository-observation",
+    "contract": {
+      "contractId": "governed-repository-observation.v1"
+    },
+    "experience": {
+      "statement": "one bounded attributable repository observation is available"
+    }
+  },
+  "gherkin": {
+    "given": {
+      "semanticRef": "observe-governed-repository.given",
+      "text": "an admitted repository root and declared resource identities"
+    },
+    "when": {
+      "semanticRef": "observe-governed-repository.when",
+      "text": "the governed repository is observed"
+    },
+    "then": {
+      "semanticRef": "observe-governed-repository.then",
+      "text": "one bounded attributable repository observation is available"
+    }
+  },
+  "name": "Observe a governed repository"
+}

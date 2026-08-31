@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/platform/ui-embodiment/ui-capability-vector.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["vectorType", "sourcePresentationIrType", "sourcePresentationIrDigest", "requirements", "canonicalDigest"],
+  "properties": {
+    "vectorType": { "const": "ui-capability-vector.v1" },
+    "sourcePresentationIrType": { "const": "sda-ui-presentation-ir.v3" },
+    "sourcePresentationIrDigest": { "$ref": "#/$defs/digest" },
+    "requirements": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["capabilityId", "category", "sourceRefs", "evidenceRequirements"],
+        "properties": {
+          "capabilityId": { "$ref": "#/$defs/id" },
+          "category": { "enum": ["COMPOSITION", "CONTENT", "INTERACTION", "ADAPTATION", "ACCESSIBILITY", "PROFILE", "TOKEN"] },
+          "sourceRefs": { "$ref": "#/$defs/idList" },
+          "evidenceRequirements": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": { "enum": ["ACCESSIBILITY", "ADAPTATION", "OBSERVATION"] }
+          }
+        }
+      }
+    },
+    "canonicalDigest": { "$ref": "#/$defs/digest" }
+  },
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._:-]*$" },
+    "digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "idList": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/id" } }
+  }
+}

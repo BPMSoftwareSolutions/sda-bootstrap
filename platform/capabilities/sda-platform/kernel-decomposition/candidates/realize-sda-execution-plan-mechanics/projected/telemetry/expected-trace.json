@@ -1,0 +1,213 @@
+{
+  "traceType": "projected-expected-consumer-trace.v1",
+  "telemetryId": "consumer-scenario-execution-telemetry",
+  "capabilityId": "realize-sda-execution-plan-mechanics",
+  "rootScenarioId": "realize-sda-execution-plan-mechanics",
+  "observationType": "scenario-execution-observation.v1",
+  "lineageFields": [
+    "executionId",
+    "rootExecutionId",
+    "parentExecutionId",
+    "scenarioId"
+  ],
+  "scenarios": [
+    {
+      "scenarioId": "realize-sda-execution-plan-mechanics",
+      "steps": [
+        "admit-input",
+        "resolve-event-authority",
+        "execute-event-authority",
+        "admit-outcome",
+        "resolve-disposition"
+      ],
+      "expectedTransitionId": "realize-to-admit-contract-value"
+    },
+    {
+      "scenarioId": "admit-contract-value",
+      "steps": [
+        "admit-input",
+        "resolve-event-authority",
+        "execute-event-authority",
+        "admit-outcome",
+        "resolve-disposition"
+      ],
+      "expectedTransitionId": "admit-to-execute-authority-transformation"
+    },
+    {
+      "scenarioId": "execute-authority-transformation",
+      "steps": [
+        "admit-input",
+        "resolve-event-authority",
+        "execute-event-authority",
+        "admit-outcome",
+        "resolve-disposition"
+      ],
+      "expectedTransitionId": "execute-to-evaluate-bounded-schema"
+    },
+    {
+      "scenarioId": "evaluate-bounded-schema",
+      "steps": [
+        "admit-input",
+        "resolve-event-authority",
+        "execute-event-authority",
+        "admit-outcome",
+        "resolve-disposition"
+      ],
+      "expectedTransitionId": "evaluate-to-materialize"
+    },
+    {
+      "scenarioId": "materialize-governed-artifact",
+      "steps": [
+        "admit-input",
+        "resolve-event-authority",
+        "execute-event-authority",
+        "admit-outcome",
+        "resolve-disposition"
+      ],
+      "expectedTransitionId": "materialize-to-repository"
+    },
+    {
+      "scenarioId": "observe-governed-repository",
+      "steps": [
+        "admit-input",
+        "resolve-event-authority",
+        "execute-event-authority",
+        "admit-outcome",
+        "resolve-disposition"
+      ],
+      "expectedTransitionId": "repository-to-external"
+    },
+    {
+      "scenarioId": "observe-external-representation",
+      "steps": [
+        "admit-input",
+        "resolve-event-authority",
+        "execute-event-authority",
+        "admit-outcome",
+        "resolve-disposition"
+      ],
+      "expectedTransitionId": "external-to-credential"
+    },
+    {
+      "scenarioId": "bind-external-credential-reference",
+      "steps": [
+        "admit-input",
+        "resolve-event-authority",
+        "execute-event-authority",
+        "admit-outcome",
+        "resolve-disposition"
+      ],
+      "expectedTransitionId": "credential-to-http"
+    },
+    {
+      "scenarioId": "execute-governed-http-exchange",
+      "steps": [
+        "admit-input",
+        "resolve-event-authority",
+        "execute-event-authority",
+        "admit-outcome",
+        "resolve-disposition"
+      ],
+      "expectedTransitionId": "http-to-model"
+    },
+    {
+      "scenarioId": "invoke-governed-model",
+      "steps": [
+        "admit-input",
+        "resolve-event-authority",
+        "execute-event-authority",
+        "admit-outcome",
+        "resolve-disposition"
+      ],
+      "expectedTransitionId": "model-to-shape"
+    },
+    {
+      "scenarioId": "shape-file-system-batch",
+      "steps": [
+        "admit-input",
+        "resolve-event-authority",
+        "execute-event-authority",
+        "admit-outcome",
+        "resolve-disposition"
+      ],
+      "expectedTransitionId": "shape-to-target-execution"
+    },
+    {
+      "scenarioId": "observe-governed-target-execution",
+      "steps": [
+        "admit-input",
+        "resolve-event-authority",
+        "execute-event-authority",
+        "admit-outcome",
+        "resolve-disposition"
+      ],
+      "expectedTransitionId": "target-execution-to-invoke-capability"
+    },
+    {
+      "scenarioId": "invoke-projected-capability",
+      "steps": [
+        "admit-input",
+        "resolve-event-authority",
+        "execute-event-authority",
+        "admit-outcome",
+        "resolve-disposition"
+      ],
+      "expectedTransitionId": "invoke-capability-to-sequence"
+    },
+    {
+      "scenarioId": "execute-governed-capability-sequence",
+      "steps": [
+        "admit-input",
+        "resolve-event-authority",
+        "execute-event-authority",
+        "admit-outcome",
+        "resolve-disposition"
+      ],
+      "expectedTransitionId": "sequence-to-resolve-feature"
+    },
+    {
+      "scenarioId": "resolve-canonical-capability-feature",
+      "steps": [
+        "admit-input",
+        "resolve-event-authority",
+        "execute-event-authority",
+        "admit-outcome",
+        "resolve-disposition"
+      ],
+      "expectedTransitionId": "resolve-feature-to-transact-binding"
+    },
+    {
+      "scenarioId": "transact-governed-tooling-binding",
+      "steps": [
+        "admit-input",
+        "resolve-event-authority",
+        "execute-event-authority",
+        "admit-outcome",
+        "resolve-disposition"
+      ],
+      "expectedTransitionId": "transact-binding-to-execute-migration"
+    },
+    {
+      "scenarioId": "execute-governed-tooling-migration-operation",
+      "steps": [
+        "admit-input",
+        "resolve-event-authority",
+        "execute-event-authority",
+        "admit-outcome",
+        "resolve-disposition"
+      ],
+      "expectedTransitionId": "execute-migration-to-project-registry"
+    },
+    {
+      "scenarioId": "project-language-mechanic-registry",
+      "steps": [
+        "admit-input",
+        "resolve-event-authority",
+        "execute-event-authority",
+        "admit-outcome",
+        "resolve-disposition"
+      ],
+      "expectedTransitionId": null
+    }
+  ]
+}

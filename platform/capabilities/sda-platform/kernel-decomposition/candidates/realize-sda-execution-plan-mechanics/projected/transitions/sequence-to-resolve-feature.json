@@ -1,0 +1,15 @@
+{
+  "transitionId": "sequence-to-resolve-feature",
+  "from": {
+    "scenarioId": "execute-governed-capability-sequence",
+    "outcomeId": "governed-capability-sequence-result",
+    "contractId": "governed-capability-sequence-result.v1"
+  },
+  "to": {
+    "scenarioId": "resolve-canonical-capability-feature",
+    "inputId": "capability-feature-authoring-request",
+    "contractId": "capability-feature-authoring-request.v1"
+  },
+  "semanticProgress": "monotonic",
+  "bindingAuthorityId": "project-sequence-to-resolve-feature"
+}

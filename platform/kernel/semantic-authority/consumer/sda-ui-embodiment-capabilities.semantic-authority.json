@@ -1,0 +1,183 @@
+{
+  "catalogType": "consumer-ui-embodiment-capability-catalog.v1",
+  "capabilities": [
+    {
+      "capabilityId": "sda-wpf-ui.v1",
+      "kind": "ui-embodiment",
+      "status": "ADMITTED",
+      "implementationDisposition": "NATIVE_PROOF_ADMITTED",
+      "embodimentTarget": "wpf",
+      "provider": "ScenarioKernel.Wpf.AuthorityBackedViewModel",
+      "providesMechanics": [
+        "ui-delivery",
+        "native-application-hosting",
+        "native-control-materialization",
+        "observable-view-state",
+        "semantic-authority-admission",
+        "semantic-object-graph",
+        "semantic-structural-testimony",
+        "authority-binding-projection",
+        "generic-command-dispatch",
+        "semantic-layout-projection",
+        "accessibility-intent-projection",
+        "validation-semantic-enforcement",
+        "semantic-testimony-emission",
+        "bidirectional-wiring-proof"
+      ],
+      "implementationRef": "languages/csharp/src/ScenarioKernel.UiAuthority/AuthorityBackedViewModel.cs",
+      "conformanceRef": "languages/csharp/src/ScenarioKernel.Wpf.Conformance/Program.cs",
+      "staticConformanceRef": "languages/csharp/src/ScenarioKernel.Wpf/UiStructuralContract.cs"
+    },
+    {
+      "capabilityId": "sda-react-ui.v1",
+      "kind": "ui-embodiment",
+      "status": "ADMITTED",
+      "implementationDisposition": "NATIVE_PROOF_ADMITTED",
+      "embodimentTarget": "react",
+      "provider": "AuthorityBackedApplication",
+      "providesMechanics": [
+        "ui-delivery",
+        "native-application-hosting",
+        "native-control-materialization",
+        "observable-view-state",
+        "semantic-authority-admission",
+        "semantic-object-graph",
+        "semantic-structural-testimony",
+        "authority-binding-projection",
+        "generic-command-dispatch",
+        "semantic-layout-projection",
+        "accessibility-intent-projection",
+        "validation-semantic-enforcement",
+        "semantic-testimony-emission",
+        "bidirectional-wiring-proof"
+      ],
+      "implementationRef": "languages/typescript/presentation/react/runtime/authority-backed-application.mjs",
+      "conformanceRef": "languages/typescript/presentation/react/conformance/browser-vector-driver.mjs",
+      "staticConformanceRef": "languages/typescript/presentation/react/runtime/ui-structural-contract.mjs"
+    },
+    {
+      "capabilityId": "sda-html-ui.v1",
+      "kind": "ui-embodiment",
+      "status": "ADMITTED",
+      "implementationDisposition": "NATIVE_PROOF_ADMITTED",
+      "embodimentTarget": "html",
+      "provider": "AuthorityBackedDomApplication",
+      "providesMechanics": [
+        "ui-delivery", "native-application-hosting", "native-control-materialization", "observable-view-state",
+        "semantic-authority-admission", "semantic-object-graph", "semantic-structural-testimony",
+        "authority-binding-projection", "generic-command-dispatch", "semantic-layout-projection",
+        "accessibility-intent-projection", "validation-semantic-enforcement", "semantic-testimony-emission",
+        "bidirectional-wiring-proof"
+      ],
+      "implementationRef": "languages/typescript/presentation/browser-dom/runtime/authority-backed-dom-application.mjs",
+      "conformanceRef": "languages/typescript/presentation/browser-dom/conformance/browser-vector-driver.mjs",
+      "staticConformanceRef": "languages/typescript/presentation/browser-dom/runtime/ui-structural-contract.mjs",
+      "toolchainRequirements": ["standards-compliant-browser"]
+    },
+    {
+      "capabilityId": "sda-javafx-ui.v1",
+      "kind": "ui-embodiment",
+      "status": "ADMITTED",
+      "implementationDisposition": "NATIVE_PROOF_ADMITTED",
+      "embodimentTarget": "javafx",
+      "provider": "AuthorityBackedJavaFxApplication",
+      "providesMechanics": [
+        "ui-delivery", "native-application-hosting", "native-control-materialization", "observable-view-state",
+        "semantic-authority-admission", "semantic-object-graph", "semantic-structural-testimony",
+        "authority-binding-projection", "generic-command-dispatch", "semantic-layout-projection",
+        "accessibility-intent-projection", "validation-semantic-enforcement", "semantic-testimony-emission",
+        "bidirectional-wiring-proof"
+      ],
+      "implementationRef": "languages/java/presentation/javafx/src/main/java/scenario/kernel/javafx/AuthorityBackedJavaFxApplication.java",
+      "conformanceRef": "languages/java/presentation/javafx/src/test/java/scenario/kernel/javafx/NativeJavaFxProofTest.java",
+      "staticConformanceRef": "languages/java/presentation/javafx/src/main/java/scenario/kernel/javafx/UiStructuralContract.java",
+      "toolchainRequirements": ["jdk-21-or-newer", "javafx-sdk", "native-javafx-automation"]
+    },
+    {
+      "capabilityId": "sda-cpp-appkit-ui.v1",
+      "kind": "ui-embodiment",
+      "status": "ADMITTED",
+      "implementationDisposition": "NATIVE_PROOF_ADMITTED",
+      "embodimentTarget": "cpp-appkit",
+      "provider": "sda::ui::AuthorityBackedAppKitApplication",
+      "providesMechanics": [
+        "ui-delivery", "native-application-hosting", "native-control-materialization", "observable-view-state",
+        "semantic-authority-admission", "semantic-object-graph", "semantic-structural-testimony",
+        "authority-binding-projection", "generic-command-dispatch", "semantic-layout-projection",
+        "accessibility-intent-projection", "validation-semantic-enforcement", "semantic-testimony-emission",
+        "bidirectional-wiring-proof"
+      ],
+      "implementationRef": "languages/cpp/ui/authority_backed_appkit_application.cpp",
+      "conformanceRef": "languages/cpp/conformance/ui_parity_test.cpp",
+      "staticConformanceRef": "languages/cpp/conformance/ui-semantic-implementation.json",
+      "projectionProfileRef": "languages/cpp/ui/projection-profile.json",
+      "toolchainRequirements": ["macos-arm64", "apple-clang", "appkit"]
+    },
+    {
+      "capabilityId": "sda-swiftui-ui.v1",
+      "kind": "ui-embodiment",
+      "status": "DECLARED",
+      "implementationDisposition": "IMPLEMENTED_AWAITING_NATIVE_PROOF",
+      "embodimentTarget": "swiftui",
+      "provider": "AuthorityBackedSwiftUiApplication",
+      "providesMechanics": [
+        "ui-delivery", "native-application-hosting", "native-control-materialization", "observable-view-state",
+        "semantic-authority-admission", "semantic-object-graph", "semantic-structural-testimony",
+        "authority-binding-projection", "generic-command-dispatch", "semantic-layout-projection",
+        "accessibility-intent-projection", "validation-semantic-enforcement", "semantic-testimony-emission",
+        "bidirectional-wiring-proof"
+      ],
+      "implementationRef": "languages/swift/presentation/swiftui/Sources/ScenarioKernelSwiftUI/AuthorityBackedApplication.swift",
+      "conformanceRef": "languages/swift/presentation/swiftui/NativeProofUITests/NativeSwiftUiProofTests.swift",
+      "staticConformanceRef": "languages/swift/presentation/swiftui/conformance/semantic-implementation.json",
+      "toolchainRequirements": ["macos", "xcode", "swift", "xctest-ui-automation"]
+    },
+    {
+      "capabilityId": "sda-android-compose-ui.v1",
+      "kind": "ui-embodiment",
+      "status": "DECLARED",
+      "implementationDisposition": "IMPLEMENTED_AWAITING_NATIVE_PROOF",
+      "embodimentTarget": "android-compose",
+      "provider": "AuthorityBackedComposeApplication",
+      "providesMechanics": [
+        "ui-delivery", "native-application-hosting", "native-control-materialization", "observable-view-state",
+        "semantic-authority-admission", "semantic-object-graph", "semantic-structural-testimony",
+        "authority-binding-projection", "generic-command-dispatch", "semantic-layout-projection",
+        "accessibility-intent-projection", "validation-semantic-enforcement", "semantic-testimony-emission",
+        "bidirectional-wiring-proof"
+      ],
+      "implementationRef": "languages/kotlin/presentation/android-compose/runtime/src/main/kotlin/dev/scenariodriven/compose/AuthorityBackedComposeApplication.kt",
+      "conformanceRef": "languages/kotlin/presentation/android-compose/runtime/src/androidTest/kotlin/dev/scenariodriven/compose/NativeComposeProofTest.kt",
+      "staticConformanceRef": "languages/kotlin/presentation/android-compose/conformance/semantic-implementation.json",
+      "toolchainRequirements": ["jdk-21-or-newer", "gradle", "android-sdk", "android-emulator-or-device", "compose-ui-test"]
+    },
+    {
+      "capabilityId": "sda-avalonia-ui.v1",
+      "kind": "ui-embodiment",
+      "status": "DECLARED",
+      "implementationDisposition": "IMPLEMENTED_AWAITING_NATIVE_PROOF",
+      "embodimentTarget": "avalonia",
+      "provider": "ScenarioKernel.Wpf.AuthorityBackedViewModel",
+      "providesMechanics": [
+        "ui-delivery",
+        "native-application-hosting",
+        "native-control-materialization",
+        "observable-view-state",
+        "semantic-authority-admission",
+        "semantic-object-graph",
+        "semantic-structural-testimony",
+        "authority-binding-projection",
+        "generic-command-dispatch",
+        "semantic-layout-projection",
+        "accessibility-intent-projection",
+        "validation-semantic-enforcement",
+        "semantic-testimony-emission",
+        "bidirectional-wiring-proof"
+      ],
+      "implementationRef": "languages/csharp/src/ScenarioKernel.UiAuthority/AuthorityBackedViewModel.cs",
+      "conformanceRef": "languages/csharp/src/ScenarioKernel.Avalonia.Conformance/Program.cs",
+      "staticConformanceRef": "languages/csharp/src/ScenarioKernel.Avalonia/conformance/semantic-implementation.json",
+      "toolchainRequirements": ["dotnet-sdk-10", "avalonia-headless"]
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/sda-platform/semantic-vector-index-provider-conformance.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["conformanceType", "lifecycle", "platformCapabilityId", "providerAuthorityRef", "providerAuthorityDigest", "providerAuthoritySourceDigest", "providerSourceSet", "contracts", "conformanceSuiteRef", "conformanceSuiteDigest", "partitions", "boundaries", "retainedForLaterAdmission", "findings", "disposition", "receiptDigest", "receiptDigestAlgorithm"],
+  "properties": {
+    "conformanceType": {"const": "semantic-vector-index-provider-conformance.v1"},
+    "lifecycle": {"enum": ["PROPOSED", "ADMITTED", "SUPERSEDED", "RETIRED", "HELD"]},
+    "platformCapabilityId": {"const": "sda-semantic-vector-index.v1"},
+    "providerAuthorityRef": {"type": "string", "minLength": 1},
+    "providerAuthorityDigest": {"$ref": "#/$defs/digest"},
+    "providerAuthoritySourceDigest": {"$ref": "#/$defs/digest"},
+    "providerSourceSet": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["sourceRef", "sourceDigest"],
+        "properties": {
+          "sourceRef": {"type": "string", "minLength": 1},
+          "sourceDigest": {"$ref": "#/$defs/digest"}
+        }
+      }
+    },
+    "contracts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["contractId", "sourceRef", "sourceDigest"],
+        "properties": {
+          "contractId": {"type": "string", "minLength": 1},
+          "sourceRef": {"type": "string", "minLength": 1},
+          "sourceDigest": {"$ref": "#/$defs/digest"}
+        }
+      }
+    },
+    "conformanceSuiteRef": {"type": "string", "minLength": 1},
+    "conformanceSuiteDigest": {"$ref": "#/$defs/digest"},
+    "partitions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["partitionId", "disposition", "assertion"],
+        "properties": {
+          "partitionId": {"type": "string", "minLength": 1},
+          "disposition": {"enum": ["SATISFIED", "NOT_SATISFIED", "NOT_OBSERVABLE", "NOT_APPLICABLE"]},
+          "assertion": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["candidatesAreFacts", "mayGroundResults", "mayAddAuthority", "mayReorderConsumerResults", "externalServiceUsed", "floatingPointCoordinatesUsed"],
+      "properties": {
+        "candidatesAreFacts": {"const": false},
+        "mayGroundResults": {"const": false},
+        "mayAddAuthority": {"const": false},
+        "mayReorderConsumerResults": {"const": false},
+        "externalServiceUsed": {"const": false},
+        "floatingPointCoordinatesUsed": {"const": false}
+      }
+    },
+    "retainedForLaterAdmission": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["code", "reason"],
+        "properties": {
+          "code": {"type": "string", "minLength": 1},
+          "reason": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "findings": {"type": "array", "items": {"type": "object"}},
+    "disposition": {"enum": ["SDA_SEMANTIC_VECTOR_INDEX_PROVIDER_CONFORMANT", "SDA_SEMANTIC_VECTOR_INDEX_PROVIDER_OPEN", "SDA_SEMANTIC_VECTOR_INDEX_PROVIDER_REJECTED"]},
+    "receiptDigest": {"$ref": "#/$defs/digest"},
+    "receiptDigestAlgorithm": {"type": "string", "minLength": 1}
+  },
+  "$defs": {"digest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"}}
+}

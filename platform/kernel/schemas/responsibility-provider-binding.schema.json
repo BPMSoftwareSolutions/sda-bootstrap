@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/responsibility-provider-binding.v1.schema.json",
+  "title": "Responsibility Provider Binding Authority",
+  "description": "Operational authority selecting providers for stable semantic responsibilities. This document is separate from capability meaning.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["bindingType", "bindings"],
+  "properties": {
+    "bindingType": { "const": "responsibility-provider-bindings.v1" },
+    "bindings": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["responsibilityId", "providerId", "implementationRef", "requires"],
+        "properties": {
+          "responsibilityId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "providerId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "implementationRef": { "type": "string", "minLength": 1 },
+          "protocol": {
+            "type": "string",
+            "enum": ["responsibility-provider-v1", "projected-consumer-runtime-v2"]
+          },
+          "requires": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" }
+          }
+        }
+      }
+    }
+  }
+}

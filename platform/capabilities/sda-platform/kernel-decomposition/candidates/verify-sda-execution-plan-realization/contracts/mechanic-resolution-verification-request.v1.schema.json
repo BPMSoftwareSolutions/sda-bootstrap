@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.sda.local/mechanic-resolution-verification-request.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contractId", "carrierType", "priorDisposition", "priorFindings", "expected", "observed", "verificationContext"],
+  "properties": {
+    "contractId": {"const": "mechanic-resolution-verification-request.v1"},
+    "carrierType": {"const": "mechanic-resolution-verification-request.v1"},
+    "priorDisposition": {"type": "string", "minLength": 1},
+    "priorFindings": {"type": "array", "items": {"type": "object"}},
+    "expected": {"type": "object", "additionalProperties": true},
+    "observed": {"type": "object", "additionalProperties": true},
+    "verificationContext": {"type": "object", "additionalProperties": true}
+  }
+}

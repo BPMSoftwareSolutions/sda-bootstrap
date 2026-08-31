@@ -1,0 +1,26 @@
+{
+  "traceType": "projected-expected-consumer-trace.v1",
+  "telemetryId": "consumer-scenario-execution-telemetry",
+  "capabilityId": "decide-tooling-migration",
+  "rootScenarioId": "decide-tooling-migration",
+  "observationType": "scenario-execution-observation.v1",
+  "lineageFields": [
+    "executionId",
+    "rootExecutionId",
+    "parentExecutionId",
+    "scenarioId"
+  ],
+  "scenarios": [
+    {
+      "scenarioId": "decide-tooling-migration",
+      "steps": [
+        "admit-input",
+        "resolve-event-authority",
+        "execute-event-authority",
+        "admit-outcome",
+        "resolve-disposition"
+      ],
+      "expectedTransitionId": null
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/json-ingestion/admitted-json-reference-closure-resolver.authority.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "authorityType", "authorityId", "authorityRef", "authorityVersion", "lifecycle", "platformCapabilityId", "authorityDigest", "authorityDigestAlgorithm", "namespaceRules", "closureRules", "providerObservation"],
+  "properties": {
+    "$schema": {"const": "contracts/admitted-json-reference-closure-resolver.authority.schema.json"},
+    "authorityType": {"const": "admitted-json-reference-closure-resolver-authority.v1"},
+    "authorityId": {"const": "admitted-json-reference-closure-resolver.v1"},
+    "authorityRef": {"const": "capabilities/sda-platform/resolve-admitted-json-reference-closure/admitted-json-reference-closure-resolver.authority.json"},
+    "authorityVersion": {"const": "1.0.0"},
+    "lifecycle": {"enum": ["PROPOSED", "ADMITTED"]},
+    "platformCapabilityId": {"const": "sda-admitted-json-reference-closure-resolver.v1"},
+    "authorityDigest": {"$ref": "#/$defs/digest"},
+    "authorityDigestAlgorithm": {"const": "sha256 of canonical recursive-key-order JSON excluding authorityDigest"},
+    "namespaceRules": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contentReferencesSeparateFromSchemaReferences", "ambientNetworkResolution", "ambientFilesystemResolution", "aliasInference"],
+      "properties": {
+        "contentReferencesSeparateFromSchemaReferences": {"const": true},
+        "ambientNetworkResolution": {"const": false},
+        "ambientFilesystemResolution": {"const": false},
+        "aliasInference": {"const": false}
+      }
+    },
+    "closureRules": {
+      "type": "array",
+      "minItems": 6,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "reference-scope-digest-must-be-current",
+          "each-reference-resolves-to-exactly-one-subject",
+          "resolved-subject-digest-must-match-scope",
+          "dangling-references-hold-closure",
+          "cycles-follow-declared-policy-and-remain-bounded",
+          "resolved-reference-order-is-bytewise-reference-id"
+        ]
+      }
+    },
+    "providerObservation": {"$ref": "#/$defs/providerObservation"}
+  },
+  "allOf": [
+    {"if": {"properties": {"lifecycle": {"const": "ADMITTED"}}, "required": ["lifecycle"]}, "then": {"properties": {"providerObservation": {"properties": {"disposition": {"const": "SATISFIED"}}}}}}
+  ],
+  "$defs": {
+    "digest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "providerObservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["disposition", "providerSourceRef", "providerSourceDigest", "implementationVersion"],
+      "properties": {
+        "disposition": {"enum": ["SATISFIED", "NOT_OBSERVABLE"]},
+        "providerSourceRef": {"oneOf": [{"type": "string", "minLength": 1}, {"type": "null"}]},
+        "providerSourceDigest": {"oneOf": [{"$ref": "#/$defs/digest"}, {"type": "null"}]},
+        "implementationVersion": {"oneOf": [{"type": "string", "minLength": 1}, {"type": "null"}]}
+      },
+      "allOf": [
+        {"if": {"properties": {"disposition": {"const": "NOT_OBSERVABLE"}}, "required": ["disposition"]}, "then": {"properties": {"providerSourceRef": {"type": "null"}, "providerSourceDigest": {"type": "null"}, "implementationVersion": {"type": "null"}}}},
+        {"if": {"properties": {"disposition": {"const": "SATISFIED"}}, "required": ["disposition"]}, "then": {"properties": {"providerSourceRef": {"type": "string", "minLength": 1}, "providerSourceDigest": {"$ref": "#/$defs/digest"}, "implementationVersion": {"type": "string", "minLength": 1}}}}
+      ]
+    }
+  }
+}

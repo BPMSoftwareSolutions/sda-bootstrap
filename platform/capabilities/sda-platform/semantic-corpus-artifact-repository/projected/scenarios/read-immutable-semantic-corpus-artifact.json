@@ -1,0 +1,38 @@
+{
+  "scenarioId": "read-immutable-semantic-corpus-artifact",
+  "input": {
+    "inputId": "semantic-corpus-artifact-read-request",
+    "contract": {
+      "contractId": "semantic-corpus-artifact-read-request.v1"
+    }
+  },
+  "event": {
+    "eventId": "semantic-corpus-artifact-read-requested",
+    "executionAuthorityId": "read-immutable-semantic-corpus-artifact.v1"
+  },
+  "outcome": {
+    "outcomeId": "semantic-corpus-artifact-read-evidence",
+    "contract": {
+      "contractId": "semantic-corpus-artifact-read-evidence.v1"
+    },
+    "experience": {
+      "statement": "the exact artifact or an attributable missing, corrupted, or unauthorized finding is returned without fallback to current or latest state"
+    },
+    "terminal": true
+  },
+  "gherkin": {
+    "given": {
+      "semanticRef": "read-immutable-semantic-corpus-artifact.given",
+      "text": "one authorized artifact digest and bounded repository authority"
+    },
+    "when": {
+      "semanticRef": "read-immutable-semantic-corpus-artifact.when",
+      "text": "the exact stored artifact is read and its digest and canonical form are verified"
+    },
+    "then": {
+      "semanticRef": "read-immutable-semantic-corpus-artifact.then",
+      "text": "the exact artifact or an attributable missing, corrupted, or unauthorized finding is returned without fallback to current or latest state"
+    }
+  },
+  "name": "Read and verify one content-addressed artifact"
+}

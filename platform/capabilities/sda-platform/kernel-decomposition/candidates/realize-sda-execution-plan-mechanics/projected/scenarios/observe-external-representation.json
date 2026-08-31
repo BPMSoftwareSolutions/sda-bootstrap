@@ -1,0 +1,37 @@
+{
+  "scenarioId": "observe-external-representation",
+  "input": {
+    "inputId": "external-representation-observation-request",
+    "contract": {
+      "contractId": "external-representation-observation-request.v1"
+    }
+  },
+  "event": {
+    "eventId": "observe-external-representation",
+    "executionAuthorityId": "observe-external-representation.v1"
+  },
+  "outcome": {
+    "outcomeId": "external-representation-observation",
+    "contract": {
+      "contractId": "external-representation-observation.v1"
+    },
+    "experience": {
+      "statement": "one attributable external representation observation is available"
+    }
+  },
+  "gherkin": {
+    "given": {
+      "semanticRef": "observe-external-representation.given",
+      "text": "an admitted external reference and source authority"
+    },
+    "when": {
+      "semanticRef": "observe-external-representation.when",
+      "text": "the external representation is observed"
+    },
+    "then": {
+      "semanticRef": "observe-external-representation.then",
+      "text": "one attributable external representation observation is available"
+    }
+  },
+  "name": "Observe an external representation"
+}

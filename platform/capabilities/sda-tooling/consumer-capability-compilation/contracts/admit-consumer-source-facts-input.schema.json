@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/tooling/admit-consumer-source-facts-input.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["facts"],
+  "properties": { "facts": { "type": "object" } }
+}

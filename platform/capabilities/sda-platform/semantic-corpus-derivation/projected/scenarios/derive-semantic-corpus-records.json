@@ -1,0 +1,38 @@
+{
+  "scenarioId": "derive-semantic-corpus-records",
+  "input": {
+    "inputId": "admitted-semantic-corpus-derivation-request",
+    "contract": {
+      "contractId": "semantic-corpus-derivation-request.v1"
+    }
+  },
+  "event": {
+    "eventId": "semantic-corpus-derivation-requested",
+    "executionAuthorityId": "semantic-corpus-derivation.v1"
+  },
+  "outcome": {
+    "outcomeId": "semantic-corpus-derivation-evidence",
+    "contract": {
+      "contractId": "semantic-corpus-derivation-evidence.v1"
+    },
+    "experience": {
+      "statement": "ordered records and attributable findings are returned with zero path, prose, similarity, or model-derived authority inventions"
+    },
+    "terminal": true
+  },
+  "gherkin": {
+    "given": {
+      "semanticRef": "derive-semantic-corpus-records.given",
+      "text": "one snapshot, admitted ingestion receipts, ontology, and deterministic object and relationship derivation rules"
+    },
+    "when": {
+      "semanticRef": "derive-semantic-corpus-records.when",
+      "text": "rules select exact compiler or JSON pointers and derive owner-scoped identities and edges"
+    },
+    "then": {
+      "semanticRef": "derive-semantic-corpus-records.then",
+      "text": "ordered records and attributable findings are returned with zero path, prose, similarity, or model-derived authority inventions"
+    }
+  },
+  "name": "Apply admitted rules without inventing semantic authority"
+}

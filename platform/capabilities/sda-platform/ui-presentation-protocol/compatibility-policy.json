@@ -1,0 +1,22 @@
+{
+  "policyType": "sda-ui-presentation-compatibility-policy.v1",
+  "protocolType": "sda-ui-presentation-ir.v2",
+  "sourceAdapters": [
+    {
+      "sourceAuthorityType": "consumer-ui-authority.v1",
+      "sourceSchemaRef": "kernel/schemas/consumer-ui-authority.schema.json",
+      "sourceSchemaDigest": "sha256:06caa7d4910a21dc6e50c6ad79d0ac0151b6dc879c7e9fae0e54086b25dd6786",
+      "adapterId": "consumer-ui-v1-to-presentation-ir-v2.v1",
+      "disposition": "ADMITTED"
+    }
+  ],
+  "rules": {
+    "unknownSourceFields": "REJECT",
+    "unknownIrFields": "REJECT",
+    "silentFallback": "FORBIDDEN",
+    "rendererAuthorityAccess": "FORBIDDEN",
+    "consumerDomainDerivationInRenderer": "FORBIDDEN",
+    "minorEvolution": "ADDITIVE_OPTIONAL_ONLY",
+    "majorEvolution": "NEW_PROTOCOL_TYPE_REQUIRED"
+  }
+}

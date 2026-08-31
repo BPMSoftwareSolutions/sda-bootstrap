@@ -1,0 +1,44 @@
+{
+  "$schema": "../../../kernel/schemas/projection-authoring-context.schema.json",
+  "contextType": "projection-authoring-context.v1",
+  "lifecycle": "FROZEN_CANDIDATE_AUTHORITY",
+  "capabilityId": "sda-semantic-corpus-derivation.v1",
+  "sourceFeature": {
+    "ref": "capability.feature",
+    "digest": "sha256:a217839f3bed4094dcbb4971419e62c6f0355df80f9015babb2121f2d2c84464"
+  },
+  "retainedAuthorities": [
+    {"role": "REQUEST_CONTRACT", "ref": "contracts/semantic-corpus-derivation-request.v1.schema.json", "digest": "sha256:774b532e265a3f715c403e20d7c5400b43b0afde7df91fbd6adcddbee8a03873", "status": "FROZEN_CANDIDATE_AUTHORITY"},
+    {"role": "EVIDENCE_CONTRACT", "ref": "contracts/semantic-corpus-derivation-evidence.v1.schema.json", "digest": "sha256:ac09e293f2dc9793ecbcf38b66738d03231f72c07ba28f1bc239ba080c6b63f8", "status": "FROZEN_CANDIDATE_AUTHORITY"},
+    {"role": "ONTOLOGY_CONTRACT", "ref": "contracts/semantic-corpus-ontology.v1.schema.json", "digest": "sha256:6c69f0caba65295fe8fb5690cbd1d462afa0645531c772b4401058cd152740e6", "status": "FROZEN_CANDIDATE_AUTHORITY"},
+    {"role": "PROFILE_CONTRACT", "ref": "contracts/semantic-corpus-derivation-profile.v1.schema.json", "digest": "sha256:cd4a9015aee4cfa1488cb2a64be81fae51f404c6377001be23e0192899767883", "status": "FROZEN_CANDIDATE_AUTHORITY"},
+    {"role": "RULE_SET_CONTRACT", "ref": "contracts/semantic-corpus-derivation-rule-set.v1.schema.json", "digest": "sha256:3a6bd75548ebc19719ca2e12c3218087ca1f2030d0cea1b0446efc3f52c0e805", "status": "FROZEN_CANDIDATE_AUTHORITY"},
+    {"role": "CONFORMANCE_FEATURE", "ref": "../verify-semantic-corpus-derivation-conformance/capability.feature", "digest": "sha256:7de19f49fd33aa0cfe33f268df70a37b2317530f514e54cbe0f4ded0fccf9d0a", "status": "FROZEN_CANDIDATE_AUTHORITY"},
+    {"role": "FIXTURE_MANIFEST", "ref": "../verify-semantic-corpus-derivation-conformance/fixtures/fixture-manifest.authority.json", "digest": "sha256:e94918fc35bbb3df93a03edd499a03621ebd45a642b7772a8549db22615f255b", "status": "FROZEN_FIXTURE_AUTHORITY"},
+    {"role": "GENERIC_ONTOLOGY", "ref": "../verify-semantic-corpus-derivation-conformance/fixtures/generic-semantic-corpus-ontology.v1.json", "digest": "sha256:1e28409aca9838ccedb726d4699d2ff88d5ba426560434190dc2033a1a2e8a24", "status": "ADMITTED_SOURCE_AUTHORITY"},
+    {"role": "GENERIC_PROFILE", "ref": "../verify-semantic-corpus-derivation-conformance/fixtures/generic-semantic-corpus-derivation-profile.v1.json", "digest": "sha256:5aa91cfe1056d8d70462d25cff029645caa2a79c12b7aa0964399d0b51b57722", "status": "ADMITTED_SOURCE_AUTHORITY"},
+    {"role": "GENERIC_RULE_SET", "ref": "../verify-semantic-corpus-derivation-conformance/fixtures/generic-semantic-corpus-derivation-rule-set.v1.json", "digest": "sha256:3f50e145a02bee6da653aab29383524286237c73f4c9c834488c30140d8fb84e", "status": "ADMITTED_SOURCE_AUTHORITY"}
+  ],
+  "requiredMechanics": [
+    {"mechanicId": "authority-document-resolution", "kind": "PURE", "status": "UNADMITTED", "proves": ["EXACT_AUTHORITY_BINDINGS", "NO_AMBIENT_READS"]},
+    {"mechanicId": "rfc6901-selector-evaluation", "kind": "PURE", "status": "UNADMITTED", "proves": ["EXACT_POINTER_SELECTION", "ROOT_POINTER_SUPPORT"]},
+    {"mechanicId": "canonical-recursive-json", "kind": "PURE", "status": "UNADMITTED", "proves": ["CANONICAL_DIGESTS", "CROSS_TARGET_IDENTITY"]},
+    {"mechanicId": "byte-exact-utf8-digesting", "kind": "PURE", "status": "UNADMITTED", "proves": ["EXACT_BYTE_IDENTITY", "CROSS_TARGET_DIGEST_PARITY"]},
+    {"mechanicId": "stable-utf8-record-ordering", "kind": "PURE", "status": "UNADMITTED", "proves": ["DISCOVERY_ORDER_INDEPENDENCE", "ORDERED_OUTPUT_IDENTITY"]},
+    {"mechanicId": "deterministic-group-and-collision-reduction", "kind": "PURE", "status": "UNADMITTED", "proves": ["OWNER_SCOPED_COLLISIONS", "DUPLICATE_MERGE_IDENTITY"]}
+  ],
+  "executablePolicy": {
+    "generatedExecutableOnly": true,
+    "consumerSeam": "sda-projected-capability-invocation-port.v2",
+    "forbiddenDomainRuntimeRefs": [
+      "languages/typescript/runtimes/node/semantic-corpus-derivation-provider.mjs",
+      "languages/typescript/runtimes/node/node-native-mechanic-providers.mjs#sda-semantic-corpus-derivation.v1"
+    ]
+  },
+  "disposition": "READY_FOR_PROJECTION",
+  "claims": {
+    "providerAdmission": "NOT_CLAIMED",
+    "projectionConformance": "NOT_CLAIMED",
+    "runtimeAdmission": "NOT_CLAIMED"
+  }
+}

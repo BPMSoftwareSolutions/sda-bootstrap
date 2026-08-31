@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/consumer-ui-claimant-native-admission-evidence.v1.schema.json",
+  "title": "Consumer UI Claimant Native Admission Evidence",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "admissionEvidenceType", "applicationId", "claimantTarget", "baselineTargets", "candidateEvidenceRoot",
+    "schemaAdmission", "staticImplementationDisposition", "crossApplyProof", "findings", "disposition"
+  ],
+  "properties": {
+    "admissionEvidenceType": { "const": "consumer-ui-claimant-native-admission-evidence.v1" },
+    "applicationId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "claimantTarget": { "$ref": "consumer-ui-parity-evidence.schema.json#/$defs/target" },
+    "baselineTargets": {
+      "type": "array", "minItems": 2, "uniqueItems": true,
+      "items": { "$ref": "consumer-ui-parity-evidence.schema.json#/$defs/target" }
+    },
+    "candidateEvidenceRoot": { "type": "string", "minLength": 1 },
+    "schemaAdmission": {
+      "type": "object", "additionalProperties": false,
+      "required": ["testimony", "presentation", "wiring", "structure"],
+      "properties": {
+        "testimony": { "const": "PASS" },
+        "presentation": { "const": "PASS" },
+        "wiring": { "const": "PASS" },
+        "structure": { "const": "PASS" }
+      }
+    },
+    "staticImplementationDisposition": { "type": "string", "enum": ["PASS", "FAIL"] },
+    "crossApplyProof": { "$ref": "consumer-ui-parity-evidence.schema.json" },
+    "findings": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "disposition": { "type": "string", "enum": ["READY_FOR_ADMISSION", "REJECTED"] }
+  }
+}

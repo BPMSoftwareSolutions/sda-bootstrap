@@ -1,0 +1,16 @@
+{
+  "execution-plan-realization-verification-request.v1": "input.schema.json",
+  "execution-plan-realization-conformance.v1": "outcome.schema.json",
+  "expected-and-observed-execution.v1": "expected-and-observed-execution.v1.schema.json",
+  "execution-trace-conformance.v1": "execution-trace-conformance.v1.schema.json",
+  "artifact-materialization-verification-request.v1": "artifact-materialization-verification-request.v1.schema.json",
+  "artifact-materialization-conformance.v1": "artifact-materialization-conformance.v1.schema.json",
+  "projected-executable-origin-verification-request.v1": "projected-executable-origin-verification-request.v1.schema.json",
+  "projected-executable-origin-conformance.v1": "projected-executable-origin-conformance.v1.schema.json",
+  "mechanic-resolution-verification-request.v1": "mechanic-resolution-verification-request.v1.schema.json",
+  "mechanic-resolution-conformance.v1": "mechanic-resolution-conformance.v1.schema.json",
+  "language-mechanic-parity-verification-request.v1": "language-mechanic-parity-verification-request.v1.schema.json",
+  "language-mechanic-parity-conformance.v1": "language-mechanic-parity-conformance.v1.schema.json",
+  "canonical-outcome-parity-verification-request.v1": "canonical-outcome-parity-verification-request.v1.schema.json",
+  "canonical-outcome-parity-conformance.v1": "canonical-outcome-parity-conformance.v1.schema.json"
+}

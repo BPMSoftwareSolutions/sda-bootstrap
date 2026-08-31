@@ -1,0 +1,15 @@
+{
+  "manifestType": "scenario-semantic-carrier-extraction-fixture-manifest.v1",
+  "fixtureRoot": "capabilities/sda-platform/verify-scenario-semantic-carrier-extraction-conformance/fixtures",
+  "artifacts": [
+    {
+      "path": "valid-extractor.carrier.ts",
+      "sourceDigest": "sha256:3a7d1c7b0d84c4cc0ac241186f515bb99bdf85160cd60a309d80f5532948abae"
+    },
+    {
+      "path": "valid-managed-extractor.carrier.ts",
+      "sourceDigest": "sha256:49df6fbfcb38711592e13f13180988caeb80ab3962bcba4ec27e5a0353ad73c6"
+    }
+  ],
+  "fixtureSetDigest": "sha256:f155b96bf61c8061a0fc2ce4cbf137020656c258ee82395c25c74c23165e7128"
+}

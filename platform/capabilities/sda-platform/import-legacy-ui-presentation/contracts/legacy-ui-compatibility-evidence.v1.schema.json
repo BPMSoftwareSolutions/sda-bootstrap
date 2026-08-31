@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/platform/ui-compatibility/legacy-ui-compatibility-evidence.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["evidenceType", "sourceType", "sourceDigest", "originManifestDigest", "declaredAuthorityDigest", "semanticPresentationDigest", "successorIrDigest", "factResults", "findings", "disposition"],
+  "properties": {
+    "evidenceType": { "const": "legacy-ui-compatibility-evidence.v1" },
+    "sourceType": { "enum": ["consumer-ui-authority.v1", "sda-ui-presentation-ir.v2", "UNKNOWN"] },
+    "sourceDigest": { "$ref": "#/$defs/digest" },
+    "originManifestDigest": { "oneOf": [{ "$ref": "#/$defs/digest" }, { "type": "null" }] },
+    "declaredAuthorityDigest": { "oneOf": [{ "$ref": "#/$defs/digest" }, { "type": "null" }] },
+    "semanticPresentationDigest": { "oneOf": [{ "$ref": "#/$defs/digest" }, { "type": "null" }] },
+    "successorIrDigest": { "oneOf": [{ "$ref": "#/$defs/digest" }, { "type": "null" }] },
+    "factResults": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["sourcePath", "factClass", "valueDigest", "targetRef", "disposition"],
+        "properties": {
+          "sourcePath": { "type": "string", "pattern": "^/" },
+          "factClass": { "enum": ["SEMANTIC", "PHYSICAL_PRESENTATION", "VISUAL_PRESENTATION", "TARGET_RECIPE"] },
+          "valueDigest": { "$ref": "#/$defs/digest" },
+          "targetRef": { "oneOf": [{ "$ref": "#/$defs/id" }, { "type": "null" }] },
+          "disposition": { "enum": ["CONVERTED", "PRESERVED_AS_LEGACY_FACT", "UNRESOLVED", "REJECTED"] }
+        }
+      }
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["code", "subjectRef"],
+        "properties": {
+          "code": { "enum": ["UNSUPPORTED_LEGACY_SOURCE", "LEGACY_SOURCE_DIGEST_MISMATCH", "ORIGIN_MANIFEST_DIGEST_MISMATCH", "DECLARED_AUTHORITY_DIGEST_MISMATCH", "DUPLICATE_FACT_MAPPING", "UNKNOWN_LEGACY_FACT_PATH", "UNKNOWN_DECLARED_TARGET", "UNMAPPED_SEMANTIC_FACT", "DECLARED_AUTHORITY_REJECTED", "SUCCESSOR_COMPILATION_REJECTED"] },
+          "subjectRef": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "disposition": { "enum": ["LOSSLESS", "ADMITTED_WITH_LEGACY_PRESENTATION_FACTS", "SEMANTIC_ORIGIN_UNRESOLVED", "INCOMPATIBLE"] }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "disposition": { "enum": ["LOSSLESS", "ADMITTED_WITH_LEGACY_PRESENTATION_FACTS"] } }, "required": ["disposition"] },
+      "then": {
+        "properties": {
+          "semanticPresentationDigest": { "$ref": "#/$defs/digest" },
+          "findings": { "maxItems": 0 }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "disposition": { "const": "SEMANTIC_ORIGIN_UNRESOLVED" } }, "required": ["disposition"] },
+      "then": {
+        "properties": {
+          "semanticPresentationDigest": { "type": "null" },
+          "successorIrDigest": { "type": "null" },
+          "findings": { "minItems": 1 }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "disposition": { "const": "INCOMPATIBLE" } }, "required": ["disposition"] },
+      "then": { "properties": { "findings": { "minItems": 1 } } }
+    }
+  ],
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._:-]*$" },
+    "digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }
+  }
+}

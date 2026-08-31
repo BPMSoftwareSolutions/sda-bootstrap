@@ -1078,6 +1078,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 
 const bootstrapEntryPath = fileURLToPath(import.meta.url);
 const bootstrapRoot = path.dirname(bootstrapEntryPath);
+const installedPackageRoot = path.resolve(bootstrapRoot, "..");
 const repositoryRoot = path.resolve(process.env.CAPSULE_SOURCE_REPOSITORY_ROOT || process.cwd());
 const bootstrapManifestPath = path.join(repositoryRoot, "bootstrap", "bootstrap.manifest.json");
 const bootstrapManifest = readJson(bootstrapManifestPath);
@@ -1288,9 +1289,47 @@ function resolveEstate(estate = loadEstate()) {
 
 function resolvePlatformRoot() {
   const override = process.env.SIDEFX_PLATFORM_ROOT;
-  const root = path.resolve(repositoryRoot, override || bootstrapManifest.platform.rootRef);
+  const configured = override || bootstrapManifest.platform.rootRef;
+  const packagePrefix = "package:sda-bootstrap/";
+  const root = !override && configured.startsWith(packagePrefix)
+    ? path.resolve(installedPackageRoot, configured.slice(packagePrefix.length))
+    : path.resolve(repositoryRoot, configured);
+  if (!override && configured.startsWith(packagePrefix)) {
+    const relative = path.relative(installedPackageRoot, root);
+    if (relative.startsWith("..") || path.isAbsolute(relative)) {
+      throw new Error(`SIDEFX_PACKAGE_PLATFORM_ROOT_ESCAPES_PACKAGE: '${configured}'.`);
+    }
+  }
   if (!fs.existsSync(root)) throw new Error(`SIDEFX_PLATFORM_ROOT_MISSING: '${root}'.`);
   return root;
+}
+
+function usesInstalledPackagePlatform() {
+  return !process.env.SIDEFX_PLATFORM_ROOT
+    && bootstrapManifest.platform.rootRef.startsWith("package:sda-bootstrap/");
+}
+
+function createExecutionWorkspace(kind) {
+  if (!usesInstalledPackagePlatform()) {
+    const targetRoot = fs.mkdtempSync(path.join(path.dirname(repositoryRoot), `agentic-harness-${kind}-`));
+    return { targetRoot, cleanupRoot: targetRoot, platformRoot: resolvePlatformRoot() };
+  }
+  const cleanupRoot = fs.mkdtempSync(path.join(os.tmpdir(), `sda-bootstrap-${kind}-`));
+  const targetRoot = path.join(cleanupRoot, "agentic-harness");
+  const platformRoot = resolvePlatformRoot();
+  const portableSiblingRoot = path.join(cleanupRoot, "scenario-driven-architecture");
+  fs.mkdirSync(targetRoot, { recursive: true });
+  copyTree(platformRoot, portableSiblingRoot);
+  return { targetRoot, cleanupRoot, platformRoot };
+}
+
+function removeExecutionWorkspace(workspace, markerName) {
+  const marker = path.join(workspace.targetRoot, markerName);
+  if (!fs.existsSync(marker)) return;
+  if (readJson(marker).root !== workspace.targetRoot) {
+    throw new Error(`EXECUTION_WORKSPACE_MARKER_DIVERGED: '${marker}'.`);
+  }
+  fs.rmSync(workspace.cleanupRoot, { recursive: true, force: true });
 }
 
 function materializeEntries(estate, targetRoot, predicate) {
@@ -1433,10 +1472,9 @@ async function invokeCapability(capabilityId, input, estate = loadEstate()) {
   verifyEstate(estate);
   resolveEstate(estate);
   capsuleRecord(estate, capabilityId);
-  const platformRoot = resolvePlatformRoot();
+  const workspace = createExecutionWorkspace("capsule-invoke");
+  const { targetRoot, platformRoot } = workspace;
   const runtimeUrl = pathToFileURL(path.resolve(platformRoot, bootstrapManifest.platform.runtimeModuleRef)).href;
-  const parent = path.dirname(repositoryRoot);
-  const targetRoot = fs.mkdtempSync(path.join(parent, "agentic-harness-capsule-invoke-"));
   const marker = path.join(targetRoot, ".capsule-invoke-root.json");
   fs.writeFileSync(marker, JSON.stringify({ root: targetRoot }), "utf8");
   try {
@@ -1466,15 +1504,14 @@ async function invokeCapability(capabilityId, input, estate = loadEstate()) {
     const execute = runtime.default(pathToFileURL(bindingPath).href, "./application-binding.node.json");
     return await execute(input);
   } finally {
-    if (fs.existsSync(marker) && readJson(marker).root === targetRoot) fs.rmSync(targetRoot, { recursive: true, force: true });
+    removeExecutionWorkspace(workspace, ".capsule-invoke-root.json");
   }
 }
 
 async function proveDirectExecution(estate, selectedIds = null) {
-  const platformRoot = resolvePlatformRoot();
+  const workspace = createExecutionWorkspace("capsule-runtime");
+  const { targetRoot, platformRoot } = workspace;
   const runtimeUrl = pathToFileURL(path.resolve(platformRoot, bootstrapManifest.platform.runtimeModuleRef)).href;
-  const parent = path.dirname(repositoryRoot);
-  const targetRoot = fs.mkdtempSync(path.join(parent, "agentic-harness-capsule-runtime-"));
   const marker = path.join(targetRoot, ".capsule-runtime-root.json");
   fs.writeFileSync(marker, JSON.stringify({ root: targetRoot }), "utf8");
   try {
@@ -1501,9 +1538,7 @@ async function proveDirectExecution(estate, selectedIds = null) {
     }
     return { eligible: selectedApplications.length, reconstructedEntryCount, fixtureCount, ...summary, broken: 0 };
   } finally {
-    if (fs.existsSync(marker) && readJson(marker).root === targetRoot) {
-      fs.rmSync(targetRoot, { recursive: true, force: true });
-    }
+    removeExecutionWorkspace(workspace, ".capsule-runtime-root.json");
   }
 }
 
@@ -1535,18 +1570,26 @@ function parseNodeTestSummary(output) {
 }
 
 function runNodeTests(targetRoot, references, emit = true) {
-  const result = spawnSync(process.execPath, ["--test", ...references], { cwd: targetRoot, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
+  const childEnvironment = { ...process.env };
+  delete childEnvironment.NODE_TEST_CONTEXT;
+  const result = spawnSync(process.execPath, ["--test", ...references], {
+    cwd: targetRoot,
+    encoding: "utf8",
+    maxBuffer: 64 * 1024 * 1024,
+    env: childEnvironment
+  });
   const output = `${result.stdout ?? ""}\n${result.stderr ?? ""}`;
   if (emit) {
     process.stdout.write(result.stdout ?? "");
     process.stderr.write(result.stderr ?? "");
   }
   const summary = parseNodeTestSummary(output);
-  if (result.status !== 0) {
+  if (result.status !== 0 || summary.tests === -1) {
     const reportPath = path.join(bootstrapRoot, "capsule-runtime-tests.tap");
     fs.writeFileSync(reportPath, output, "utf8");
     const failedTests = output.split(/\r?\n/).filter((line) => /^not ok \d+ - /.test(line)).map((line) => line.replace(/^not ok \d+ - /, ""));
-    throw new Error(`AGGREGATE_TEST_FAILED: exit '${result.status}', summary '${JSON.stringify(summary)}', failures '${JSON.stringify(failedTests)}', report '${reportPath}'.`);
+    const diagnostic = output.slice(-4000);
+    throw new Error(`AGGREGATE_TEST_FAILED: exit '${result.status}', summary '${JSON.stringify(summary)}', failures '${JSON.stringify(failedTests)}', report '${reportPath}', diagnostic '${diagnostic}'.`);
   }
   return summary;
 }
@@ -1568,10 +1611,12 @@ function copyTree(source, target) {
   fs.cpSync(source, target, { recursive: true, force: false, errorOnExist: false, filter: (item) => !item.includes(`${path.sep}.git${path.sep}`) });
 }
 
-function assertOwnedSterileRoot(root) {
-  const parent = path.dirname(repositoryRoot);
-  const relative = path.relative(parent, root);
-  if (relative.startsWith("..") || path.isAbsolute(relative) || !path.basename(root).startsWith("agentic-harness-sterile-")) {
+function assertOwnedSterileRoot(root, cleanupRoot) {
+  const legacyRoot = cleanupRoot === root && path.basename(root).startsWith("agentic-harness-sterile-");
+  const packagedRoot = path.dirname(root) === cleanupRoot
+    && path.basename(cleanupRoot).startsWith("sda-bootstrap-sterile-")
+    && path.basename(root) === "agentic-harness";
+  if (!legacyRoot && !packagedRoot) {
     throw new Error(`STERILE_ROOT_NOT_OWNED: '${root}'.`);
   }
 }
@@ -1687,9 +1732,9 @@ function assertCollapsedRepository() {
 
 async function runSterileProof() {
   assertCollapsedRepository();
-  const parent = path.dirname(repositoryRoot);
-  const sterileRoot = fs.mkdtempSync(path.join(parent, "agentic-harness-sterile-"));
-  assertOwnedSterileRoot(sterileRoot);
+  const workspace = createExecutionWorkspace("sterile");
+  const sterileRoot = workspace.targetRoot;
+  assertOwnedSterileRoot(sterileRoot, workspace.cleanupRoot);
   const marker = path.join(sterileRoot, ".capsule-first-sterile-root.json");
   fs.writeFileSync(marker, JSON.stringify({ proofType: "capsule-first-sterile-root.v1", root: sterileRoot }), "utf8");
   try {
@@ -1704,7 +1749,7 @@ async function runSterileProof() {
       env: {
         ...process.env,
         CAPSULE_SOURCE_REPOSITORY_ROOT: sterileRoot,
-        SIDEFX_PLATFORM_ROOT: resolvePlatformRoot()
+        SIDEFX_PLATFORM_ROOT: workspace.platformRoot
       }
     });
     process.stdout.write(child.stdout ?? "");
@@ -1712,11 +1757,7 @@ async function runSterileProof() {
     if (child.status !== 0) throw new Error(`STERILE_PROOF_FAILED: exit '${child.status}'.`);
     return { sterileRoot, status: "GREEN" };
   } finally {
-    if (fs.existsSync(marker)) {
-      const observed = readJson(marker);
-      if (observed.root !== sterileRoot) throw new Error("STERILE_ROOT_MARKER_DIVERGED");
-      fs.rmSync(sterileRoot, { recursive: true, force: true });
-    }
+    removeExecutionWorkspace(workspace, ".capsule-first-sterile-root.json");
   }
 }
 

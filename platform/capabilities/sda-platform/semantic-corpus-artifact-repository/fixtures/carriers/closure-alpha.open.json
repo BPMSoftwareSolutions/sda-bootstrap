@@ -1,0 +1,12 @@
+{
+  "contractId": "semantic-corpus-closure-receipt.v1",
+  "repositoryAuthorityDigest": "sha256:4f1eae11041c8ce43b0c7b0aa7d3ecb48bf12073cf727b8b9ba3950c2da1269e",
+  "pointerId": "CurrentSemanticCorpus",
+  "candidateSnapshotDigest": "sha256:15ec0b65d3bd9e18030633def91fad03d05735c706f05c4bdb0c9d56cccb8197",
+  "candidateGeneration": 1,
+  "evaluatedCurrentGeneration": 0,
+  "evaluatedCurrentSnapshotDigest": null,
+  "findings": [{"code": "CORPUS_OPEN", "subjectRef": "snapshot:alpha"}],
+  "disposition": "CORPUS_OPEN",
+  "receiptDigest": "sha256:9486382c4477209f9023fda40e3fcad4c5c66b32c2fd54c36926c59cfe09fd6e"
+}

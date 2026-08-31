@@ -1,0 +1,230 @@
+{
+  "planType": "ui-embodiment-plan.v1",
+  "sourcePresentationIrDigest": "sha256:252aeaae2d7879dd54bed41266340c026f266c73ca59b45a4453594e4e587205",
+  "semanticPresentationDigest": "sha256:dbc0c271502daf1d8284ea42b7fd9e9259f65024bbac2ef638a1976c3b19adc0",
+  "compilerAuthorityDigest": "sha256:f3b82ee8d5136d70006f68c4b619828995b9fcb915a02995fd0d869d66a22333",
+  "capabilityVectorDigest": "sha256:96ccfedae2000305091b1c37130816cb917c1a1d4b03d9b5b3d50cb5b2113489",
+  "targetProfileDigest": "sha256:f0fa686a4e94f401eba5835cafc9c231e3dddc343067f3bb741fde1de898dbc7",
+  "providerCatalogDigest": "sha256:c08d8a3ab929f2de86bad48d70a065047c8c82a8b510e449b7720d524a228407",
+  "providerId": "sda-wpf-v3-embodiment-provider.v1",
+  "providerVersion": "1.0.0",
+  "providerDigest": "sha256:2ba347ce751bf2067d87077031c63bd0557acc11b0a55e03bea8aee9f2392071",
+  "rootNodeRefs": [
+    "node.root"
+  ],
+  "bindings": [
+    {
+      "capabilityId": "accessibility.live-feedback.v1",
+      "mechanicId": "csharp.accessibility.live-feedback.v1",
+      "sourceRefs": [
+        "accessibility.status-live"
+      ]
+    },
+    {
+      "capabilityId": "accessibility.name.v1",
+      "mechanicId": "csharp.accessibility.name.v1",
+      "sourceRefs": [
+        "accessibility.result-name"
+      ]
+    },
+    {
+      "capabilityId": "accessibility.operable-action.v1",
+      "mechanicId": "csharp.accessibility.operable-action.v1",
+      "sourceRefs": [
+        "accessibility.resolve-operable"
+      ]
+    },
+    {
+      "capabilityId": "adaptation.grouping.v1",
+      "mechanicId": "csharp.adaptation.grouping.v1",
+      "sourceRefs": [
+        "rule.adaptation.compact-wide"
+      ]
+    },
+    {
+      "capabilityId": "adaptation.order.v1",
+      "mechanicId": "csharp.adaptation.order.v1",
+      "sourceRefs": [
+        "rule.adaptation.compact-wide"
+      ]
+    },
+    {
+      "capabilityId": "composition.flow.v1",
+      "mechanicId": "csharp.composition.flow.v1",
+      "sourceRefs": [
+        "node.root"
+      ]
+    },
+    {
+      "capabilityId": "content.semantic-element.v1",
+      "mechanicId": "csharp.content.semantic-element.v1",
+      "sourceRefs": [
+        "action.resolve",
+        "feedback.resolution-status",
+        "information.result"
+      ]
+    },
+    {
+      "capabilityId": "interaction.activate.v1",
+      "mechanicId": "csharp.interaction.activate.v1",
+      "sourceRefs": [
+        "binding.action.resolve.0"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "instructionId": "instruction.accessibility.accessibility.resolve-operable",
+      "instructionKind": "APPLY_ACCESSIBILITY",
+      "sourceRef": "accessibility.resolve-operable",
+      "capabilityId": "accessibility.operable-action.v1",
+      "mechanicId": "csharp.accessibility.operable-action.v1",
+      "semanticElementRef": "action.resolve",
+      "obligationKind": "OPERABLE_ACTION"
+    },
+    {
+      "instructionId": "instruction.accessibility.accessibility.result-name",
+      "instructionKind": "APPLY_ACCESSIBILITY",
+      "sourceRef": "accessibility.result-name",
+      "capabilityId": "accessibility.name.v1",
+      "mechanicId": "csharp.accessibility.name.v1",
+      "semanticElementRef": "information.result",
+      "obligationKind": "NAME"
+    },
+    {
+      "instructionId": "instruction.accessibility.accessibility.status-live",
+      "instructionKind": "APPLY_ACCESSIBILITY",
+      "sourceRef": "accessibility.status-live",
+      "capabilityId": "accessibility.live-feedback.v1",
+      "mechanicId": "csharp.accessibility.live-feedback.v1",
+      "semanticElementRef": "feedback.resolution-status",
+      "obligationKind": "LIVE_FEEDBACK"
+    },
+    {
+      "instructionId": "instruction.adaptation.rule.adaptation.compact-wide.0",
+      "instructionKind": "APPLY_ADAPTATION",
+      "sourceRef": "rule.adaptation.compact-wide",
+      "capabilityId": "adaptation.grouping.v1",
+      "mechanicId": "csharp.adaptation.grouping.v1",
+      "semanticAdaptationRef": "adaptation.compact-wide",
+      "contextRef": "context.available-space",
+      "operationKind": "GROUPING",
+      "nodeRefs": [
+        "node.root"
+      ],
+      "invariantRefs": [
+        "experience.observable-result"
+      ]
+    },
+    {
+      "instructionId": "instruction.adaptation.rule.adaptation.compact-wide.1",
+      "instructionKind": "APPLY_ADAPTATION",
+      "sourceRef": "rule.adaptation.compact-wide",
+      "capabilityId": "adaptation.order.v1",
+      "mechanicId": "csharp.adaptation.order.v1",
+      "semanticAdaptationRef": "adaptation.compact-wide",
+      "contextRef": "context.available-space",
+      "operationKind": "ORDER",
+      "nodeRefs": [
+        "node.root"
+      ],
+      "invariantRefs": [
+        "experience.observable-result"
+      ]
+    },
+    {
+      "instructionId": "instruction.composition.node.root",
+      "instructionKind": "COMPOSE_NODE",
+      "sourceRef": "node.root",
+      "capabilityId": "composition.flow.v1",
+      "mechanicId": "csharp.composition.flow.v1",
+      "configuration": {
+        "kind": "FLOW",
+        "axis": "BLOCK",
+        "direction": "FORWARD",
+        "wrap": "NO_WRAP"
+      },
+      "childNodeRefs": [],
+      "semanticElementRefs": [
+        "action.resolve",
+        "feedback.resolution-status",
+        "information.result"
+      ]
+    },
+    {
+      "instructionId": "instruction.element.action.resolve",
+      "instructionKind": "REALIZE_SEMANTIC_ELEMENT",
+      "sourceRef": "action.resolve",
+      "capabilityId": "content.semantic-element.v1",
+      "mechanicId": "csharp.content.semantic-element.v1",
+      "semanticKind": "ACTION",
+      "semanticRole": "PRIMARY",
+      "content": {
+        "kind": "LITERAL",
+        "value": "Resolve"
+      },
+      "stateRefs": [],
+      "eventRefs": [
+        "event.resolve"
+      ]
+    },
+    {
+      "instructionId": "instruction.element.feedback.resolution-status",
+      "instructionKind": "REALIZE_SEMANTIC_ELEMENT",
+      "sourceRef": "feedback.resolution-status",
+      "capabilityId": "content.semantic-element.v1",
+      "mechanicId": "csharp.content.semantic-element.v1",
+      "semanticKind": "FEEDBACK",
+      "semanticRole": "STATUS",
+      "content": {
+        "kind": "READ_MODEL_REF",
+        "value": "read-model.resolution-status"
+      },
+      "stateRefs": [
+        "state.resolution-status"
+      ],
+      "eventRefs": []
+    },
+    {
+      "instructionId": "instruction.element.information.result",
+      "instructionKind": "REALIZE_SEMANTIC_ELEMENT",
+      "sourceRef": "information.result",
+      "capabilityId": "content.semantic-element.v1",
+      "mechanicId": "csharp.content.semantic-element.v1",
+      "semanticKind": "INFORMATION",
+      "semanticRole": "PRIMARY",
+      "content": {
+        "kind": "READ_MODEL_REF",
+        "value": "read-model.result"
+      },
+      "stateRefs": [
+        "state.result"
+      ],
+      "eventRefs": []
+    },
+    {
+      "instructionId": "instruction.event.binding.action.resolve.0",
+      "instructionKind": "BIND_EVENT",
+      "sourceRef": "binding.action.resolve.0",
+      "capabilityId": "interaction.activate.v1",
+      "mechanicId": "csharp.interaction.activate.v1",
+      "semanticElementRef": "action.resolve",
+      "semanticEventRef": "event.resolve",
+      "trigger": "ACTIVATE"
+    }
+  ],
+  "adaptationObligationRefs": [
+    "rule.adaptation.compact-wide"
+  ],
+  "accessibilityObligationRefs": [
+    "accessibility.resolve-operable",
+    "accessibility.result-name",
+    "accessibility.status-live"
+  ],
+  "observationRequirements": [
+    "ACCESSIBILITY",
+    "ADAPTATION",
+    "OBSERVATION"
+  ],
+  "canonicalDigest": "sha256:5804635b16d2af764772b80bbfd5234d66da5cbe40869fbf7374b257613f1032"
+}

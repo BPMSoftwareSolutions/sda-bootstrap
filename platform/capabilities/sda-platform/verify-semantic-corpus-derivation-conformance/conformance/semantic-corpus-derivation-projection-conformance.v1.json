@@ -1,0 +1,40 @@
+{
+  "contractId": "semantic-corpus-derivation-projection-conformance.v1",
+  "lifecycle": "ADMITTED",
+  "projectedCircuit": {
+    "consumerWorkspace": {"ref": "capabilities/sda-platform/semantic-corpus-derivation/consumer-workspace.authority.json", "digest": "sha256:9946a7cbb651d0b25e8f3f7128783643c83e801fb09bbb2c6a967fb6f15bd3c6"},
+    "applicationBinding": {"ref": "capabilities/sda-platform/semantic-corpus-derivation/projected/application-binding.node.json", "digest": "sha256:304f54de4f1bd10a573331518ad67faddc327c98e9049d32a6fd17b039b99257"},
+    "projectedCapability": {"ref": "capabilities/sda-platform/semantic-corpus-derivation/projected/capability.json", "digest": "sha256:e57cbfeb5299592b20ead4113d84eb848a86ba3704ba4286381ea919db7e15f7"},
+    "projectionManifest": {"ref": "capabilities/sda-platform/semantic-corpus-derivation/projected/projection-manifest.json", "digest": "sha256:c736856c5bb467f0648819b8697e6438dcc19e6caa79891bbc33d4531a68df0f"},
+    "projectionConformance": {"ref": "capabilities/sda-platform/semantic-corpus-derivation/projected/projection-conformance.json", "digest": "sha256:eff29d9d763919b405a021fc126f66b5b0c552c3cbe74d8ddb85f9781e4b2eed"},
+    "generatedTest": {"ref": "capabilities/sda-platform/semantic-corpus-derivation/projected/node/capability.projected.test.mjs", "digest": "sha256:2b3773a1c004f9d2958fc8a554c5fb2e43dfeac2bb9491dfa4a94ed8fe69d04b"}
+  },
+  "authorityDigests": {
+    "sourceCapability": "sha256:a217839f3bed4094dcbb4971419e62c6f0355df80f9015babb2121f2d2c84464",
+    "projectionAuthoringContext": "sha256:5050d9d0de50d434719886b987b2a332ea7a6f944993b5eb3a8979a7a573f28c",
+    "ontology": "sha256:1e28409aca9838ccedb726d4699d2ff88d5ba426560434190dc2033a1a2e8a24",
+    "profile": "sha256:5aa91cfe1056d8d70462d25cff029645caa2a79c12b7aa0964399d0b51b57722",
+    "ruleSet": "sha256:3f50e145a02bee6da653aab29383524286237c73f4c9c834488c30140d8fb84e"
+  },
+  "fixtureManifestRef": "capabilities/sda-platform/verify-semantic-corpus-derivation-conformance/fixtures/fixture-manifest.authority.json",
+  "fixtureManifestDigest": "sha256:e94918fc35bbb3df93a03edd499a03621ebd45a642b7772a8549db22615f255b",
+  "fixtureSetDigest": "sha256:bd45738ae240fe24750bf7cd0f8ee81319f5f5f06592538e521afad5979407ed",
+  "partitions": [
+    {"partitionId": "AUTHORITY_SCHEMA_BOUNDARY", "disposition": "SATISFIED", "evidenceDigests": ["sha256:5050d9d0de50d434719886b987b2a332ea7a6f944993b5eb3a8979a7a573f28c", "sha256:774b532e265a3f715c403e20d7c5400b43b0afde7df91fbd6adcddbee8a03873", "sha256:2b3773a1c004f9d2958fc8a554c5fb2e43dfeac2bb9491dfa4a94ed8fe69d04b"], "reason": null},
+    {"partitionId": "EXACT_LINEAGE_VALIDATION", "disposition": "SATISFIED", "evidenceDigests": ["sha256:b26575eab263fc5b0c9dc645183dd10642ec9b35d6ba7bc52f587a6a52517afb", "sha256:2f866b33b3c79f871786d433f03a7b03ebcf486304a6432dacb1b2c64c404e96", "sha256:2b3773a1c004f9d2958fc8a554c5fb2e43dfeac2bb9491dfa4a94ed8fe69d04b"], "reason": null},
+    {"partitionId": "CANONICAL_OBJECT_DERIVATION", "disposition": "SATISFIED", "evidenceDigests": ["sha256:2b3773a1c004f9d2958fc8a554c5fb2e43dfeac2bb9491dfa4a94ed8fe69d04b"], "reason": null},
+    {"partitionId": "OWNER_SCOPED_IDENTITY", "disposition": "SATISFIED", "evidenceDigests": ["sha256:2b3773a1c004f9d2958fc8a554c5fb2e43dfeac2bb9491dfa4a94ed8fe69d04b"], "reason": null},
+    {"partitionId": "RELATIONSHIP_DERIVATION", "disposition": "SATISFIED", "evidenceDigests": ["sha256:2b3773a1c004f9d2958fc8a554c5fb2e43dfeac2bb9491dfa4a94ed8fe69d04b"], "reason": null},
+    {"partitionId": "OPEN_REFERENCE_NON_INVENTION", "disposition": "SATISFIED", "evidenceDigests": ["sha256:2b3773a1c004f9d2958fc8a554c5fb2e43dfeac2bb9491dfa4a94ed8fe69d04b"], "reason": null},
+    {"partitionId": "PROHIBITED_BASIS_REJECTION", "disposition": "SATISFIED", "evidenceDigests": ["sha256:3f50e145a02bee6da653aab29383524286237c73f4c9c834488c30140d8fb84e", "sha256:2f866b33b3c79f871786d433f03a7b03ebcf486304a6432dacb1b2c64c404e96", "sha256:2b3773a1c004f9d2958fc8a554c5fb2e43dfeac2bb9491dfa4a94ed8fe69d04b"], "reason": null},
+    {"partitionId": "MIXED_GENERATION_REJECTION", "disposition": "SATISFIED", "evidenceDigests": ["sha256:b26575eab263fc5b0c9dc645183dd10642ec9b35d6ba7bc52f587a6a52517afb", "sha256:2f866b33b3c79f871786d433f03a7b03ebcf486304a6432dacb1b2c64c404e96", "sha256:2b3773a1c004f9d2958fc8a554c5fb2e43dfeac2bb9491dfa4a94ed8fe69d04b"], "reason": null},
+    {"partitionId": "SOURCE_CLASS_NON_ESCALATION", "disposition": "SATISFIED", "evidenceDigests": ["sha256:774b532e265a3f715c403e20d7c5400b43b0afde7df91fbd6adcddbee8a03873"], "reason": null},
+    {"partitionId": "DETERMINISTIC_ORDERING", "disposition": "SATISFIED", "evidenceDigests": ["sha256:2b3773a1c004f9d2958fc8a554c5fb2e43dfeac2bb9491dfa4a94ed8fe69d04b"], "reason": null},
+    {"partitionId": "REPRODUCTION_IDENTITY", "disposition": "SATISFIED", "evidenceDigests": ["sha256:2b3773a1c004f9d2958fc8a554c5fb2e43dfeac2bb9491dfa4a94ed8fe69d04b"], "reason": null},
+    {"partitionId": "PROJECTED_INVOCATION_AND_RECEIPT", "disposition": "SATISFIED", "evidenceDigests": ["sha256:c736856c5bb467f0648819b8697e6438dcc19e6caa79891bbc33d4531a68df0f", "sha256:2b3773a1c004f9d2958fc8a554c5fb2e43dfeac2bb9491dfa4a94ed8fe69d04b"], "reason": null}
+  ],
+  "findings": [],
+  "disposition": "SDA_SEMANTIC_CORPUS_DERIVATION_PROJECTION_CONFORMANT",
+  "receiptDigest": "sha256:c5d8dd98618fc5d89d0103276addfa71aac9b355cad15738281ec2fd901280b1",
+  "receiptDigestAlgorithm": "sha256 of canonical recursive-key-order JSON excluding receiptDigest"
+}

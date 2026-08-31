@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/interface-binding.v1.schema.json",
+  "title": "Interface Binding",
+  "description": "Binds an exposed interface surface to the scenarios it admits entry through.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["interfaceId", "scenarioIds"],
+  "properties": {
+    "interfaceId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "kind": {
+      "type": "string",
+      "enum": ["semantic", "cli", "http", "sdk", "ui", "mcp", "agent", "message", "rpc", "other"]
+    },
+    "scenarioIds": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" }
+    }
+  }
+}

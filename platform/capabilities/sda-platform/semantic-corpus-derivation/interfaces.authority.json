@@ -1,0 +1,26 @@
+{
+  "interfaceAuthorityType": "consumer-interface-authority.v1",
+  "contractValidatorCapabilityId": "sda-schema-contract-admission.v1",
+  "contractCatalog": "contracts/contract-catalog.json",
+  "requiredPlatformObligations": ["dynamic-semantic-execution", "domain-contract-admission"],
+  "interfaces": [
+    {
+      "interfaceId": "semantic-corpus-derivation-cli",
+      "kind": "cli",
+      "rootScenarioId": "derive-semantic-corpus-records",
+      "platformCapabilityId": "sda-json-cli.v1",
+      "projectionTargets": ["node"]
+    }
+  ],
+  "portBindings": [
+    {
+      "portId": "derive-semantic-corpus-records",
+      "platformCapabilityId": "sda-authority-transformation-port.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "derive-generic-semantic-corpus.v1"
+      }
+    }
+  ],
+  "projectionBindings": []
+}

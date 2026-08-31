@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/scenario.v2.schema.json",
+  "title": "Scenario v2",
+  "description": "The smallest independently executable and provable unit: admitted information, one bounded responsibility, and one observable outcome obligation.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["scenarioType", "scenarioId", "input", "event", "outcome"],
+  "properties": {
+    "scenarioType": { "const": "scenario.v2" },
+    "scenarioId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "name": { "type": "string", "minLength": 1 },
+    "description": { "type": "string", "minLength": 1 },
+    "input": { "$ref": "scenario-input.schema.json" },
+    "event": { "$ref": "scenario-event.v2.schema.json" },
+    "outcome": { "$ref": "scenario-outcome.v2.schema.json" },
+    "compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceVersion", "derivation", "derivedFields"],
+      "properties": {
+        "sourceVersion": { "const": "v1" },
+        "derivation": { "const": "legacy-derived" },
+        "derivedFields": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  }
+}

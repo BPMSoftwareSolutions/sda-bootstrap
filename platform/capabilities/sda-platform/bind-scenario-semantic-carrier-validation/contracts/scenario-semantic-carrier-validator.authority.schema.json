@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/semantic-carrier/scenario-semantic-carrier-validator.authority.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "authorityType", "authorityId", "authorityRef", "authorityVersion", "platformCapabilityId", "lifecycle", "authorityDigest", "authorityDigestAlgorithm", "inputContracts", "outputContracts", "subordinateAuthorities", "responsibility", "prohibitedResponsibilities", "compositionRules", "grammarAuthority", "managedGrammarAuthority", "providerObservation", "runtimeDependencies"],
+  "properties": {
+    "$schema": {"const": "contracts/scenario-semantic-carrier-validator.authority.schema.json"},
+    "authorityType": {"const": "scenario-semantic-carrier-validator-provider-authority.v1"},
+    "authorityId": {"const": "scenario-semantic-carrier-validator-provider.v1"},
+    "authorityRef": {"const": "capabilities/sda-platform/bind-scenario-semantic-carrier-validation/scenario-semantic-carrier-validator.authority.json"},
+    "authorityVersion": {"const": "1.0.0"},
+    "platformCapabilityId": {"const": "sda-scenario-semantic-carrier-validation-port.v1"},
+    "lifecycle": {"const": "ADMITTED"},
+    "authorityDigest": {"$ref": "#/$defs/digest"},
+    "authorityDigestAlgorithm": {"const": "sha256 of canonical recursive-key-order JSON excluding authorityDigest"},
+    "inputContracts": {"const": ["semantic-carrier-validation-request.v1"]},
+    "outputContracts": {"const": ["semantic-carrier-validation-result.v1", "scenario-semantic-carrier-validation-provider-conformance.v1"]},
+    "subordinateAuthorities": {"type": "array", "maxItems": 0},
+    "responsibility": {"type": "string", "minLength": 1},
+    "prohibitedResponsibilities": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "compositionRules": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "grammarAuthority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["grammarVersion", "grammarRef", "grammarDigest"],
+      "properties": {
+        "grammarVersion": {"const": "scenario-semantic-carrier.v2"},
+        "grammarRef": {"const": "languages/typescript/runtimes/node/semantic-carrier-validator/schemas/semantic-carrier.schema.json"},
+        "grammarDigest": {"$ref": "#/$defs/digest"}
+      }
+    },
+    "managedGrammarAuthority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["grammarVersion", "grammarRef", "grammarDigest"],
+      "properties": {
+        "grammarVersion": {"const": "scenario-semantic-carrier.v3"},
+        "grammarRef": {"const": "languages/typescript/runtimes/node/semantic-carrier-validator/schemas/semantic-carrier.v3.schema.json"},
+        "grammarDigest": {"$ref": "#/$defs/digest"}
+      }
+    },
+    "providerObservation": {"$ref": "#/$defs/providerObservation"},
+    "runtimeDependencies": {"$ref": "#/$defs/runtimeDependencies"}
+  },
+  "$defs": {
+    "digest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "sourceBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceRef", "sourceDigest"],
+      "properties": {
+        "sourceRef": {"type": "string", "minLength": 1},
+        "sourceDigest": {"$ref": "#/$defs/digest"}
+      }
+    },
+    "providerObservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["disposition", "providerSourceSet", "implementationVersion", "registryBindingRef", "registryBindingDigest"],
+      "properties": {
+        "disposition": {"const": "SATISFIED"},
+        "providerSourceSet": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/sourceBinding"}},
+        "implementationVersion": {"const": "1.1.0"},
+        "registryBindingRef": {"const": "kernel/semantic-authority/consumer/node-mechanic-registrations/scenario-semantic-carrier-validation.registration.authority.json"},
+        "registryBindingDigest": {"$ref": "#/$defs/digest"}
+      }
+    },
+    "runtimeDependencies": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["packageLockRef", "packageLockDigest", "packages"],
+      "properties": {
+        "packageLockRef": {"const": "package-lock.json"},
+        "packageLockDigest": {"$ref": "#/$defs/digest"},
+        "packages": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["packageName", "packageVersion", "integrity"],
+            "properties": {
+              "packageName": {"enum": ["ajv", "typescript"]},
+              "packageVersion": {"type": "string", "minLength": 1},
+              "integrity": {"type": "string", "pattern": "^sha512-"}
+            }
+          }
+        }
+      }
+    }
+  }
+}

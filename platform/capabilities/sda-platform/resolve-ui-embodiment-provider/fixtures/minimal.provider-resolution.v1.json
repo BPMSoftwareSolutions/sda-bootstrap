@@ -1,0 +1,10 @@
+{
+  "resolutionType": "provider-resolution.v1",
+  "capabilityVectorDigest": "sha256:96ccfedae2000305091b1c37130816cb917c1a1d4b03d9b5b3d50cb5b2113489",
+  "targetProfileDigest": "sha256:689933510518e49c02a517250a1e2751afbcabad2bfddf3662491ddbcea34d6f",
+  "providerCatalogDigest": "sha256:c08d8a3ab929f2de86bad48d70a065047c8c82a8b510e449b7720d524a228407",
+  "selectedProviderId": "sda-headless-v3-proof-provider.v1",
+  "selectedProviderDigest": "sha256:50a8920c65c79493cf696bfd7589bd85dba4313e59b183d815f3afd405d5eefa",
+  "findings": [],
+  "disposition": "SELECTED"
+}

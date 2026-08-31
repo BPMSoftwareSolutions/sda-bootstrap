@@ -1,0 +1,37 @@
+{
+  "scenarioId": "execute-governed-tooling-migration-operation",
+  "input": {
+    "inputId": "governed-tooling-migration-operation-request",
+    "contract": {
+      "contractId": "governed-tooling-migration-operation-request.v1"
+    }
+  },
+  "event": {
+    "eventId": "execute-governed-tooling-migration-operation",
+    "executionAuthorityId": "execute-governed-tooling-migration-operation.v1"
+  },
+  "outcome": {
+    "outcomeId": "governed-tooling-migration-operation-evidence",
+    "contract": {
+      "contractId": "governed-tooling-migration-operation-evidence.v1"
+    },
+    "experience": {
+      "statement": "one effect-lineage-bearing migration outcome is available"
+    }
+  },
+  "gherkin": {
+    "given": {
+      "semanticRef": "execute-governed-tooling-migration-operation.given",
+      "text": "an admitted migration provider and operation authority"
+    },
+    "when": {
+      "semanticRef": "execute-governed-tooling-migration-operation.when",
+      "text": "the governed migration operation is executed"
+    },
+    "then": {
+      "semanticRef": "execute-governed-tooling-migration-operation.then",
+      "text": "one effect-lineage-bearing migration outcome is available"
+    }
+  },
+  "name": "Execute a governed tooling migration operation"
+}

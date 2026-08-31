@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/sda-platform/os-environment-credential-binding-request.v1.schema.json",
+  "title": "OS environment credential binding request v1",
+  "anyOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contractId", "credentialReference", "invocationIdentity", "requestingCapabilityId", "endpointAuthorityDigest", "effectScope"],
+      "properties": {
+        "contractId": { "const": "os-environment-credential-binding-request.v1" },
+        "credentialReference": { "type": "string", "pattern": "^[A-Za-z0-9_-]+$" },
+        "invocationIdentity": { "type": "string", "minLength": 1 },
+        "requestingCapabilityId": { "type": "string", "minLength": 1 },
+        "endpointAuthorityDigest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+        "effectScope": { "type": "string", "minLength": 1 }
+      }
+    },
+    {
+      "type": "object",
+      "required": ["contractId", "disposition", "opaqueBindingId", "nonDisclosureVerified"],
+      "properties": {
+        "contractId": { "const": "os-environment-credential-binding-evidence.v1" },
+        "disposition": { "type": "string" },
+        "opaqueBindingId": { "type": "string" },
+        "nonDisclosureVerified": { "const": true }
+      }
+    }
+  ]
+}

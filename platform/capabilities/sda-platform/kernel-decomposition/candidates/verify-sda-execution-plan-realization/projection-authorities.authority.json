@@ -1,0 +1,41 @@
+{
+  "authorityType": "projection-authorities.v1",
+  "projectionAuthorities": [
+    {
+      "id": "project-verification-to-trace",
+      "inputContract": {"contractId": "execution-plan-realization-conformance.v1"},
+      "outputContract": {"contractId": "expected-and-observed-execution.v1"},
+      "kind": "projection"
+    },
+    {
+      "id": "project-trace-to-artifact",
+      "inputContract": {"contractId": "execution-trace-conformance.v1"},
+      "outputContract": {"contractId": "artifact-materialization-verification-request.v1"},
+      "kind": "projection"
+    },
+    {
+      "id": "project-artifact-to-origin",
+      "inputContract": {"contractId": "artifact-materialization-conformance.v1"},
+      "outputContract": {"contractId": "projected-executable-origin-verification-request.v1"},
+      "kind": "projection"
+    },
+    {
+      "id": "project-origin-to-mechanic-resolution",
+      "inputContract": {"contractId": "projected-executable-origin-conformance.v1"},
+      "outputContract": {"contractId": "mechanic-resolution-verification-request.v1"},
+      "kind": "projection"
+    },
+    {
+      "id": "project-mechanic-resolution-to-parity",
+      "inputContract": {"contractId": "mechanic-resolution-conformance.v1"},
+      "outputContract": {"contractId": "language-mechanic-parity-verification-request.v1"},
+      "kind": "projection"
+    },
+    {
+      "id": "project-parity-to-outcome-parity",
+      "inputContract": {"contractId": "language-mechanic-parity-conformance.v1"},
+      "outputContract": {"contractId": "canonical-outcome-parity-verification-request.v1"},
+      "kind": "projection"
+    }
+  ]
+}

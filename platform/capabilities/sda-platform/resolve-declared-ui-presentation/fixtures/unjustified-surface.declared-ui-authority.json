@@ -1,0 +1,24 @@
+{
+  "authorityType": "declared-ui-authority.v1",
+  "authorityId": "fixture.unjustified-surface",
+  "authorityDigest": "sha256:d23b68101c7102d7e270a99cdb80d22df9eb5f2da2f41263230372533d068882",
+  "promisedExperiences": [],
+  "elements": [
+    {
+      "elementId": "region.invented-shell",
+      "semanticKind": "REGION",
+      "semanticRole": "PERSISTENT",
+      "content": { "literal": "Helpful application shell" },
+      "informationRefs": [],
+      "interactionRefs": [],
+      "feedbackRefs": [],
+      "stateRefs": [],
+      "eventRefs": [],
+      "accessibilityObligations": [],
+      "lineage": []
+    }
+  ],
+  "relationships": [],
+  "adaptationIntents": [],
+  "presentationProfileRefs": []
+}

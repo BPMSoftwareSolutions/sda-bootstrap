@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/platform/consumer-execution/composed-scenario-execution-context.v1.schema.json",
+  "title": "Composed scenario execution context",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["rootExecutionId", "plan", "initialCarrier"],
+  "properties": {
+    "rootExecutionId": { "$ref": "consumer-execution-embodiment-plan.v1.schema.json#/$defs/id" },
+    "plan": { "$ref": "consumer-execution-embodiment-plan.v2.schema.json" },
+    "initialCarrier": {}
+  }
+}

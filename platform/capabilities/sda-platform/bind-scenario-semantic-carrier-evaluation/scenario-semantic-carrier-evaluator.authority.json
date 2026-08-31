@@ -1,0 +1,68 @@
+{
+  "authorityType": "scenario-semantic-carrier-evaluator-provider-authority.v1",
+  "authorityId": "scenario-semantic-carrier-evaluator-provider.v1",
+  "authorityRef": "capabilities/sda-platform/bind-scenario-semantic-carrier-evaluation/scenario-semantic-carrier-evaluator.authority.json",
+  "authorityVersion": "1.0.0",
+  "platformCapabilityId": "sda-scenario-semantic-carrier-evaluation-port.v1",
+  "lifecycle": "ADMITTED",
+  "authorityDigestAlgorithm": "sha256 of canonical recursive-key-order JSON excluding authorityDigest",
+  "inputContracts": [
+    "semantic-carrier-compilation-evaluation-request.v1"
+  ],
+  "outputContracts": [
+    "semantic-carrier-compilation-evaluation-result.v1",
+    "scenario-semantic-carrier-evaluation-provider-conformance.v1"
+  ],
+  "subordinateAuthorities": [
+    {
+      "authorityRef": "capabilities/sda-platform/bind-scenario-semantic-carrier-evaluation/semantic-carrier-evaluation.profile.json",
+      "authorityDigest": "sha256:ba9e1f0f4484793cef81507dcd541cc86fe7f6230f12ab69ccc512bf34fee67c",
+      "sourceDigest": "sha256:48af23bd890139563e488a622e7936083132558783d7c7aaf207b5c2d36a3a08"
+    },
+    {
+      "authorityRef": "capabilities/sda-platform/bind-scenario-semantic-carrier-evaluation/semantic-carrier-evaluation.acceptance-authority.json",
+      "authorityDigest": "sha256:d0c9e08ec78fd0b98765df037bb3ec9ecd31f5f82060f01d547079ab293b9493",
+      "sourceDigest": "sha256:fc8fbc1d01b9567a1f859cd5488125ba11a43416873601b160266edcf093d81b"
+    },
+    {
+      "authorityRef": "capabilities/sda-platform/bind-scenario-semantic-carrier-evaluation/contracts/semantic-carrier-compilation-evaluation-request.v1.schema.json",
+      "sourceDigest": "sha256:0c61c3423b8629f552d463f6fbc2190405a9de137bbba8e9b013417a355aa868"
+    },
+    {
+      "authorityRef": "capabilities/sda-platform/bind-scenario-semantic-carrier-evaluation/contracts/semantic-carrier-compilation-evaluation-result.v1.schema.json",
+      "sourceDigest": "sha256:837856e47e1559c6cd7ce952094bd2bd47a61c2d7f36b77440a82c4971a861de"
+    }
+  ],
+  "responsibility": "Adjudicate a complete independently manufactured, graph-bound Semantic Carrier compilation evidence set against exact profile and acceptance authority.",
+  "prohibitedResponsibilities": [
+    "carrier access",
+    "carrier validation",
+    "graph extraction",
+    "projection",
+    "proof manufacture",
+    "evidence repair",
+    "independent adjudication",
+    "publication"
+  ],
+  "compositionRules": [
+    "complete-required-evidence-set",
+    "same-graph-lineage",
+    "independent-evidence-origin",
+    "ordered-attributable-findings",
+    "evaluator-replacement-only-independent-diversion",
+    "evaluator-does-not-manufacture-evidence"
+  ],
+  "providerObservation": {
+    "disposition": "SATISFIED",
+    "providerSourceSet": [
+      {
+        "sourceRef": "languages/typescript/runtimes/node/semantic-carrier-evaluator-provider.mjs",
+        "sourceDigest": "sha256:61725fa97a2a9e3f642e6b8d82784e0a0388b625c98daa496668d90f93ae1f23"
+      }
+    ],
+    "implementationVersion": "1.0.0",
+    "registryBindingRef": "kernel/semantic-authority/consumer/node-mechanic-registrations/scenario-semantic-carrier-evaluation.registration.authority.json",
+    "registryBindingDigest": "sha256:34864dd59c90989fd745d54bd9eda4ee2c6dc25a097c7afdf605535b1006bfa0"
+  },
+  "authorityDigest": "sha256:88309aeb76c31c86452bdaeeaa009a15a3c70e4124d18a097587dbb154e33a00"
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/platform/ui-embodiment/ui-target-profile.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["profileType", "targetId", "targetKind", "requestedProviderId", "requiredEvidenceCapabilities", "canonicalDigest"],
+  "properties": {
+    "profileType": { "const": "ui-target-profile.v1" },
+    "targetId": { "$ref": "#/$defs/id" },
+    "targetKind": { "$ref": "#/$defs/id" },
+    "requestedProviderId": { "oneOf": [{ "$ref": "#/$defs/id" }, { "type": "null" }] },
+    "requiredEvidenceCapabilities": { "type": "array", "uniqueItems": true, "items": { "enum": ["ACCESSIBILITY", "ADAPTATION", "OBSERVATION"] } },
+    "canonicalDigest": { "$ref": "#/$defs/digest" }
+  },
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._:-]*$" },
+    "digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }
+  }
+}

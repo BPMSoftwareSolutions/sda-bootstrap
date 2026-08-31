@@ -1,0 +1,867 @@
+{
+  "resolutionType": "consumer-platform-mechanic-resolution.v1",
+  "projectionTarget": "python",
+  "requirements": [
+    {
+      "mechanicId": "contract-document-reading",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+    },
+    {
+      "mechanicId": "canonicalization",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+    },
+    {
+      "mechanicId": "schema-admission",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+    },
+    {
+      "mechanicId": "authority-resolution",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+    },
+    {
+      "mechanicId": "semantic-execution",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+    },
+    {
+      "mechanicId": "telemetry-observation",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+    },
+    {
+      "mechanicId": "scenario-invocation",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+    },
+    {
+      "mechanicId": "transition-binding-projection",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+    },
+    {
+      "mechanicId": "interface-delivery",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+    },
+    {
+      "mechanicId": "runtime-projection",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+    },
+    {
+      "mechanicId": "artifact-result-delivery",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+    },
+    {
+      "mechanicId": "authority-driven-transformation",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+    },
+    {
+      "mechanicId": "durable-artifact-materialization",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+    },
+    {
+      "mechanicId": "contract-validation",
+      "capabilityKind": "contract-validator",
+      "requiredBy": "scenario-contract-admission",
+      "requestedCapabilityId": "sda-schema-contract-admission.v1"
+    },
+    {
+      "mechanicId": "cli-delivery",
+      "capabilityKind": "interface-delivery",
+      "requiredBy": "interface:realize-sda-execution-plan-mechanics-cli",
+      "requestedCapabilityId": "sda-json-cli.v1"
+    },
+    {
+      "mechanicId": "json-reading",
+      "capabilityKind": "interface-delivery",
+      "requiredBy": "interface:realize-sda-execution-plan-mechanics-cli",
+      "requestedCapabilityId": "sda-json-cli.v1"
+    },
+    {
+      "mechanicId": "json-serialization",
+      "capabilityKind": "interface-delivery",
+      "requiredBy": "interface:realize-sda-execution-plan-mechanics-cli",
+      "requestedCapabilityId": "sda-json-cli.v1"
+    },
+    {
+      "mechanicId": "event-port-invocation",
+      "capabilityKind": "event-port",
+      "requiredBy": "port:admit-contract-value",
+      "requestedCapabilityId": "sda-authority-transformation-port.v1"
+    },
+    {
+      "mechanicId": "event-port-invocation",
+      "capabilityKind": "event-port",
+      "requiredBy": "port:bind-external-credential-reference",
+      "requestedCapabilityId": "sda-authority-transformation-port.v1"
+    },
+    {
+      "mechanicId": "event-port-invocation",
+      "capabilityKind": "event-port",
+      "requiredBy": "port:evaluate-bounded-schema",
+      "requestedCapabilityId": "sda-authority-transformation-port.v1"
+    },
+    {
+      "mechanicId": "event-port-invocation",
+      "capabilityKind": "event-port",
+      "requiredBy": "port:execute-authority-transformation",
+      "requestedCapabilityId": "sda-authority-transformation-port.v1"
+    },
+    {
+      "mechanicId": "event-port-invocation",
+      "capabilityKind": "event-port",
+      "requiredBy": "port:execute-governed-capability-sequence",
+      "requestedCapabilityId": "sda-authority-transformation-port.v1"
+    },
+    {
+      "mechanicId": "event-port-invocation",
+      "capabilityKind": "event-port",
+      "requiredBy": "port:execute-governed-http-exchange",
+      "requestedCapabilityId": "sda-authority-transformation-port.v1"
+    },
+    {
+      "mechanicId": "event-port-invocation",
+      "capabilityKind": "event-port",
+      "requiredBy": "port:execute-governed-tooling-migration-operation",
+      "requestedCapabilityId": "sda-authority-transformation-port.v1"
+    },
+    {
+      "mechanicId": "event-port-invocation",
+      "capabilityKind": "event-port",
+      "requiredBy": "port:invoke-governed-model",
+      "requestedCapabilityId": "sda-authority-transformation-port.v1"
+    },
+    {
+      "mechanicId": "event-port-invocation",
+      "capabilityKind": "event-port",
+      "requiredBy": "port:invoke-projected-capability",
+      "requestedCapabilityId": "sda-authority-transformation-port.v1"
+    },
+    {
+      "mechanicId": "event-port-invocation",
+      "capabilityKind": "event-port",
+      "requiredBy": "port:materialize-governed-artifact",
+      "requestedCapabilityId": "sda-authority-transformation-port.v1"
+    },
+    {
+      "mechanicId": "event-port-invocation",
+      "capabilityKind": "event-port",
+      "requiredBy": "port:observe-external-representation",
+      "requestedCapabilityId": "sda-authority-transformation-port.v1"
+    },
+    {
+      "mechanicId": "event-port-invocation",
+      "capabilityKind": "event-port",
+      "requiredBy": "port:observe-governed-repository",
+      "requestedCapabilityId": "sda-authority-transformation-port.v1"
+    },
+    {
+      "mechanicId": "event-port-invocation",
+      "capabilityKind": "event-port",
+      "requiredBy": "port:observe-governed-target-execution",
+      "requestedCapabilityId": "sda-authority-transformation-port.v1"
+    },
+    {
+      "mechanicId": "event-port-invocation",
+      "capabilityKind": "event-port",
+      "requiredBy": "port:project-language-mechanic-registry",
+      "requestedCapabilityId": "sda-authority-transformation-port.v1"
+    },
+    {
+      "mechanicId": "event-port-invocation",
+      "capabilityKind": "event-port",
+      "requiredBy": "port:realize-sda-execution-plan-mechanics",
+      "requestedCapabilityId": "sda-authority-transformation-port.v1"
+    },
+    {
+      "mechanicId": "event-port-invocation",
+      "capabilityKind": "event-port",
+      "requiredBy": "port:resolve-canonical-capability-feature",
+      "requestedCapabilityId": "sda-authority-transformation-port.v1"
+    },
+    {
+      "mechanicId": "event-port-invocation",
+      "capabilityKind": "event-port",
+      "requiredBy": "port:shape-file-system-batch",
+      "requestedCapabilityId": "sda-authority-transformation-port.v1"
+    },
+    {
+      "mechanicId": "event-port-invocation",
+      "capabilityKind": "event-port",
+      "requiredBy": "port:transact-governed-tooling-binding",
+      "requestedCapabilityId": "sda-authority-transformation-port.v1"
+    },
+    {
+      "mechanicId": "state-projection",
+      "capabilityKind": "state-projection",
+      "requiredBy": "projection:project-realization-to-admission",
+      "requestedCapabilityId": "sda-authority-state-projection.v1"
+    },
+    {
+      "mechanicId": "state-projection",
+      "capabilityKind": "state-projection",
+      "requiredBy": "projection:project-admission-to-transformation",
+      "requestedCapabilityId": "sda-authority-state-projection.v1"
+    },
+    {
+      "mechanicId": "state-projection",
+      "capabilityKind": "state-projection",
+      "requiredBy": "projection:project-transformation-to-schema-evaluation",
+      "requestedCapabilityId": "sda-authority-state-projection.v1"
+    },
+    {
+      "mechanicId": "state-projection",
+      "capabilityKind": "state-projection",
+      "requiredBy": "projection:project-evaluate-to-materialize",
+      "requestedCapabilityId": "sda-authority-state-projection.v1"
+    },
+    {
+      "mechanicId": "state-projection",
+      "capabilityKind": "state-projection",
+      "requiredBy": "projection:project-materialize-to-repository",
+      "requestedCapabilityId": "sda-authority-state-projection.v1"
+    },
+    {
+      "mechanicId": "state-projection",
+      "capabilityKind": "state-projection",
+      "requiredBy": "projection:project-repository-to-external",
+      "requestedCapabilityId": "sda-authority-state-projection.v1"
+    },
+    {
+      "mechanicId": "state-projection",
+      "capabilityKind": "state-projection",
+      "requiredBy": "projection:project-external-to-credential",
+      "requestedCapabilityId": "sda-authority-state-projection.v1"
+    },
+    {
+      "mechanicId": "state-projection",
+      "capabilityKind": "state-projection",
+      "requiredBy": "projection:project-credential-to-http",
+      "requestedCapabilityId": "sda-authority-state-projection.v1"
+    },
+    {
+      "mechanicId": "state-projection",
+      "capabilityKind": "state-projection",
+      "requiredBy": "projection:project-http-to-model",
+      "requestedCapabilityId": "sda-authority-state-projection.v1"
+    },
+    {
+      "mechanicId": "state-projection",
+      "capabilityKind": "state-projection",
+      "requiredBy": "projection:project-model-to-shape",
+      "requestedCapabilityId": "sda-authority-state-projection.v1"
+    },
+    {
+      "mechanicId": "state-projection",
+      "capabilityKind": "state-projection",
+      "requiredBy": "projection:project-shape-to-target-execution",
+      "requestedCapabilityId": "sda-authority-state-projection.v1"
+    },
+    {
+      "mechanicId": "state-projection",
+      "capabilityKind": "state-projection",
+      "requiredBy": "projection:project-target-execution-to-invoke-capability",
+      "requestedCapabilityId": "sda-authority-state-projection.v1"
+    },
+    {
+      "mechanicId": "state-projection",
+      "capabilityKind": "state-projection",
+      "requiredBy": "projection:project-invoke-capability-to-sequence",
+      "requestedCapabilityId": "sda-authority-state-projection.v1"
+    },
+    {
+      "mechanicId": "state-projection",
+      "capabilityKind": "state-projection",
+      "requiredBy": "projection:project-sequence-to-resolve-feature",
+      "requestedCapabilityId": "sda-authority-state-projection.v1"
+    },
+    {
+      "mechanicId": "state-projection",
+      "capabilityKind": "state-projection",
+      "requiredBy": "projection:project-resolve-feature-to-transact-binding",
+      "requestedCapabilityId": "sda-authority-state-projection.v1"
+    },
+    {
+      "mechanicId": "state-projection",
+      "capabilityKind": "state-projection",
+      "requiredBy": "projection:project-transact-binding-to-execute-migration",
+      "requestedCapabilityId": "sda-authority-state-projection.v1"
+    },
+    {
+      "mechanicId": "state-projection",
+      "capabilityKind": "state-projection",
+      "requiredBy": "projection:project-execute-migration-to-project-registry",
+      "requestedCapabilityId": "sda-authority-state-projection.v1"
+    }
+  ],
+  "resolutions": [
+    {
+      "mechanicId": "contract-document-reading",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-python-admitted-consumer-platform.v1",
+      "provider": "scenario_kernel.platform.consumer",
+      "implementationRef": "languages/python/src/scenario_kernel/platform/consumer.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "canonicalization",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-python-admitted-consumer-platform.v1",
+      "provider": "scenario_kernel.platform.consumer",
+      "implementationRef": "languages/python/src/scenario_kernel/platform/consumer.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "schema-admission",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-python-admitted-consumer-platform.v1",
+      "provider": "scenario_kernel.platform.consumer",
+      "implementationRef": "languages/python/src/scenario_kernel/platform/consumer.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "authority-resolution",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-python-admitted-consumer-platform.v1",
+      "provider": "scenario_kernel.platform.consumer",
+      "implementationRef": "languages/python/src/scenario_kernel/platform/consumer.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "semantic-execution",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-python-admitted-consumer-platform.v1",
+      "provider": "scenario_kernel.platform.consumer",
+      "implementationRef": "languages/python/src/scenario_kernel/platform/consumer.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "telemetry-observation",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-python-admitted-consumer-platform.v1",
+      "provider": "scenario_kernel.platform.consumer",
+      "implementationRef": "languages/python/src/scenario_kernel/platform/consumer.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "scenario-invocation",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-python-admitted-consumer-platform.v1",
+      "provider": "scenario_kernel.platform.consumer",
+      "implementationRef": "languages/python/src/scenario_kernel/platform/consumer.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "transition-binding-projection",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-python-admitted-consumer-platform.v1",
+      "provider": "scenario_kernel.platform.consumer",
+      "implementationRef": "languages/python/src/scenario_kernel/platform/consumer.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "interface-delivery",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-python-admitted-consumer-platform.v1",
+      "provider": "scenario_kernel.platform.consumer",
+      "implementationRef": "languages/python/src/scenario_kernel/platform/consumer.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "runtime-projection",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-python-admitted-consumer-platform.v1",
+      "provider": "scenario_kernel.platform.consumer",
+      "implementationRef": "languages/python/src/scenario_kernel/platform/consumer.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "artifact-result-delivery",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-python-admitted-consumer-platform.v1",
+      "provider": "scenario_kernel.platform.consumer",
+      "implementationRef": "languages/python/src/scenario_kernel/platform/consumer.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "authority-driven-transformation",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-python-admitted-consumer-platform.v1",
+      "provider": "scenario_kernel.platform.consumer",
+      "implementationRef": "languages/python/src/scenario_kernel/platform/consumer.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "durable-artifact-materialization",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-python-admitted-consumer-platform.v1",
+      "provider": "scenario_kernel.platform.consumer",
+      "implementationRef": "languages/python/src/scenario_kernel/platform/consumer.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "contract-validation",
+      "capabilityKind": "contract-validator",
+      "requiredBy": "scenario-contract-admission",
+      "requestedCapabilityId": "sda-schema-contract-admission.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-schema-contract-admission.v1",
+      "provider": "scenario_kernel.adapters.JsonSchemaContractValidator",
+      "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "cli-delivery",
+      "capabilityKind": "interface-delivery",
+      "requiredBy": "interface:realize-sda-execution-plan-mechanics-cli",
+      "requestedCapabilityId": "sda-json-cli.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-json-cli.v1",
+      "provider": "scenario_kernel.platform.consumer",
+      "implementationRef": "languages/python/src/scenario_kernel/platform/consumer.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "json-reading",
+      "capabilityKind": "interface-delivery",
+      "requiredBy": "interface:realize-sda-execution-plan-mechanics-cli",
+      "requestedCapabilityId": "sda-json-cli.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-json-cli.v1",
+      "provider": "scenario_kernel.platform.consumer",
+      "implementationRef": "languages/python/src/scenario_kernel/platform/consumer.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "json-serialization",
+      "capabilityKind": "interface-delivery",
+      "requiredBy": "interface:realize-sda-execution-plan-mechanics-cli",
+      "requestedCapabilityId": "sda-json-cli.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-json-cli.v1",
+      "provider": "scenario_kernel.platform.consumer",
+      "implementationRef": "languages/python/src/scenario_kernel/platform/consumer.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "event-port-invocation",
+      "capabilityKind": "event-port",
+      "requiredBy": "port:admit-contract-value",
+      "requestedCapabilityId": "sda-authority-transformation-port.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-authority-transformation-port.v1",
+      "provider": "scenario_kernel.adapters.SemanticTransformationEngine",
+      "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "event-port-invocation",
+      "capabilityKind": "event-port",
+      "requiredBy": "port:bind-external-credential-reference",
+      "requestedCapabilityId": "sda-authority-transformation-port.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-authority-transformation-port.v1",
+      "provider": "scenario_kernel.adapters.SemanticTransformationEngine",
+      "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "event-port-invocation",
+      "capabilityKind": "event-port",
+      "requiredBy": "port:evaluate-bounded-schema",
+      "requestedCapabilityId": "sda-authority-transformation-port.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-authority-transformation-port.v1",
+      "provider": "scenario_kernel.adapters.SemanticTransformationEngine",
+      "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "event-port-invocation",
+      "capabilityKind": "event-port",
+      "requiredBy": "port:execute-authority-transformation",
+      "requestedCapabilityId": "sda-authority-transformation-port.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-authority-transformation-port.v1",
+      "provider": "scenario_kernel.adapters.SemanticTransformationEngine",
+      "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "event-port-invocation",
+      "capabilityKind": "event-port",
+      "requiredBy": "port:execute-governed-capability-sequence",
+      "requestedCapabilityId": "sda-authority-transformation-port.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-authority-transformation-port.v1",
+      "provider": "scenario_kernel.adapters.SemanticTransformationEngine",
+      "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "event-port-invocation",
+      "capabilityKind": "event-port",
+      "requiredBy": "port:execute-governed-http-exchange",
+      "requestedCapabilityId": "sda-authority-transformation-port.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-authority-transformation-port.v1",
+      "provider": "scenario_kernel.adapters.SemanticTransformationEngine",
+      "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "event-port-invocation",
+      "capabilityKind": "event-port",
+      "requiredBy": "port:execute-governed-tooling-migration-operation",
+      "requestedCapabilityId": "sda-authority-transformation-port.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-authority-transformation-port.v1",
+      "provider": "scenario_kernel.adapters.SemanticTransformationEngine",
+      "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "event-port-invocation",
+      "capabilityKind": "event-port",
+      "requiredBy": "port:invoke-governed-model",
+      "requestedCapabilityId": "sda-authority-transformation-port.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-authority-transformation-port.v1",
+      "provider": "scenario_kernel.adapters.SemanticTransformationEngine",
+      "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "event-port-invocation",
+      "capabilityKind": "event-port",
+      "requiredBy": "port:invoke-projected-capability",
+      "requestedCapabilityId": "sda-authority-transformation-port.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-authority-transformation-port.v1",
+      "provider": "scenario_kernel.adapters.SemanticTransformationEngine",
+      "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "event-port-invocation",
+      "capabilityKind": "event-port",
+      "requiredBy": "port:materialize-governed-artifact",
+      "requestedCapabilityId": "sda-authority-transformation-port.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-authority-transformation-port.v1",
+      "provider": "scenario_kernel.adapters.SemanticTransformationEngine",
+      "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "event-port-invocation",
+      "capabilityKind": "event-port",
+      "requiredBy": "port:observe-external-representation",
+      "requestedCapabilityId": "sda-authority-transformation-port.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-authority-transformation-port.v1",
+      "provider": "scenario_kernel.adapters.SemanticTransformationEngine",
+      "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "event-port-invocation",
+      "capabilityKind": "event-port",
+      "requiredBy": "port:observe-governed-repository",
+      "requestedCapabilityId": "sda-authority-transformation-port.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-authority-transformation-port.v1",
+      "provider": "scenario_kernel.adapters.SemanticTransformationEngine",
+      "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "event-port-invocation",
+      "capabilityKind": "event-port",
+      "requiredBy": "port:observe-governed-target-execution",
+      "requestedCapabilityId": "sda-authority-transformation-port.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-authority-transformation-port.v1",
+      "provider": "scenario_kernel.adapters.SemanticTransformationEngine",
+      "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "event-port-invocation",
+      "capabilityKind": "event-port",
+      "requiredBy": "port:project-language-mechanic-registry",
+      "requestedCapabilityId": "sda-authority-transformation-port.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-authority-transformation-port.v1",
+      "provider": "scenario_kernel.adapters.SemanticTransformationEngine",
+      "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "event-port-invocation",
+      "capabilityKind": "event-port",
+      "requiredBy": "port:realize-sda-execution-plan-mechanics",
+      "requestedCapabilityId": "sda-authority-transformation-port.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-authority-transformation-port.v1",
+      "provider": "scenario_kernel.adapters.SemanticTransformationEngine",
+      "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "event-port-invocation",
+      "capabilityKind": "event-port",
+      "requiredBy": "port:resolve-canonical-capability-feature",
+      "requestedCapabilityId": "sda-authority-transformation-port.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-authority-transformation-port.v1",
+      "provider": "scenario_kernel.adapters.SemanticTransformationEngine",
+      "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "event-port-invocation",
+      "capabilityKind": "event-port",
+      "requiredBy": "port:shape-file-system-batch",
+      "requestedCapabilityId": "sda-authority-transformation-port.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-authority-transformation-port.v1",
+      "provider": "scenario_kernel.adapters.SemanticTransformationEngine",
+      "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "event-port-invocation",
+      "capabilityKind": "event-port",
+      "requiredBy": "port:transact-governed-tooling-binding",
+      "requestedCapabilityId": "sda-authority-transformation-port.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-authority-transformation-port.v1",
+      "provider": "scenario_kernel.adapters.SemanticTransformationEngine",
+      "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "state-projection",
+      "capabilityKind": "state-projection",
+      "requiredBy": "projection:project-realization-to-admission",
+      "requestedCapabilityId": "sda-authority-state-projection.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-authority-state-projection.v1",
+      "provider": "scenario_kernel.adapters.SemanticTransformationEngine",
+      "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "state-projection",
+      "capabilityKind": "state-projection",
+      "requiredBy": "projection:project-admission-to-transformation",
+      "requestedCapabilityId": "sda-authority-state-projection.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-authority-state-projection.v1",
+      "provider": "scenario_kernel.adapters.SemanticTransformationEngine",
+      "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "state-projection",
+      "capabilityKind": "state-projection",
+      "requiredBy": "projection:project-transformation-to-schema-evaluation",
+      "requestedCapabilityId": "sda-authority-state-projection.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-authority-state-projection.v1",
+      "provider": "scenario_kernel.adapters.SemanticTransformationEngine",
+      "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "state-projection",
+      "capabilityKind": "state-projection",
+      "requiredBy": "projection:project-evaluate-to-materialize",
+      "requestedCapabilityId": "sda-authority-state-projection.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-authority-state-projection.v1",
+      "provider": "scenario_kernel.adapters.SemanticTransformationEngine",
+      "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "state-projection",
+      "capabilityKind": "state-projection",
+      "requiredBy": "projection:project-materialize-to-repository",
+      "requestedCapabilityId": "sda-authority-state-projection.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-authority-state-projection.v1",
+      "provider": "scenario_kernel.adapters.SemanticTransformationEngine",
+      "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "state-projection",
+      "capabilityKind": "state-projection",
+      "requiredBy": "projection:project-repository-to-external",
+      "requestedCapabilityId": "sda-authority-state-projection.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-authority-state-projection.v1",
+      "provider": "scenario_kernel.adapters.SemanticTransformationEngine",
+      "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "state-projection",
+      "capabilityKind": "state-projection",
+      "requiredBy": "projection:project-external-to-credential",
+      "requestedCapabilityId": "sda-authority-state-projection.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-authority-state-projection.v1",
+      "provider": "scenario_kernel.adapters.SemanticTransformationEngine",
+      "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "state-projection",
+      "capabilityKind": "state-projection",
+      "requiredBy": "projection:project-credential-to-http",
+      "requestedCapabilityId": "sda-authority-state-projection.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-authority-state-projection.v1",
+      "provider": "scenario_kernel.adapters.SemanticTransformationEngine",
+      "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "state-projection",
+      "capabilityKind": "state-projection",
+      "requiredBy": "projection:project-http-to-model",
+      "requestedCapabilityId": "sda-authority-state-projection.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-authority-state-projection.v1",
+      "provider": "scenario_kernel.adapters.SemanticTransformationEngine",
+      "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "state-projection",
+      "capabilityKind": "state-projection",
+      "requiredBy": "projection:project-model-to-shape",
+      "requestedCapabilityId": "sda-authority-state-projection.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-authority-state-projection.v1",
+      "provider": "scenario_kernel.adapters.SemanticTransformationEngine",
+      "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "state-projection",
+      "capabilityKind": "state-projection",
+      "requiredBy": "projection:project-shape-to-target-execution",
+      "requestedCapabilityId": "sda-authority-state-projection.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-authority-state-projection.v1",
+      "provider": "scenario_kernel.adapters.SemanticTransformationEngine",
+      "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "state-projection",
+      "capabilityKind": "state-projection",
+      "requiredBy": "projection:project-target-execution-to-invoke-capability",
+      "requestedCapabilityId": "sda-authority-state-projection.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-authority-state-projection.v1",
+      "provider": "scenario_kernel.adapters.SemanticTransformationEngine",
+      "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "state-projection",
+      "capabilityKind": "state-projection",
+      "requiredBy": "projection:project-invoke-capability-to-sequence",
+      "requestedCapabilityId": "sda-authority-state-projection.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-authority-state-projection.v1",
+      "provider": "scenario_kernel.adapters.SemanticTransformationEngine",
+      "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "state-projection",
+      "capabilityKind": "state-projection",
+      "requiredBy": "projection:project-sequence-to-resolve-feature",
+      "requestedCapabilityId": "sda-authority-state-projection.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-authority-state-projection.v1",
+      "provider": "scenario_kernel.adapters.SemanticTransformationEngine",
+      "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "state-projection",
+      "capabilityKind": "state-projection",
+      "requiredBy": "projection:project-resolve-feature-to-transact-binding",
+      "requestedCapabilityId": "sda-authority-state-projection.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-authority-state-projection.v1",
+      "provider": "scenario_kernel.adapters.SemanticTransformationEngine",
+      "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "state-projection",
+      "capabilityKind": "state-projection",
+      "requiredBy": "projection:project-transact-binding-to-execute-migration",
+      "requestedCapabilityId": "sda-authority-state-projection.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-authority-state-projection.v1",
+      "provider": "scenario_kernel.adapters.SemanticTransformationEngine",
+      "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    },
+    {
+      "mechanicId": "state-projection",
+      "capabilityKind": "state-projection",
+      "requiredBy": "projection:project-execute-migration-to-project-registry",
+      "requestedCapabilityId": "sda-authority-state-projection.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-authority-state-projection.v1",
+      "provider": "scenario_kernel.adapters.SemanticTransformationEngine",
+      "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+      "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+    }
+  ],
+  "disposition": "RESOLVED"
+}

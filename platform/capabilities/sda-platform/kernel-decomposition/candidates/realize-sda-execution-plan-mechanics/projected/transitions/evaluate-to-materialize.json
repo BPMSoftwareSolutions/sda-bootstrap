@@ -1,0 +1,15 @@
+{
+  "transitionId": "evaluate-to-materialize",
+  "from": {
+    "scenarioId": "evaluate-bounded-schema",
+    "outcomeId": "bounded-schema-evaluation",
+    "contractId": "bounded-schema-evaluation.v1"
+  },
+  "to": {
+    "scenarioId": "materialize-governed-artifact",
+    "inputId": "governed-artifact-materialization-request",
+    "contractId": "governed-artifact-materialization-request.v1"
+  },
+  "semanticProgress": "monotonic",
+  "bindingAuthorityId": "project-evaluate-to-materialize"
+}

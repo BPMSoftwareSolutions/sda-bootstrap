@@ -1,0 +1,37 @@
+{
+  "contractId": "profile-governed-proof-binding-evaluation-input.v1",
+  "payload": {
+    "evaluationCaseId": "reordered-candidate-discovery",
+    "profileId": "generic-proof-binding-evaluation-conformance-profile.v1",
+    "snapshotDigest": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "proofObligationId": "obligation:reordered",
+    "subjectSemanticObjectId": "scenario:reordered",
+    "authorityApplicability": "REQUIRED",
+    "bindingCandidates": [
+      {
+        "fromSemanticObjectId": "fixture:beta",
+        "relationshipKind": "FIXTURE_EXECUTED_AS_PROJECTED_TEST",
+        "toSemanticObjectId": "projected-test:beta",
+        "basis": "EXPLICIT_AUTHORITY",
+        "lineageState": "CURRENT"
+      },
+      {
+        "fromSemanticObjectId": "fixture:alpha",
+        "relationshipKind": "FIXTURE_EXERCISES_SCENARIO",
+        "toSemanticObjectId": "scenario:alpha",
+        "basis": "DETERMINISTIC_RULE",
+        "lineageState": "CURRENT"
+      }
+    ],
+    "evidenceState": "CURRENT_PASSING",
+    "reproduction": {
+      "orderedInputDigest": "sha256:38aecd72f604f9488eaa8e28df15c07d8db48de988c05268a76a7d1264366130",
+      "evaluationRuleIds": [
+        "evaluation-order.v1",
+        "bind-fixture-scenario.v1",
+        "bind-fixture-projected-test.v1",
+        "bind-evidence-subject.v1"
+      ]
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "scopeType": "generic-json-reference-scope.v1",
+  "lifecycle": "PROPOSED",
+  "subjects": [
+    {
+      "subjectRef": "subject:alpha",
+      "sourceRef": "carriers/subject-alpha.json.source",
+      "sourceDigest": "sha256:e9a6f77caea323e272a7c36a0b34f24ad3102340bc726d45a336798e9494a45e"
+    }
+  ],
+  "cyclePolicy": "ALLOW_AND_RECORD",
+  "ambientNetworkResolution": false,
+  "ambientFilesystemResolution": false,
+  "admissionClaims": {
+    "platformAdmission": "NOT_OBSERVABLE"
+  }
+}

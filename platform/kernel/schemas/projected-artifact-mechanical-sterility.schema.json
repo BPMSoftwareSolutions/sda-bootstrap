@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/projected-artifact-mechanical-sterility.v1.schema.json",
+  "title": "Projected Artifact Mechanical Sterility Result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["conformanceType", "sourceOrigin", "forbiddenExecutableMechanics", "violations", "disposition"],
+  "properties": {
+    "conformanceType": { "const": "projected-artifact-mechanical-sterility.v1" },
+    "sourceOrigin": { "const": "PROJECTED" },
+    "forbiddenExecutableMechanics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["branch", "iteration", "exception-handling", "throw", "object-construction", "serialization", "normalization", "validation", "fallback", "retry", "state-mutation", "meaning-hidden-in-text"],
+      "properties": {
+        "branch": { "type": "integer", "minimum": 0 },
+        "iteration": { "type": "integer", "minimum": 0 },
+        "exception-handling": { "type": "integer", "minimum": 0 },
+        "throw": { "type": "integer", "minimum": 0 },
+        "object-construction": { "type": "integer", "minimum": 0 },
+        "serialization": { "type": "integer", "minimum": 0 },
+        "normalization": { "type": "integer", "minimum": 0 },
+        "validation": { "type": "integer", "minimum": 0 },
+        "fallback": { "type": "integer", "minimum": 0 },
+        "retry": { "type": "integer", "minimum": 0 },
+        "state-mutation": { "type": "integer", "minimum": 0 },
+        "meaning-hidden-in-text": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "violations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["file", "mechanic", "count"],
+        "properties": {
+          "file": { "type": "string", "minLength": 1 },
+          "mechanic": { "type": "string", "minLength": 1 },
+          "count": { "type": "integer", "minimum": 1 }
+        }
+      }
+    },
+    "disposition": { "type": "string", "enum": ["PURE_PROJECTION_CONFORMS", "PROJECTED_EXECUTION_MECHANIC_VIOLATION"] }
+  }
+}

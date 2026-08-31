@@ -1,0 +1,312 @@
+{
+  "capabilityType": "scenario-driven-capability.v1",
+  "capabilityId": "semantic-corpus-artifact-repository",
+  "userStory": {
+    "actor": "semantic corpus maintainer",
+    "intent": "publish, read, and pointer-advance semantic corpus artifacts by canonical content address under one bounded repository authority",
+    "outcome": "exact bytes are retained once or matched idempotently without overwrite, reads verify digests without fallback, and pointer movement is one compare-and-swap permitted only after corpus closure"
+  },
+  "scenarios": [
+    {
+      "scenarioId": "publish-immutable-semantic-corpus-artifact",
+      "input": {
+        "inputId": "semantic-corpus-artifact-publication-request",
+        "contract": {
+          "contractId": "semantic-corpus-artifact-publication-request.v1"
+        }
+      },
+      "event": {
+        "eventId": "semantic-corpus-artifact-publication-requested",
+        "executionAuthorityId": "publish-immutable-semantic-corpus-artifact.v1"
+      },
+      "outcome": {
+        "outcomeId": "semantic-corpus-artifact-publication-evidence",
+        "contract": {
+          "contractId": "semantic-corpus-artifact-publication-evidence.v1"
+        },
+        "experience": {
+          "statement": "exact bytes are retained once or matched idempotently without overwrite, pointer movement, semantic interpretation, or mixed generation"
+        },
+        "terminal": true
+      },
+      "gherkin": {
+        "given": {
+          "semanticRef": "publish-immutable-semantic-corpus-artifact.given",
+          "text": "one canonical artifact, declared artifact kind, expected digest, and bounded repository authority"
+        },
+        "when": {
+          "semanticRef": "publish-immutable-semantic-corpus-artifact.when",
+          "text": "the artifact is published atomically at its content address"
+        },
+        "then": {
+          "semanticRef": "publish-immutable-semantic-corpus-artifact.then",
+          "text": "exact bytes are retained once or matched idempotently without overwrite, pointer movement, semantic interpretation, or mixed generation"
+        }
+      },
+      "name": "Publish one canonical immutable artifact"
+    },
+    {
+      "scenarioId": "reject-semantic-corpus-artifact-publication-conflict",
+      "input": {
+        "inputId": "semantic-corpus-artifact-publication-request",
+        "contract": {
+          "contractId": "semantic-corpus-artifact-publication-request.v1"
+        }
+      },
+      "event": {
+        "eventId": "conflicting-semantic-corpus-artifact-publication-requested",
+        "executionAuthorityId": "reject-semantic-corpus-artifact-publication-conflict.v1"
+      },
+      "outcome": {
+        "outcomeId": "rejected-semantic-corpus-artifact-publication-evidence",
+        "contract": {
+          "contractId": "semantic-corpus-artifact-publication-evidence.v1"
+        },
+        "experience": {
+          "statement": "publication is rejected without overwrite, partial artifact, pointer movement, or reinterpretation of either digest"
+        },
+        "terminal": true
+      },
+      "gherkin": {
+        "given": {
+          "semanticRef": "reject-semantic-corpus-artifact-publication-conflict.given",
+          "text": "supplied bytes do not match the expected digest or an occupied content address contains different bytes"
+        },
+        "when": {
+          "semanticRef": "reject-semantic-corpus-artifact-publication-conflict.when",
+          "text": "publication admission is evaluated"
+        },
+        "then": {
+          "semanticRef": "reject-semantic-corpus-artifact-publication-conflict.then",
+          "text": "publication is rejected without overwrite, partial artifact, pointer movement, or reinterpretation of either digest"
+        }
+      },
+      "name": "Reject digest mismatch or occupied-address byte conflict"
+    },
+    {
+      "scenarioId": "read-immutable-semantic-corpus-artifact",
+      "input": {
+        "inputId": "semantic-corpus-artifact-read-request",
+        "contract": {
+          "contractId": "semantic-corpus-artifact-read-request.v1"
+        }
+      },
+      "event": {
+        "eventId": "semantic-corpus-artifact-read-requested",
+        "executionAuthorityId": "read-immutable-semantic-corpus-artifact.v1"
+      },
+      "outcome": {
+        "outcomeId": "semantic-corpus-artifact-read-evidence",
+        "contract": {
+          "contractId": "semantic-corpus-artifact-read-evidence.v1"
+        },
+        "experience": {
+          "statement": "the exact artifact or an attributable missing, corrupted, or unauthorized finding is returned without fallback to current or latest state"
+        },
+        "terminal": true
+      },
+      "gherkin": {
+        "given": {
+          "semanticRef": "read-immutable-semantic-corpus-artifact.given",
+          "text": "one authorized artifact digest and bounded repository authority"
+        },
+        "when": {
+          "semanticRef": "read-immutable-semantic-corpus-artifact.when",
+          "text": "the exact stored artifact is read and its digest and canonical form are verified"
+        },
+        "then": {
+          "semanticRef": "read-immutable-semantic-corpus-artifact.then",
+          "text": "the exact artifact or an attributable missing, corrupted, or unauthorized finding is returned without fallback to current or latest state"
+        }
+      },
+      "name": "Read and verify one content-addressed artifact"
+    },
+    {
+      "scenarioId": "retain-referenced-semantic-corpus-snapshot",
+      "input": {
+        "inputId": "semantic-corpus-artifact-read-request",
+        "contract": {
+          "contractId": "semantic-corpus-artifact-read-request.v1"
+        }
+      },
+      "event": {
+        "eventId": "retained-semantic-corpus-snapshot-read-requested",
+        "executionAuthorityId": "retain-referenced-semantic-corpus-snapshot.v1"
+      },
+      "outcome": {
+        "outcomeId": "semantic-corpus-artifact-read-evidence",
+        "contract": {
+          "contractId": "semantic-corpus-artifact-read-evidence.v1"
+        },
+        "experience": {
+          "statement": "its original bytes and digest are returned independently of the current pointer generation"
+        },
+        "terminal": true
+      },
+      "gherkin": {
+        "given": {
+          "semanticRef": "retain-referenced-semantic-corpus-snapshot.given",
+          "text": "a non-current snapshot digest is still referenced by a retained query, publication, or authoring receipt"
+        },
+        "when": {
+          "semanticRef": "retain-referenced-semantic-corpus-snapshot.when",
+          "text": "that exact content address is read"
+        },
+        "then": {
+          "semanticRef": "retain-referenced-semantic-corpus-snapshot.then",
+          "text": "its original bytes and digest are returned independently of the current pointer generation"
+        }
+      },
+      "name": "Read an older snapshot retained by receipt lineage"
+    },
+    {
+      "scenarioId": "update-current-semantic-corpus-pointer",
+      "input": {
+        "inputId": "semantic-corpus-current-pointer-update-request",
+        "contract": {
+          "contractId": "semantic-corpus-current-pointer-update-request.v1"
+        }
+      },
+      "event": {
+        "eventId": "semantic-corpus-current-pointer-update-requested",
+        "executionAuthorityId": "update-current-semantic-corpus-pointer.v1"
+      },
+      "outcome": {
+        "outcomeId": "semantic-corpus-current-pointer-update-evidence",
+        "contract": {
+          "contractId": "semantic-corpus-current-pointer-update-evidence.v1"
+        },
+        "experience": {
+          "statement": "it advances exactly one generation or returns a conflict without changing any artifact, old pointer, or retained snapshot"
+        },
+        "terminal": true
+      },
+      "gherkin": {
+        "given": {
+          "semanticRef": "update-current-semantic-corpus-pointer.given",
+          "text": "one expected current digest, one published closed candidate snapshot, and a current closure receipt"
+        },
+        "when": {
+          "semanticRef": "update-current-semantic-corpus-pointer.when",
+          "text": "the environment pointer is updated through one atomic compare-and-swap"
+        },
+        "then": {
+          "semanticRef": "update-current-semantic-corpus-pointer.then",
+          "text": "it advances exactly one generation or returns a conflict without changing any artifact, old pointer, or retained snapshot"
+        }
+      },
+      "name": "Compare and swap the current pointer after corpus closure"
+    },
+    {
+      "scenarioId": "reject-open-semantic-corpus-pointer-update",
+      "input": {
+        "inputId": "semantic-corpus-current-pointer-update-request",
+        "contract": {
+          "contractId": "semantic-corpus-current-pointer-update-request.v1"
+        }
+      },
+      "event": {
+        "eventId": "open-semantic-corpus-pointer-update-requested",
+        "executionAuthorityId": "reject-open-semantic-corpus-pointer-update.v1"
+      },
+      "outcome": {
+        "outcomeId": "rejected-semantic-corpus-current-pointer-update-evidence",
+        "contract": {
+          "contractId": "semantic-corpus-current-pointer-update-evidence.v1"
+        },
+        "experience": {
+          "statement": "the current pointer is unchanged and every missing, stale, or rejected subject is returned as an attributable finding"
+        },
+        "terminal": true
+      },
+      "gherkin": {
+        "given": {
+          "semanticRef": "reject-open-semantic-corpus-pointer-update.given",
+          "text": "the candidate snapshot is missing, corrupted, open, rejected, or bound to a stale closure receipt"
+        },
+        "when": {
+          "semanticRef": "reject-open-semantic-corpus-pointer-update.when",
+          "text": "pointer advancement is requested"
+        },
+        "then": {
+          "semanticRef": "reject-open-semantic-corpus-pointer-update.then",
+          "text": "the current pointer is unchanged and every missing, stale, or rejected subject is returned as an attributable finding"
+        }
+      },
+      "name": "Reject a pointer update without current corpus closure"
+    },
+    {
+      "scenarioId": "reproduce-semantic-corpus-artifact-address",
+      "input": {
+        "inputId": "semantic-corpus-artifact-publication-request",
+        "contract": {
+          "contractId": "semantic-corpus-artifact-publication-request.v1"
+        }
+      },
+      "event": {
+        "eventId": "semantic-corpus-artifact-address-reproduction-requested",
+        "executionAuthorityId": "reproduce-semantic-corpus-artifact-address.v1"
+      },
+      "outcome": {
+        "outcomeId": "semantic-corpus-artifact-publication-evidence",
+        "contract": {
+          "contractId": "semantic-corpus-artifact-publication-evidence.v1"
+        },
+        "experience": {
+          "statement": "artifact digests and immutable address identities are identical without timestamp, machine, user, or path input"
+        },
+        "terminal": true
+      },
+      "gherkin": {
+        "given": {
+          "semanticRef": "reproduce-semantic-corpus-artifact-address.given",
+          "text": "byte-identical canonical artifacts are published in different process and discovery orders"
+        },
+        "when": {
+          "semanticRef": "reproduce-semantic-corpus-artifact-address.when",
+          "text": "their content addresses and publication evidence are derived"
+        },
+        "then": {
+          "semanticRef": "reproduce-semantic-corpus-artifact-address.then",
+          "text": "artifact digests and immutable address identities are identical without timestamp, machine, user, or path input"
+        }
+      },
+      "name": "Reproduce one content address from identical canonical bytes"
+    }
+  ],
+  "transitions": [],
+  "rootScenarioId": "publish-immutable-semantic-corpus-artifact",
+  "name": "Operate a semantic corpus artifact repository",
+  "experience": {
+    "experienceType": "promised-experience.v1",
+    "experienceId": "semantic-corpus-artifact-repository-is-content-addressed-and-immutable",
+    "actor": "semantic corpus maintainer",
+    "promise": "The projected capability either returns exact publication, read, or pointer evidence, or an attributable rejection with named findings; storage never changes semantic identity or meaning.",
+    "observableConditions": [
+      {
+        "conditionId": "repository-authority-binding-is-exact",
+        "statement": "repository authority reference and digest are admitted before any evaluation"
+      },
+      {
+        "conditionId": "artifact-bytes-verify-before-retention",
+        "statement": "supplied bytes must recompute the expected digest exactly; mismatched bytes are rejected without write"
+      },
+      {
+        "conditionId": "occupied-addresses-never-overwrite",
+        "statement": "a content address occupied by different bytes rejects publication and mutates nothing"
+      },
+      {
+        "conditionId": "reads-verify-without-fallback",
+        "statement": "reads return the exact artifact or an attributable missing, corrupted, or unauthorized finding; no current or latest fallback"
+      },
+      {
+        "conditionId": "pointer-advances-only-after-closure",
+        "statement": "the pointer advances exactly one generation by compare-and-swap only when the candidate corpus closed; conflicts change no state"
+      },
+      {
+        "conditionId": "missing-mechanics-hold-with-typed-findings",
+        "statement": "a scenario requiring an unadmitted mechanic returns a typed finding naming that mechanic and claims no publication, read, or pointer authority"
+      }
+    ]
+  }
+}

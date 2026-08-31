@@ -1,0 +1,72 @@
+{
+  "capabilityType": "scenario-driven-capability.v1",
+  "capabilityId": "decide-tooling-migration",
+  "userStory": {
+    "actor": "SDA maintainer",
+    "intent": "derive tooling migration policy decisions from observed facts",
+    "outcome": "deterministic inventory, replacement, promotion, evidence, and continuation decisions"
+  },
+  "scenarios": [
+    {
+      "scenarioId": "decide-tooling-migration",
+      "input": {
+        "inputId": "tooling-migration-facts",
+        "contract": {
+          "contractId": "tooling-migration-decision-input.v1"
+        }
+      },
+      "event": {
+        "eventId": "tooling-migration-decision-requested",
+        "executionAuthorityId": "tooling-migration-decision.v1"
+      },
+      "outcome": {
+        "outcomeId": "tooling-migration-decision-known",
+        "contract": {
+          "contractId": "tooling-migration-decision.v1"
+        },
+        "experience": {
+          "statement": "the deterministic inventory, replacement, promotion, evidence, or run decision is returned"
+        },
+        "terminal": true
+      },
+      "gherkin": {
+        "given": {
+          "semanticRef": "decide-tooling-migration.given",
+          "text": "tooling inventory, binding, gate, and run facts have been observed"
+        },
+        "when": {
+          "semanticRef": "decide-tooling-migration.when",
+          "text": "a tooling migration decision is requested"
+        },
+        "then": {
+          "semanticRef": "decide-tooling-migration.then",
+          "text": "the deterministic inventory, replacement, promotion, evidence, or run decision is returned"
+        }
+      },
+      "name": "Decide the next tooling migration outcome from admitted facts"
+    }
+  ],
+  "transitions": [],
+  "rootScenarioId": "decide-tooling-migration",
+  "name": "Decide tooling migration",
+  "experience": {
+    "experienceType": "promised-experience.v1",
+    "experienceId": "test-signal-drives-tooling-replacement",
+    "actor": "SDA maintainer",
+    "promise": "the test signal determines whether projected tooling is retained or rolled back",
+    "observableConditions": [
+      {
+        "conditionId": "requested-decision-is-returned",
+        "statement": "the returned decision type matches the admitted request"
+      },
+      {
+        "conditionId": "failed-gate-requires-exact-rollback",
+        "statement": "a nonzero full-gate exit requires the original provider binding to be restored"
+      },
+      {
+        "conditionId": "independent-candidates-continue-after-rejection",
+        "statement": "a rejected candidate does not stop independent candidates from being evaluated"
+      }
+    ]
+  }
+}

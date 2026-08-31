@@ -1,0 +1,151 @@
+{
+  "contractId": "scenario-semantic-carrier-validation-provider-conformance.v1",
+  "lifecycle": "ADMITTED",
+  "providerObservation": {
+    "disposition": "SATISFIED",
+    "providerSourceSet": [
+      {
+        "sourceRef": "languages/typescript/runtimes/node/semantic-carrier-validator/index.mjs",
+        "sourceDigest": "sha256:44ac0e1c9b9dbf958ed7e7ddddf4b5acab9c2f204a9c037ea85765a5932f70c0"
+      },
+      {
+        "sourceRef": "languages/typescript/runtimes/node/semantic-carrier-validator/src/parse-carrier.js",
+        "sourceDigest": "sha256:60eef8a5e11d51622bddf43e2209e4b18d1def3a06c38a252abb69919a7aada6"
+      },
+      {
+        "sourceRef": "languages/typescript/runtimes/node/semantic-carrier-validator/src/stable.js",
+        "sourceDigest": "sha256:33ea675ed777aa2bb9a760c16845efba7fac3efe5e1d4bac6e1df529eb4688be"
+      },
+      {
+        "sourceRef": "languages/typescript/runtimes/node/semantic-carrier-validator/src/validate.js",
+        "sourceDigest": "sha256:ddfa4a289ecdcaf5f2386bd0794a1ca9a9802867f6fa6ea2c677ba98e0003ac5"
+      },
+      {
+        "sourceRef": "languages/typescript/runtimes/node/semantic-carrier-validator/src/validate-managed.js",
+        "sourceDigest": "sha256:6a30a3feb979fc4419b152c1e78f20cde8ccf158984f867cce66bbba87d6006b"
+      },
+      {
+        "sourceRef": "languages/typescript/runtimes/node/semantic-carrier-validator/schemas/semantic-carrier.schema.json",
+        "sourceDigest": "sha256:4956f3095cd47b720c46ecb00c0f4ba37983433347fa12800d0d25b8ea6d3433"
+      },
+      {
+        "sourceRef": "languages/typescript/runtimes/node/semantic-carrier-validator/schemas/semantic-carrier.v3.schema.json",
+        "sourceDigest": "sha256:9f27b1b3e1c443bebdd308b05d113bca836a08c143da877f95713146c56a1387"
+      },
+      {
+        "sourceRef": "languages/typescript/runtimes/node/semantic-carrier-validator/schemas/canonical-circuit-blueprint.schema.json",
+        "sourceDigest": "sha256:dc3a4cf1c75ca3ebdf51e83b6047bde6c5cd45674798cb31a7e14d1585a12d02"
+      },
+      {
+        "sourceRef": "languages/typescript/runtimes/node/semantic-carrier-validator/schemas/canonical-circuit-blueprint.schema.authority.json",
+        "sourceDigest": "sha256:b6d6d92001683b0d474473a83fe1b765e5f6dd2bd2262a2e9e1d990e6f48e24b"
+      },
+      {
+        "sourceRef": "languages/typescript/runtimes/node/node-mechanic-registry-loader.mjs",
+        "sourceDigest": "sha256:9a29843fac88fefaeb9308c14a661904d41744f5c9e1a43ab98d7f1646d12704"
+      }
+    ],
+    "implementationVersion": "1.1.0",
+    "registryBindingRef": "kernel/semantic-authority/consumer/node-mechanic-registrations/scenario-semantic-carrier-validation.registration.authority.json",
+    "registryBindingDigest": "sha256:7e7a0944efef74a9599311403a647939406fcdfd278f8ba7954f8c398528ad41"
+  },
+  "authorityDigests": {
+    "provider": "sha256:96b374c40dc4cb183a3e928acd209e0b6889e5166341f0caec8edd08a362b819",
+    "grammar": "sha256:4956f3095cd47b720c46ecb00c0f4ba37983433347fa12800d0d25b8ea6d3433",
+    "managedGrammar": "sha256:9f27b1b3e1c443bebdd308b05d113bca836a08c143da877f95713146c56a1387"
+  },
+  "fixtureManifestRef": "capabilities/sda-platform/verify-scenario-semantic-carrier-validation-conformance/fixtures/fixture-manifest.authority.json",
+  "fixtureManifestDigest": "sha256:5864795c0a5a6075531a1c68f0be7c0d2c4aa4733ea230018caa9fd01fab1b0c",
+  "fixtureSetDigest": "sha256:ca422962fbaeea980e1c4473b9da02356c2be091263f72660df3520abe8e4e8b",
+  "partitions": [
+    {
+      "partitionId": "EXACT_SOURCE_IDENTITY",
+      "disposition": "SATISFIED",
+      "evidenceDigests": [
+        "sha256:202a01dec3c36ed4e16c4cc186b6b61d5f14d178cbe26c213bd232819ffad7fd",
+        "sha256:49df6fbfcb38711592e13f13180988caeb80ab3962bcba4ec27e5a0353ad73c6",
+        "sha256:5d2752ff859f8bae3d59b4897b7036e49507286fb3b19c1bae15acb1c21c0789"
+      ],
+      "reason": null
+    },
+    {
+      "partitionId": "LITERAL_AST_ADMISSION",
+      "disposition": "SATISFIED",
+      "evidenceDigests": [
+        "sha256:60eef8a5e11d51622bddf43e2209e4b18d1def3a06c38a252abb69919a7aada6",
+        "sha256:202a01dec3c36ed4e16c4cc186b6b61d5f14d178cbe26c213bd232819ffad7fd",
+        "sha256:49df6fbfcb38711592e13f13180988caeb80ab3962bcba4ec27e5a0353ad73c6"
+      ],
+      "reason": null
+    },
+    {
+      "partitionId": "HIDDEN_EXECUTABLE_MEANING_REJECTION",
+      "disposition": "SATISFIED",
+      "evidenceDigests": [
+        "sha256:cd120b931b74751de3ff25d1af1ae8a0b611a15744dc3d2a568a4153f5f2df3c",
+        "sha256:60eef8a5e11d51622bddf43e2209e4b18d1def3a06c38a252abb69919a7aada6"
+      ],
+      "reason": null
+    },
+    {
+      "partitionId": "SCHEMA_ADMISSION",
+      "disposition": "SATISFIED",
+      "evidenceDigests": [
+        "sha256:ddfa4a289ecdcaf5f2386bd0794a1ca9a9802867f6fa6ea2c677ba98e0003ac5",
+        "sha256:4956f3095cd47b720c46ecb00c0f4ba37983433347fa12800d0d25b8ea6d3433"
+      ],
+      "reason": null
+    },
+    {
+      "partitionId": "SEMANTIC_REFERENCE_CLOSURE",
+      "disposition": "SATISFIED",
+      "evidenceDigests": [
+        "sha256:ab6b9b38ceb3aa286b398608f4650093b20a47f2cd6f1a6f4b6ff4499dd10e68",
+        "sha256:ddfa4a289ecdcaf5f2386bd0794a1ca9a9802867f6fa6ea2c677ba98e0003ac5"
+      ],
+      "reason": null
+    },
+    {
+      "partitionId": "MANAGED_V3_SCHEMA_AND_REFERENCE_CLOSURE",
+      "disposition": "SATISFIED",
+      "evidenceDigests": [
+        "sha256:49df6fbfcb38711592e13f13180988caeb80ab3962bcba4ec27e5a0353ad73c6",
+        "sha256:6a30a3feb979fc4419b152c1e78f20cde8ccf158984f867cce66bbba87d6006b",
+        "sha256:9f27b1b3e1c443bebdd308b05d113bca836a08c143da877f95713146c56a1387"
+      ],
+      "reason": null
+    },
+    {
+      "partitionId": "DETERMINISTIC_FINDINGS_AND_RECEIPTS",
+      "disposition": "SATISFIED",
+      "evidenceDigests": [
+        "sha256:33ea675ed777aa2bb9a760c16845efba7fac3efe5e1d4bac6e1df529eb4688be",
+        "sha256:5d2752ff859f8bae3d59b4897b7036e49507286fb3b19c1bae15acb1c21c0789"
+      ],
+      "reason": null
+    },
+    {
+      "partitionId": "PROVIDER_AND_REGISTRY_BINDING",
+      "disposition": "SATISFIED",
+      "evidenceDigests": [
+        "sha256:96b374c40dc4cb183a3e928acd209e0b6889e5166341f0caec8edd08a362b819",
+        "sha256:7e7a0944efef74a9599311403a647939406fcdfd278f8ba7954f8c398528ad41",
+        "sha256:9a29843fac88fefaeb9308c14a661904d41744f5c9e1a43ab98d7f1646d12704"
+      ],
+      "reason": null
+    },
+    {
+      "partitionId": "REAL_RUNTIME_INVOCATION",
+      "disposition": "SATISFIED",
+      "evidenceDigests": [
+        "sha256:44ac0e1c9b9dbf958ed7e7ddddf4b5acab9c2f204a9c037ea85765a5932f70c0",
+        "sha256:5d2752ff859f8bae3d59b4897b7036e49507286fb3b19c1bae15acb1c21c0789"
+      ],
+      "reason": null
+    }
+  ],
+  "findings": [],
+  "disposition": "SDA_SCENARIO_SEMANTIC_CARRIER_VALIDATION_PROVIDER_CONFORMANT",
+  "receiptDigestAlgorithm": "sha256 of canonical recursive-key-order JSON excluding receiptDigest",
+  "receiptDigest": "sha256:2a517b1c8cd9cc2b8bd9afc62548cc6270c4b52156d4e9ab8712eb1f2e344a51"
+}

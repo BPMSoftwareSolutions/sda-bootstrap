@@ -1,0 +1,8 @@
+{
+  "profileType": "ui-target-profile.v1",
+  "targetId": "target.react-web",
+  "targetKind": "react-web",
+  "requestedProviderId": null,
+  "requiredEvidenceCapabilities": ["ACCESSIBILITY", "ADAPTATION", "OBSERVATION"],
+  "canonicalDigest": "sha256:d5ef0881282525c786a67ef8504a58d3ee4a489f4dbee7abcad5318b2c516bdf"
+}

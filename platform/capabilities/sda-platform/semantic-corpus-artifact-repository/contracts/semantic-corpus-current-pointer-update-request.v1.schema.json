@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/semantic-corpus/semantic-corpus-current-pointer-update-request.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contractId", "repositoryAuthorityRef", "repositoryAuthorityDigest", "pointerId", "expectedGeneration", "expectedCurrentSnapshotDigest", "candidateArtifactKind", "candidateSnapshotDigest", "closureReceiptRef", "closureReceiptDigest", "closureReceiptContractId"],
+  "properties": {
+    "contractId": {"const": "semantic-corpus-current-pointer-update-request.v1"},
+    "repositoryAuthorityRef": {"$ref": "#/$defs/reference"},
+    "repositoryAuthorityDigest": {"$ref": "#/$defs/digest"},
+    "pointerId": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9._-]{0,127}$"},
+    "expectedGeneration": {"type": "integer", "minimum": 0},
+    "expectedCurrentSnapshotDigest": {"oneOf": [{"$ref": "#/$defs/digest"}, {"type": "null"}]},
+    "candidateArtifactKind": {"const": "CORPUS_SNAPSHOT"},
+    "candidateSnapshotDigest": {"$ref": "#/$defs/digest"},
+    "closureReceiptRef": {"$ref": "#/$defs/contentAddress"},
+    "closureReceiptDigest": {"$ref": "#/$defs/digest"},
+    "closureReceiptContractId": {"const": "semantic-corpus-closure-receipt.v1"}
+  },
+  "$defs": {
+    "digest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "reference": {"type": "string", "minLength": 1, "pattern": "^(?![A-Za-z]:)(?![/\\\\])(?!.*(?:^|[/\\\\])\\.\\.(?:[/\\\\]|$)).+$"},
+    "contentAddress": {"type": "string", "pattern": "^objects/[a-f0-9]{2}/[a-f0-9]{64}\\.json$"}
+  }
+}

@@ -1,0 +1,158 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/proof-binding/proof-binding-evaluation-provider-conformance.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contractId", "lifecycle", "providerObservation", "authorityDigests", "fixtureManifestRef", "fixtureManifestDigest", "fixtureSetDigest", "partitions", "findings", "disposition", "receiptDigest", "receiptDigestAlgorithm"],
+  "properties": {
+    "contractId": {"const": "proof-binding-evaluation-provider-conformance.v1"},
+    "lifecycle": {"enum": ["PROPOSED", "ADMITTED"]},
+    "providerObservation": {"$ref": "#/$defs/providerObservation"},
+    "authorityDigests": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["provider", "profile"],
+      "properties": {
+        "provider": {"$ref": "#/$defs/digest"},
+        "profile": {"$ref": "#/$defs/digest"}
+      }
+    },
+    "fixtureManifestRef": {"const": "capabilities/sda-platform/verify-proof-binding-evaluation-conformance/fixtures/fixture-manifest.authority.json"},
+    "fixtureManifestDigest": {"$ref": "#/$defs/digest"},
+    "fixtureSetDigest": {"$ref": "#/$defs/digest"},
+    "partitions": {
+      "type": "array",
+      "minItems": 12,
+      "maxItems": 12,
+      "items": {"$ref": "#/$defs/partition"},
+      "allOf": [
+        {"contains": {"type": "object", "properties": {"partitionId": {"const": "PROFILE_BOUNDARY_AND_EVALUATION_ORDER"}}, "required": ["partitionId"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "properties": {"partitionId": {"const": "EXCLUDED_OBLIGATION_NOT_APPLICABLE"}}, "required": ["partitionId"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "properties": {"partitionId": {"const": "ABSENCE_DOES_NOT_MEAN_FAILURE"}}, "required": ["partitionId"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "properties": {"partitionId": {"const": "PROHIBITED_BASIS_REJECTION"}}, "required": ["partitionId"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "properties": {"partitionId": {"const": "STALE_OR_MIXED_LINEAGE_REJECTION"}}, "required": ["partitionId"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "properties": {"partitionId": {"const": "CURRENT_PASSING_SATISFIED"}}, "required": ["partitionId"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "properties": {"partitionId": {"const": "CURRENT_FAILING_NOT_SATISFIED"}}, "required": ["partitionId"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "properties": {"partitionId": {"const": "EXACTLY_ONE_DISPOSITION_PER_OBLIGATION"}}, "required": ["partitionId"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "properties": {"partitionId": {"const": "DETERMINISTIC_REPRODUCTION"}}, "required": ["partitionId"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "properties": {"partitionId": {"const": "CONTRACT_ADMISSION_AND_RECEIPT_DIGEST"}}, "required": ["partitionId"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "properties": {"partitionId": {"const": "PROVIDER_AND_AUTHORITY_IDENTITIES"}}, "required": ["partitionId"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "properties": {"partitionId": {"const": "ORDERED_EVIDENCE_FINDINGS"}}, "required": ["partitionId"]}, "minContains": 1, "maxContains": 1}
+      ]
+    },
+    "findings": {"type": "array", "items": {"$ref": "#/$defs/finding"}},
+    "disposition": {"enum": ["SDA_PROOF_BINDING_EVALUATION_PROVIDER_CONFORMANT", "SDA_PROOF_BINDING_EVALUATION_PROVIDER_OPEN", "SDA_PROOF_BINDING_EVALUATION_PROVIDER_REJECTED"]},
+    "receiptDigest": {"$ref": "#/$defs/digest"},
+    "receiptDigestAlgorithm": {"const": "sha256 of canonical recursive-key-order JSON excluding receiptDigest"}
+  },
+  "allOf": [
+    {
+      "if": {"type": "object", "properties": {"lifecycle": {"const": "PROPOSED"}}, "required": ["lifecycle"]},
+      "then": {"type": "object", "properties": {"providerObservation": {"type": "object", "properties": {"disposition": {"const": "NOT_OBSERVABLE"}}}, "disposition": {"const": "SDA_PROOF_BINDING_EVALUATION_PROVIDER_OPEN"}}}
+    },
+    {
+      "if": {"type": "object", "properties": {"lifecycle": {"const": "ADMITTED"}}, "required": ["lifecycle"]},
+      "then": {"type": "object", "properties": {"providerObservation": {"type": "object", "properties": {"disposition": {"const": "SATISFIED"}}}, "disposition": {"enum": ["SDA_PROOF_BINDING_EVALUATION_PROVIDER_CONFORMANT", "SDA_PROOF_BINDING_EVALUATION_PROVIDER_REJECTED"]}}}
+    },
+    {
+      "if": {"type": "object", "properties": {"disposition": {"const": "SDA_PROOF_BINDING_EVALUATION_PROVIDER_CONFORMANT"}}, "required": ["disposition"]},
+      "then": {
+        "type": "object",
+        "properties": {
+          "partitions": {"type": "array", "items": {"type": "object", "properties": {"disposition": {"const": "SATISFIED"}, "evidenceDigests": {"type": "array", "minItems": 1}}, "required": ["disposition", "evidenceDigests"]}},
+          "findings": {"type": "array", "maxItems": 0}
+        }
+      }
+    },
+    {
+      "if": {"type": "object", "properties": {"disposition": {"const": "SDA_PROOF_BINDING_EVALUATION_PROVIDER_OPEN"}}, "required": ["disposition"]},
+      "then": {
+        "type": "object",
+        "properties": {
+          "partitions": {
+            "type": "array",
+            "contains": {"type": "object", "properties": {"disposition": {"const": "NOT_OBSERVABLE"}}, "required": ["disposition"]},
+            "allOf": [{"not": {"contains": {"type": "object", "properties": {"disposition": {"const": "NOT_SATISFIED"}}, "required": ["disposition"]}}}]
+          },
+          "findings": {"type": "array", "minItems": 1}
+        }
+      }
+    },
+    {
+      "if": {"type": "object", "properties": {"disposition": {"const": "SDA_PROOF_BINDING_EVALUATION_PROVIDER_REJECTED"}}, "required": ["disposition"]},
+      "then": {
+        "type": "object",
+        "properties": {
+          "partitions": {"type": "array", "contains": {"type": "object", "properties": {"disposition": {"const": "NOT_SATISFIED"}}, "required": ["disposition"]}},
+          "findings": {"type": "array", "minItems": 1}
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "digest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "partitionId": {
+      "enum": [
+        "PROFILE_BOUNDARY_AND_EVALUATION_ORDER",
+        "EXCLUDED_OBLIGATION_NOT_APPLICABLE",
+        "ABSENCE_DOES_NOT_MEAN_FAILURE",
+        "PROHIBITED_BASIS_REJECTION",
+        "STALE_OR_MIXED_LINEAGE_REJECTION",
+        "CURRENT_PASSING_SATISFIED",
+        "CURRENT_FAILING_NOT_SATISFIED",
+        "EXACTLY_ONE_DISPOSITION_PER_OBLIGATION",
+        "DETERMINISTIC_REPRODUCTION",
+        "CONTRACT_ADMISSION_AND_RECEIPT_DIGEST",
+        "PROVIDER_AND_AUTHORITY_IDENTITIES",
+        "ORDERED_EVIDENCE_FINDINGS"
+      ]
+    },
+    "partition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["partitionId", "disposition", "evidenceDigests", "reason"],
+      "properties": {
+        "partitionId": {"$ref": "#/$defs/partitionId"},
+        "disposition": {"enum": ["SATISFIED", "NOT_SATISFIED", "NOT_OBSERVABLE"]},
+        "evidenceDigests": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/digest"}},
+        "reason": {"oneOf": [{"type": "string", "minLength": 1}, {"type": "null"}]}
+      },
+      "allOf": [
+        {"if": {"type": "object", "properties": {"disposition": {"const": "SATISFIED"}}, "required": ["disposition"]}, "then": {"type": "object", "properties": {"evidenceDigests": {"type": "array", "minItems": 1}, "reason": {"type": "null"}}}},
+        {"if": {"type": "object", "properties": {"disposition": {"enum": ["NOT_SATISFIED", "NOT_OBSERVABLE"]}}, "required": ["disposition"]}, "then": {"type": "object", "properties": {"reason": {"type": "string", "minLength": 1}}}}
+      ]
+    },
+    "providerObservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["disposition", "providerSourceSet", "implementationVersion", "registryBindingRef", "registryBindingDigest"],
+      "properties": {
+        "disposition": {"enum": ["SATISFIED", "NOT_OBSERVABLE"]},
+        "providerSourceSet": {"type": "array", "items": {"$ref": "#/$defs/sourceBinding"}},
+        "implementationVersion": {"oneOf": [{"type": "string", "minLength": 1}, {"type": "null"}]},
+        "registryBindingRef": {"oneOf": [{"type": "string", "minLength": 1}, {"type": "null"}]},
+        "registryBindingDigest": {"oneOf": [{"$ref": "#/$defs/digest"}, {"type": "null"}]}
+      },
+      "allOf": [
+        {"if": {"type": "object", "properties": {"disposition": {"const": "NOT_OBSERVABLE"}}, "required": ["disposition"]}, "then": {"type": "object", "properties": {"providerSourceSet": {"type": "array", "maxItems": 0}, "implementationVersion": {"type": "null"}, "registryBindingRef": {"type": "null"}, "registryBindingDigest": {"type": "null"}}}},
+        {"if": {"type": "object", "properties": {"disposition": {"const": "SATISFIED"}}, "required": ["disposition"]}, "then": {"type": "object", "properties": {"providerSourceSet": {"type": "array", "minItems": 1}, "implementationVersion": {"type": "string", "minLength": 1}, "registryBindingRef": {"type": "string", "minLength": 1}, "registryBindingDigest": {"$ref": "#/$defs/digest"}}}}
+      ]
+    },
+    "sourceBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceRef", "sourceDigest"],
+      "properties": {"sourceRef": {"type": "string", "minLength": 1}, "sourceDigest": {"$ref": "#/$defs/digest"}}
+    },
+    "finding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "subjectRef", "message"],
+      "properties": {
+        "code": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]*$"},
+        "subjectRef": {"type": "string", "minLength": 1},
+        "message": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

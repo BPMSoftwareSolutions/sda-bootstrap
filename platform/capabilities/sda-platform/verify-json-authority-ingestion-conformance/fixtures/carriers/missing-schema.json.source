@@ -1,0 +1,7 @@
+{
+  "$schema": "schema:missing-generic-json-authority.v1",
+  "documentType": "generic-json-authority.v1",
+  "id": "missing-schema",
+  "value": "held",
+  "references": []
+}

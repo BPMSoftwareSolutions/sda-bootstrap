@@ -1,0 +1,9 @@
+{
+  "authorityType": "semantic-transformation-authority.v1",
+  "transformations": [
+    {
+      "id": "preserve-os-credential-evidence",
+      "expression": {"op": "path", "from": "input", "path": ""}
+    }
+  ]
+}

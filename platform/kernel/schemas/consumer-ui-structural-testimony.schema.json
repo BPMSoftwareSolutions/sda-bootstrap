@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/consumer-ui-structural-testimony.v1.schema.json",
+  "title": "Consumer UI Semantic Structural Testimony",
+  "description": "Target testimony that binds native implementation shapes to the canonical UI semantic object model.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["structuralTestimonyType", "embodimentTarget", "objectModelDigest", "implementationRefs", "concepts", "rawAuthorityAccessSites", "targetOwnedSemanticConcepts", "disposition"],
+  "properties": {
+    "structuralTestimonyType": { "const": "consumer-ui-structural-testimony.v1" },
+    "embodimentTarget": { "$ref": "consumer-ui-parity-evidence.schema.json#/$defs/target" },
+    "objectModelDigest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "implementationRefs": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+    "concepts": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/conceptClaim" } },
+    "rawAuthorityAccessSites": { "type": "array", "items": { "$ref": "#/$defs/accessSite" } },
+    "targetOwnedSemanticConcepts": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "disposition": { "type": "string", "enum": ["PASS", "FAIL"] }
+  },
+  "$defs": {
+    "relationship": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["targetConceptId", "cardinality"],
+      "properties": {
+        "targetConceptId": { "type": "string", "pattern": "^[A-Z][A-Za-z0-9]*$" },
+        "cardinality": { "type": "string", "enum": ["one", "optional", "many"] }
+      }
+    },
+    "conceptClaim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["conceptId", "representation", "implementationRef", "members", "relationships", "behaviors"],
+      "properties": {
+        "conceptId": { "type": "string", "pattern": "^[A-Z][A-Za-z0-9]*$" },
+        "representation": { "type": "string", "minLength": 1 },
+        "implementationRef": { "type": "string", "minLength": 1 },
+        "members": { "type": "array", "uniqueItems": true, "items": { "type": "string", "pattern": "^[a-z][A-Za-z0-9]*$" } },
+        "relationships": { "type": "array", "items": { "$ref": "#/$defs/relationship" } },
+        "behaviors": { "type": "array", "uniqueItems": true, "items": { "type": "string", "pattern": "^[a-z][A-Za-z0-9]*$" } }
+      }
+    },
+    "accessSite": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["implementationRef", "member", "disposition"],
+      "properties": {
+        "implementationRef": { "type": "string", "minLength": 1 },
+        "member": { "type": "string", "minLength": 1 },
+        "disposition": { "type": "string", "enum": ["ADMISSION_BOUNDARY", "RUNTIME_LEAK"] }
+      }
+    }
+  }
+}

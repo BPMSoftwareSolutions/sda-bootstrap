@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/proof-binding/profile-governed-proof-binding-evaluator.authority.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "authorityType", "authorityId", "authorityRef", "authorityVersion", "lifecycle", "platformCapabilityId", "authorityDigest", "authorityDigestAlgorithm", "inputContracts", "outputContracts", "subordinateAuthorities", "compositionRules", "providerObservation", "runtimeDependencies"],
+  "properties": {
+    "$schema": {"const": "contracts/profile-governed-proof-binding-evaluator.authority.schema.json"},
+    "authorityType": {"const": "profile-governed-proof-binding-evaluator-authority.v1"},
+    "authorityId": {"const": "profile-governed-proof-binding-evaluator.v1"},
+    "authorityRef": {"const": "capabilities/sda-platform/bind-profile-governed-proof-binding-evaluation/profile-governed-proof-binding-evaluator.authority.json"},
+    "authorityVersion": {"const": "1.0.0"},
+    "lifecycle": {"enum": ["PROPOSED", "ADMITTED"]},
+    "platformCapabilityId": {"const": "sda-proof-binding-evaluation-port.v1"},
+    "authorityDigest": {"$ref": "#/$defs/digest"},
+    "authorityDigestAlgorithm": {"const": "sha256 of canonical recursive-key-order JSON excluding authorityDigest"},
+    "inputContracts": {
+      "const": ["profile-governed-proof-binding-evaluation-input.v1"]
+    },
+    "outputContracts": {
+      "const": [
+        "profile-governed-proof-binding-evaluation-record.v1",
+        "proof-binding-evaluation-provider-conformance.v1"
+      ]
+    },
+    "subordinateAuthorities": {
+      "type": "array",
+      "maxItems": 0,
+      "items": {"$ref": "#/$defs/authorityBinding"}
+    },
+    "compositionRules": {
+      "type": "array",
+      "minItems": 9,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "all-authority-digests-recomputed-before-evaluation",
+          "profile-obligation-dispositions-read-from-admitted-profile",
+          "profile-binding-rules-evaluation-order-and-declared-rule-identities-validated",
+          "canonical-json-used-only-for-derived-identity-and-reproduction-material",
+          "prohibited-basis-rejects-without-deriving-relationship",
+          "stale-or-mixed-lineage-rejects-without-combining-evidence",
+          "absence-means-not-observable-never-failure",
+          "exactly-one-disposition-per-obligation",
+          "operational-record-does-not-claim-provider-conformance"
+        ]
+      }
+    },
+    "providerObservation": {"$ref": "#/$defs/providerObservation"},
+    "runtimeDependencies": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["packageLockRef", "packageLockDigest", "packages"],
+      "properties": {
+        "packageLockRef": {"const": "package-lock.json"},
+        "packageLockDigest": {"$ref": "#/$defs/digest"},
+        "packages": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["packageName", "packageVersion", "integrity"],
+            "properties": {
+              "packageName": {"type": "string", "minLength": 1},
+              "packageVersion": {"type": "string", "minLength": 1},
+              "integrity": {"type": "string", "pattern": "^sha512-[A-Za-z0-9+/]+={0,2}$"}
+            }
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {"if": {"type": "object", "properties": {"lifecycle": {"const": "ADMITTED"}}, "required": ["lifecycle"]}, "then": {"type": "object", "properties": {"providerObservation": {"type": "object", "properties": {"disposition": {"const": "SATISFIED"}}}}}}
+  ],
+  "$defs": {
+    "digest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "authorityBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authorityId", "authorityRef", "authorityDigest"],
+      "properties": {
+        "authorityId": {"type": "string", "minLength": 1},
+        "authorityRef": {"type": "string", "minLength": 1},
+        "authorityDigest": {"$ref": "#/$defs/digest"}
+      }
+    },
+    "providerObservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["disposition", "providerSourceSet", "implementationVersion", "registryBindingRef", "registryBindingDigest"],
+      "properties": {
+        "disposition": {"enum": ["SATISFIED", "NOT_OBSERVABLE"]},
+        "providerSourceSet": {"type": "array", "items": {"$ref": "#/$defs/sourceBinding"}},
+        "implementationVersion": {"oneOf": [{"type": "string", "minLength": 1}, {"type": "null"}]},
+        "registryBindingRef": {"oneOf": [{"type": "string", "minLength": 1}, {"type": "null"}]},
+        "registryBindingDigest": {"oneOf": [{"$ref": "#/$defs/digest"}, {"type": "null"}]}
+      },
+      "allOf": [
+        {"if": {"type": "object", "properties": {"disposition": {"const": "NOT_OBSERVABLE"}}, "required": ["disposition"]}, "then": {"type": "object", "properties": {"providerSourceSet": {"type": "array", "maxItems": 0}, "implementationVersion": {"type": "null"}, "registryBindingRef": {"type": "null"}, "registryBindingDigest": {"type": "null"}}}},
+        {"if": {"type": "object", "properties": {"disposition": {"const": "SATISFIED"}}, "required": ["disposition"]}, "then": {"type": "object", "properties": {"providerSourceSet": {"type": "array", "minItems": 1}, "implementationVersion": {"type": "string", "minLength": 1}, "registryBindingRef": {"type": "string", "minLength": 1}, "registryBindingDigest": {"$ref": "#/$defs/digest"}}}}
+      ]
+    },
+    "sourceBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceRef", "sourceDigest"],
+      "properties": {
+        "sourceRef": {"type": "string", "minLength": 1},
+        "sourceDigest": {"$ref": "#/$defs/digest"}
+      }
+    }
+  }
+}

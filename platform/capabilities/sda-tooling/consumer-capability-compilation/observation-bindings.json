@@ -1,0 +1,11 @@
+{
+  "bindingType": "observation-bindings.v1",
+  "bindings": [
+    { "conditionId": "all-declared-consumer-sources-have-current-digests", "evaluatorId": "typescript-consumer-source-admission-evaluator.v1", "evidenceContractId": "consumer-source-admission-evidence.v1", "configurationRef": "artifacts/tools/dist/capabilities/consumer-capability-compilation/admit-consumer-source-facts/obligation.js" },
+    { "conditionId": "canonical-consumer-graph-has-complete-lineage", "evaluatorId": "typescript-canonical-consumer-graph-evaluator.v1", "evidenceContractId": "canonical-consumer-scenario-graph-evidence.v1", "configurationRef": "artifacts/tools/dist/capabilities/consumer-capability-compilation/compose-canonical-scenario-graph/obligation.js" },
+    { "conditionId": "all-requested-target-mechanics-resolve-to-admitted-providers", "evaluatorId": "typescript-platform-responsibility-evaluator.v1", "evidenceContractId": "platform-responsibility-resolution-evidence.v1", "configurationRef": "artifacts/tools/dist/capabilities/consumer-capability-compilation/resolve-platform-responsibilities/obligation.js" },
+    { "conditionId": "consumer-plan-covers-shared-and-requested-target-artifacts", "evaluatorId": "typescript-consumer-plan-evaluator.v1", "evidenceContractId": "consumer-projection-plan-evidence.v1", "configurationRef": "artifacts/tools/dist/capabilities/consumer-capability-compilation/construct-consumer-projection-plan/obligation.js" },
+    { "conditionId": "planned-consumer-executables-are-mechanically-sterile", "evaluatorId": "typescript-prepublication-sterility-evaluator.v1", "evidenceContractId": "prepublication-sterility-evidence.v1", "configurationRef": "artifacts/tools/dist/capabilities/consumer-capability-compilation/prove-projected-sterility-before-publication/obligation.js" },
+    { "conditionId": "consumer-publication-is-atomic-complete-and-isolated", "evaluatorId": "typescript-consumer-publication-evaluator.v1", "evidenceContractId": "consumer-capability-publication-evidence.v1", "configurationRef": "artifacts/tools/dist/capabilities/consumer-capability-compilation/publish-projected-capability/obligation.js" }
+  ]
+}

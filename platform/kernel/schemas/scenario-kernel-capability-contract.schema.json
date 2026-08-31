@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/scenario-kernel-capability-contract.v1.schema.json",
+  "title": "Scenario Kernel Capability Contract",
+  "description": "Canonical language-neutral contract for a Scenario-Driven Architecture capability, composed from the modular kernel schema family. A capability is a governed composition of scenarios.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contractType", "contractVersion", "capability"],
+  "properties": {
+    "contractType": { "const": "scenario-kernel-capability-contract.v1" },
+    "contractVersion": { "$ref": "semantic-primitives.schema.json#/$defs/semanticVersion" },
+    "kernelSpecification": { "$ref": "semantic-primitives.schema.json#/$defs/kernelSpecificationReference" },
+    "capability": { "$ref": "capability.schema.json" }
+  }
+}

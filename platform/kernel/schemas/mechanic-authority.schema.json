@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/mechanic-authority.v1.schema.json",
+  "title": "SDA mechanic catalog authority v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["authorityType", "authorityId", "authorityVersion", "lifecycle", "family", "mechanics", "digestAlgorithm", "authorityDigest"],
+  "properties": {
+    "authorityType": { "type": "string", "enum": ["semantic-value-mechanics-authority.v1", "platform-effect-mechanics-authority.v1"] },
+    "authorityId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "authorityVersion": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "lifecycle": { "type": "string", "enum": ["PROPOSED", "ADMITTED", "HELD", "RETIRED"] },
+    "family": { "type": "string", "minLength": 1 },
+    "mechanics": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["mechanicId", "meaning", "input", "output", "inputContractId", "outcomeContractId", "determinism", "effectClassification", "sourceProfiles", "conformanceRefs", "nativeFloor"],
+        "properties": {
+          "mechanicId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "meaning": { "type": "string", "minLength": 1 },
+          "input": { "type": "string", "minLength": 1 },
+          "output": { "type": "string", "minLength": 1 },
+          "inputContractId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "outcomeContractId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "determinism": { "type": "string", "enum": ["deterministic", "testimony-governed"] },
+          "effectClassification": { "type": "string", "enum": ["pure", "observation", "effect"] },
+          "sourceProfiles": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" } },
+          "conformanceRefs": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+          "nativeFloor": { "type": "boolean" },
+          "authoringForm": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["expressedAs", "operation", "required", "optional", "arguments"],
+            "properties": {
+              "expressedAs": { "const": "semantic-transformation-expression.v1" },
+              "operation": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+              "required": { "$ref": "#/$defs/authoringArgumentNames" },
+              "optional": { "$ref": "#/$defs/authoringArgumentNames" },
+              "arguments": {
+                "type": "object",
+                "minProperties": 1,
+                "propertyNames": { "enum": ["addressLayout", "artifactBytes", "as", "bindings", "bytes", "else", "fields", "from", "in", "items", "left", "lineageReferences", "path", "right", "schemaDigest", "schemaReference", "separator", "subjectDigest", "template", "then", "value", "values", "when", "where"] },
+                "additionalProperties": { "enum": ["admitted-value", "binding-identity", "expression-list", "expression-map", "literal-text", "semantic-expression"] }
+              },
+              "authoringNote": { "type": "string", "minLength": 1 }
+            }
+          }
+        }
+      }
+    },
+    "digestAlgorithm": { "type": "string", "minLength": 1 },
+    "authorityDigest": { "$ref": "semantic-primitives.schema.json#/$defs/digest" }
+  },
+  "$defs": {
+    "authoringArgumentNames": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    }
+  }
+}

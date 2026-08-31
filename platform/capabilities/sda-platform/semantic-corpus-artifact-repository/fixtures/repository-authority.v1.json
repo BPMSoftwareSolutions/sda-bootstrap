@@ -1,0 +1,54 @@
+{
+  "$schema": "semantic-corpus-artifact-repository.authority.schema.json",
+  "authorityType": "semantic-corpus-artifact-repository-authority.v1",
+  "lifecycle": "ADMITTED",
+  "authorityId": "semantic-corpus-artifact-repository-conformance.v1",
+  "repositoryId": "semantic-corpus-conformance",
+  "repositoryRootAuthorityId": "semantic-corpus-conformance-root.v1",
+  "addressing": {"digestAlgorithm": "SHA-256", "objectsDirectory": "objects", "hexShardLength": 2, "fileExtension": ".json"},
+  "pointerPolicy": {
+    "pointersDirectory": "pointers",
+    "generationWidth": 12,
+    "resolution": "HIGHEST_CONTIGUOUS_IMMUTABLE_GENERATION",
+    "allowedPointerIds": ["CurrentSemanticCorpus"]
+  },
+  "allowedArtifactKinds": [
+    "SOURCE_MANIFEST",
+    "CORPUS_SNAPSHOT",
+    "OBJECT_CATALOG",
+    "RELATIONSHIP_GRAPH",
+    "IDENTITY_INDEX",
+    "LEXICAL_INDEX",
+    "QUERY_RECEIPT",
+    "AUTHORING_RECEIPT",
+    "CLOSURE_RECEIPT",
+    "PUBLICATION_RECEIPT"
+  ],
+  "canonicalizationAuthorities": [
+    {
+      "authorityId": "canonical-recursive-key-order-json.v1",
+      "authorityDigest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "algorithm": "RECURSIVE_CODE_POINT_KEY_ORDER_JSON_V1",
+      "artifactKinds": [
+        "SOURCE_MANIFEST",
+        "CORPUS_SNAPSHOT",
+        "OBJECT_CATALOG",
+        "RELATIONSHIP_GRAPH",
+        "IDENTITY_INDEX",
+        "LEXICAL_INDEX",
+        "QUERY_RECEIPT",
+        "AUTHORING_RECEIPT",
+        "CLOSURE_RECEIPT",
+        "PUBLICATION_RECEIPT"
+      ]
+    }
+  ],
+  "closureReceiptPolicy": {
+    "contractId": "semantic-corpus-closure-receipt.v1",
+    "requiredDisposition": "CORPUS_CLOSED",
+    "requireExactExpectedGeneration": true,
+    "requireExactExpectedCurrentSnapshot": true
+  },
+  "retentionPolicy": {"receiptContractIds": ["semantic-corpus-closure-receipt.v1"], "requireDigestBinding": true},
+  "authorityDigest": "sha256:4f1eae11041c8ce43b0c7b0aa7d3ecb48bf12073cf727b8b9ba3950c2da1269e"
+}

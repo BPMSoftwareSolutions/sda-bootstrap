@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/scenario-responsibility.v2.schema.json",
+  "title": "Scenario Responsibility v2",
+  "description": "One bounded responsibility exercised by a scenario event. Provider selection is deliberately excluded.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["responsibilityId", "statement"],
+  "properties": {
+    "responsibilityId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "statement": { "type": "string", "minLength": 1 }
+  }
+}

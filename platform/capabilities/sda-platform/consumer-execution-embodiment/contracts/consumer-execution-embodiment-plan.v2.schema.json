@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/platform/consumer-execution/consumer-execution-embodiment-plan.v2.schema.json",
+  "title": "Consumer execution embodiment plan v2 candidate",
+  "description": "Adds declared scenario invocation to the immutable compiler-to-runtime plan without introducing a new event port.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "executionEmbodimentPlanType",
+    "target",
+    "capabilityId",
+    "source",
+    "rootNodeId",
+    "nodes",
+    "mechanicBindings",
+    "compositionPolicy",
+    "conformance",
+    "requiredProviderCapabilityIds"
+  ],
+  "properties": {
+    "$schema": { "type": "string", "minLength": 1 },
+    "executionEmbodimentPlanType": { "const": "consumer-execution-embodiment-plan.v2" },
+    "target": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+    "capabilityId": { "$ref": "consumer-execution-embodiment-plan.v1.schema.json#/$defs/id" },
+    "source": { "$ref": "consumer-execution-embodiment-plan.v1.schema.json#/properties/source" },
+    "rootNodeId": { "$ref": "consumer-execution-embodiment-plan.v1.schema.json#/$defs/id" },
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/node" }
+    },
+    "mechanicBindings": {
+      "$ref": "consumer-execution-embodiment-plan.v1.schema.json#/properties/mechanicBindings"
+    },
+    "compositionPolicy": { "$ref": "#/$defs/compositionPolicy" },
+    "conformance": { "$ref": "consumer-execution-embodiment-plan.v1.schema.json#/$defs/conformance" },
+    "requiredProviderCapabilityIds": {
+      "$ref": "consumer-execution-embodiment-plan.v1.schema.json#/properties/requiredProviderCapabilityIds"
+    }
+  },
+  "$defs": {
+    "invokePortOperation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operationId", "kind", "mechanicBindingId"],
+      "properties": {
+        "operationId": { "$ref": "consumer-execution-embodiment-plan.v1.schema.json#/$defs/id" },
+        "kind": { "const": "invoke-port" },
+        "mechanicBindingId": { "$ref": "consumer-execution-embodiment-plan.v1.schema.json#/$defs/id" }
+      }
+    },
+    "invokeScenarioOperation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operationId", "kind", "scenarioNodeId"],
+      "properties": {
+        "operationId": { "$ref": "consumer-execution-embodiment-plan.v1.schema.json#/$defs/id" },
+        "kind": { "const": "invoke-scenario" },
+        "scenarioNodeId": { "$ref": "consumer-execution-embodiment-plan.v1.schema.json#/$defs/id" }
+      }
+    },
+    "projectStateOperation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operationId", "kind", "mechanicBindingId"],
+      "properties": {
+        "operationId": { "$ref": "consumer-execution-embodiment-plan.v1.schema.json#/$defs/id" },
+        "kind": { "const": "project-state" },
+        "mechanicBindingId": { "$ref": "consumer-execution-embodiment-plan.v1.schema.json#/$defs/id" }
+      }
+    },
+    "node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["nodeId", "scenario", "operations", "transition"],
+      "properties": {
+        "nodeId": { "$ref": "consumer-execution-embodiment-plan.v1.schema.json#/$defs/id" },
+        "scenario": { "$ref": "consumer-execution-embodiment-plan.v1.schema.json#/$defs/scenario" },
+        "operations": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "oneOf": [
+              { "$ref": "#/$defs/invokePortOperation" },
+              { "$ref": "#/$defs/invokeScenarioOperation" },
+              { "$ref": "#/$defs/projectStateOperation" }
+            ]
+          }
+        },
+        "transition": { "$ref": "consumer-execution-embodiment-plan.v1.schema.json#/$defs/transition" }
+      }
+    },
+    "compositionPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["carrierMode", "contractAdmissionMode", "lineageMode", "failureMode", "cycleMode"],
+      "properties": {
+        "carrierMode": { "const": "previous-admitted-outcome" },
+        "contractAdmissionMode": { "const": "each-scenario-boundary" },
+        "lineageMode": { "const": "retain-root-and-parent-execution" },
+        "failureMode": { "const": "stop-at-first-non-success" },
+        "cycleMode": { "const": "reject-recursive-invocation" }
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/edge-execution-testimony.v1.schema.json",
+  "title": "SDA edge execution testimony v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["testimonyType", "graphId", "canonicalGraphDigest", "edgeId", "edgeAuthorityDigest", "sourceCellExecutionId", "sourceOutcomeDigest", "destinationCellId", "destinationPortId", "admissionDisposition", "logicalOrder"],
+  "properties": {
+    "testimonyType": { "const": "edge-execution-testimony.v1" },
+    "graphId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "canonicalGraphDigest": { "$ref": "semantic-primitives.schema.json#/$defs/digest" },
+    "edgeId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "edgeAuthorityDigest": { "$ref": "semantic-primitives.schema.json#/$defs/digest" },
+    "sourceCellExecutionId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "sourceOutcomeDigest": { "$ref": "semantic-primitives.schema.json#/$defs/digest" },
+    "bindingAuthorityId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "bindingResultDigest": { "$ref": "semantic-primitives.schema.json#/$defs/digest" },
+    "destinationCellId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "destinationPortId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "groupId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "iterationId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "admissionDisposition": { "type": "string", "enum": ["admitted", "rejected", "buffered", "cancelled"] },
+    "logicalOrder": { "type": "integer", "minimum": 0 }
+  }
+}

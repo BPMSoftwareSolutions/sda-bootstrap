@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/platform/ui-compatibility/legacy-ui-repair-workbench.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["workbenchType", "sourceType", "sourceDigest", "unresolvedFacts", "preservedLegacyFacts", "requiredRepairArtifactType", "canonicalDigest"],
+  "properties": {
+    "workbenchType": { "const": "legacy-ui-repair-workbench.v1" },
+    "sourceType": { "enum": ["consumer-ui-authority.v1", "sda-ui-presentation-ir.v2", "UNKNOWN"] },
+    "sourceDigest": { "$ref": "#/$defs/digest" },
+    "unresolvedFacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["sourcePath", "candidateKind", "reason"],
+        "properties": {
+          "sourcePath": { "type": "string", "pattern": "^/" },
+          "candidateKind": { "enum": ["PROMISED_EXPERIENCE", "ELEMENT", "RELATIONSHIP", "ADAPTATION", "PRESENTATION_PROFILE", "UNKNOWN"] },
+          "reason": { "const": "SEMANTIC_ORIGIN_REQUIRES_EXPLICIT_MAPPING" }
+        }
+      }
+    },
+    "preservedLegacyFacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["sourcePath", "factClass", "valueDigest"],
+        "properties": {
+          "sourcePath": { "type": "string", "pattern": "^/" },
+          "factClass": { "enum": ["PHYSICAL_PRESENTATION", "VISUAL_PRESENTATION", "TARGET_RECIPE"] },
+          "valueDigest": { "$ref": "#/$defs/digest" }
+        }
+      }
+    },
+    "requiredRepairArtifactType": { "const": "legacy-ui-semantic-origin-manifest.v1" },
+    "canonicalDigest": { "$ref": "#/$defs/digest" }
+  },
+  "$defs": {
+    "digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }
+  }
+}

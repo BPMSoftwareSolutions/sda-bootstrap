@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/platform/ui/semantic-presentation-resolution-evidence.v1.schema.json",
+  "title": "Semantic presentation resolution evidence",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["evidenceType", "sourceAuthorityDigest", "presentationDigest", "stages", "findings", "disposition"],
+  "properties": {
+    "evidenceType": { "const": "semantic-presentation-resolution-evidence.v1" },
+    "sourceAuthorityDigest": { "$ref": "declared-ui-authority.v1.schema.json#/$defs/digest" },
+    "presentationDigest": {
+      "oneOf": [
+        { "$ref": "declared-ui-authority.v1.schema.json#/$defs/digest" },
+        { "type": "null" }
+      ]
+    },
+    "stages": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "prefixItems": [
+        { "$ref": "#/$defs/admitStage" },
+        { "$ref": "#/$defs/lineageStage" },
+        { "$ref": "#/$defs/justificationStage" },
+        { "$ref": "#/$defs/compositionStage" },
+        { "$ref": "#/$defs/interactionStage" },
+        { "$ref": "#/$defs/adaptationStage" },
+        { "$ref": "#/$defs/profileStage" },
+        { "$ref": "#/$defs/canonicalStage" }
+      ],
+      "items": false
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["code", "subjectRef"],
+        "properties": {
+          "code": {
+            "enum": [
+              "DECLARED_UI_AUTHORITY_DIGEST_MISMATCH",
+              "DUPLICATE_SEMANTIC_ELEMENT",
+              "DUPLICATE_SEMANTIC_RELATIONSHIP",
+              "DUPLICATE_ADAPTATION_INTENT",
+              "DUPLICATE_PROMISED_EXPERIENCE",
+              "UNJUSTIFIED_PRESENTATION_ELEMENT",
+              "UNJUSTIFIED_PRESENTATION_RELATIONSHIP",
+              "UNKNOWN_RELATIONSHIP_ENDPOINT",
+              "MISSING_INTERACTION_PRESENTATION",
+              "UNKNOWN_ADAPTATION_INVARIANT",
+              "MISSING_PRESENTATION_FOR_EXPERIENCE"
+            ]
+          },
+          "subjectRef": { "$ref": "declared-ui-authority.v1.schema.json#/$defs/id" }
+        }
+      }
+    },
+    "disposition": { "enum": ["RESOLVED", "REJECTED"] }
+  },
+  "$defs": {
+    "stageBase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stageId", "disposition"],
+      "properties": {
+        "stageId": { "type": "string" },
+        "disposition": { "enum": ["PASS", "FAIL", "NOT_REACHED"] }
+      }
+    },
+    "admitStage": { "allOf": [{ "$ref": "#/$defs/stageBase" }, { "properties": { "stageId": { "const": "admit-declared-ui" } } }] },
+    "lineageStage": { "allOf": [{ "$ref": "#/$defs/stageBase" }, { "properties": { "stageId": { "const": "resolve-ui-presentation-lineage" } } }] },
+    "justificationStage": { "allOf": [{ "$ref": "#/$defs/stageBase" }, { "properties": { "stageId": { "const": "reject-unjustified-presentation" } } }] },
+    "compositionStage": { "allOf": [{ "$ref": "#/$defs/stageBase" }, { "properties": { "stageId": { "const": "resolve-semantic-presentation-composition" } } }] },
+    "interactionStage": { "allOf": [{ "$ref": "#/$defs/stageBase" }, { "properties": { "stageId": { "const": "resolve-semantic-interaction-presentation" } } }] },
+    "adaptationStage": { "allOf": [{ "$ref": "#/$defs/stageBase" }, { "properties": { "stageId": { "const": "resolve-adaptive-presentation" } } }] },
+    "profileStage": { "allOf": [{ "$ref": "#/$defs/stageBase" }, { "properties": { "stageId": { "const": "resolve-declared-presentation-profile" } } }] },
+    "canonicalStage": { "allOf": [{ "$ref": "#/$defs/stageBase" }, { "properties": { "stageId": { "const": "produce-canonical-semantic-presentation" } } }] }
+  }
+}

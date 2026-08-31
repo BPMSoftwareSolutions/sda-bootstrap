@@ -1,0 +1,26 @@
+{
+  "traceType": "projected-expected-consumer-trace.v1",
+  "telemetryId": "consumer-scenario-execution-telemetry",
+  "capabilityId": "project-semantic-element-realization",
+  "rootScenarioId": "project-semantic-element-realization",
+  "observationType": "scenario-execution-observation.v1",
+  "lineageFields": [
+    "executionId",
+    "rootExecutionId",
+    "parentExecutionId",
+    "scenarioId"
+  ],
+  "scenarios": [
+    {
+      "scenarioId": "project-semantic-element-realization",
+      "steps": [
+        "admit-input",
+        "resolve-event-authority",
+        "execute-event-authority",
+        "admit-outcome",
+        "resolve-disposition"
+      ],
+      "expectedTransitionId": null
+    }
+  ]
+}

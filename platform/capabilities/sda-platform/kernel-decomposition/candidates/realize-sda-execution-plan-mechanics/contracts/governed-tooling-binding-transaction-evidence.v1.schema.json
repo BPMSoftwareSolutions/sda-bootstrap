@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.sda.local/governed-tooling-binding-transaction-evidence.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contractId",
+    "disposition",
+    "evidence",
+    "findings",
+    "authorityClaims",
+    "lineage",
+    "mechanicPayloads"
+  ],
+  "properties": {
+    "contractId": {
+      "const": "governed-tooling-binding-transaction-evidence.v1"
+    },
+    "disposition": {
+      "enum": [
+        "SUCCEEDED",
+        "REJECTED"
+      ]
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "authorityClaims": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "projection",
+        "promotion",
+        "behavioralConformance"
+      ],
+      "properties": {
+        "projection": {
+          "const": "NOT_CLAIMED"
+        },
+        "promotion": {
+          "const": "NOT_CLAIMED"
+        },
+        "behavioralConformance": {
+          "const": "NOT_CLAIMED"
+        }
+      }
+    },
+    "lineage": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "mechanicPayloads": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  }
+}

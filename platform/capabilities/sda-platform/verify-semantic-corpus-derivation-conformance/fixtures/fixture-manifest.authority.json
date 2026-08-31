@@ -1,0 +1,29 @@
+{
+  "$schema": "fixture-manifest.authority.schema.json",
+  "fixtureType": "semantic-corpus-derivation-projection-fixture-manifest.v1",
+  "lifecycle": "ADMITTED",
+  "fixtureSetDigest": "sha256:bd45738ae240fe24750bf7cd0f8ee81319f5f5f06592538e521afad5979407ed",
+  "fixtureSetDigestAlgorithm": "sha256 over UTF-8 path, NUL, sha256 exact artifact-file bytes digest, LF records sorted by bytewise path",
+  "artifacts": [
+    {"artifactId": "ontology", "path": "generic-semantic-corpus-ontology.v1.json", "role": "ONTOLOGY", "digestSubject": "EXACT_FIXTURE_FILE_BYTES", "sourceDigest": "sha256:1e28409aca9838ccedb726d4699d2ff88d5ba426560434190dc2033a1a2e8a24"},
+    {"artifactId": "rule-set", "path": "generic-semantic-corpus-derivation-rule-set.v1.json", "role": "RULE_SET", "digestSubject": "EXACT_FIXTURE_FILE_BYTES", "sourceDigest": "sha256:3f50e145a02bee6da653aab29383524286237c73f4c9c834488c30140d8fb84e"},
+    {"artifactId": "profile", "path": "generic-semantic-corpus-derivation-profile.v1.json", "role": "PROFILE", "digestSubject": "EXACT_FIXTURE_FILE_BYTES", "sourceDigest": "sha256:5aa91cfe1056d8d70462d25cff029645caa2a79c12b7aa0964399d0b51b57722"},
+    {"artifactId": "carrier-schema", "path": "semantic-corpus-derivation-carrier.v1.schema.json", "role": "CARRIER_SCHEMA", "digestSubject": "EXACT_FIXTURE_FILE_BYTES", "sourceDigest": "sha256:088da5a06926b98a67b8cad78a09bea3d9e8186e563b9e8e3d62e9a68e75792b"},
+    {"artifactId": "canonical-records", "path": "carriers/canonical-records.derive.json", "role": "CARRIER", "digestSubject": "EXACT_FIXTURE_FILE_BYTES", "sourceDigest": "sha256:8b5b5beac4170e74291b87ce47571f5d22c2d426335b70caf409505ce0abd9ca"},
+    {"artifactId": "open-reference", "path": "carriers/open-reference.derive.json", "role": "CARRIER", "digestSubject": "EXACT_FIXTURE_FILE_BYTES", "sourceDigest": "sha256:5350ac374f3c51084ee0ffac1319bf60a6606bec7d1a8de569cad57176cd22c8"},
+    {"artifactId": "prohibited-bases", "path": "carriers/prohibited-bases.derive.json", "role": "CARRIER", "digestSubject": "EXACT_FIXTURE_FILE_BYTES", "sourceDigest": "sha256:933a752124cbff0237078a64ce37eb4f4c8bb74e42523dc594f5a5bf77e11b03"},
+    {"artifactId": "mixed-generation", "path": "carriers/mixed-generation.derive.json", "role": "CARRIER", "digestSubject": "EXACT_FIXTURE_FILE_BYTES", "sourceDigest": "sha256:c8b38f38ba1221f67182d21acfad39ff9547231819ba8c38f9e12c27a754cc04"},
+    {"artifactId": "reordered-reproduction", "path": "carriers/reordered-reproduction.derive.json", "role": "CARRIER", "digestSubject": "EXACT_FIXTURE_FILE_BYTES", "sourceDigest": "sha256:0eea7349e8ed220c4e9a976bd9913052f7ee0ce837fd2e630ba62c21efd4c5f8"}
+  ],
+  "cases": [
+    {"fixtureId": "canonical-records", "carrierArtifactId": "canonical-records", "scenarioId": "derive-semantic-corpus-records", "provesPartitions": ["AUTHORITY_SCHEMA_BOUNDARY", "EXACT_LINEAGE_VALIDATION", "CANONICAL_OBJECT_DERIVATION", "OWNER_SCOPED_IDENTITY", "RELATIONSHIP_DERIVATION", "SOURCE_CLASS_NON_ESCALATION", "PROJECTED_INVOCATION_AND_RECEIPT"]},
+    {"fixtureId": "open-reference", "carrierArtifactId": "open-reference", "scenarioId": "retain-open-semantic-references", "provesPartitions": ["OPEN_REFERENCE_NON_INVENTION", "DETERMINISTIC_ORDERING"]},
+    {"fixtureId": "prohibited-bases", "carrierArtifactId": "prohibited-bases", "scenarioId": "reject-unadmitted-semantic-basis", "provesPartitions": ["AUTHORITY_SCHEMA_BOUNDARY", "PROHIBITED_BASIS_REJECTION"]},
+    {"fixtureId": "mixed-generation", "carrierArtifactId": "mixed-generation", "scenarioId": "reject-mixed-semantic-corpus-generation", "provesPartitions": ["EXACT_LINEAGE_VALIDATION", "MIXED_GENERATION_REJECTION", "SOURCE_CLASS_NON_ESCALATION"]},
+    {"fixtureId": "reordered-reproduction", "carrierArtifactId": "reordered-reproduction", "scenarioId": "reproduce-semantic-corpus-derivation", "provesPartitions": ["OWNER_SCOPED_IDENTITY", "DETERMINISTIC_ORDERING", "REPRODUCTION_IDENTITY"]}
+  ],
+  "reproductionSets": [
+    {"reproductionSetId": "reordered-input-discovery", "fixtureId": "reordered-reproduction", "variantIds": ["order-a", "order-b"], "requiredEqualityFields": ["orderedInputDigest", "objects", "relationships", "findings", "derivationDigest"]}
+  ],
+  "admissionClaims": {"projectionConformance": "NOT_CLAIMED", "runtimeProjection": "NOT_CLAIMED", "receiptIssuance": "NOT_CLAIMED"}
+}

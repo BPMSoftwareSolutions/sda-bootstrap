@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/execution-cell.v1.schema.json",
+  "title": "SDA execution cell v1",
+  "description": "One addressable Input -> Execution -> Outcome geometry at an explicit semantic altitude.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["cellId", "semanticAddress", "altitude", "parentCellId", "input", "execution", "outcome", "sourcePointers", "sourceAuthorityDigests"],
+  "properties": {
+    "cellId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "semanticAddress": { "type": "string", "minLength": 1 },
+    "altitude": { "type": "string", "enum": ["scenario", "mechanic", "provider", "physical"] },
+    "parentCellId": {
+      "oneOf": [
+        { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+        { "type": "null" }
+      ]
+    },
+    "input": { "$ref": "#/$defs/port" },
+    "execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "authorityId", "authorityDigest", "protocolRef"],
+      "properties": {
+        "kind": { "type": "string", "enum": ["scenario", "mechanic", "provider", "physical", "junction"] },
+        "authorityId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+        "authorityDigest": { "$ref": "semantic-primitives.schema.json#/$defs/digest" },
+        "protocolRef": { "const": "cell-execution-protocol.v1" },
+        "providerSlotId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+        "primitiveProfileId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+        "configuration": { "type": "object" }
+      }
+    },
+    "outcome": { "$ref": "#/$defs/outcomePort" },
+    "sourcePointers": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "sourceAuthorityDigests": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "semantic-primitives.schema.json#/$defs/digest" }
+    },
+    "obligationIds": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" }
+    },
+    "terminal": { "type": "boolean" }
+  },
+  "$defs": {
+    "port": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["portId", "contractId"],
+      "properties": {
+        "portId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+        "contractId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+        "cardinality": { "type": "string", "enum": ["one", "zero-or-one", "many", "named-product"] }
+      }
+    },
+    "outcomePort": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["portId", "contractId"],
+      "properties": {
+        "portId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+        "contractId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+        "cardinality": { "type": "string", "enum": ["one", "zero-or-one", "many", "named-product"] },
+        "variants": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$" }
+        }
+      }
+    }
+  }
+}

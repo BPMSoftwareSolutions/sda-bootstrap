@@ -1,0 +1,144 @@
+{
+  "capabilityType": "scenario-driven-capability.v1",
+  "capabilityId": "bind-os-environment-credential",
+  "userStory": {
+    "actor": "governed model invocation",
+    "intent": "bind one admitted credential reference in the fixed OS resolution order without depending on process spawn state",
+    "outcome": "an opaque invocation-scoped binding and secret-free availability lineage"
+  },
+  "scenarios": [
+    {
+      "scenarioId": "bind-os-environment-credential",
+      "input": {
+        "inputId": "os-environment-credential-binding-request",
+        "contract": {
+          "contractId": "os-environment-credential-binding-request.v1"
+        }
+      },
+      "event": {
+        "eventId": "os-environment-credential-binding-requested",
+        "executionAuthorityId": "bind-os-environment-credential.v1"
+      },
+      "outcome": {
+        "outcomeId": "os-environment-credential-binding",
+        "contract": {
+          "contractId": "os-environment-credential-binding-evidence.v1"
+        },
+        "experience": {
+          "statement": "an opaque invocation-scoped binding and secret-free availability lineage are returned without exposing the credential value"
+        },
+        "terminal": true
+      },
+      "gherkin": {
+        "given": {
+          "semanticRef": "bind-os-environment-credential.given",
+          "text": "one admitted credential reference name and one matching invocation identity"
+        },
+        "when": {
+          "semanticRef": "bind-os-environment-credential.when",
+          "text": "the reference is bound in the fixed resolution order"
+        },
+        "then": {
+          "semanticRef": "bind-os-environment-credential.then",
+          "text": "an opaque invocation-scoped binding and secret-free availability lineage are returned without exposing the credential value"
+        }
+      },
+      "name": "Bind one authorized OS environment credential reference"
+    },
+    {
+      "scenarioId": "hold-missing-os-environment-credential",
+      "input": {
+        "inputId": "os-environment-credential-binding-request",
+        "contract": {
+          "contractId": "os-environment-credential-binding-request.v1"
+        }
+      },
+      "event": {
+        "eventId": "missing-os-environment-credential-binding-requested",
+        "executionAuthorityId": "hold-missing-os-environment-credential.v1"
+      },
+      "outcome": {
+        "outcomeId": "os-environment-credential-not-available",
+        "contract": {
+          "contractId": "os-environment-credential-binding-evidence.v1"
+        },
+        "experience": {
+          "statement": "CREDENTIAL_NOT_AVAILABLE and secret-free reference lineage are returned without creating a binding, reading alternatives, or authorizing an HTTP exchange"
+        },
+        "terminal": true
+      },
+      "gherkin": {
+        "given": {
+          "semanticRef": "hold-missing-os-environment-credential.given",
+          "text": "an admitted credential reference whose value is absent from the process environment and every operating-system scope"
+        },
+        "when": {
+          "semanticRef": "hold-missing-os-environment-credential.when",
+          "text": "the reference is bound"
+        },
+        "then": {
+          "semanticRef": "hold-missing-os-environment-credential.then",
+          "text": "CREDENTIAL_NOT_AVAILABLE and secret-free reference lineage are returned without creating a binding, reading alternatives, or authorizing an HTTP exchange"
+        }
+      },
+      "name": "Hold a reference absent from every resolution scope"
+    },
+    {
+      "scenarioId": "reject-unauthorized-os-environment-credential-reference",
+      "input": {
+        "inputId": "os-environment-credential-binding-request",
+        "contract": {
+          "contractId": "os-environment-credential-binding-request.v1"
+        }
+      },
+      "event": {
+        "eventId": "unauthorized-os-environment-credential-binding-requested",
+        "executionAuthorityId": "reject-unauthorized-os-environment-credential-reference.v1"
+      },
+      "outcome": {
+        "outcomeId": "os-environment-credential-not-available",
+        "contract": {
+          "contractId": "os-environment-credential-binding-evidence.v1"
+        },
+        "experience": {
+          "statement": "the unauthorized reference is rejected without attempting to read it or enumerating nearby credentials"
+        },
+        "terminal": true
+      },
+      "gherkin": {
+        "given": {
+          "semanticRef": "reject-unauthorized-os-environment-credential-reference.given",
+          "text": "a request naming a reference the credential authority does not declare"
+        },
+        "when": {
+          "semanticRef": "reject-unauthorized-os-environment-credential-reference.when",
+          "text": "credential-reference authorization is evaluated"
+        },
+        "then": {
+          "semanticRef": "reject-unauthorized-os-environment-credential-reference.then",
+          "text": "the unauthorized reference is rejected without attempting to read it or enumerating nearby credentials"
+        }
+      },
+      "name": "Reject a reference name outside the admitted credential authority"
+    }
+  ],
+  "transitions": [],
+  "rootScenarioId": "bind-os-environment-credential",
+  "name": "Bind one OS environment credential reference",
+  "experience": {
+    "experienceType": "promised-experience.v1",
+    "experienceId": "bind-os-environment-credential-is-secret-free",
+    "actor": "governed model invocation",
+    "promise": "The projected capability returns one opaque binding or a typed secret-free refusal; credential bytes never cross the semantic boundary.",
+    "observableConditions": [
+      {
+        "conditionId": "fixed-resolution-order",
+        "statement": "process environment, then operating-system user scope, then operating-system machine scope"
+      },
+      {
+        "conditionId": "non-disclosure",
+        "statement": "no credential material appears in any observable channel"
+      }
+    ]
+  }
+}

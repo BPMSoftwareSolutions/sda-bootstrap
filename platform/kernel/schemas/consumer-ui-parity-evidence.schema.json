@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/consumer-ui-parity-evidence.v1.schema.json",
+  "title": "Consumer UI Cross-Apply Parity Evidence",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "parityEvidenceType", "applicationId", "targets", "authorityDigest", "objectModelDigest",
+    "vectorCorpusDigest", "experienceCoverageDigest", "presentationProfileDigest", "gates",
+    "targetGates", "proofCellCount", "crossApplyDisposition", "experienceParity"
+  ],
+  "properties": {
+    "parityEvidenceType": { "const": "consumer-ui-parity-evidence.v1" },
+    "applicationId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "targets": {
+      "type": "array", "minItems": 2, "uniqueItems": true,
+      "items": { "$ref": "#/$defs/target" }
+    },
+    "authorityDigest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "objectModelDigest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "vectorCorpusDigest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "experienceCoverageDigest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "presentationProfileDigest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "gates": { "$ref": "#/$defs/gates" },
+    "targetGates": {
+      "type": "object", "minProperties": 2,
+      "propertyNames": { "$ref": "#/$defs/target" },
+      "additionalProperties": { "$ref": "#/$defs/targetGates" }
+    },
+    "proofCellCount": { "type": "integer", "minimum": 38 },
+    "crossApplyDisposition": { "type": "string", "enum": ["CROSS_APPLY_UI_CONFORMANT", "CROSS_APPLY_UI_DIVERGENT"] },
+    "experienceParity": { "type": "string", "enum": ["PASS", "FAIL"] }
+  },
+  "$defs": {
+    "target": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+    "gate": {
+      "type": "object", "additionalProperties": false, "required": ["disposition", "findings"],
+      "properties": {
+        "disposition": { "type": "string", "enum": ["PASS", "FAIL", "PROJECTED_ONLY"] },
+        "findings": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+      }
+    },
+    "gates": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "AUTHORITY_IDENTITY", "OBJECT_MODEL_IDENTITY", "STRUCTURAL_PARITY", "EVIDENCE_STRUCTURE_PARITY",
+        "VECTOR_CORPUS_IDENTITY", "INFORMATION_PARITY", "AVAILABILITY_PARITY", "STATE_PARITY", "ACTION_PARITY",
+        "VALIDATION_PARITY", "FEEDBACK_PARITY", "NAVIGATION_PARITY", "ACCESSIBILITY_PARITY",
+        "PRESENTATION_PROFILE_IDENTITY", "VISUAL_HIERARCHY_PARITY", "GROUPING_PARITY", "ACTION_EMPHASIS_PARITY",
+        "TYPOGRAPHY_PARITY", "SPACING_DENSITY_PARITY", "SURFACE_PARITY", "STATE_DISTINCTION_PARITY",
+        "RESPONSIVE_ADAPTIVE_PARITY", "FOCUS_PARITY", "MEDIA_PARITY", "MOTION_PARITY", "EXPERIENCE_PARITY"
+      ],
+      "properties": {
+        "AUTHORITY_IDENTITY": { "$ref": "#/$defs/gate" }, "OBJECT_MODEL_IDENTITY": { "$ref": "#/$defs/gate" },
+        "STRUCTURAL_PARITY": { "$ref": "#/$defs/gate" }, "EVIDENCE_STRUCTURE_PARITY": { "$ref": "#/$defs/gate" },
+        "VECTOR_CORPUS_IDENTITY": { "$ref": "#/$defs/gate" }, "INFORMATION_PARITY": { "$ref": "#/$defs/gate" },
+        "AVAILABILITY_PARITY": { "$ref": "#/$defs/gate" }, "STATE_PARITY": { "$ref": "#/$defs/gate" },
+        "ACTION_PARITY": { "$ref": "#/$defs/gate" }, "VALIDATION_PARITY": { "$ref": "#/$defs/gate" },
+        "FEEDBACK_PARITY": { "$ref": "#/$defs/gate" }, "NAVIGATION_PARITY": { "$ref": "#/$defs/gate" },
+        "ACCESSIBILITY_PARITY": { "$ref": "#/$defs/gate" }, "PRESENTATION_PROFILE_IDENTITY": { "$ref": "#/$defs/gate" },
+        "VISUAL_HIERARCHY_PARITY": { "$ref": "#/$defs/gate" }, "GROUPING_PARITY": { "$ref": "#/$defs/gate" },
+        "ACTION_EMPHASIS_PARITY": { "$ref": "#/$defs/gate" }, "TYPOGRAPHY_PARITY": { "$ref": "#/$defs/gate" },
+        "SPACING_DENSITY_PARITY": { "$ref": "#/$defs/gate" }, "SURFACE_PARITY": { "$ref": "#/$defs/gate" },
+        "STATE_DISTINCTION_PARITY": { "$ref": "#/$defs/gate" }, "RESPONSIVE_ADAPTIVE_PARITY": { "$ref": "#/$defs/gate" },
+        "FOCUS_PARITY": { "$ref": "#/$defs/gate" }, "MEDIA_PARITY": { "$ref": "#/$defs/gate" },
+        "MOTION_PARITY": { "$ref": "#/$defs/gate" }, "EXPERIENCE_PARITY": { "$ref": "#/$defs/gate" }
+      }
+    },
+    "targetGates": {
+      "type": "object", "additionalProperties": false,
+      "required": ["SEMANTIC_STRUCTURE", "RAW_AUTHORITY_BOUNDARY", "TARGET_SEMANTIC_OWNERSHIP", "PLATFORM_NATIVE", "FRAMEWORK_WIRING", "EXECUTABLE_ORIGIN"],
+      "properties": {
+        "SEMANTIC_STRUCTURE": { "$ref": "#/$defs/gate" }, "RAW_AUTHORITY_BOUNDARY": { "$ref": "#/$defs/gate" },
+        "TARGET_SEMANTIC_OWNERSHIP": { "$ref": "#/$defs/gate" }, "PLATFORM_NATIVE": { "$ref": "#/$defs/gate" },
+        "FRAMEWORK_WIRING": { "$ref": "#/$defs/gate" }, "EXECUTABLE_ORIGIN": { "$ref": "#/$defs/gate" }
+      }
+    }
+  }
+}

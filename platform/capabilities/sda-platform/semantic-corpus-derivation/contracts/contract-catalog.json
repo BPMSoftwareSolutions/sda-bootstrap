@@ -1,0 +1,4 @@
+{
+  "semantic-corpus-derivation-request.v1": "semantic-corpus-derivation-request.v1.schema.json",
+  "semantic-corpus-derivation-evidence.v1": "semantic-corpus-derivation-evidence.v1.schema.json"
+}

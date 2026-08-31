@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/consumer-telemetry-authority.v1.schema.json",
+  "title": "Consumer Telemetry Authority",
+  "description": "Canonical authority from which consumer execution instrumentation and expected traces are projected.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["telemetryType", "telemetryId", "executionVectorRef", "observationType", "emission", "lineageFields"],
+  "properties": {
+    "telemetryType": { "const": "consumer-telemetry-authority.v1" },
+    "telemetryId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "executionVectorRef": { "type": "string", "minLength": 1 },
+    "observationType": { "const": "scenario-execution-observation.v1" },
+    "emission": { "const": "each-performed-vector-step" },
+    "lineageFields": {
+      "type": "array",
+      "minItems": 4,
+      "uniqueItems": true,
+      "items": { "type": "string", "enum": ["executionId", "rootExecutionId", "parentExecutionId", "scenarioId"] },
+      "contains": { "const": "executionId" }
+    }
+  }
+}

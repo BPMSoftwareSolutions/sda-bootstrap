@@ -1,0 +1,48 @@
+{
+  "traceType": "projected-expected-consumer-trace.v1",
+  "telemetryId": "consumer-scenario-execution-telemetry",
+  "capabilityId": "bind-os-environment-credential",
+  "rootScenarioId": "bind-os-environment-credential",
+  "observationType": "scenario-execution-observation.v1",
+  "lineageFields": [
+    "executionId",
+    "rootExecutionId",
+    "parentExecutionId",
+    "scenarioId"
+  ],
+  "scenarios": [
+    {
+      "scenarioId": "bind-os-environment-credential",
+      "steps": [
+        "admit-input",
+        "resolve-event-authority",
+        "execute-event-authority",
+        "admit-outcome",
+        "resolve-disposition"
+      ],
+      "expectedTransitionId": null
+    },
+    {
+      "scenarioId": "hold-missing-os-environment-credential",
+      "steps": [
+        "admit-input",
+        "resolve-event-authority",
+        "execute-event-authority",
+        "admit-outcome",
+        "resolve-disposition"
+      ],
+      "expectedTransitionId": null
+    },
+    {
+      "scenarioId": "reject-unauthorized-os-environment-credential-reference",
+      "steps": [
+        "admit-input",
+        "resolve-event-authority",
+        "execute-event-authority",
+        "admit-outcome",
+        "resolve-disposition"
+      ],
+      "expectedTransitionId": null
+    }
+  ]
+}

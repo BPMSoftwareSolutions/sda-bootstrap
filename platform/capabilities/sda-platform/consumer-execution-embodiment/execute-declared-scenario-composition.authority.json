@@ -1,0 +1,27 @@
+{
+  "$schema": "contracts/execute-declared-scenario-composition.authority.schema.json",
+  "eventAuthorityType": "declarative-scenario-composition-authority.v1",
+  "eventId": "execute-declared-scenario-composition",
+  "authorityId": "execute-declared-scenario-composition.v1",
+  "inputContractId": "composed-scenario-execution-context.v1",
+  "outcomeContractId": "composed-scenario-execution-testimony.v1",
+  "operation": "execute-ordered-invoke-scenario-operations",
+  "invariants": [
+    "each-child-is-an-independent-kernel-scenario",
+    "each-intermediate-input-and-outcome-is-contract-admitted",
+    "previous-admitted-outcome-is-the-next-carrier",
+    "root-and-parent-execution-lineage-is-preserved",
+    "execution-stops-at-the-first-non-success",
+    "no-later-scenario-executes-after-a-governed-stop",
+    "composition-does-not-claim-acceptance"
+  ],
+  "governedStops": [
+    "UNKNOWN_SCENARIO_REJECTED",
+    "RECURSIVE_INVOCATION_REJECTED",
+    "INTERMEDIATE_CONTRACT_REJECTED",
+    "BINDING_AUTHORITY_REJECTED",
+    "INPUT_REJECTED",
+    "EVENT_FAILED",
+    "OUTCOME_REJECTED"
+  ]
+}

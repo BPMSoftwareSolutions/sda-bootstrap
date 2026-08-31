@@ -1,0 +1,8 @@
+{
+  "telemetryType": "consumer-telemetry-authority.v1",
+  "telemetryId": "consumer-scenario-execution-telemetry",
+  "executionVectorRef": "kernel/contracts/execution/scenario-kernel-execution-vector.json",
+  "observationType": "scenario-execution-observation.v1",
+  "emission": "each-performed-vector-step",
+  "lineageFields": ["executionId", "rootExecutionId", "parentExecutionId", "scenarioId"]
+}

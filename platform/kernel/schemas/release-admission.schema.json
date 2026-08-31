@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/enterprise/release-admission.v1.schema.json",
+  "title": "SDA Environment Release Admission v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["admissionType", "environment", "bundleDigest", "requiredGates", "evidenceFreshnessMilliseconds", "gateEvidence", "disposition", "decidedAt"],
+  "properties": {
+    "admissionType": { "const": "sda-release-admission.v1" },
+    "environment": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "bundleDigest": { "$ref": "semantic-primitives.schema.json#/$defs/digest" },
+    "requiredGates": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+    "evidenceFreshnessMilliseconds": { "type": "integer", "minimum": 0 },
+    "gateEvidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["gate", "subjectDigest", "evidenceType", "evidenceVersion", "issuer", "observedAt", "disposition", "evidenceRef", "digest"],
+        "properties": {
+          "gate": { "type": "string", "minLength": 1 },
+          "subjectDigest": { "$ref": "semantic-primitives.schema.json#/$defs/digest" },
+          "evidenceType": { "type": "string", "minLength": 1 },
+          "evidenceVersion": { "type": "string", "minLength": 1 },
+          "issuer": { "type": "string", "minLength": 1 },
+          "observedAt": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?Z$" },
+          "disposition": { "type": "string", "enum": ["SATISFIED", "NOT_SATISFIED", "NOT_OBSERVABLE"] },
+          "evidenceRef": { "type": "string", "minLength": 1 },
+          "digest": { "$ref": "semantic-primitives.schema.json#/$defs/digest" }
+        }
+      }
+    },
+    "disposition": { "type": "string", "enum": ["RELEASE_ADMITTED", "RELEASE_BLOCKED"] },
+    "decidedAt": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?Z$" }
+  }
+}

@@ -1,0 +1,343 @@
+{
+  "registryType": "node-mechanic-registry-authority.v1",
+  "authorityId": "node-mechanic-registry-authority.v1",
+  "authorityVersion": "1.0.0",
+  "language": "node",
+  "projector": "sda-node-mechanic-registry-projector.v1",
+  "projectorVersion": "1.0.0",
+  "generatedArtifact": "languages/typescript/runtimes/node/node-mechanic-registry.generated.mjs",
+  "providerModuleRoot": "languages/typescript/runtimes/node",
+  "graphProviderProfiles": [
+    {
+      "profileId": "node-deterministic-semantic-value-provider.v1",
+      "mechanicAuthorityRef": "kernel/semantic-authority/consumer/semantic-value-mechanics.authority.v1.json",
+      "mechanicAuthorityDigest": "sha256:533b856ded71d2e6334dd2f4911b1ec5edb265c4cdc3e79620584fe4cdca1877",
+      "providerModule": "semantic-transformation-evaluator.mjs",
+      "providerExport": "evaluateExpression",
+      "effectClassification": "pure",
+      "testimonyRequired": true
+    },
+    {
+      "profileId": "node-profile-bound-physical-provider.v1",
+      "mechanicAuthorityRef": "kernel/semantic-authority/consumer/platform-effect-mechanics.authority.v1.json",
+      "mechanicAuthorityDigest": "sha256:3b39afa785c925525086acddb65166fad1e52001ddcd6d66bc65448e5efe0bac",
+      "providerModule": "semantic-execution-graph/scheduler.js",
+      "providerExport": "GraphTokenScheduler",
+      "effectClassification": "effect",
+      "testimonyRequired": true
+    }
+  ],
+  "runtimeSupportImports": [
+    {
+      "name": "valueAt",
+      "providerModule": "native-mechanic-primitives.mjs"
+    },
+    {
+      "name": "bindValueAt",
+      "providerModule": "native-mechanic-primitives.mjs"
+    },
+    {
+      "name": "canonicalDigest",
+      "providerModule": "native-mechanic-primitives.mjs"
+    },
+    {
+      "name": "canonicalizeValue",
+      "providerModule": "native-mechanic-primitives.mjs"
+    },
+    {
+      "name": "createGovernedEffectContext",
+      "providerModule": "native-mechanic-primitives.mjs"
+    },
+    {
+      "name": "evaluateExpression",
+      "providerModule": "semantic-transformation-evaluator.mjs"
+    },
+    {
+      "name": "matchesSchema",
+      "providerModule": "schema-contract-admission-provider.mjs"
+    },
+    {
+      "name": "observeExternalRepresentation",
+      "providerModule": "external-observation-provider.mjs"
+    },
+    {
+      "name": "nestedExecutionTestimony",
+      "providerModule": "governed-serial-execution-provider.mjs"
+    }
+  ],
+  "contractAdmissions": [
+    {
+      "platformCapabilityId": "sda-fixture-contract-validator.v1",
+      "kind": "composed",
+      "composition": "identity-admit",
+      "invocation": "configuration"
+    },
+    {
+      "platformCapabilityId": "sda-schema-contract-admission.v1",
+      "kind": "direct",
+      "providerModule": "schema-contract-admission-provider.mjs",
+      "providerExport": "createSchemaAdmission",
+      "invocation": "configuration"
+    }
+  ],
+  "eventPorts": [
+    {
+      "platformCapabilityId": "sda-json-authority-ingestion-port.v1",
+      "kind": "direct",
+      "providerModule": "json-authority-ingestion-provider.mjs",
+      "providerExport": "invokeJsonAuthorityIngestion",
+      "invocation": "url-context",
+      "registrationAuthorityRef": "kernel/semantic-authority/consumer/node-mechanic-registrations/json-authority-ingestion.registration.authority.json",
+      "registrationAuthorityDigest": "sha256:59bcd0c3ded497e48e89c6567abf5a4f9e569cfc0fa0216b28c410b37ccdafce"
+    },
+    {
+      "platformCapabilityId": "sda-proof-binding-evaluation-port.v1",
+      "kind": "direct",
+      "providerModule": "proof-binding-evaluation-provider.mjs",
+      "providerExport": "invokeProofBindingEvaluation",
+      "invocation": "url-context",
+      "registrationAuthorityRef": "kernel/semantic-authority/consumer/node-mechanic-registrations/proof-binding-evaluation.registration.authority.json",
+      "registrationAuthorityDigest": "sha256:3149812f05dec95a5a8db991b9834a263af0cfc6e4a6d42fb2aab1947fd2d4a0"
+    },
+    {
+      "platformCapabilityId": "sda-scenario-semantic-carrier-validation-port.v1",
+      "kind": "direct",
+      "providerModule": "semantic-carrier-validator/index.mjs",
+      "providerExport": "invokeScenarioSemanticCarrierValidation",
+      "invocation": "url-context",
+      "registrationAuthorityRef": "kernel/semantic-authority/consumer/node-mechanic-registrations/scenario-semantic-carrier-validation.registration.authority.json",
+      "registrationAuthorityDigest": "sha256:7e7a0944efef74a9599311403a647939406fcdfd278f8ba7954f8c398528ad41"
+    },
+    {
+      "platformCapabilityId": "sda-scenario-semantic-carrier-extraction-port.v1",
+      "kind": "direct",
+      "providerModule": "semantic-carrier-extractor-provider.mjs",
+      "providerExport": "invokeScenarioSemanticCarrierExtraction",
+      "invocation": "url-context",
+      "registrationAuthorityRef": "kernel/semantic-authority/consumer/node-mechanic-registrations/scenario-semantic-carrier-extraction.registration.authority.json",
+      "registrationAuthorityDigest": "sha256:6994bc9bfe799073d53eef94c41fe0630c1e39292b674f3f34fbf86f49246eeb"
+    },
+    {
+      "platformCapabilityId": "sda-scenario-semantic-carrier-evaluation-port.v1",
+      "kind": "direct",
+      "providerModule": "semantic-carrier-evaluator-provider.mjs",
+      "providerExport": "invokeScenarioSemanticCarrierCompilationEvaluation",
+      "invocation": "url-context",
+      "registrationAuthorityRef": "kernel/semantic-authority/consumer/node-mechanic-registrations/scenario-semantic-carrier-evaluation.registration.authority.json",
+      "registrationAuthorityDigest": "sha256:34864dd59c90989fd745d54bd9eda4ee2c6dc25a097c7afdf605535b1006bfa0"
+    },
+    {
+      "platformCapabilityId": "sda-declarative-value-port.v1",
+      "kind": "composed",
+      "composition": "declarative-value",
+      "invocation": "configuration"
+    },
+    {
+      "platformCapabilityId": "sda-authority-transformation-port.v1",
+      "kind": "direct",
+      "providerModule": "semantic-transformation-evaluator.mjs",
+      "providerExport": "evaluateExpression",
+      "invocation": "transformation"
+    },
+    {
+      "platformCapabilityId": "sda-filesystem-artifact-store.v1",
+      "kind": "direct",
+      "providerModule": "filesystem-artifact-store-provider.mjs",
+      "providerExport": "storeArtifact",
+      "invocation": "configuration"
+    },
+    {
+      "platformCapabilityId": "sda-external-observation-port.v1",
+      "kind": "composed",
+      "composition": "external-observation",
+      "providerModule": "external-observation-provider.mjs",
+      "providerExport": "observeExternalRepresentation",
+      "invocation": "configuration"
+    },
+    {
+      "platformCapabilityId": "sda-external-credential-reference-binding-port.v1",
+      "kind": "direct",
+      "providerModule": "external-credential-reference-binding-provider.mjs",
+      "providerExport": "bindExternalCredentialReference",
+      "invocation": "effects"
+    },
+    {
+      "platformCapabilityId": "sda-governed-http-exchange-port.v1",
+      "kind": "direct",
+      "providerModule": "governed-http-exchange-provider.mjs",
+      "providerExport": "observeGovernedHttpExchange",
+      "invocation": "effects"
+    },
+    {
+      "platformCapabilityId": "sda-governed-repository-observation-port.v1",
+      "kind": "direct",
+      "providerModule": "governed-repository-observation-provider.mjs",
+      "providerExport": "observeGovernedRepository",
+      "invocation": "configuration"
+    },
+    {
+      "platformCapabilityId": "sda-governed-external-root-observation-port.v1",
+      "kind": "direct",
+      "providerModule": "governed-external-root-observation-provider.mjs",
+      "providerExport": "observeGovernedExternalRoot",
+      "invocation": "configuration"
+    },
+    {
+      "platformCapabilityId": "sda-generic-llm-connector-port.v1",
+      "kind": "direct",
+      "providerModule": "generic-llm-connector-provider.mjs",
+      "providerExport": "invokeGenericLlmConnector",
+      "invocation": "llm",
+      "defaultResponseProvider": {
+        "providerModule": "generic-llm-connector-provider.mjs",
+        "providerExport": "obtainGenericModelResponse"
+      }
+    },
+    {
+      "platformCapabilityId": "sda-semantic-execution-graph-compilation-port.v1",
+      "kind": "direct",
+      "providerModule": "semantic-execution-graph-compilation-provider.mjs",
+      "providerExport": "compileSemanticExecutionGraph",
+      "invocation": "configuration"
+    },
+    {
+      "platformCapabilityId": "sda-governed-tooling-binding-transaction-port.v1",
+      "kind": "direct",
+      "providerModule": "governed-tooling-binding-transaction-provider.mjs",
+      "providerExport": "transactGovernedToolingBinding",
+      "invocation": "configuration"
+    },
+    {
+      "platformCapabilityId": "sda-governed-tooling-migration-operation-port.v1",
+      "kind": "direct",
+      "providerModule": "governed-tooling-migration-operation-provider.mjs",
+      "providerExport": "invokeGovernedToolingMigrationOperation",
+      "invocation": "configuration"
+    },
+    {
+      "platformCapabilityId": "sda-governed-file-system-shaping-port.v2",
+      "kind": "direct",
+      "providerModule": "governed-file-system-shaping-provider.mjs",
+      "providerExport": "invokeGovernedFileSystemShaping",
+      "invocation": "configuration"
+    },
+    {
+      "platformCapabilityId": "sda-governed-external-root-batch-materialization-port.v1",
+      "kind": "direct",
+      "providerModule": "governed-external-root-batch-materialization-provider.mjs",
+      "providerExport": "invokeGovernedExternalRootBatchMaterialization",
+      "invocation": "configuration"
+    },
+    {
+      "platformCapabilityId": "sda-bounded-base64-byte-digest-port.v1",
+      "kind": "direct",
+      "providerModule": "bounded-base64-byte-digest-provider.mjs",
+      "providerExport": "resolveBoundedBase64ByteDigests",
+      "invocation": "configuration"
+    },
+    {
+      "platformCapabilityId": "sda-governed-external-root-projected-application-execution-port.v1",
+      "kind": "composed",
+      "composition": "invoke-external-application-batch-v1",
+      "invocation": "configuration"
+    },
+    {
+      "platformCapabilityId": "sda-governed-external-root-consumer-projection-port.v1",
+      "kind": "direct",
+      "providerModule": "governed-external-root-consumer-projection-provider.mjs",
+      "providerExport": "invokeGovernedExternalRootConsumerProjection",
+      "invocation": "configuration"
+    },
+    {
+      "platformCapabilityId": "sda-governed-disposable-root-lifecycle-port.v1",
+      "kind": "direct",
+      "providerModule": "governed-disposable-root-lifecycle-provider.mjs",
+      "providerExport": "invokeGovernedDisposableRootLifecycle",
+      "invocation": "effects"
+    },
+    {
+      "platformCapabilityId": "sda-governed-target-execution-observation-port.v1",
+      "kind": "direct",
+      "providerModule": "governed-target-execution-observation-provider.mjs",
+      "providerExport": "observeGovernedTargetExecution",
+      "invocation": "configuration"
+    },
+    {
+      "platformCapabilityId": "sda-canonical-capability-feature-resolution-port.v1",
+      "kind": "direct",
+      "providerModule": "canonical-capability-feature-resolution-provider.mjs",
+      "providerExport": "resolveCanonicalCapabilityFeature",
+      "invocation": "url-context"
+    },
+    {
+      "platformCapabilityId": "sda-projected-capability-invocation-port.v1",
+      "kind": "composed",
+      "composition": "invoke-binding-v1",
+      "invocation": "configuration"
+    },
+    {
+      "platformCapabilityId": "sda-projected-capability-invocation-port.v2",
+      "kind": "composed",
+      "composition": "invoke-binding-v2",
+      "invocation": "configuration"
+    },
+    {
+      "platformCapabilityId": "sda-governed-serial-execution-port.v1",
+      "kind": "direct",
+      "providerModule": "governed-serial-execution-provider.mjs",
+      "providerExport": "invokeGovernedSerialExecution",
+      "invocation": "serial"
+    },
+    {
+      "platformCapabilityId": "sda-semantic-vector-index.v1",
+      "kind": "direct",
+      "providerModule": "semantic-vector-index-provider.mjs",
+      "providerExport": "invokeSemanticVectorIndex",
+      "invocation": "configuration",
+      "registrationAuthorityRef": "kernel/semantic-authority/consumer/node-mechanic-registrations/semantic-vector-index.registration.authority.json",
+      "registrationAuthorityDigest": "sha256:2818484ebe55088b7924549fbc4ad2c2e070916efe0238f85254cf8fab80faba"
+    },
+    {
+      "platformCapabilityId": "sda-os-environment-credential-port.v1",
+      "kind": "direct",
+      "providerModule": "os-environment-credential-provider.mjs",
+      "providerExport": "bindOsEnvironmentCredential",
+      "invocation": "configuration",
+      "registrationAuthorityRef": "kernel/semantic-authority/consumer/node-mechanic-registrations/os-environment-credential.registration.authority.json",
+      "registrationAuthorityDigest": "sha256:bba0572b03b761dc48dc98ddcaf7fd7744b9bb097e4c738bd199b6b8522712ac"
+    }
+  ],
+  "stateProjections": [
+    {
+      "platformCapabilityId": "sda-declarative-state-projection.v1",
+      "kind": "composed",
+      "composition": "declarative-output",
+      "invocation": "configuration"
+    },
+    {
+      "platformCapabilityId": "sda-authority-state-projection.v1",
+      "kind": "direct",
+      "providerModule": "semantic-transformation-evaluator.mjs",
+      "providerExport": "evaluateExpression",
+      "invocation": "transformation"
+    }
+  ],
+  "evidenceEvaluators": [
+    {
+      "evaluatorId": "expected-execution-trace.v1",
+      "providerModule": "execution-evidence-evaluators-provider.mjs",
+      "providerExport": "expectedExecutionTraceEvaluator"
+    },
+    {
+      "evaluatorId": "artifact-binding-observation.v1",
+      "providerModule": "execution-evidence-evaluators-provider.mjs",
+      "providerExport": "artifactBindingObservationEvaluator"
+    },
+    {
+      "evaluatorId": "projected-origin-observation.v1",
+      "providerModule": "execution-evidence-evaluators-provider.mjs",
+      "providerExport": "projectedOriginObservationEvaluator"
+    }
+  ],
+  "digestAlgorithm": "sha256 of canonical recursive-key-order JSON excluding authorityDigest"
+}

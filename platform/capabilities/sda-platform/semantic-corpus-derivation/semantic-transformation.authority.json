@@ -1,0 +1,484 @@
+{
+  "authorityType": "semantic-transformation-authority.v1",
+  "transformations": [
+    {
+      "id": "derive-generic-semantic-corpus.v1",
+      "expression": {
+        "op": "let",
+        "bindings": {
+          "profileBound": {
+            "op": "every",
+            "from": {"op": "array", "items": [
+              {"op": "equals", "left": {"op": "path", "from": "input", "path": "profile.authorityId"}, "right": {"op": "literal", "value": "generic-semantic-corpus-derivation-profile.v1"}},
+              {"op": "equals", "left": {"op": "path", "from": "input", "path": "profile.authorityRef"}, "right": {"op": "literal", "value": "../verify-semantic-corpus-derivation-conformance/fixtures/generic-semantic-corpus-derivation-profile.v1.json"}},
+              {"op": "equals", "left": {"op": "path", "from": "input", "path": "profile.authorityDigest"}, "right": {"op": "literal", "value": "sha256:5aa91cfe1056d8d70462d25cff029645caa2a79c12b7aa0964399d0b51b57722"}}
+            ]},
+            "as": "match",
+            "where": {"op": "path", "from": "match", "path": ""}
+          },
+          "ontologyBound": {
+            "op": "every",
+            "from": {"op": "array", "items": [
+              {"op": "equals", "left": {"op": "path", "from": "input", "path": "ontology.authorityId"}, "right": {"op": "literal", "value": "generic-semantic-corpus-ontology.v1"}},
+              {"op": "equals", "left": {"op": "path", "from": "input", "path": "ontology.authorityRef"}, "right": {"op": "literal", "value": "../verify-semantic-corpus-derivation-conformance/fixtures/generic-semantic-corpus-ontology.v1.json"}},
+              {"op": "equals", "left": {"op": "path", "from": "input", "path": "ontology.authorityDigest"}, "right": {"op": "literal", "value": "sha256:1e28409aca9838ccedb726d4699d2ff88d5ba426560434190dc2033a1a2e8a24"}}
+            ]},
+            "as": "match",
+            "where": {"op": "path", "from": "match", "path": ""}
+          },
+          "ruleSetBound": {
+            "op": "every",
+            "from": {"op": "array", "items": [
+              {"op": "equals", "left": {"op": "path", "from": "input", "path": "ruleSet.authorityId"}, "right": {"op": "literal", "value": "generic-semantic-corpus-derivation-rule-set.v1"}},
+              {"op": "equals", "left": {"op": "path", "from": "input", "path": "ruleSet.authorityRef"}, "right": {"op": "literal", "value": "../verify-semantic-corpus-derivation-conformance/fixtures/generic-semantic-corpus-derivation-rule-set.v1.json"}},
+              {"op": "equals", "left": {"op": "path", "from": "input", "path": "ruleSet.authorityDigest"}, "right": {"op": "literal", "value": "sha256:3f50e145a02bee6da653aab29383524286237c73f4c9c834488c30140d8fb84e"}}
+            ]},
+            "as": "match",
+            "where": {"op": "path", "from": "match", "path": ""}
+          },
+          "rulesBound": {
+            "op": "equals",
+            "left": {"op": "json-stringify", "value": {"op": "path", "from": "input", "path": "reproduction.evaluationRuleIds"}},
+            "right": {"op": "literal", "value": "[\"top-level-semantic-object-identity.v1\",\"owner-scoped-semantic-object-identity.v1\",\"gherkin-capability-object.v1\",\"gherkin-scenario-object.v1\",\"json-schema-object.v1\",\"gherkin-capability-scenario-relationship.v1\",\"json-contract-schema-relationship.v1\"]"}
+          },
+          "profileAuthoritiesBound": {
+            "op": "if",
+            "when": {"op": "path", "from": "profileBound", "path": ""},
+            "then": {
+              "op": "if",
+              "when": {"op": "path", "from": "ontologyBound", "path": ""},
+              "then": {
+                "op": "if",
+                "when": {"op": "path", "from": "ruleSetBound", "path": ""},
+                "then": {"op": "path", "from": "rulesBound", "path": ""},
+                "else": {"op": "literal", "value": false}
+              },
+              "else": {"op": "literal", "value": false}
+            },
+            "else": {"op": "literal", "value": false}
+          },
+          "orderedSources": {
+            "op": "map",
+            "from": {"op": "path", "from": "input", "path": "declaredResourceOrder"},
+            "as": "resourceId",
+            "value": {
+              "op": "find",
+              "from": {"op": "path", "from": "input", "path": "sourceRecords"},
+              "as": "source",
+              "where": {"op": "equals", "left": {"op": "path", "from": "source", "path": "resourceId"}, "right": {"op": "path", "from": "resourceId", "path": ""}}
+            }
+          },
+          "gherkinSources": {
+            "op": "filter",
+            "from": {"op": "path", "from": "orderedSources", "path": ""},
+            "as": "source",
+            "where": {"op": "equals", "left": {"op": "path", "from": "source", "path": "representationKind"}, "right": {"op": "literal", "value": "GHERKIN_COMPILATION"}}
+          },
+          "jsonSources": {
+            "op": "filter",
+            "from": {"op": "path", "from": "orderedSources", "path": ""},
+            "as": "source",
+            "where": {"op": "equals", "left": {"op": "path", "from": "source", "path": "representationKind"}, "right": {"op": "literal", "value": "SCHEMA_ADMITTED_JSON"}}
+          },
+          "declaredOrderCoversSources": {
+            "op": "if",
+            "when": {"op": "equals", "left": {"op": "length", "value": {"op": "path", "from": "input", "path": "declaredResourceOrder"}}, "right": {"op": "length", "value": {"op": "path", "from": "input", "path": "sourceRecords"}}},
+            "then": {
+              "op": "every",
+              "from": {"op": "path", "from": "input", "path": "sourceRecords"},
+              "as": "source",
+              "where": {"op": "includes", "in": {"op": "path", "from": "input", "path": "declaredResourceOrder"}, "value": {"op": "path", "from": "source", "path": "resourceId"}}
+            },
+            "else": {"op": "literal", "value": false}
+          },
+          "receiptSnapshotsValid": {
+            "op": "every",
+            "from": {"op": "path", "from": "input", "path": "ingestionReceipts"},
+            "as": "receipt",
+            "where": {"op": "equals", "left": {"op": "path", "from": "receipt", "path": "snapshotDigest"}, "right": {"op": "path", "from": "input", "path": "snapshotDigest"}}
+          },
+          "receiptDigestsValid": {
+            "op": "every",
+            "from": {"op": "path", "from": "input", "path": "ingestionReceipts"},
+            "as": "receipt",
+            "where": {"op": "equals", "left": {"op": "path", "from": "receipt", "path": "receiptDigest"}, "right": {"op": "format", "template": "sha256:{digest}", "values": {"digest": {"op": "sha256", "value": {"op": "json-stringify", "value": {"op": "path", "from": "receipt", "path": "document"}}}}}}
+          },
+          "receiptDispositionsValid": {
+            "op": "every",
+            "from": {"op": "path", "from": "input", "path": "ingestionReceipts"},
+            "as": "receipt",
+            "where": {"op": "equals", "left": {"op": "path", "from": "receipt", "path": "disposition"}, "right": {"op": "literal", "value": "ADMITTED"}}
+          },
+          "requiredReceiptsPresent": {
+            "op": "if",
+            "when": {"op": "some", "from": {"op": "path", "from": "input", "path": "ingestionReceipts"}, "as": "receipt", "where": {"op": "equals", "left": {"op": "path", "from": "receipt", "path": "receiptKind"}, "right": {"op": "literal", "value": "GHERKIN_COMPILATION"}}},
+            "then": {"op": "some", "from": {"op": "path", "from": "input", "path": "ingestionReceipts"}, "as": "receipt", "where": {"op": "equals", "left": {"op": "path", "from": "receipt", "path": "receiptKind"}, "right": {"op": "literal", "value": "JSON_AUTHORITY_INGESTION"}}},
+            "else": {"op": "literal", "value": false}
+          },
+          "sourceReceiptLinksValid": {
+            "op": "every",
+            "from": {"op": "path", "from": "input", "path": "sourceRecords"},
+            "as": "source",
+            "where": {"op": "some", "from": {"op": "path", "from": "input", "path": "ingestionReceipts"}, "as": "receipt", "where": {"op": "equals", "left": {"op": "path", "from": "receipt", "path": "receiptId"}, "right": {"op": "path", "from": "source", "path": "receiptId"}}}
+          },
+          "sourceDigestsValid": {
+            "op": "every",
+            "from": {"op": "path", "from": "input", "path": "sourceRecords"},
+            "as": "source",
+            "where": {"op": "equals", "left": {"op": "path", "from": "source", "path": "sourceDigest"}, "right": {"op": "format", "template": "sha256:{digest}", "values": {"digest": {"op": "sha256", "value": {"op": "base64-decode-utf8", "value": {"op": "path", "from": "source", "path": "sourceBytesBase64"}}}}}}
+          },
+          "representationDigestsValid": {
+            "op": "every",
+            "from": {"op": "path", "from": "input", "path": "sourceRecords"},
+            "as": "source",
+            "where": {"op": "equals", "left": {"op": "path", "from": "source", "path": "representationDigest"}, "right": {"op": "format", "template": "sha256:{digest}", "values": {"digest": {"op": "sha256", "value": {"op": "json-stringify", "value": {"op": "path", "from": "source", "path": "representation"}}}}}}
+          },
+          "sourceClassesValid": {
+            "op": "every",
+            "from": {"op": "path", "from": "input", "path": "sourceRecords"},
+            "as": "source",
+            "where": {"op": "includes", "in": {"op": "literal", "value": ["CANONICAL_AUTHORITY", "ADMITTED_EVIDENCE"]}, "value": {"op": "path", "from": "source", "path": "sourceClass"}}
+          },
+          "orderedInputIdentity": {"op": "object", "fields": {
+            "snapshotDigest": {"op": "path", "from": "input", "path": "snapshotDigest"},
+            "profileDigest": {"op": "path", "from": "input", "path": "profile.authorityDigest"},
+            "ontologyDigest": {"op": "path", "from": "input", "path": "ontology.authorityDigest"},
+            "ruleSetDigest": {"op": "path", "from": "input", "path": "ruleSet.authorityDigest"},
+            "declaredResourceOrder": {"op": "path", "from": "input", "path": "declaredResourceOrder"},
+            "resources": {"op": "map", "from": {"op": "path", "from": "orderedSources", "path": ""}, "as": "source", "value": {"op": "object", "fields": {
+              "resourceId": {"op": "path", "from": "source", "path": "resourceId"},
+              "sourceDigest": {"op": "path", "from": "source", "path": "sourceDigest"},
+              "representationDigest": {"op": "path", "from": "source", "path": "representationDigest"},
+              "receiptId": {"op": "path", "from": "source", "path": "receiptId"}
+            }}},
+            "evaluationRuleIds": {"op": "path", "from": "input", "path": "reproduction.evaluationRuleIds"}
+          }},
+          "orderedInputDigestExpected": {"op": "format", "template": "sha256:{digest}", "values": {"digest": {"op": "sha256", "value": {"op": "json-stringify", "value": {"op": "path", "from": "orderedInputIdentity", "path": ""}}}}},
+          "orderedInputPinValid": {"op": "equals", "left": {"op": "path", "from": "input", "path": "reproduction.orderedInputDigest"}, "right": {"op": "path", "from": "orderedInputDigestExpected", "path": ""}},
+          "requestAdmissible": {
+            "op": "every",
+            "from": {"op": "array", "items": [
+              {"op": "path", "from": "profileAuthoritiesBound", "path": ""},
+              {"op": "path", "from": "declaredOrderCoversSources", "path": ""},
+              {"op": "path", "from": "receiptSnapshotsValid", "path": ""},
+              {"op": "path", "from": "receiptDigestsValid", "path": ""},
+              {"op": "path", "from": "receiptDispositionsValid", "path": ""},
+              {"op": "path", "from": "requiredReceiptsPresent", "path": ""},
+              {"op": "path", "from": "sourceReceiptLinksValid", "path": ""},
+              {"op": "path", "from": "sourceDigestsValid", "path": ""},
+              {"op": "path", "from": "representationDigestsValid", "path": ""},
+              {"op": "path", "from": "sourceClassesValid", "path": ""},
+              {"op": "path", "from": "orderedInputPinValid", "path": ""}
+            ]},
+            "as": "valid",
+            "where": {"op": "path", "from": "valid", "path": ""}
+          },
+          "objects": {
+            "op": "flat-map",
+            "from": {
+              "op": "array",
+              "items": [
+                {
+                  "op": "flat-map",
+                  "from": {"op": "path", "from": "gherkinSources", "path": ""},
+                  "as": "source",
+                  "value": {
+                    "op": "map",
+                    "from": {"op": "path", "from": "source", "path": "representation.capabilities"},
+                    "as": "record",
+                    "value": {
+                    "op": "object",
+                    "fields": {
+                      "semanticObjectId": {"op": "format", "template": "capability:{id}", "values": {"id": {"op": "path", "from": "record", "path": "capabilityId"}}},
+                      "canonicalId": {"op": "path", "from": "record", "path": "capabilityId"},
+                      "kind": {"op": "literal", "value": "CAPABILITY"},
+                      "sourceClass": {"op": "path", "from": "source", "path": "sourceClass"},
+                      "lifecycle": {"op": "literal", "value": "ADMITTED"},
+                      "sourceAttestations": {"op": "array", "items": [{"op": "object", "fields": {
+                        "sourceRef": {"op": "path", "from": "source", "path": "sourceRef"},
+                        "sourcePointer": {"op": "format", "template": "/capabilities/{index}", "values": {"index": {"op": "path", "from": "recordIndex", "path": ""}}},
+                        "sourceDigest": {"op": "path", "from": "source", "path": "sourceDigest"}
+                      }}]},
+                      "derivationRuleId": {"op": "literal", "value": "gherkin-capability-object.v1"},
+                      "snapshotDigest": {"op": "path", "from": "input", "path": "snapshotDigest"},
+                      "searchRepresentation": {"op": "path", "from": "record", "path": "name"},
+                      "attributes": {"op": "object", "fields": {"name": {"op": "path", "from": "record", "path": "name"}}}
+                    }
+                    }
+                  }
+                },
+                {
+                  "op": "flat-map",
+                  "from": {"op": "path", "from": "gherkinSources", "path": ""},
+                  "as": "source",
+                  "value": {
+                    "op": "map",
+                    "from": {"op": "path", "from": "source", "path": "representation.scenarios"},
+                    "as": "record",
+                    "value": {
+                    "op": "object",
+                    "fields": {
+                      "semanticObjectId": {"op": "format", "template": "scenario:{owner}:{id}", "values": {"owner": {"op": "path", "from": "record", "path": "ownerSemanticObjectId"}, "id": {"op": "path", "from": "record", "path": "scenarioId"}}},
+                      "canonicalId": {"op": "path", "from": "record", "path": "scenarioId"},
+                      "ownerSemanticObjectId": {"op": "path", "from": "record", "path": "ownerSemanticObjectId"},
+                      "kind": {"op": "literal", "value": "SCENARIO"},
+                      "sourceClass": {"op": "path", "from": "source", "path": "sourceClass"},
+                      "lifecycle": {"op": "literal", "value": "ADMITTED"},
+                      "sourceAttestations": {"op": "array", "items": [{"op": "object", "fields": {
+                        "sourceRef": {"op": "path", "from": "source", "path": "sourceRef"},
+                        "sourcePointer": {"op": "format", "template": "/scenarios/{index}", "values": {"index": {"op": "path", "from": "recordIndex", "path": ""}}},
+                        "sourceDigest": {"op": "path", "from": "source", "path": "sourceDigest"}
+                      }}]},
+                      "derivationRuleId": {"op": "literal", "value": "gherkin-scenario-object.v1"},
+                      "snapshotDigest": {"op": "path", "from": "input", "path": "snapshotDigest"},
+                      "searchRepresentation": {"op": "path", "from": "record", "path": "name"},
+                      "attributes": {"op": "object", "fields": {"name": {"op": "path", "from": "record", "path": "name"}}}
+                    }
+                    }
+                  }
+                },
+                {
+                  "op": "flat-map",
+                  "from": {"op": "path", "from": "jsonSources", "path": ""},
+                  "as": "source",
+                  "value": {
+                    "op": "map",
+                    "from": {"op": "path", "from": "source", "path": "representation.schemas"},
+                    "as": "record",
+                    "value": {
+                    "op": "object",
+                    "fields": {
+                      "semanticObjectId": {"op": "format", "template": "schema:{id}", "values": {"id": {"op": "path", "from": "record", "path": "schemaId"}}},
+                      "canonicalId": {"op": "path", "from": "record", "path": "schemaId"},
+                      "kind": {"op": "literal", "value": "SCHEMA"},
+                      "sourceClass": {"op": "path", "from": "source", "path": "sourceClass"},
+                      "lifecycle": {"op": "literal", "value": "ADMITTED"},
+                      "sourceAttestations": {"op": "array", "items": [{"op": "object", "fields": {
+                        "sourceRef": {"op": "path", "from": "source", "path": "sourceRef"},
+                        "sourcePointer": {"op": "format", "template": "/schemas/{index}", "values": {"index": {"op": "path", "from": "recordIndex", "path": ""}}},
+                        "sourceDigest": {"op": "path", "from": "source", "path": "sourceDigest"}
+                      }}]},
+                      "derivationRuleId": {"op": "literal", "value": "json-schema-object.v1"},
+                      "snapshotDigest": {"op": "path", "from": "input", "path": "snapshotDigest"},
+                      "searchRepresentation": {"op": "path", "from": "record", "path": "title"},
+                      "attributes": {"op": "object", "fields": {"title": {"op": "path", "from": "record", "path": "title"}}}
+                    }
+                    }
+                  }
+                }
+              ]
+            },
+            "as": "recordSet",
+            "value": {"op": "path", "from": "recordSet", "path": ""}
+          },
+          "relationshipCandidates": {
+            "op": "flat-map",
+            "from": {
+              "op": "array",
+              "items": [
+                {
+                  "op": "flat-map",
+                  "from": {"op": "path", "from": "gherkinSources", "path": ""},
+                  "as": "source",
+                  "value": {"op": "map", "from": {"op": "path", "from": "source", "path": "representation.relationships"}, "as": "record", "value": {"op": "object", "fields": {
+                    "relationshipId": {"op": "format", "template": "capability-has-scenario:{from}->{to}", "values": {"from": {"op": "path", "from": "record", "path": "fromSemanticObjectId"}, "to": {"op": "path", "from": "record", "path": "toSemanticObjectId"}}},
+                    "fromSemanticObjectId": {"op": "path", "from": "record", "path": "fromSemanticObjectId"},
+                    "kind": {"op": "literal", "value": "CAPABILITY_HAS_SCENARIO"},
+                    "toSemanticObjectId": {"op": "path", "from": "record", "path": "toSemanticObjectId"},
+                    "disposition": {"op": "literal", "value": "DECLARED_RELATIONSHIP"},
+                    "sourceLocator": {"op": "object", "fields": {
+                      "sourceRef": {"op": "path", "from": "source", "path": "sourceRef"},
+                      "sourcePointer": {"op": "format", "template": "/relationships/{index}", "values": {"index": {"op": "path", "from": "recordIndex", "path": ""}}},
+                      "sourceDigest": {"op": "path", "from": "source", "path": "sourceDigest"}
+                    }},
+                    "derivationRuleId": {"op": "literal", "value": "gherkin-capability-scenario-relationship.v1"}
+                  }}}
+                },
+                {
+                  "op": "flat-map",
+                  "from": {"op": "path", "from": "jsonSources", "path": ""},
+                  "as": "source",
+                  "value": {"op": "map", "from": {"op": "path", "from": "source", "path": "representation.relationships"}, "as": "record", "value": {"op": "object", "fields": {
+                    "relationshipId": {"op": "format", "template": "contract-validated-by-schema:{from}->{to}", "values": {"from": {"op": "path", "from": "record", "path": "fromSemanticObjectId"}, "to": {"op": "path", "from": "record", "path": "toSemanticObjectId"}}},
+                    "fromSemanticObjectId": {"op": "path", "from": "record", "path": "fromSemanticObjectId"},
+                    "kind": {"op": "literal", "value": "CONTRACT_VALIDATED_BY_SCHEMA"},
+                    "toSemanticObjectId": {"op": "path", "from": "record", "path": "toSemanticObjectId"},
+                    "disposition": {"op": "literal", "value": "DETERMINISTIC_DERIVATION"},
+                    "sourceLocator": {"op": "object", "fields": {
+                      "sourceRef": {"op": "path", "from": "source", "path": "sourceRef"},
+                      "sourcePointer": {"op": "format", "template": "/relationships/{index}", "values": {"index": {"op": "path", "from": "recordIndex", "path": ""}}},
+                      "sourceDigest": {"op": "path", "from": "source", "path": "sourceDigest"}
+                    }},
+                    "derivationRuleId": {"op": "literal", "value": "json-contract-schema-relationship.v1"}
+                  }}}
+                }
+              ]
+            },
+            "as": "recordSet",
+            "value": {"op": "path", "from": "recordSet", "path": ""}
+          },
+          "relationships": {
+            "op": "filter",
+            "from": {"op": "path", "from": "relationshipCandidates", "path": ""},
+            "as": "relationship",
+            "where": {
+              "op": "some",
+              "from": {"op": "path", "from": "objects", "path": ""},
+              "as": "candidate",
+              "where": {
+                "op": "if",
+                "when": {"op": "equals", "left": {"op": "path", "from": "candidate", "path": "semanticObjectId"}, "right": {"op": "path", "from": "relationship", "path": "fromSemanticObjectId"}},
+                "then": {
+                  "op": "some",
+                  "from": {"op": "path", "from": "objects", "path": ""},
+                  "as": "target",
+                  "where": {"op": "equals", "left": {"op": "path", "from": "target", "path": "semanticObjectId"}, "right": {"op": "path", "from": "relationship", "path": "toSemanticObjectId"}}
+                },
+                "else": {"op": "literal", "value": false}
+              }
+            }
+          },
+          "openRelationships": {
+            "op": "filter",
+            "from": {"op": "path", "from": "relationshipCandidates", "path": ""},
+            "as": "relationship",
+            "where": {
+              "op": "if",
+              "when": {
+                "op": "some",
+                "from": {"op": "path", "from": "objects", "path": ""},
+                "as": "candidate",
+                "where": {"op": "equals", "left": {"op": "path", "from": "candidate", "path": "semanticObjectId"}, "right": {"op": "path", "from": "relationship", "path": "fromSemanticObjectId"}}
+              },
+              "then": {
+                "op": "if",
+                "when": {
+                  "op": "some",
+                  "from": {"op": "path", "from": "objects", "path": ""},
+                  "as": "target",
+                  "where": {"op": "equals", "left": {"op": "path", "from": "target", "path": "semanticObjectId"}, "right": {"op": "path", "from": "relationship", "path": "toSemanticObjectId"}}
+                },
+                "then": {"op": "literal", "value": false},
+                "else": {"op": "literal", "value": true}
+              },
+              "else": {"op": "literal", "value": true}
+            }
+          },
+          "findings": {
+            "op": "map",
+            "from": {"op": "path", "from": "openRelationships", "path": ""},
+            "as": "relationship",
+            "value": {"op": "object", "fields": {
+              "code": {"op": "literal", "value": "SEMANTIC_CORPUS_REFERENCE_OPEN"},
+              "severity": {"op": "literal", "value": "WARNING"},
+              "message": {"op": "literal", "value": "The admitted relationship has an absent endpoint; no endpoint was invented."},
+              "subjectRef": {"op": "path", "from": "relationship", "path": "relationshipId"},
+              "disposition": {"op": "literal", "value": "OPEN"},
+              "sourceRef": {"op": "path", "from": "relationship", "path": "sourceLocator.sourceRef"},
+              "sourcePointer": {"op": "path", "from": "relationship", "path": "sourceLocator.sourcePointer"},
+              "relatedSourcePointers": {"op": "array", "items": []},
+              "derivationRuleId": {"op": "path", "from": "relationship", "path": "derivationRuleId"}
+            }}
+          },
+          "derivedBody": {"op": "object", "fields": {
+            "contractId": {"op": "literal", "value": "semantic-corpus-derivation-evidence.v1"},
+            "snapshotDigest": {"op": "path", "from": "input", "path": "snapshotDigest"},
+            "authorityDigests": {"op": "object", "fields": {
+              "profile": {"op": "path", "from": "input", "path": "profile.authorityDigest"},
+              "ontology": {"op": "path", "from": "input", "path": "ontology.authorityDigest"},
+              "ruleSet": {"op": "path", "from": "input", "path": "ruleSet.authorityDigest"},
+              "provider": {"op": "literal", "value": "sha256:a217839f3bed4094dcbb4971419e62c6f0355df80f9015babb2121f2d2c84464"}
+            }},
+            "objects": {"op": "path", "from": "objects", "path": ""},
+            "relationships": {"op": "path", "from": "relationships", "path": ""},
+            "findings": {"op": "path", "from": "findings", "path": ""},
+            "objectCatalogDigest": {"op": "format", "template": "sha256:{digest}", "values": {"digest": {"op": "sha256", "value": {"op": "json-stringify", "value": {"op": "path", "from": "objects", "path": ""}}}}},
+            "relationshipGraphDigest": {"op": "format", "template": "sha256:{digest}", "values": {"digest": {"op": "sha256", "value": {"op": "json-stringify", "value": {"op": "path", "from": "relationships", "path": ""}}}}},
+            "findingSetDigest": {"op": "format", "template": "sha256:{digest}", "values": {"digest": {"op": "sha256", "value": {"op": "json-stringify", "value": {"op": "path", "from": "findings", "path": ""}}}}},
+            "reproduction": {"op": "object", "fields": {
+              "orderedInputDigest": {"op": "path", "from": "input", "path": "reproduction.orderedInputDigest"},
+              "evaluationRuleIds": {"op": "path", "from": "input", "path": "reproduction.evaluationRuleIds"},
+              "reproductionDisposition": {"op": "literal", "value": "REPRODUCIBLE"}
+            }},
+            "disposition": {"op": "if", "when": {"op": "greater-than", "left": {"op": "length", "value": {"op": "path", "from": "findings", "path": ""}}, "right": {"op": "literal", "value": 0}}, "then": {"op": "literal", "value": "OPEN"}, "else": {"op": "literal", "value": "DERIVED"}},
+            "authorityClaims": {"op": "literal", "value": {"corpusAdmission": "NOT_CLAIMED", "corpusClosure": "NOT_CLAIMED", "artifactPublication": "NOT_CLAIMED", "proofDisposition": "NOT_CLAIMED"}}
+          }},
+          "derivedEvidence": {"op": "merge", "values": [
+            {"op": "path", "from": "derivedBody", "path": ""},
+            {"op": "object", "fields": {"derivationDigest": {"op": "format", "template": "sha256:{digest}", "values": {"digest": {"op": "sha256", "value": {"op": "json-stringify", "value": {"op": "path", "from": "derivedBody", "path": ""}}}}}}}
+          ]},
+          "rejectedFinding": {"op": "object", "fields": {
+            "code": {
+              "op": "if",
+              "when": {"op": "path", "from": "profileAuthoritiesBound", "path": ""},
+              "then": {
+                "op": "if",
+                "when": {"op": "path", "from": "receiptSnapshotsValid", "path": ""},
+                "then": {
+                  "op": "if",
+                  "when": {"op": "path", "from": "receiptDigestsValid", "path": ""},
+                  "then": {
+                    "op": "if",
+                    "when": {"op": "path", "from": "sourceDigestsValid", "path": ""},
+                    "then": {
+                      "op": "if",
+                      "when": {"op": "path", "from": "representationDigestsValid", "path": ""},
+                      "then": {
+                        "op": "if",
+                        "when": {"op": "path", "from": "sourceClassesValid", "path": ""},
+                        "then": {"op": "literal", "value": "SEMANTIC_CORPUS_REPRODUCTION_PIN_MISMATCH"},
+                        "else": {"op": "literal", "value": "SEMANTIC_CORPUS_SOURCE_CLASS_NOT_PERMITTED"}
+                      },
+                      "else": {"op": "literal", "value": "SEMANTIC_CORPUS_REPRESENTATION_DIGEST_MISMATCH"}
+                    },
+                    "else": {"op": "literal", "value": "SEMANTIC_CORPUS_SOURCE_DIGEST_MISMATCH"}
+                  },
+                  "else": {"op": "literal", "value": "SEMANTIC_CORPUS_RECEIPT_DIGEST_MISMATCH"}
+                },
+                "else": {"op": "literal", "value": "SEMANTIC_CORPUS_MIXED_GENERATION"}
+              },
+              "else": {"op": "literal", "value": "SEMANTIC_CORPUS_AUTHORITY_DIGEST_MISMATCH"}
+            },
+            "severity": {"op": "literal", "value": "FATAL"},
+            "message": {"op": "literal", "value": "The request is not bound to the admitted generic ontology, profile, rule set, and ordered evaluation rule identities."},
+            "subjectRef": {"op": "literal", "value": "generic-semantic-corpus-derivation-profile.v1"},
+            "disposition": {"op": "literal", "value": "REJECTED"},
+            "sourceRef": {"op": "literal", "value": "projection-authoring-context.v1.json"},
+            "sourcePointer": {"op": "literal", "value": ""},
+            "relatedSourcePointers": {"op": "array", "items": []},
+            "derivationRuleId": {"op": "literal", "value": "profile-bound-static-projection.v1"}
+          }},
+          "rejectedFindings": {"op": "array", "items": [{"op": "path", "from": "rejectedFinding", "path": ""}]},
+          "rejectedBody": {"op": "object", "fields": {
+            "contractId": {"op": "literal", "value": "semantic-corpus-derivation-evidence.v1"},
+            "snapshotDigest": {"op": "path", "from": "input", "path": "snapshotDigest"},
+            "authorityDigests": {"op": "object", "fields": {
+              "profile": {"op": "path", "from": "input", "path": "profile.authorityDigest"},
+              "ontology": {"op": "path", "from": "input", "path": "ontology.authorityDigest"},
+              "ruleSet": {"op": "path", "from": "input", "path": "ruleSet.authorityDigest"},
+              "provider": {"op": "literal", "value": "sha256:a217839f3bed4094dcbb4971419e62c6f0355df80f9015babb2121f2d2c84464"}
+            }},
+            "objects": {"op": "array", "items": []},
+            "relationships": {"op": "array", "items": []},
+            "findings": {"op": "path", "from": "rejectedFindings", "path": ""},
+            "objectCatalogDigest": {"op": "literal", "value": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e61e530293678e36f7f6f76"},
+            "relationshipGraphDigest": {"op": "literal", "value": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e61e530293678e36f7f6f76"},
+            "findingSetDigest": {"op": "format", "template": "sha256:{digest}", "values": {"digest": {"op": "sha256", "value": {"op": "json-stringify", "value": {"op": "path", "from": "rejectedFindings", "path": ""}}}}},
+            "reproduction": {"op": "object", "fields": {
+              "orderedInputDigest": {"op": "path", "from": "input", "path": "reproduction.orderedInputDigest"},
+              "evaluationRuleIds": {"op": "path", "from": "input", "path": "reproduction.evaluationRuleIds"},
+              "reproductionDisposition": {"op": "literal", "value": "NOT_REPRODUCIBLE"}
+            }},
+            "disposition": {"op": "literal", "value": "REJECTED"},
+            "authorityClaims": {"op": "literal", "value": {"corpusAdmission": "NOT_CLAIMED", "corpusClosure": "NOT_CLAIMED", "artifactPublication": "NOT_CLAIMED", "proofDisposition": "NOT_CLAIMED"}}
+          }},
+          "rejectedEvidence": {"op": "merge", "values": [
+            {"op": "path", "from": "rejectedBody", "path": ""},
+            {"op": "object", "fields": {"derivationDigest": {"op": "format", "template": "sha256:{digest}", "values": {"digest": {"op": "sha256", "value": {"op": "json-stringify", "value": {"op": "path", "from": "rejectedBody", "path": ""}}}}}}}
+          ]}
+        },
+        "value": {"op": "if", "when": {"op": "path", "from": "requestAdmissible", "path": ""}, "then": {"op": "path", "from": "derivedEvidence", "path": ""}, "else": {"op": "path", "from": "rejectedEvidence", "path": ""}}
+      }
+    }
+  ]
+}

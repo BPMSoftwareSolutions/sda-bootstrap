@@ -1,0 +1,92 @@
+{
+  "traceType": "projected-expected-consumer-trace.v1",
+  "telemetryId": "consumer-scenario-execution-telemetry",
+  "capabilityId": "semantic-corpus-artifact-repository",
+  "rootScenarioId": "publish-immutable-semantic-corpus-artifact",
+  "observationType": "scenario-execution-observation.v1",
+  "lineageFields": [
+    "executionId",
+    "rootExecutionId",
+    "parentExecutionId",
+    "scenarioId"
+  ],
+  "scenarios": [
+    {
+      "scenarioId": "publish-immutable-semantic-corpus-artifact",
+      "steps": [
+        "admit-input",
+        "resolve-event-authority",
+        "execute-event-authority",
+        "admit-outcome",
+        "resolve-disposition"
+      ],
+      "expectedTransitionId": null
+    },
+    {
+      "scenarioId": "reject-semantic-corpus-artifact-publication-conflict",
+      "steps": [
+        "admit-input",
+        "resolve-event-authority",
+        "execute-event-authority",
+        "admit-outcome",
+        "resolve-disposition"
+      ],
+      "expectedTransitionId": null
+    },
+    {
+      "scenarioId": "read-immutable-semantic-corpus-artifact",
+      "steps": [
+        "admit-input",
+        "resolve-event-authority",
+        "execute-event-authority",
+        "admit-outcome",
+        "resolve-disposition"
+      ],
+      "expectedTransitionId": null
+    },
+    {
+      "scenarioId": "retain-referenced-semantic-corpus-snapshot",
+      "steps": [
+        "admit-input",
+        "resolve-event-authority",
+        "execute-event-authority",
+        "admit-outcome",
+        "resolve-disposition"
+      ],
+      "expectedTransitionId": null
+    },
+    {
+      "scenarioId": "update-current-semantic-corpus-pointer",
+      "steps": [
+        "admit-input",
+        "resolve-event-authority",
+        "execute-event-authority",
+        "admit-outcome",
+        "resolve-disposition"
+      ],
+      "expectedTransitionId": null
+    },
+    {
+      "scenarioId": "reject-open-semantic-corpus-pointer-update",
+      "steps": [
+        "admit-input",
+        "resolve-event-authority",
+        "execute-event-authority",
+        "admit-outcome",
+        "resolve-disposition"
+      ],
+      "expectedTransitionId": null
+    },
+    {
+      "scenarioId": "reproduce-semantic-corpus-artifact-address",
+      "steps": [
+        "admit-input",
+        "resolve-event-authority",
+        "execute-event-authority",
+        "admit-outcome",
+        "resolve-disposition"
+      ],
+      "expectedTransitionId": null
+    }
+  ]
+}

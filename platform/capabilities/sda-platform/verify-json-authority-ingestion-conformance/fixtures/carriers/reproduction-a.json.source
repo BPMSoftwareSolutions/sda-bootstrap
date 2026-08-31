@@ -1,0 +1,7 @@
+{
+  "$schema": "schema:generic-json-authority.v1",
+  "documentType": "generic-json-authority.v1",
+  "id": "reproduction-a",
+  "value": "alpha",
+  "references": []
+}

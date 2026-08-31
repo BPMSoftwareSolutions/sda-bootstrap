@@ -1,0 +1,142 @@
+{
+  "projectionManifestType": "consumer-capability-projection-manifest.v1",
+  "generator": "scenario-driven-architecture/tools/src/consumer-projection",
+  "authorityRefs": [
+    "capability.feature",
+    "capability.authority.json",
+    "semantic-graph.authority.json",
+    "execution-authorities.authority.json",
+    "projection-authorities.authority.json",
+    "interfaces.authority.json",
+    "fixtures.authority.json",
+    "../../../kernel/semantic-authority/consumer/scenario-conformance-closure.query-authority.json",
+    "../../../kernel/semantic-authority/consumer/scenario-execution.telemetry-authority.json"
+  ],
+  "admittedPlatformCapabilities": [
+    "sda-authority-state-projection.v1",
+    "sda-authority-transformation-port.v1",
+    "sda-batch-filesystem-shaper-port.v1",
+    "sda-canonical-capability-feature-resolution-port.v1",
+    "sda-declarative-state-projection.v1",
+    "sda-declarative-value-port.v1",
+    "sda-external-credential-reference-binding-port.v1",
+    "sda-external-observation-port.v1",
+    "sda-filesystem-artifact-store.v1",
+    "sda-fixture-contract-validator.v1",
+    "sda-generic-llm-connector-port.v1",
+    "sda-governed-http-exchange-port.v1",
+    "sda-governed-repository-observation-port.v1",
+    "sda-governed-serial-execution-port.v1",
+    "sda-governed-target-execution-observation-port.v1",
+    "sda-governed-tooling-binding-transaction-port.v1",
+    "sda-governed-tooling-migration-operation-port.v1",
+    "sda-json-authority-ingestion-port.v1",
+    "sda-json-cli.v1",
+    "sda-json-query-cli.v1",
+    "sda-node-consumer-runtime.v1",
+    "sda-os-environment-credential-port.v1",
+    "sda-projected-capability-invocation-port.v1",
+    "sda-projected-capability-invocation-port.v2",
+    "sda-proof-binding-evaluation-port.v1",
+    "sda-schema-contract-admission.v1",
+    "sda-semantic-execution-graph-compilation-port.v1",
+    "sda-semantic-vector-index.v1"
+  ],
+  "files": [
+    {
+      "path": "application-binding.json",
+      "executableOrigin": "PROJECTED",
+      "sha256": "c3c5ea58178e3c533ddabec5390b9d0ed556bdc1aff070f4851fc438972ce5b8"
+    },
+    {
+      "path": "application-binding.node.json",
+      "executableOrigin": "PROJECTED",
+      "sha256": "c3c5ea58178e3c533ddabec5390b9d0ed556bdc1aff070f4851fc438972ce5b8"
+    },
+    {
+      "path": "capability.json",
+      "executableOrigin": "PROJECTED",
+      "sha256": "c412258937e2f67b5310e6360fe43df99a110519dd011eb79d3011c5b3141e1d"
+    },
+    {
+      "path": "execution-plans/consumer-execution-plan.node.json",
+      "executableOrigin": "PROJECTED",
+      "sha256": "6da36d898b9400239914f62d06ccd8cf6f491210daa35ab55a7d4dda5c22fbc2"
+    },
+    {
+      "path": "execution-plans/consumer-execution-plan.node.v3.json",
+      "executableOrigin": "PROJECTED",
+      "sha256": "549a612be98f78cf1460d304f5d1f14a8b8108394e0cbecb0cf2711f845e8a15"
+    },
+    {
+      "path": "fixtures/fixtures.json",
+      "executableOrigin": "PROJECTED",
+      "sha256": "32c94840a905555feed70983ce78eb059f002d78d1eb79f00dd4d2da3bc66151"
+    },
+    {
+      "path": "node/bind-os-environment-credential-cli.generated.mjs",
+      "executableOrigin": "PROJECTED",
+      "sha256": "e165c7e72c5d68e9da9ca0cd577525db9f3c65c5a8f959f4e03b206bf0c3e67f"
+    },
+    {
+      "path": "node/capability-runtime.generated.mjs",
+      "executableOrigin": "PROJECTED",
+      "sha256": "b22e962ed9ba8e119126c88d22edf3576b69954eb3848f8588f2d52164b5ac26"
+    },
+    {
+      "path": "node/capability.projected.test.mjs",
+      "executableOrigin": "PROJECTED",
+      "sha256": "2b3773a1c004f9d2958fc8a554c5fb2e43dfeac2bb9491dfa4a94ed8fe69d04b"
+    },
+    {
+      "path": "node/conformance-query.generated.mjs",
+      "executableOrigin": "PROJECTED",
+      "sha256": "c4ef7d1428895e27032309df9b46620bff17c47a3756d90b17e3881d17f4c1d3"
+    },
+    {
+      "path": "projection-conformance.json",
+      "executableOrigin": "PROJECTED",
+      "sha256": "eff29d9d763919b405a021fc126f66b5b0c552c3cbe74d8ddb85f9781e4b2eed"
+    },
+    {
+      "path": "query/conformance-query.json",
+      "executableOrigin": "PROJECTED",
+      "sha256": "6168dab545b23f7adf0a7a2dc905ba8af71e8f82e677820aa65a8540b1358c84"
+    },
+    {
+      "path": "query/conformance-query.node.json",
+      "executableOrigin": "PROJECTED",
+      "sha256": "6168dab545b23f7adf0a7a2dc905ba8af71e8f82e677820aa65a8540b1358c84"
+    },
+    {
+      "path": "query/platform-mechanic-resolution.json",
+      "executableOrigin": "PROJECTED",
+      "sha256": "a3c2646ffc51763fe5709b4f3bc77b4ffc4f96ae61297b7f9ea1d4c4843361f8"
+    },
+    {
+      "path": "query/platform-mechanic-resolution.node.json",
+      "executableOrigin": "PROJECTED",
+      "sha256": "a3c2646ffc51763fe5709b4f3bc77b4ffc4f96ae61297b7f9ea1d4c4843361f8"
+    },
+    {
+      "path": "scenarios/bind-os-environment-credential.json",
+      "executableOrigin": "PROJECTED",
+      "sha256": "0782e89e1869f502aed57ff27e46d9aef68dfeda9ba6b83c9d37d985515d6653"
+    },
+    {
+      "path": "scenarios/hold-missing-os-environment-credential.json",
+      "executableOrigin": "PROJECTED",
+      "sha256": "728ba42a38301418bd0ad4710d79629e4515e9d4341f02d87816a7d69fef4300"
+    },
+    {
+      "path": "scenarios/reject-unauthorized-os-environment-credential-reference.json",
+      "executableOrigin": "PROJECTED",
+      "sha256": "d6454f40271a56dcf4ec7cf9a3dc88603ade8c4ccfd50511a84dd35a164cfbe7"
+    },
+    {
+      "path": "telemetry/expected-trace.json",
+      "executableOrigin": "PROJECTED",
+      "sha256": "990471da6e49ab868a9512dd8525e5205a33d81a2fe546ec97a6c76a2f13cacb"
+    }
+  ]
+}

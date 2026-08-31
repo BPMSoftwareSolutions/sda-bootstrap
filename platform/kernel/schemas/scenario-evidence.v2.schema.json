@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/scenario-evidence.v2.schema.json",
+  "title": "Scenario Evidence Contract v2",
+  "description": "The admitted contract for evidence used to evaluate an outcome obligation.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract"],
+  "properties": {
+    "contract": { "$ref": "semantic-primitives.schema.json#/$defs/contractReference" }
+  }
+}

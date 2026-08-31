@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/tooling/platform-responsibility-resolution-evidence.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["evidenceType", "resolutions", "admittedPlatformCapabilities", "disposition"],
+  "properties": {
+    "evidenceType": { "const": "platform-responsibility-resolution-evidence.v1" },
+    "resolutions": { "type": "object" },
+    "admittedPlatformCapabilities": { "type": "array" },
+    "disposition": { "enum": ["RESOLVED", "MISSING"] }
+  }
+}

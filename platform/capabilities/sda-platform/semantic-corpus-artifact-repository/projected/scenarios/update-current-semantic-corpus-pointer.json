@@ -1,0 +1,38 @@
+{
+  "scenarioId": "update-current-semantic-corpus-pointer",
+  "input": {
+    "inputId": "semantic-corpus-current-pointer-update-request",
+    "contract": {
+      "contractId": "semantic-corpus-current-pointer-update-request.v1"
+    }
+  },
+  "event": {
+    "eventId": "semantic-corpus-current-pointer-update-requested",
+    "executionAuthorityId": "update-current-semantic-corpus-pointer.v1"
+  },
+  "outcome": {
+    "outcomeId": "semantic-corpus-current-pointer-update-evidence",
+    "contract": {
+      "contractId": "semantic-corpus-current-pointer-update-evidence.v1"
+    },
+    "experience": {
+      "statement": "it advances exactly one generation or returns a conflict without changing any artifact, old pointer, or retained snapshot"
+    },
+    "terminal": true
+  },
+  "gherkin": {
+    "given": {
+      "semanticRef": "update-current-semantic-corpus-pointer.given",
+      "text": "one expected current digest, one published closed candidate snapshot, and a current closure receipt"
+    },
+    "when": {
+      "semanticRef": "update-current-semantic-corpus-pointer.when",
+      "text": "the environment pointer is updated through one atomic compare-and-swap"
+    },
+    "then": {
+      "semanticRef": "update-current-semantic-corpus-pointer.then",
+      "text": "it advances exactly one generation or returns a conflict without changing any artifact, old pointer, or retained snapshot"
+    }
+  },
+  "name": "Compare and swap the current pointer after corpus closure"
+}

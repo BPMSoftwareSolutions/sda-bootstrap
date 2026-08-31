@@ -1,0 +1,37 @@
+{
+  "scenarioId": "evaluate-bounded-schema",
+  "input": {
+    "inputId": "bounded-schema-evaluation-request",
+    "contract": {
+      "contractId": "bounded-schema-evaluation-request.v1"
+    }
+  },
+  "event": {
+    "eventId": "evaluate-bounded-schema",
+    "executionAuthorityId": "evaluate-bounded-schema.v1"
+  },
+  "outcome": {
+    "outcomeId": "bounded-schema-evaluation",
+    "contract": {
+      "contractId": "bounded-schema-evaluation.v1"
+    },
+    "experience": {
+      "statement": "one deterministic schema-match disposition is established"
+    }
+  },
+  "gherkin": {
+    "given": {
+      "semanticRef": "evaluate-bounded-schema.given",
+      "text": "a candidate value and an admitted bounded schema"
+    },
+    "when": {
+      "semanticRef": "evaluate-bounded-schema.when",
+      "text": "bounded schema evaluation is performed"
+    },
+    "then": {
+      "semanticRef": "evaluate-bounded-schema.then",
+      "text": "one deterministic schema-match disposition is established"
+    }
+  },
+  "name": "Evaluate a bounded schema"
+}

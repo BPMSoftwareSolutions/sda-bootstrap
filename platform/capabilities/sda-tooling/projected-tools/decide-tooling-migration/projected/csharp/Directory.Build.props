@@ -1,0 +1,25 @@
+<Project>
+  <PropertyGroup>
+    <SdaConsumerProjectionBuildRoot Condition="'$(SdaConsumerProjectionBuildRoot)' == ''">$(MSBuildThisFileDirectory)..\..\..\..\..\..\artifacts\cb\0e4e874b0d20a8f7</SdaConsumerProjectionBuildRoot>
+  </PropertyGroup>
+  <PropertyGroup Condition="$([System.String]::Copy('$(MSBuildProjectName)').StartsWith('ProjectedConsumerSdk.generated'))">
+    <BaseOutputPath>$(SdaConsumerProjectionBuildRoot)\bin\sdk\</BaseOutputPath>
+    <BaseIntermediateOutputPath>$(SdaConsumerProjectionBuildRoot)\obj\sdk\</BaseIntermediateOutputPath>
+    <MSBuildProjectExtensionsPath>$(SdaConsumerProjectionBuildRoot)\obj\sdk\</MSBuildProjectExtensionsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="$([System.String]::Copy('$(MSBuildProjectName)').StartsWith('ProjectedConsumerCli.generated'))">
+    <BaseOutputPath>$(SdaConsumerProjectionBuildRoot)\bin\cli\</BaseOutputPath>
+    <BaseIntermediateOutputPath>$(SdaConsumerProjectionBuildRoot)\obj\cli\</BaseIntermediateOutputPath>
+    <MSBuildProjectExtensionsPath>$(SdaConsumerProjectionBuildRoot)\obj\cli\</MSBuildProjectExtensionsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="$([System.String]::Copy('$(MSBuildProjectName)').StartsWith('ProjectedConsumerWpf.generated'))">
+    <BaseOutputPath>$(SdaConsumerProjectionBuildRoot)\bin\wpf\</BaseOutputPath>
+    <BaseIntermediateOutputPath>$(SdaConsumerProjectionBuildRoot)\obj\wpf\</BaseIntermediateOutputPath>
+    <MSBuildProjectExtensionsPath>$(SdaConsumerProjectionBuildRoot)\obj\wpf\</MSBuildProjectExtensionsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="$([System.String]::Copy('$(MSBuildProjectName)').StartsWith('ProjectedConsumerAvalonia.generated'))">
+    <BaseOutputPath>$(SdaConsumerProjectionBuildRoot)\bin\avalonia\</BaseOutputPath>
+    <BaseIntermediateOutputPath>$(SdaConsumerProjectionBuildRoot)\obj\avalonia\</BaseIntermediateOutputPath>
+    <MSBuildProjectExtensionsPath>$(SdaConsumerProjectionBuildRoot)\obj\avalonia\</MSBuildProjectExtensionsPath>
+  </PropertyGroup>
+</Project>

@@ -1,0 +1,37 @@
+{
+  "scenarioId": "verify-projected-executable-origin",
+  "input": {
+    "inputId": "projected-executable-origin-verification-request",
+    "contract": {
+      "contractId": "projected-executable-origin-verification-request.v1"
+    }
+  },
+  "event": {
+    "eventId": "verify-projected-executable-origin",
+    "executionAuthorityId": "verify-projected-executable-origin.v1"
+  },
+  "outcome": {
+    "outcomeId": "projected-executable-origin-conformance",
+    "contract": {
+      "contractId": "projected-executable-origin-conformance.v1"
+    },
+    "experience": {
+      "statement": "one projected-origin conformance disposition is established"
+    }
+  },
+  "gherkin": {
+    "given": {
+      "semanticRef": "verify-projected-executable-origin.given",
+      "text": "executable-origin testimony and required projection policy"
+    },
+    "when": {
+      "semanticRef": "verify-projected-executable-origin.when",
+      "text": "executable origin is verified"
+    },
+    "then": {
+      "semanticRef": "verify-projected-executable-origin.then",
+      "text": "one projected-origin conformance disposition is established"
+    }
+  },
+  "name": "Verify the projected executable origin"
+}

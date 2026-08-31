@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/platform/ui-embodiment/provider-resolution.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["resolutionType", "capabilityVectorDigest", "targetProfileDigest", "providerCatalogDigest", "selectedProviderId", "selectedProviderDigest", "findings", "disposition"],
+  "properties": {
+    "resolutionType": { "const": "provider-resolution.v1" },
+    "capabilityVectorDigest": { "$ref": "#/$defs/digest" },
+    "targetProfileDigest": { "$ref": "#/$defs/digest" },
+    "providerCatalogDigest": { "$ref": "#/$defs/digest" },
+    "selectedProviderId": { "oneOf": [{ "$ref": "#/$defs/id" }, { "type": "null" }] },
+    "selectedProviderDigest": { "oneOf": [{ "$ref": "#/$defs/digest" }, { "type": "null" }] },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["code", "subjectRef"],
+        "properties": {
+          "code": { "enum": ["CAPABILITY_VECTOR_DIGEST_MISMATCH", "TARGET_PROFILE_DIGEST_MISMATCH", "PROVIDER_CATALOG_DIGEST_MISMATCH", "PROVIDER_DIGEST_MISMATCH", "REQUESTED_PROVIDER_NOT_FOUND", "NO_COMPATIBLE_PROVIDER", "AMBIGUOUS_PROVIDER"] },
+          "subjectRef": { "$ref": "#/$defs/id" }
+        }
+      }
+    },
+    "disposition": { "enum": ["SELECTED", "REJECTED"] }
+  },
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._:-]*$" },
+    "digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }
+  }
+}

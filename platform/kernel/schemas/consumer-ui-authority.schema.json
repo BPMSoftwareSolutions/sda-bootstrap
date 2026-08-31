@@ -1,0 +1,535 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/consumer-ui-authority.v1.schema.json",
+  "title": "Consumer UI Authority",
+  "description": "Framework-neutral experience, interaction, and presentation intent projected through admitted UI embodiments.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["uiAuthorityType", "applicationId", "title", "experienceAuthority", "interactionAuthority", "presentationProfile"],
+  "properties": {
+    "uiAuthorityType": { "const": "consumer-ui-authority.v1" },
+    "applicationId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "title": { "type": "string", "minLength": 1 },
+    "experienceAuthority": { "$ref": "#/$defs/experienceAuthority" },
+    "interactionAuthority": { "$ref": "#/$defs/interactionAuthority" },
+    "presentationProfile": { "$ref": "#/$defs/presentationProfile" }
+  },
+  "$defs": {
+    "semanticId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "accessibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "description": { "type": "string", "minLength": 1 },
+        "live": { "type": "string", "enum": ["off", "polite", "assertive"] }
+      }
+    },
+    "experienceAuthority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["experienceId", "actor", "promise", "conditions"],
+      "properties": {
+        "experienceId": { "$ref": "#/$defs/semanticId" },
+        "actor": { "type": "string", "minLength": 1 },
+        "promise": { "type": "string", "minLength": 1 },
+        "conditions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["conditionId", "statement"],
+            "properties": {
+              "conditionId": { "$ref": "#/$defs/semanticId" },
+              "statement": { "type": "string", "minLength": 1 }
+            }
+          }
+        }
+      }
+    },
+    "semanticReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["semanticKind", "refId"],
+      "properties": {
+        "semanticKind": { "type": "string", "enum": ["information", "input", "action", "collection", "feedback"] },
+        "refId": { "$ref": "#/$defs/semanticId" }
+      }
+    },
+    "stateBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stateId", "valueIntent", "source"],
+      "properties": {
+        "stateId": { "$ref": "#/$defs/semanticId" },
+        "valueIntent": { "type": "string", "enum": ["text", "structured", "boolean", "status", "collection"] },
+        "source": { "type": "string", "enum": ["user-input", "execution-busy", "execution-status", "execution-result", "query-result", "execution-error", "outcome"] },
+        "path": { "type": "string", "minLength": 1 },
+        "initialValue": { "type": ["string", "boolean"] }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "source": { "const": "outcome" } }, "required": ["source"] },
+          "then": { "required": ["path"] }
+        }
+      ]
+    },
+    "information": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["informationId", "content", "importance", "accessibility"],
+      "properties": {
+        "informationId": { "$ref": "#/$defs/semanticId" },
+        "content": { "type": "string", "minLength": 1 },
+        "importance": { "type": "string", "enum": ["primary", "supporting"] },
+        "accessibility": { "$ref": "#/$defs/accessibility" }
+      }
+    },
+    "input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["inputId", "label", "inputIntent", "stateId", "accessibility"],
+      "properties": {
+        "inputId": { "$ref": "#/$defs/semanticId" },
+        "label": { "type": "string", "minLength": 1 },
+        "inputIntent": { "type": "string", "enum": ["text", "structured-text", "single-choice", "boolean-choice", "date", "file-selection"] },
+        "stateId": { "$ref": "#/$defs/semanticId" },
+        "commitOperationId": { "$ref": "#/$defs/semanticId" },
+        "acceptedFileTypes": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+        "placeholder": { "type": "string" },
+        "accessibility": { "$ref": "#/$defs/accessibility" }
+      }
+    },
+    "availability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stateId", "operator", "value"],
+      "properties": {
+        "stateId": { "$ref": "#/$defs/semanticId" },
+        "operator": { "type": "string", "enum": ["equals", "not-equals"] },
+        "value": { "type": ["string", "boolean", "number"] }
+      }
+    },
+    "action": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["actionId", "label", "operationId", "importance", "availability", "accessibility"],
+      "properties": {
+        "actionId": { "$ref": "#/$defs/semanticId" },
+        "label": { "type": "string", "minLength": 1 },
+        "operationId": { "$ref": "#/$defs/semanticId" },
+        "importance": { "type": "string", "enum": ["primary", "secondary", "destructive"] },
+        "availability": { "$ref": "#/$defs/availability" },
+        "accessibility": { "$ref": "#/$defs/accessibility" }
+      }
+    },
+    "collection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["collectionId", "label", "stateId", "fields", "accessibility"],
+      "properties": {
+        "collectionId": { "$ref": "#/$defs/semanticId" },
+        "label": { "type": "string", "minLength": 1 },
+        "stateId": { "$ref": "#/$defs/semanticId" },
+        "presentationIntent": {
+          "type": "string",
+          "enum": ["tabular", "cards", "metrics", "lineage", "steps", "navigation"]
+        },
+        "fields": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["fieldId", "label", "path"],
+            "properties": {
+              "fieldId": { "$ref": "#/$defs/semanticId" },
+              "label": { "type": "string", "minLength": 1 },
+              "path": { "type": "string", "minLength": 1 }
+            }
+          }
+        },
+        "accessibility": { "$ref": "#/$defs/accessibility" }
+      }
+    },
+    "feedback": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["feedbackId", "label", "feedbackIntent", "stateId", "accessibility"],
+      "properties": {
+        "feedbackId": { "$ref": "#/$defs/semanticId" },
+        "label": { "type": "string", "minLength": 1 },
+        "feedbackIntent": { "type": "string", "enum": ["status", "result", "error", "document"] },
+        "presentationIntent": {
+          "type": "string",
+          "enum": ["plain", "context", "registration", "lineage", "proof"]
+        },
+        "stateId": { "$ref": "#/$defs/semanticId" },
+        "accessibility": { "$ref": "#/$defs/accessibility" }
+      }
+    },
+    "operation": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["operationId", "kind", "fixtureId", "targetStateId"],
+          "properties": {
+            "operationId": { "$ref": "#/$defs/semanticId" },
+            "kind": { "const": "load-fixture" },
+            "fixtureId": { "$ref": "#/$defs/semanticId" },
+            "targetStateId": { "$ref": "#/$defs/semanticId" }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["operationId", "kind", "inputStateId"],
+          "properties": {
+            "operationId": { "$ref": "#/$defs/semanticId" },
+            "kind": { "const": "execute-capability" },
+            "inputStateId": { "$ref": "#/$defs/semanticId" },
+            "targetBindings": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["path", "stateId"],
+                "properties": {
+                  "path": { "type": "string", "minLength": 1 },
+                  "stateId": { "$ref": "#/$defs/semanticId" }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["operationId", "kind", "queryId"],
+          "properties": {
+            "operationId": { "$ref": "#/$defs/semanticId" },
+            "kind": { "const": "execute-query" },
+            "queryId": { "$ref": "#/$defs/semanticId" },
+            "parameterBindings": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["parameter", "stateId"],
+                "properties": {
+                  "parameter": { "type": "string", "minLength": 1, "pattern": "^[A-Za-z][A-Za-z0-9._:-]*$" },
+                  "stateId": { "$ref": "#/$defs/semanticId" }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["operationId", "kind", "authorityRef", "authorityDigest", "recipeId", "sourceBindings", "targetBindings"],
+          "properties": {
+            "operationId": { "$ref": "#/$defs/semanticId" },
+            "kind": { "const": "resolve-input" },
+            "authorityRef": { "type": "string", "minLength": 1 },
+            "authorityDigest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+            "recipeId": { "$ref": "#/$defs/semanticId" },
+            "sourceBindings": {
+              "type": "array", "minItems": 1,
+              "items": {
+                "type": "object", "additionalProperties": false, "required": ["role", "stateId"],
+                "properties": { "role": { "$ref": "#/$defs/semanticId" }, "stateId": { "$ref": "#/$defs/semanticId" } }
+              }
+            },
+            "targetBindings": {
+              "type": "array", "minItems": 1,
+              "items": {
+                "type": "object", "additionalProperties": false, "required": ["role", "stateId"],
+                "properties": { "role": { "$ref": "#/$defs/semanticId" }, "stateId": { "$ref": "#/$defs/semanticId" } }
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["operationId", "kind"],
+          "properties": {
+            "operationId": { "$ref": "#/$defs/semanticId" },
+            "kind": { "const": "cancel" }
+          }
+        }
+      ]
+    },
+    "validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["validationId", "stateId", "rule", "message"],
+      "properties": {
+        "validationId": { "$ref": "#/$defs/semanticId" },
+        "stateId": { "$ref": "#/$defs/semanticId" },
+        "rule": { "type": "string", "enum": ["required", "json"] },
+        "message": { "type": "string", "minLength": 1 }
+      }
+    },
+    "navigation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["navigationId", "fromViewId", "toViewId", "actionId"],
+      "properties": {
+        "navigationId": { "$ref": "#/$defs/semanticId" },
+        "fromViewId": { "$ref": "#/$defs/semanticId" },
+        "toViewId": { "$ref": "#/$defs/semanticId" },
+        "actionId": { "$ref": "#/$defs/semanticId" }
+      }
+    },
+    "interactionAuthority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["startViewId", "views", "stateBindings", "information", "inputs", "actions", "collections", "feedback", "operations", "validation", "navigation"],
+      "properties": {
+        "startViewId": { "$ref": "#/$defs/semanticId" },
+        "views": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["viewId", "title", "members"],
+            "properties": {
+              "viewId": { "$ref": "#/$defs/semanticId" },
+              "title": { "type": "string", "minLength": 1 },
+              "members": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/semanticReference" } }
+            }
+          }
+        },
+        "stateBindings": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/stateBinding" } },
+        "information": { "type": "array", "items": { "$ref": "#/$defs/information" } },
+        "inputs": { "type": "array", "items": { "$ref": "#/$defs/input" } },
+        "actions": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/action" } },
+        "collections": { "type": "array", "items": { "$ref": "#/$defs/collection" } },
+        "feedback": { "type": "array", "items": { "$ref": "#/$defs/feedback" } },
+        "operations": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/operation" } },
+        "validation": { "type": "array", "items": { "$ref": "#/$defs/validation" } },
+        "navigation": { "type": "array", "items": { "$ref": "#/$defs/navigation" } }
+      }
+    },
+    "presentationProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["profileId", "density", "tokens", "intent", "adaptation", "views"],
+      "properties": {
+        "profileId": { "$ref": "#/$defs/semanticId" },
+        "density": { "type": "string", "enum": ["compact", "comfortable", "spacious"] },
+        "tokens": { "$ref": "#/$defs/presentationTokens" },
+        "intent": { "$ref": "#/$defs/presentationIntent" },
+        "adaptation": { "$ref": "#/$defs/adaptationIntent" },
+        "views": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["viewId", "sizeIntent", "layoutIntent", "regions"],
+            "properties": {
+              "viewId": { "$ref": "#/$defs/semanticId" },
+              "sizeIntent": { "type": "string", "enum": ["compact", "standard", "workspace"] },
+              "layoutIntent": { "type": "string", "enum": ["stack", "row", "column", "split", "workspace"] },
+              "regions": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["regionId", "title", "layoutIntent", "items"],
+                  "properties": {
+                    "regionId": { "$ref": "#/$defs/semanticId" },
+                    "title": { "type": "string", "minLength": 1 },
+                    "layoutIntent": { "type": "string", "enum": ["group", "stack", "row", "column", "primary-action-region", "supporting-information"] },
+                    "role": {
+                      "type": "string",
+                      "enum": ["navigation", "hero", "context", "summary", "primary-content", "document", "assurance", "proof", "actions"]
+                    },
+                    "importance": { "type": "string", "enum": ["primary", "secondary", "supporting"] },
+                    "items": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/semanticReference" } }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "presentationTokens": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["colors", "spacing", "typography", "shape", "elevation"],
+      "properties": {
+        "colors": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "pageSurface", "contentSurface", "supportingSurface", "border", "textPrimary", "textSupporting",
+            "primaryAction", "primaryActionContent", "secondaryAction", "secondaryActionContent",
+            "destructiveAction", "destructiveActionContent", "statusSurface", "statusAccent",
+            "errorSurface", "errorAccent", "focus"
+          ],
+          "properties": {
+            "pageSurface": { "$ref": "#/$defs/colorToken" },
+            "contentSurface": { "$ref": "#/$defs/colorToken" },
+            "supportingSurface": { "$ref": "#/$defs/colorToken" },
+            "border": { "$ref": "#/$defs/colorToken" },
+            "textPrimary": { "$ref": "#/$defs/colorToken" },
+            "textSupporting": { "$ref": "#/$defs/colorToken" },
+            "primaryAction": { "$ref": "#/$defs/colorToken" },
+            "primaryActionContent": { "$ref": "#/$defs/colorToken" },
+            "secondaryAction": { "$ref": "#/$defs/colorToken" },
+            "secondaryActionContent": { "$ref": "#/$defs/colorToken" },
+            "destructiveAction": { "$ref": "#/$defs/colorToken" },
+            "destructiveActionContent": { "$ref": "#/$defs/colorToken" },
+            "statusSurface": { "$ref": "#/$defs/colorToken" },
+            "statusAccent": { "$ref": "#/$defs/colorToken" },
+            "errorSurface": { "$ref": "#/$defs/colorToken" },
+            "errorAccent": { "$ref": "#/$defs/colorToken" },
+            "focus": { "$ref": "#/$defs/colorToken" }
+          }
+        },
+        "spacing": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["xs", "sm", "md", "lg", "xl"],
+          "properties": {
+            "xs": { "$ref": "#/$defs/abstractLength" },
+            "sm": { "$ref": "#/$defs/abstractLength" },
+            "md": { "$ref": "#/$defs/abstractLength" },
+            "lg": { "$ref": "#/$defs/abstractLength" },
+            "xl": { "$ref": "#/$defs/abstractLength" }
+          }
+        },
+        "typography": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["display", "section", "body", "label", "supporting"],
+          "properties": {
+            "display": { "$ref": "#/$defs/typographyToken" },
+            "section": { "$ref": "#/$defs/typographyToken" },
+            "body": { "$ref": "#/$defs/typographyToken" },
+            "label": { "$ref": "#/$defs/typographyToken" },
+            "supporting": { "$ref": "#/$defs/typographyToken" }
+          }
+        },
+        "shape": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["controlRadius", "panelRadius"],
+          "properties": {
+            "controlRadius": { "$ref": "#/$defs/abstractLength" },
+            "panelRadius": { "$ref": "#/$defs/abstractLength" }
+          }
+        },
+        "elevation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["panel"],
+          "properties": { "panel": { "type": "string", "enum": ["none", "subtle", "moderate"] } }
+        }
+      }
+    },
+    "colorToken": { "type": "string", "pattern": "^#[A-Fa-f0-9]{6}$" },
+    "abstractLength": { "type": "number", "minimum": 0, "maximum": 96 },
+    "typographyToken": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["size", "weight"],
+      "properties": {
+        "size": { "type": "number", "minimum": 8, "maximum": 64 },
+        "weight": { "type": "string", "enum": ["regular", "medium", "strong"] }
+      }
+    },
+    "presentationIntent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["hierarchy", "surfaces", "actionEmphasis", "stateDistinction", "focus", "media", "motion", "platformAdaptation"],
+      "properties": {
+        "hierarchy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["pageTitle", "regionTitle", "itemLabel"],
+          "properties": {
+            "pageTitle": { "const": "display" },
+            "regionTitle": { "const": "section" },
+            "itemLabel": { "const": "label" }
+          }
+        },
+        "surfaces": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["page", "region", "control", "status", "error", "result", "document", "collection"],
+          "properties": {
+            "page": { "const": "page" },
+            "region": { "enum": ["panel", "elevated-panel"] },
+            "control": { "const": "control" },
+            "status": { "const": "status" },
+            "error": { "const": "error" },
+            "result": { "const": "supporting" },
+            "document": { "const": "document-canvas" },
+            "collection": { "const": "collection" }
+          }
+        },
+        "actionEmphasis": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["primary", "secondary", "destructive"],
+          "properties": {
+            "primary": { "const": "prominent" },
+            "secondary": { "const": "standard" },
+            "destructive": { "const": "caution" }
+          }
+        },
+        "stateDistinction": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["disabled", "status", "error"],
+          "properties": {
+            "disabled": { "const": "muted" },
+            "status": { "const": "informative" },
+            "error": { "const": "assertive" }
+          }
+        },
+        "focus": { "const": "prominent" },
+        "media": { "type": "string", "enum": ["none-required", "semantically-required"] },
+        "motion": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["stateChange", "reducedMotionBehavior"],
+          "properties": {
+            "stateChange": { "type": "string", "enum": ["immediate", "subtle"] },
+            "reducedMotionBehavior": { "const": "immediate" }
+          }
+        },
+        "platformAdaptation": { "const": "native-controls" },
+        "experiencePattern": { "type": "string", "enum": ["standard", "assurance-workspace"] }
+      }
+    },
+    "adaptationIntent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["compactMaximumWidth", "wideMinimumWidth", "contentWidth", "actionFlow", "collectionOverflow", "textScale"],
+      "properties": {
+        "compactMaximumWidth": { "type": "number", "minimum": 320, "maximum": 1024 },
+        "wideMinimumWidth": { "type": "number", "minimum": 720, "maximum": 2560 },
+        "contentWidth": { "const": "bounded-fluid" },
+        "actionFlow": { "const": "wrap" },
+        "collectionOverflow": { "const": "horizontal-scroll" },
+        "textScale": { "const": "preserve" },
+        "compactRegionOrder": { "type": "array", "items": { "$ref": "#/$defs/semanticId" } },
+        "standardRegionOrder": { "type": "array", "items": { "$ref": "#/$defs/semanticId" } },
+        "wideRegionOrder": { "type": "array", "items": { "$ref": "#/$defs/semanticId" } }
+      }
+    }
+  }
+}

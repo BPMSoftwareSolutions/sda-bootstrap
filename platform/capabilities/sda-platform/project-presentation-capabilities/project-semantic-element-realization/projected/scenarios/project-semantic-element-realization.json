@@ -1,0 +1,38 @@
+{
+  "scenarioId": "project-semantic-element-realization",
+  "input": {
+    "inputId": "semantic-element-realization-facts",
+    "contract": {
+      "contractId": "project-semantic-element-realization-input.v1"
+    }
+  },
+  "event": {
+    "eventId": "semantic-element-realization-projection-requested",
+    "executionAuthorityId": "semantic-element-realization-projection.v1"
+  },
+  "outcome": {
+    "outcomeId": "semantic-element-realization-projection-known",
+    "contract": {
+      "contractId": "semantic-element-realization-projection-evidence.v1"
+    },
+    "experience": {
+      "statement": "its kind, role, content, state, event, mechanic, and lineage facts are preserved without a language or native-control decision"
+    },
+    "terminal": true
+  },
+  "gherkin": {
+    "given": {
+      "semanticRef": "project-semantic-element-realization.given",
+      "text": "one admitted semantic element instruction and its resolved capability binding"
+    },
+    "when": {
+      "semanticRef": "project-semantic-element-realization.when",
+      "text": "semantic element realization is projected"
+    },
+    "then": {
+      "semanticRef": "project-semantic-element-realization.then",
+      "text": "its kind, role, content, state, event, mechanic, and lineage facts are preserved without a language or native-control decision"
+    }
+  },
+  "name": "Preserve one semantic element for multi-language projection"
+}

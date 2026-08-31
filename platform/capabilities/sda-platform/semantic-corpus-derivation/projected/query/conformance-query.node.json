@@ -1,0 +1,3460 @@
+{
+  "queryType": "projected-consumer-conformance-query.v1",
+  "queryId": "scenario-conformance-closure",
+  "capabilityId": "semantic-corpus-derivation",
+  "subjects": [
+    "feature",
+    "scenario",
+    "contract",
+    "execution-authority",
+    "transition",
+    "interface",
+    "projection",
+    "telemetry",
+    "execution",
+    "behavior",
+    "platform-capability",
+    "executable-origin"
+  ],
+  "requiredClosures": [
+    "feature-to-scenario",
+    "scenario-to-contract",
+    "scenario-to-event-authority",
+    "outcome-to-transition",
+    "transition-to-next-input",
+    "scenario-to-interface",
+    "execution-to-telemetry",
+    "scenario-to-projection",
+    "expected-to-observed-execution",
+    "root-to-terminal-behavior",
+    "required-mechanic-to-platform-capability",
+    "consumer-executable-origin",
+    "dynamic-semantic-execution",
+    "domain-contract-admission"
+  ],
+  "dispositionPolicy": "all-required-closures-conform",
+  "authorityGraph": {
+    "rootScenarioId": "derive-semantic-corpus-records",
+    "scenarios": [
+      {
+        "scenarioId": "derive-semantic-corpus-records",
+        "input": {
+          "inputId": "admitted-semantic-corpus-derivation-request",
+          "contract": {
+            "contractId": "semantic-corpus-derivation-request.v1"
+          }
+        },
+        "event": {
+          "eventId": "semantic-corpus-derivation-requested",
+          "executionAuthorityId": "semantic-corpus-derivation.v1"
+        },
+        "outcome": {
+          "outcomeId": "semantic-corpus-derivation-evidence",
+          "contract": {
+            "contractId": "semantic-corpus-derivation-evidence.v1"
+          },
+          "experience": {
+            "statement": "ordered records and attributable findings are returned with zero path, prose, similarity, or model-derived authority inventions"
+          },
+          "terminal": true
+        },
+        "gherkin": {
+          "given": {
+            "semanticRef": "derive-semantic-corpus-records.given",
+            "text": "one snapshot, admitted ingestion receipts, ontology, and deterministic object and relationship derivation rules"
+          },
+          "when": {
+            "semanticRef": "derive-semantic-corpus-records.when",
+            "text": "rules select exact compiler or JSON pointers and derive owner-scoped identities and edges"
+          },
+          "then": {
+            "semanticRef": "derive-semantic-corpus-records.then",
+            "text": "ordered records and attributable findings are returned with zero path, prose, similarity, or model-derived authority inventions"
+          }
+        },
+        "name": "Apply admitted rules without inventing semantic authority"
+      }
+    ],
+    "transitions": [],
+    "executionAuthorities": [
+      {
+        "id": "semantic-corpus-derivation.v1",
+        "owningScenarioId": "derive-semantic-corpus-records",
+        "operations": [
+          {
+            "kind": "invoke-port",
+            "portId": "derive-semantic-corpus-records"
+          }
+        ]
+      }
+    ],
+    "projectionAuthorities": [],
+    "interfaceAuthority": {
+      "interfaceAuthorityType": "consumer-interface-authority.v1",
+      "contractValidatorCapabilityId": "sda-schema-contract-admission.v1",
+      "contractCatalog": "contracts/contract-catalog.json",
+      "requiredPlatformObligations": [
+        "dynamic-semantic-execution",
+        "domain-contract-admission"
+      ],
+      "interfaces": [
+        {
+          "interfaceId": "semantic-corpus-derivation-cli",
+          "kind": "cli",
+          "rootScenarioId": "derive-semantic-corpus-records",
+          "platformCapabilityId": "sda-json-cli.v1",
+          "projectionTargets": [
+            "node"
+          ]
+        }
+      ],
+      "portBindings": [
+        {
+          "portId": "derive-semantic-corpus-records",
+          "platformCapabilityId": "sda-authority-transformation-port.v1",
+          "configuration": {
+            "expression": {
+              "op": "let",
+              "bindings": {
+                "profileBound": {
+                  "op": "every",
+                  "from": {
+                    "op": "array",
+                    "items": [
+                      {
+                        "op": "equals",
+                        "left": {
+                          "op": "path",
+                          "from": "input",
+                          "path": "profile.authorityId"
+                        },
+                        "right": {
+                          "op": "literal",
+                          "value": "generic-semantic-corpus-derivation-profile.v1"
+                        }
+                      },
+                      {
+                        "op": "equals",
+                        "left": {
+                          "op": "path",
+                          "from": "input",
+                          "path": "profile.authorityRef"
+                        },
+                        "right": {
+                          "op": "literal",
+                          "value": "../verify-semantic-corpus-derivation-conformance/fixtures/generic-semantic-corpus-derivation-profile.v1.json"
+                        }
+                      },
+                      {
+                        "op": "equals",
+                        "left": {
+                          "op": "path",
+                          "from": "input",
+                          "path": "profile.authorityDigest"
+                        },
+                        "right": {
+                          "op": "literal",
+                          "value": "sha256:5aa91cfe1056d8d70462d25cff029645caa2a79c12b7aa0964399d0b51b57722"
+                        }
+                      }
+                    ]
+                  },
+                  "as": "match",
+                  "where": {
+                    "op": "path",
+                    "from": "match",
+                    "path": ""
+                  }
+                },
+                "ontologyBound": {
+                  "op": "every",
+                  "from": {
+                    "op": "array",
+                    "items": [
+                      {
+                        "op": "equals",
+                        "left": {
+                          "op": "path",
+                          "from": "input",
+                          "path": "ontology.authorityId"
+                        },
+                        "right": {
+                          "op": "literal",
+                          "value": "generic-semantic-corpus-ontology.v1"
+                        }
+                      },
+                      {
+                        "op": "equals",
+                        "left": {
+                          "op": "path",
+                          "from": "input",
+                          "path": "ontology.authorityRef"
+                        },
+                        "right": {
+                          "op": "literal",
+                          "value": "../verify-semantic-corpus-derivation-conformance/fixtures/generic-semantic-corpus-ontology.v1.json"
+                        }
+                      },
+                      {
+                        "op": "equals",
+                        "left": {
+                          "op": "path",
+                          "from": "input",
+                          "path": "ontology.authorityDigest"
+                        },
+                        "right": {
+                          "op": "literal",
+                          "value": "sha256:1e28409aca9838ccedb726d4699d2ff88d5ba426560434190dc2033a1a2e8a24"
+                        }
+                      }
+                    ]
+                  },
+                  "as": "match",
+                  "where": {
+                    "op": "path",
+                    "from": "match",
+                    "path": ""
+                  }
+                },
+                "ruleSetBound": {
+                  "op": "every",
+                  "from": {
+                    "op": "array",
+                    "items": [
+                      {
+                        "op": "equals",
+                        "left": {
+                          "op": "path",
+                          "from": "input",
+                          "path": "ruleSet.authorityId"
+                        },
+                        "right": {
+                          "op": "literal",
+                          "value": "generic-semantic-corpus-derivation-rule-set.v1"
+                        }
+                      },
+                      {
+                        "op": "equals",
+                        "left": {
+                          "op": "path",
+                          "from": "input",
+                          "path": "ruleSet.authorityRef"
+                        },
+                        "right": {
+                          "op": "literal",
+                          "value": "../verify-semantic-corpus-derivation-conformance/fixtures/generic-semantic-corpus-derivation-rule-set.v1.json"
+                        }
+                      },
+                      {
+                        "op": "equals",
+                        "left": {
+                          "op": "path",
+                          "from": "input",
+                          "path": "ruleSet.authorityDigest"
+                        },
+                        "right": {
+                          "op": "literal",
+                          "value": "sha256:3f50e145a02bee6da653aab29383524286237c73f4c9c834488c30140d8fb84e"
+                        }
+                      }
+                    ]
+                  },
+                  "as": "match",
+                  "where": {
+                    "op": "path",
+                    "from": "match",
+                    "path": ""
+                  }
+                },
+                "rulesBound": {
+                  "op": "equals",
+                  "left": {
+                    "op": "json-stringify",
+                    "value": {
+                      "op": "path",
+                      "from": "input",
+                      "path": "reproduction.evaluationRuleIds"
+                    }
+                  },
+                  "right": {
+                    "op": "literal",
+                    "value": "[\"top-level-semantic-object-identity.v1\",\"owner-scoped-semantic-object-identity.v1\",\"gherkin-capability-object.v1\",\"gherkin-scenario-object.v1\",\"json-schema-object.v1\",\"gherkin-capability-scenario-relationship.v1\",\"json-contract-schema-relationship.v1\"]"
+                  }
+                },
+                "profileAuthoritiesBound": {
+                  "op": "if",
+                  "when": {
+                    "op": "path",
+                    "from": "profileBound",
+                    "path": ""
+                  },
+                  "then": {
+                    "op": "if",
+                    "when": {
+                      "op": "path",
+                      "from": "ontologyBound",
+                      "path": ""
+                    },
+                    "then": {
+                      "op": "if",
+                      "when": {
+                        "op": "path",
+                        "from": "ruleSetBound",
+                        "path": ""
+                      },
+                      "then": {
+                        "op": "path",
+                        "from": "rulesBound",
+                        "path": ""
+                      },
+                      "else": {
+                        "op": "literal",
+                        "value": false
+                      }
+                    },
+                    "else": {
+                      "op": "literal",
+                      "value": false
+                    }
+                  },
+                  "else": {
+                    "op": "literal",
+                    "value": false
+                  }
+                },
+                "orderedSources": {
+                  "op": "map",
+                  "from": {
+                    "op": "path",
+                    "from": "input",
+                    "path": "declaredResourceOrder"
+                  },
+                  "as": "resourceId",
+                  "value": {
+                    "op": "find",
+                    "from": {
+                      "op": "path",
+                      "from": "input",
+                      "path": "sourceRecords"
+                    },
+                    "as": "source",
+                    "where": {
+                      "op": "equals",
+                      "left": {
+                        "op": "path",
+                        "from": "source",
+                        "path": "resourceId"
+                      },
+                      "right": {
+                        "op": "path",
+                        "from": "resourceId",
+                        "path": ""
+                      }
+                    }
+                  }
+                },
+                "gherkinSources": {
+                  "op": "filter",
+                  "from": {
+                    "op": "path",
+                    "from": "orderedSources",
+                    "path": ""
+                  },
+                  "as": "source",
+                  "where": {
+                    "op": "equals",
+                    "left": {
+                      "op": "path",
+                      "from": "source",
+                      "path": "representationKind"
+                    },
+                    "right": {
+                      "op": "literal",
+                      "value": "GHERKIN_COMPILATION"
+                    }
+                  }
+                },
+                "jsonSources": {
+                  "op": "filter",
+                  "from": {
+                    "op": "path",
+                    "from": "orderedSources",
+                    "path": ""
+                  },
+                  "as": "source",
+                  "where": {
+                    "op": "equals",
+                    "left": {
+                      "op": "path",
+                      "from": "source",
+                      "path": "representationKind"
+                    },
+                    "right": {
+                      "op": "literal",
+                      "value": "SCHEMA_ADMITTED_JSON"
+                    }
+                  }
+                },
+                "declaredOrderCoversSources": {
+                  "op": "if",
+                  "when": {
+                    "op": "equals",
+                    "left": {
+                      "op": "length",
+                      "value": {
+                        "op": "path",
+                        "from": "input",
+                        "path": "declaredResourceOrder"
+                      }
+                    },
+                    "right": {
+                      "op": "length",
+                      "value": {
+                        "op": "path",
+                        "from": "input",
+                        "path": "sourceRecords"
+                      }
+                    }
+                  },
+                  "then": {
+                    "op": "every",
+                    "from": {
+                      "op": "path",
+                      "from": "input",
+                      "path": "sourceRecords"
+                    },
+                    "as": "source",
+                    "where": {
+                      "op": "includes",
+                      "in": {
+                        "op": "path",
+                        "from": "input",
+                        "path": "declaredResourceOrder"
+                      },
+                      "value": {
+                        "op": "path",
+                        "from": "source",
+                        "path": "resourceId"
+                      }
+                    }
+                  },
+                  "else": {
+                    "op": "literal",
+                    "value": false
+                  }
+                },
+                "receiptSnapshotsValid": {
+                  "op": "every",
+                  "from": {
+                    "op": "path",
+                    "from": "input",
+                    "path": "ingestionReceipts"
+                  },
+                  "as": "receipt",
+                  "where": {
+                    "op": "equals",
+                    "left": {
+                      "op": "path",
+                      "from": "receipt",
+                      "path": "snapshotDigest"
+                    },
+                    "right": {
+                      "op": "path",
+                      "from": "input",
+                      "path": "snapshotDigest"
+                    }
+                  }
+                },
+                "receiptDigestsValid": {
+                  "op": "every",
+                  "from": {
+                    "op": "path",
+                    "from": "input",
+                    "path": "ingestionReceipts"
+                  },
+                  "as": "receipt",
+                  "where": {
+                    "op": "equals",
+                    "left": {
+                      "op": "path",
+                      "from": "receipt",
+                      "path": "receiptDigest"
+                    },
+                    "right": {
+                      "op": "format",
+                      "template": "sha256:{digest}",
+                      "values": {
+                        "digest": {
+                          "op": "sha256",
+                          "value": {
+                            "op": "json-stringify",
+                            "value": {
+                              "op": "path",
+                              "from": "receipt",
+                              "path": "document"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "receiptDispositionsValid": {
+                  "op": "every",
+                  "from": {
+                    "op": "path",
+                    "from": "input",
+                    "path": "ingestionReceipts"
+                  },
+                  "as": "receipt",
+                  "where": {
+                    "op": "equals",
+                    "left": {
+                      "op": "path",
+                      "from": "receipt",
+                      "path": "disposition"
+                    },
+                    "right": {
+                      "op": "literal",
+                      "value": "ADMITTED"
+                    }
+                  }
+                },
+                "requiredReceiptsPresent": {
+                  "op": "if",
+                  "when": {
+                    "op": "some",
+                    "from": {
+                      "op": "path",
+                      "from": "input",
+                      "path": "ingestionReceipts"
+                    },
+                    "as": "receipt",
+                    "where": {
+                      "op": "equals",
+                      "left": {
+                        "op": "path",
+                        "from": "receipt",
+                        "path": "receiptKind"
+                      },
+                      "right": {
+                        "op": "literal",
+                        "value": "GHERKIN_COMPILATION"
+                      }
+                    }
+                  },
+                  "then": {
+                    "op": "some",
+                    "from": {
+                      "op": "path",
+                      "from": "input",
+                      "path": "ingestionReceipts"
+                    },
+                    "as": "receipt",
+                    "where": {
+                      "op": "equals",
+                      "left": {
+                        "op": "path",
+                        "from": "receipt",
+                        "path": "receiptKind"
+                      },
+                      "right": {
+                        "op": "literal",
+                        "value": "JSON_AUTHORITY_INGESTION"
+                      }
+                    }
+                  },
+                  "else": {
+                    "op": "literal",
+                    "value": false
+                  }
+                },
+                "sourceReceiptLinksValid": {
+                  "op": "every",
+                  "from": {
+                    "op": "path",
+                    "from": "input",
+                    "path": "sourceRecords"
+                  },
+                  "as": "source",
+                  "where": {
+                    "op": "some",
+                    "from": {
+                      "op": "path",
+                      "from": "input",
+                      "path": "ingestionReceipts"
+                    },
+                    "as": "receipt",
+                    "where": {
+                      "op": "equals",
+                      "left": {
+                        "op": "path",
+                        "from": "receipt",
+                        "path": "receiptId"
+                      },
+                      "right": {
+                        "op": "path",
+                        "from": "source",
+                        "path": "receiptId"
+                      }
+                    }
+                  }
+                },
+                "sourceDigestsValid": {
+                  "op": "every",
+                  "from": {
+                    "op": "path",
+                    "from": "input",
+                    "path": "sourceRecords"
+                  },
+                  "as": "source",
+                  "where": {
+                    "op": "equals",
+                    "left": {
+                      "op": "path",
+                      "from": "source",
+                      "path": "sourceDigest"
+                    },
+                    "right": {
+                      "op": "format",
+                      "template": "sha256:{digest}",
+                      "values": {
+                        "digest": {
+                          "op": "sha256",
+                          "value": {
+                            "op": "base64-decode-utf8",
+                            "value": {
+                              "op": "path",
+                              "from": "source",
+                              "path": "sourceBytesBase64"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "representationDigestsValid": {
+                  "op": "every",
+                  "from": {
+                    "op": "path",
+                    "from": "input",
+                    "path": "sourceRecords"
+                  },
+                  "as": "source",
+                  "where": {
+                    "op": "equals",
+                    "left": {
+                      "op": "path",
+                      "from": "source",
+                      "path": "representationDigest"
+                    },
+                    "right": {
+                      "op": "format",
+                      "template": "sha256:{digest}",
+                      "values": {
+                        "digest": {
+                          "op": "sha256",
+                          "value": {
+                            "op": "json-stringify",
+                            "value": {
+                              "op": "path",
+                              "from": "source",
+                              "path": "representation"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "sourceClassesValid": {
+                  "op": "every",
+                  "from": {
+                    "op": "path",
+                    "from": "input",
+                    "path": "sourceRecords"
+                  },
+                  "as": "source",
+                  "where": {
+                    "op": "includes",
+                    "in": {
+                      "op": "literal",
+                      "value": [
+                        "CANONICAL_AUTHORITY",
+                        "ADMITTED_EVIDENCE"
+                      ]
+                    },
+                    "value": {
+                      "op": "path",
+                      "from": "source",
+                      "path": "sourceClass"
+                    }
+                  }
+                },
+                "orderedInputIdentity": {
+                  "op": "object",
+                  "fields": {
+                    "snapshotDigest": {
+                      "op": "path",
+                      "from": "input",
+                      "path": "snapshotDigest"
+                    },
+                    "profileDigest": {
+                      "op": "path",
+                      "from": "input",
+                      "path": "profile.authorityDigest"
+                    },
+                    "ontologyDigest": {
+                      "op": "path",
+                      "from": "input",
+                      "path": "ontology.authorityDigest"
+                    },
+                    "ruleSetDigest": {
+                      "op": "path",
+                      "from": "input",
+                      "path": "ruleSet.authorityDigest"
+                    },
+                    "declaredResourceOrder": {
+                      "op": "path",
+                      "from": "input",
+                      "path": "declaredResourceOrder"
+                    },
+                    "resources": {
+                      "op": "map",
+                      "from": {
+                        "op": "path",
+                        "from": "orderedSources",
+                        "path": ""
+                      },
+                      "as": "source",
+                      "value": {
+                        "op": "object",
+                        "fields": {
+                          "resourceId": {
+                            "op": "path",
+                            "from": "source",
+                            "path": "resourceId"
+                          },
+                          "sourceDigest": {
+                            "op": "path",
+                            "from": "source",
+                            "path": "sourceDigest"
+                          },
+                          "representationDigest": {
+                            "op": "path",
+                            "from": "source",
+                            "path": "representationDigest"
+                          },
+                          "receiptId": {
+                            "op": "path",
+                            "from": "source",
+                            "path": "receiptId"
+                          }
+                        }
+                      }
+                    },
+                    "evaluationRuleIds": {
+                      "op": "path",
+                      "from": "input",
+                      "path": "reproduction.evaluationRuleIds"
+                    }
+                  }
+                },
+                "orderedInputDigestExpected": {
+                  "op": "format",
+                  "template": "sha256:{digest}",
+                  "values": {
+                    "digest": {
+                      "op": "sha256",
+                      "value": {
+                        "op": "json-stringify",
+                        "value": {
+                          "op": "path",
+                          "from": "orderedInputIdentity",
+                          "path": ""
+                        }
+                      }
+                    }
+                  }
+                },
+                "orderedInputPinValid": {
+                  "op": "equals",
+                  "left": {
+                    "op": "path",
+                    "from": "input",
+                    "path": "reproduction.orderedInputDigest"
+                  },
+                  "right": {
+                    "op": "path",
+                    "from": "orderedInputDigestExpected",
+                    "path": ""
+                  }
+                },
+                "requestAdmissible": {
+                  "op": "every",
+                  "from": {
+                    "op": "array",
+                    "items": [
+                      {
+                        "op": "path",
+                        "from": "profileAuthoritiesBound",
+                        "path": ""
+                      },
+                      {
+                        "op": "path",
+                        "from": "declaredOrderCoversSources",
+                        "path": ""
+                      },
+                      {
+                        "op": "path",
+                        "from": "receiptSnapshotsValid",
+                        "path": ""
+                      },
+                      {
+                        "op": "path",
+                        "from": "receiptDigestsValid",
+                        "path": ""
+                      },
+                      {
+                        "op": "path",
+                        "from": "receiptDispositionsValid",
+                        "path": ""
+                      },
+                      {
+                        "op": "path",
+                        "from": "requiredReceiptsPresent",
+                        "path": ""
+                      },
+                      {
+                        "op": "path",
+                        "from": "sourceReceiptLinksValid",
+                        "path": ""
+                      },
+                      {
+                        "op": "path",
+                        "from": "sourceDigestsValid",
+                        "path": ""
+                      },
+                      {
+                        "op": "path",
+                        "from": "representationDigestsValid",
+                        "path": ""
+                      },
+                      {
+                        "op": "path",
+                        "from": "sourceClassesValid",
+                        "path": ""
+                      },
+                      {
+                        "op": "path",
+                        "from": "orderedInputPinValid",
+                        "path": ""
+                      }
+                    ]
+                  },
+                  "as": "valid",
+                  "where": {
+                    "op": "path",
+                    "from": "valid",
+                    "path": ""
+                  }
+                },
+                "objects": {
+                  "op": "flat-map",
+                  "from": {
+                    "op": "array",
+                    "items": [
+                      {
+                        "op": "flat-map",
+                        "from": {
+                          "op": "path",
+                          "from": "gherkinSources",
+                          "path": ""
+                        },
+                        "as": "source",
+                        "value": {
+                          "op": "map",
+                          "from": {
+                            "op": "path",
+                            "from": "source",
+                            "path": "representation.capabilities"
+                          },
+                          "as": "record",
+                          "value": {
+                            "op": "object",
+                            "fields": {
+                              "semanticObjectId": {
+                                "op": "format",
+                                "template": "capability:{id}",
+                                "values": {
+                                  "id": {
+                                    "op": "path",
+                                    "from": "record",
+                                    "path": "capabilityId"
+                                  }
+                                }
+                              },
+                              "canonicalId": {
+                                "op": "path",
+                                "from": "record",
+                                "path": "capabilityId"
+                              },
+                              "kind": {
+                                "op": "literal",
+                                "value": "CAPABILITY"
+                              },
+                              "sourceClass": {
+                                "op": "path",
+                                "from": "source",
+                                "path": "sourceClass"
+                              },
+                              "lifecycle": {
+                                "op": "literal",
+                                "value": "ADMITTED"
+                              },
+                              "sourceAttestations": {
+                                "op": "array",
+                                "items": [
+                                  {
+                                    "op": "object",
+                                    "fields": {
+                                      "sourceRef": {
+                                        "op": "path",
+                                        "from": "source",
+                                        "path": "sourceRef"
+                                      },
+                                      "sourcePointer": {
+                                        "op": "format",
+                                        "template": "/capabilities/{index}",
+                                        "values": {
+                                          "index": {
+                                            "op": "path",
+                                            "from": "recordIndex",
+                                            "path": ""
+                                          }
+                                        }
+                                      },
+                                      "sourceDigest": {
+                                        "op": "path",
+                                        "from": "source",
+                                        "path": "sourceDigest"
+                                      }
+                                    }
+                                  }
+                                ]
+                              },
+                              "derivationRuleId": {
+                                "op": "literal",
+                                "value": "gherkin-capability-object.v1"
+                              },
+                              "snapshotDigest": {
+                                "op": "path",
+                                "from": "input",
+                                "path": "snapshotDigest"
+                              },
+                              "searchRepresentation": {
+                                "op": "path",
+                                "from": "record",
+                                "path": "name"
+                              },
+                              "attributes": {
+                                "op": "object",
+                                "fields": {
+                                  "name": {
+                                    "op": "path",
+                                    "from": "record",
+                                    "path": "name"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "op": "flat-map",
+                        "from": {
+                          "op": "path",
+                          "from": "gherkinSources",
+                          "path": ""
+                        },
+                        "as": "source",
+                        "value": {
+                          "op": "map",
+                          "from": {
+                            "op": "path",
+                            "from": "source",
+                            "path": "representation.scenarios"
+                          },
+                          "as": "record",
+                          "value": {
+                            "op": "object",
+                            "fields": {
+                              "semanticObjectId": {
+                                "op": "format",
+                                "template": "scenario:{owner}:{id}",
+                                "values": {
+                                  "owner": {
+                                    "op": "path",
+                                    "from": "record",
+                                    "path": "ownerSemanticObjectId"
+                                  },
+                                  "id": {
+                                    "op": "path",
+                                    "from": "record",
+                                    "path": "scenarioId"
+                                  }
+                                }
+                              },
+                              "canonicalId": {
+                                "op": "path",
+                                "from": "record",
+                                "path": "scenarioId"
+                              },
+                              "ownerSemanticObjectId": {
+                                "op": "path",
+                                "from": "record",
+                                "path": "ownerSemanticObjectId"
+                              },
+                              "kind": {
+                                "op": "literal",
+                                "value": "SCENARIO"
+                              },
+                              "sourceClass": {
+                                "op": "path",
+                                "from": "source",
+                                "path": "sourceClass"
+                              },
+                              "lifecycle": {
+                                "op": "literal",
+                                "value": "ADMITTED"
+                              },
+                              "sourceAttestations": {
+                                "op": "array",
+                                "items": [
+                                  {
+                                    "op": "object",
+                                    "fields": {
+                                      "sourceRef": {
+                                        "op": "path",
+                                        "from": "source",
+                                        "path": "sourceRef"
+                                      },
+                                      "sourcePointer": {
+                                        "op": "format",
+                                        "template": "/scenarios/{index}",
+                                        "values": {
+                                          "index": {
+                                            "op": "path",
+                                            "from": "recordIndex",
+                                            "path": ""
+                                          }
+                                        }
+                                      },
+                                      "sourceDigest": {
+                                        "op": "path",
+                                        "from": "source",
+                                        "path": "sourceDigest"
+                                      }
+                                    }
+                                  }
+                                ]
+                              },
+                              "derivationRuleId": {
+                                "op": "literal",
+                                "value": "gherkin-scenario-object.v1"
+                              },
+                              "snapshotDigest": {
+                                "op": "path",
+                                "from": "input",
+                                "path": "snapshotDigest"
+                              },
+                              "searchRepresentation": {
+                                "op": "path",
+                                "from": "record",
+                                "path": "name"
+                              },
+                              "attributes": {
+                                "op": "object",
+                                "fields": {
+                                  "name": {
+                                    "op": "path",
+                                    "from": "record",
+                                    "path": "name"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "op": "flat-map",
+                        "from": {
+                          "op": "path",
+                          "from": "jsonSources",
+                          "path": ""
+                        },
+                        "as": "source",
+                        "value": {
+                          "op": "map",
+                          "from": {
+                            "op": "path",
+                            "from": "source",
+                            "path": "representation.schemas"
+                          },
+                          "as": "record",
+                          "value": {
+                            "op": "object",
+                            "fields": {
+                              "semanticObjectId": {
+                                "op": "format",
+                                "template": "schema:{id}",
+                                "values": {
+                                  "id": {
+                                    "op": "path",
+                                    "from": "record",
+                                    "path": "schemaId"
+                                  }
+                                }
+                              },
+                              "canonicalId": {
+                                "op": "path",
+                                "from": "record",
+                                "path": "schemaId"
+                              },
+                              "kind": {
+                                "op": "literal",
+                                "value": "SCHEMA"
+                              },
+                              "sourceClass": {
+                                "op": "path",
+                                "from": "source",
+                                "path": "sourceClass"
+                              },
+                              "lifecycle": {
+                                "op": "literal",
+                                "value": "ADMITTED"
+                              },
+                              "sourceAttestations": {
+                                "op": "array",
+                                "items": [
+                                  {
+                                    "op": "object",
+                                    "fields": {
+                                      "sourceRef": {
+                                        "op": "path",
+                                        "from": "source",
+                                        "path": "sourceRef"
+                                      },
+                                      "sourcePointer": {
+                                        "op": "format",
+                                        "template": "/schemas/{index}",
+                                        "values": {
+                                          "index": {
+                                            "op": "path",
+                                            "from": "recordIndex",
+                                            "path": ""
+                                          }
+                                        }
+                                      },
+                                      "sourceDigest": {
+                                        "op": "path",
+                                        "from": "source",
+                                        "path": "sourceDigest"
+                                      }
+                                    }
+                                  }
+                                ]
+                              },
+                              "derivationRuleId": {
+                                "op": "literal",
+                                "value": "json-schema-object.v1"
+                              },
+                              "snapshotDigest": {
+                                "op": "path",
+                                "from": "input",
+                                "path": "snapshotDigest"
+                              },
+                              "searchRepresentation": {
+                                "op": "path",
+                                "from": "record",
+                                "path": "title"
+                              },
+                              "attributes": {
+                                "op": "object",
+                                "fields": {
+                                  "title": {
+                                    "op": "path",
+                                    "from": "record",
+                                    "path": "title"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "as": "recordSet",
+                  "value": {
+                    "op": "path",
+                    "from": "recordSet",
+                    "path": ""
+                  }
+                },
+                "relationshipCandidates": {
+                  "op": "flat-map",
+                  "from": {
+                    "op": "array",
+                    "items": [
+                      {
+                        "op": "flat-map",
+                        "from": {
+                          "op": "path",
+                          "from": "gherkinSources",
+                          "path": ""
+                        },
+                        "as": "source",
+                        "value": {
+                          "op": "map",
+                          "from": {
+                            "op": "path",
+                            "from": "source",
+                            "path": "representation.relationships"
+                          },
+                          "as": "record",
+                          "value": {
+                            "op": "object",
+                            "fields": {
+                              "relationshipId": {
+                                "op": "format",
+                                "template": "capability-has-scenario:{from}->{to}",
+                                "values": {
+                                  "from": {
+                                    "op": "path",
+                                    "from": "record",
+                                    "path": "fromSemanticObjectId"
+                                  },
+                                  "to": {
+                                    "op": "path",
+                                    "from": "record",
+                                    "path": "toSemanticObjectId"
+                                  }
+                                }
+                              },
+                              "fromSemanticObjectId": {
+                                "op": "path",
+                                "from": "record",
+                                "path": "fromSemanticObjectId"
+                              },
+                              "kind": {
+                                "op": "literal",
+                                "value": "CAPABILITY_HAS_SCENARIO"
+                              },
+                              "toSemanticObjectId": {
+                                "op": "path",
+                                "from": "record",
+                                "path": "toSemanticObjectId"
+                              },
+                              "disposition": {
+                                "op": "literal",
+                                "value": "DECLARED_RELATIONSHIP"
+                              },
+                              "sourceLocator": {
+                                "op": "object",
+                                "fields": {
+                                  "sourceRef": {
+                                    "op": "path",
+                                    "from": "source",
+                                    "path": "sourceRef"
+                                  },
+                                  "sourcePointer": {
+                                    "op": "format",
+                                    "template": "/relationships/{index}",
+                                    "values": {
+                                      "index": {
+                                        "op": "path",
+                                        "from": "recordIndex",
+                                        "path": ""
+                                      }
+                                    }
+                                  },
+                                  "sourceDigest": {
+                                    "op": "path",
+                                    "from": "source",
+                                    "path": "sourceDigest"
+                                  }
+                                }
+                              },
+                              "derivationRuleId": {
+                                "op": "literal",
+                                "value": "gherkin-capability-scenario-relationship.v1"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "op": "flat-map",
+                        "from": {
+                          "op": "path",
+                          "from": "jsonSources",
+                          "path": ""
+                        },
+                        "as": "source",
+                        "value": {
+                          "op": "map",
+                          "from": {
+                            "op": "path",
+                            "from": "source",
+                            "path": "representation.relationships"
+                          },
+                          "as": "record",
+                          "value": {
+                            "op": "object",
+                            "fields": {
+                              "relationshipId": {
+                                "op": "format",
+                                "template": "contract-validated-by-schema:{from}->{to}",
+                                "values": {
+                                  "from": {
+                                    "op": "path",
+                                    "from": "record",
+                                    "path": "fromSemanticObjectId"
+                                  },
+                                  "to": {
+                                    "op": "path",
+                                    "from": "record",
+                                    "path": "toSemanticObjectId"
+                                  }
+                                }
+                              },
+                              "fromSemanticObjectId": {
+                                "op": "path",
+                                "from": "record",
+                                "path": "fromSemanticObjectId"
+                              },
+                              "kind": {
+                                "op": "literal",
+                                "value": "CONTRACT_VALIDATED_BY_SCHEMA"
+                              },
+                              "toSemanticObjectId": {
+                                "op": "path",
+                                "from": "record",
+                                "path": "toSemanticObjectId"
+                              },
+                              "disposition": {
+                                "op": "literal",
+                                "value": "DETERMINISTIC_DERIVATION"
+                              },
+                              "sourceLocator": {
+                                "op": "object",
+                                "fields": {
+                                  "sourceRef": {
+                                    "op": "path",
+                                    "from": "source",
+                                    "path": "sourceRef"
+                                  },
+                                  "sourcePointer": {
+                                    "op": "format",
+                                    "template": "/relationships/{index}",
+                                    "values": {
+                                      "index": {
+                                        "op": "path",
+                                        "from": "recordIndex",
+                                        "path": ""
+                                      }
+                                    }
+                                  },
+                                  "sourceDigest": {
+                                    "op": "path",
+                                    "from": "source",
+                                    "path": "sourceDigest"
+                                  }
+                                }
+                              },
+                              "derivationRuleId": {
+                                "op": "literal",
+                                "value": "json-contract-schema-relationship.v1"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "as": "recordSet",
+                  "value": {
+                    "op": "path",
+                    "from": "recordSet",
+                    "path": ""
+                  }
+                },
+                "relationships": {
+                  "op": "filter",
+                  "from": {
+                    "op": "path",
+                    "from": "relationshipCandidates",
+                    "path": ""
+                  },
+                  "as": "relationship",
+                  "where": {
+                    "op": "some",
+                    "from": {
+                      "op": "path",
+                      "from": "objects",
+                      "path": ""
+                    },
+                    "as": "candidate",
+                    "where": {
+                      "op": "if",
+                      "when": {
+                        "op": "equals",
+                        "left": {
+                          "op": "path",
+                          "from": "candidate",
+                          "path": "semanticObjectId"
+                        },
+                        "right": {
+                          "op": "path",
+                          "from": "relationship",
+                          "path": "fromSemanticObjectId"
+                        }
+                      },
+                      "then": {
+                        "op": "some",
+                        "from": {
+                          "op": "path",
+                          "from": "objects",
+                          "path": ""
+                        },
+                        "as": "target",
+                        "where": {
+                          "op": "equals",
+                          "left": {
+                            "op": "path",
+                            "from": "target",
+                            "path": "semanticObjectId"
+                          },
+                          "right": {
+                            "op": "path",
+                            "from": "relationship",
+                            "path": "toSemanticObjectId"
+                          }
+                        }
+                      },
+                      "else": {
+                        "op": "literal",
+                        "value": false
+                      }
+                    }
+                  }
+                },
+                "openRelationships": {
+                  "op": "filter",
+                  "from": {
+                    "op": "path",
+                    "from": "relationshipCandidates",
+                    "path": ""
+                  },
+                  "as": "relationship",
+                  "where": {
+                    "op": "if",
+                    "when": {
+                      "op": "some",
+                      "from": {
+                        "op": "path",
+                        "from": "objects",
+                        "path": ""
+                      },
+                      "as": "candidate",
+                      "where": {
+                        "op": "equals",
+                        "left": {
+                          "op": "path",
+                          "from": "candidate",
+                          "path": "semanticObjectId"
+                        },
+                        "right": {
+                          "op": "path",
+                          "from": "relationship",
+                          "path": "fromSemanticObjectId"
+                        }
+                      }
+                    },
+                    "then": {
+                      "op": "if",
+                      "when": {
+                        "op": "some",
+                        "from": {
+                          "op": "path",
+                          "from": "objects",
+                          "path": ""
+                        },
+                        "as": "target",
+                        "where": {
+                          "op": "equals",
+                          "left": {
+                            "op": "path",
+                            "from": "target",
+                            "path": "semanticObjectId"
+                          },
+                          "right": {
+                            "op": "path",
+                            "from": "relationship",
+                            "path": "toSemanticObjectId"
+                          }
+                        }
+                      },
+                      "then": {
+                        "op": "literal",
+                        "value": false
+                      },
+                      "else": {
+                        "op": "literal",
+                        "value": true
+                      }
+                    },
+                    "else": {
+                      "op": "literal",
+                      "value": true
+                    }
+                  }
+                },
+                "findings": {
+                  "op": "map",
+                  "from": {
+                    "op": "path",
+                    "from": "openRelationships",
+                    "path": ""
+                  },
+                  "as": "relationship",
+                  "value": {
+                    "op": "object",
+                    "fields": {
+                      "code": {
+                        "op": "literal",
+                        "value": "SEMANTIC_CORPUS_REFERENCE_OPEN"
+                      },
+                      "severity": {
+                        "op": "literal",
+                        "value": "WARNING"
+                      },
+                      "message": {
+                        "op": "literal",
+                        "value": "The admitted relationship has an absent endpoint; no endpoint was invented."
+                      },
+                      "subjectRef": {
+                        "op": "path",
+                        "from": "relationship",
+                        "path": "relationshipId"
+                      },
+                      "disposition": {
+                        "op": "literal",
+                        "value": "OPEN"
+                      },
+                      "sourceRef": {
+                        "op": "path",
+                        "from": "relationship",
+                        "path": "sourceLocator.sourceRef"
+                      },
+                      "sourcePointer": {
+                        "op": "path",
+                        "from": "relationship",
+                        "path": "sourceLocator.sourcePointer"
+                      },
+                      "relatedSourcePointers": {
+                        "op": "array",
+                        "items": []
+                      },
+                      "derivationRuleId": {
+                        "op": "path",
+                        "from": "relationship",
+                        "path": "derivationRuleId"
+                      }
+                    }
+                  }
+                },
+                "derivedBody": {
+                  "op": "object",
+                  "fields": {
+                    "contractId": {
+                      "op": "literal",
+                      "value": "semantic-corpus-derivation-evidence.v1"
+                    },
+                    "snapshotDigest": {
+                      "op": "path",
+                      "from": "input",
+                      "path": "snapshotDigest"
+                    },
+                    "authorityDigests": {
+                      "op": "object",
+                      "fields": {
+                        "profile": {
+                          "op": "path",
+                          "from": "input",
+                          "path": "profile.authorityDigest"
+                        },
+                        "ontology": {
+                          "op": "path",
+                          "from": "input",
+                          "path": "ontology.authorityDigest"
+                        },
+                        "ruleSet": {
+                          "op": "path",
+                          "from": "input",
+                          "path": "ruleSet.authorityDigest"
+                        },
+                        "provider": {
+                          "op": "literal",
+                          "value": "sha256:a217839f3bed4094dcbb4971419e62c6f0355df80f9015babb2121f2d2c84464"
+                        }
+                      }
+                    },
+                    "objects": {
+                      "op": "path",
+                      "from": "objects",
+                      "path": ""
+                    },
+                    "relationships": {
+                      "op": "path",
+                      "from": "relationships",
+                      "path": ""
+                    },
+                    "findings": {
+                      "op": "path",
+                      "from": "findings",
+                      "path": ""
+                    },
+                    "objectCatalogDigest": {
+                      "op": "format",
+                      "template": "sha256:{digest}",
+                      "values": {
+                        "digest": {
+                          "op": "sha256",
+                          "value": {
+                            "op": "json-stringify",
+                            "value": {
+                              "op": "path",
+                              "from": "objects",
+                              "path": ""
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "relationshipGraphDigest": {
+                      "op": "format",
+                      "template": "sha256:{digest}",
+                      "values": {
+                        "digest": {
+                          "op": "sha256",
+                          "value": {
+                            "op": "json-stringify",
+                            "value": {
+                              "op": "path",
+                              "from": "relationships",
+                              "path": ""
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "findingSetDigest": {
+                      "op": "format",
+                      "template": "sha256:{digest}",
+                      "values": {
+                        "digest": {
+                          "op": "sha256",
+                          "value": {
+                            "op": "json-stringify",
+                            "value": {
+                              "op": "path",
+                              "from": "findings",
+                              "path": ""
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "reproduction": {
+                      "op": "object",
+                      "fields": {
+                        "orderedInputDigest": {
+                          "op": "path",
+                          "from": "input",
+                          "path": "reproduction.orderedInputDigest"
+                        },
+                        "evaluationRuleIds": {
+                          "op": "path",
+                          "from": "input",
+                          "path": "reproduction.evaluationRuleIds"
+                        },
+                        "reproductionDisposition": {
+                          "op": "literal",
+                          "value": "REPRODUCIBLE"
+                        }
+                      }
+                    },
+                    "disposition": {
+                      "op": "if",
+                      "when": {
+                        "op": "greater-than",
+                        "left": {
+                          "op": "length",
+                          "value": {
+                            "op": "path",
+                            "from": "findings",
+                            "path": ""
+                          }
+                        },
+                        "right": {
+                          "op": "literal",
+                          "value": 0
+                        }
+                      },
+                      "then": {
+                        "op": "literal",
+                        "value": "OPEN"
+                      },
+                      "else": {
+                        "op": "literal",
+                        "value": "DERIVED"
+                      }
+                    },
+                    "authorityClaims": {
+                      "op": "literal",
+                      "value": {
+                        "corpusAdmission": "NOT_CLAIMED",
+                        "corpusClosure": "NOT_CLAIMED",
+                        "artifactPublication": "NOT_CLAIMED",
+                        "proofDisposition": "NOT_CLAIMED"
+                      }
+                    }
+                  }
+                },
+                "derivedEvidence": {
+                  "op": "merge",
+                  "values": [
+                    {
+                      "op": "path",
+                      "from": "derivedBody",
+                      "path": ""
+                    },
+                    {
+                      "op": "object",
+                      "fields": {
+                        "derivationDigest": {
+                          "op": "format",
+                          "template": "sha256:{digest}",
+                          "values": {
+                            "digest": {
+                              "op": "sha256",
+                              "value": {
+                                "op": "json-stringify",
+                                "value": {
+                                  "op": "path",
+                                  "from": "derivedBody",
+                                  "path": ""
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "rejectedFinding": {
+                  "op": "object",
+                  "fields": {
+                    "code": {
+                      "op": "if",
+                      "when": {
+                        "op": "path",
+                        "from": "profileAuthoritiesBound",
+                        "path": ""
+                      },
+                      "then": {
+                        "op": "if",
+                        "when": {
+                          "op": "path",
+                          "from": "receiptSnapshotsValid",
+                          "path": ""
+                        },
+                        "then": {
+                          "op": "if",
+                          "when": {
+                            "op": "path",
+                            "from": "receiptDigestsValid",
+                            "path": ""
+                          },
+                          "then": {
+                            "op": "if",
+                            "when": {
+                              "op": "path",
+                              "from": "sourceDigestsValid",
+                              "path": ""
+                            },
+                            "then": {
+                              "op": "if",
+                              "when": {
+                                "op": "path",
+                                "from": "representationDigestsValid",
+                                "path": ""
+                              },
+                              "then": {
+                                "op": "if",
+                                "when": {
+                                  "op": "path",
+                                  "from": "sourceClassesValid",
+                                  "path": ""
+                                },
+                                "then": {
+                                  "op": "literal",
+                                  "value": "SEMANTIC_CORPUS_REPRODUCTION_PIN_MISMATCH"
+                                },
+                                "else": {
+                                  "op": "literal",
+                                  "value": "SEMANTIC_CORPUS_SOURCE_CLASS_NOT_PERMITTED"
+                                }
+                              },
+                              "else": {
+                                "op": "literal",
+                                "value": "SEMANTIC_CORPUS_REPRESENTATION_DIGEST_MISMATCH"
+                              }
+                            },
+                            "else": {
+                              "op": "literal",
+                              "value": "SEMANTIC_CORPUS_SOURCE_DIGEST_MISMATCH"
+                            }
+                          },
+                          "else": {
+                            "op": "literal",
+                            "value": "SEMANTIC_CORPUS_RECEIPT_DIGEST_MISMATCH"
+                          }
+                        },
+                        "else": {
+                          "op": "literal",
+                          "value": "SEMANTIC_CORPUS_MIXED_GENERATION"
+                        }
+                      },
+                      "else": {
+                        "op": "literal",
+                        "value": "SEMANTIC_CORPUS_AUTHORITY_DIGEST_MISMATCH"
+                      }
+                    },
+                    "severity": {
+                      "op": "literal",
+                      "value": "FATAL"
+                    },
+                    "message": {
+                      "op": "literal",
+                      "value": "The request is not bound to the admitted generic ontology, profile, rule set, and ordered evaluation rule identities."
+                    },
+                    "subjectRef": {
+                      "op": "literal",
+                      "value": "generic-semantic-corpus-derivation-profile.v1"
+                    },
+                    "disposition": {
+                      "op": "literal",
+                      "value": "REJECTED"
+                    },
+                    "sourceRef": {
+                      "op": "literal",
+                      "value": "projection-authoring-context.v1.json"
+                    },
+                    "sourcePointer": {
+                      "op": "literal",
+                      "value": ""
+                    },
+                    "relatedSourcePointers": {
+                      "op": "array",
+                      "items": []
+                    },
+                    "derivationRuleId": {
+                      "op": "literal",
+                      "value": "profile-bound-static-projection.v1"
+                    }
+                  }
+                },
+                "rejectedFindings": {
+                  "op": "array",
+                  "items": [
+                    {
+                      "op": "path",
+                      "from": "rejectedFinding",
+                      "path": ""
+                    }
+                  ]
+                },
+                "rejectedBody": {
+                  "op": "object",
+                  "fields": {
+                    "contractId": {
+                      "op": "literal",
+                      "value": "semantic-corpus-derivation-evidence.v1"
+                    },
+                    "snapshotDigest": {
+                      "op": "path",
+                      "from": "input",
+                      "path": "snapshotDigest"
+                    },
+                    "authorityDigests": {
+                      "op": "object",
+                      "fields": {
+                        "profile": {
+                          "op": "path",
+                          "from": "input",
+                          "path": "profile.authorityDigest"
+                        },
+                        "ontology": {
+                          "op": "path",
+                          "from": "input",
+                          "path": "ontology.authorityDigest"
+                        },
+                        "ruleSet": {
+                          "op": "path",
+                          "from": "input",
+                          "path": "ruleSet.authorityDigest"
+                        },
+                        "provider": {
+                          "op": "literal",
+                          "value": "sha256:a217839f3bed4094dcbb4971419e62c6f0355df80f9015babb2121f2d2c84464"
+                        }
+                      }
+                    },
+                    "objects": {
+                      "op": "array",
+                      "items": []
+                    },
+                    "relationships": {
+                      "op": "array",
+                      "items": []
+                    },
+                    "findings": {
+                      "op": "path",
+                      "from": "rejectedFindings",
+                      "path": ""
+                    },
+                    "objectCatalogDigest": {
+                      "op": "literal",
+                      "value": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e61e530293678e36f7f6f76"
+                    },
+                    "relationshipGraphDigest": {
+                      "op": "literal",
+                      "value": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e61e530293678e36f7f6f76"
+                    },
+                    "findingSetDigest": {
+                      "op": "format",
+                      "template": "sha256:{digest}",
+                      "values": {
+                        "digest": {
+                          "op": "sha256",
+                          "value": {
+                            "op": "json-stringify",
+                            "value": {
+                              "op": "path",
+                              "from": "rejectedFindings",
+                              "path": ""
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "reproduction": {
+                      "op": "object",
+                      "fields": {
+                        "orderedInputDigest": {
+                          "op": "path",
+                          "from": "input",
+                          "path": "reproduction.orderedInputDigest"
+                        },
+                        "evaluationRuleIds": {
+                          "op": "path",
+                          "from": "input",
+                          "path": "reproduction.evaluationRuleIds"
+                        },
+                        "reproductionDisposition": {
+                          "op": "literal",
+                          "value": "NOT_REPRODUCIBLE"
+                        }
+                      }
+                    },
+                    "disposition": {
+                      "op": "literal",
+                      "value": "REJECTED"
+                    },
+                    "authorityClaims": {
+                      "op": "literal",
+                      "value": {
+                        "corpusAdmission": "NOT_CLAIMED",
+                        "corpusClosure": "NOT_CLAIMED",
+                        "artifactPublication": "NOT_CLAIMED",
+                        "proofDisposition": "NOT_CLAIMED"
+                      }
+                    }
+                  }
+                },
+                "rejectedEvidence": {
+                  "op": "merge",
+                  "values": [
+                    {
+                      "op": "path",
+                      "from": "rejectedBody",
+                      "path": ""
+                    },
+                    {
+                      "op": "object",
+                      "fields": {
+                        "derivationDigest": {
+                          "op": "format",
+                          "template": "sha256:{digest}",
+                          "values": {
+                            "digest": {
+                              "op": "sha256",
+                              "value": {
+                                "op": "json-stringify",
+                                "value": {
+                                  "op": "path",
+                                  "from": "rejectedBody",
+                                  "path": ""
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "value": {
+                "op": "if",
+                "when": {
+                  "op": "path",
+                  "from": "requestAdmissible",
+                  "path": ""
+                },
+                "then": {
+                  "op": "path",
+                  "from": "derivedEvidence",
+                  "path": ""
+                },
+                "else": {
+                  "op": "path",
+                  "from": "rejectedEvidence",
+                  "path": ""
+                }
+              }
+            }
+          }
+        }
+      ],
+      "projectionBindings": []
+    },
+    "contractAuthorities": {
+      "authorityType": "consumer-contract-authorities.v1",
+      "contracts": {
+        "semantic-corpus-derivation-request.v1": {
+          "schemaRef": "semantic-corpus-derivation-request.v1.schema.json",
+          "schemaId": "https://schemas.scenario-driven.dev/semantic-corpus/semantic-corpus-derivation-request.v1.schema.json",
+          "schemaDigest": "652b18f78b464dfb4aba234c9cb36ffa56c17e0daf637cace96c73ba3933eb86",
+          "schema": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "$id": "https://schemas.scenario-driven.dev/semantic-corpus/semantic-corpus-derivation-request.v1.schema.json",
+            "title": "Profile-governed semantic corpus derivation request",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "contractId",
+              "profile",
+              "snapshotDigest",
+              "ontology",
+              "ruleSet",
+              "ingestionReceipts",
+              "declaredResourceOrder",
+              "sourceRecords",
+              "reproduction"
+            ],
+            "properties": {
+              "contractId": {
+                "const": "semantic-corpus-derivation-request.v1"
+              },
+              "profile": {
+                "$ref": "#/$defs/authorityBinding"
+              },
+              "snapshotDigest": {
+                "$ref": "#/$defs/digest"
+              },
+              "ontology": {
+                "$ref": "#/$defs/authorityBinding"
+              },
+              "ruleSet": {
+                "$ref": "#/$defs/authorityBinding"
+              },
+              "ingestionReceipts": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "$ref": "#/$defs/ingestionReceipt"
+                }
+              },
+              "declaredResourceOrder": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "sourceRecords": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "$ref": "#/$defs/sourceRecord"
+                }
+              },
+              "reproduction": {
+                "$ref": "#/$defs/reproduction"
+              }
+            },
+            "$defs": {
+              "digest": {
+                "type": "string",
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              },
+              "base64": {
+                "type": "string",
+                "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$"
+              },
+              "jsonPointer": {
+                "type": "string",
+                "pattern": "^(?:|(?:/(?:[^~/]|~0|~1)*)+)$"
+              },
+              "authorityBinding": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "authorityId",
+                  "authorityRef",
+                  "authorityDigest"
+                ],
+                "properties": {
+                  "authorityId": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "authorityRef": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "authorityDigest": {
+                    "$ref": "#/$defs/digest"
+                  }
+                }
+              },
+              "ingestionReceipt": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "receiptId",
+                  "receiptKind",
+                  "receiptRef",
+                  "receiptDigest",
+                  "snapshotDigest",
+                  "disposition",
+                  "document"
+                ],
+                "properties": {
+                  "receiptId": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "receiptKind": {
+                    "enum": [
+                      "GHERKIN_COMPILATION",
+                      "JSON_AUTHORITY_INGESTION",
+                      "PROOF_BINDING"
+                    ]
+                  },
+                  "receiptRef": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "receiptDigest": {
+                    "$ref": "#/$defs/digest"
+                  },
+                  "snapshotDigest": {
+                    "$ref": "#/$defs/digest"
+                  },
+                  "disposition": {
+                    "enum": [
+                      "ADMITTED",
+                      "OPEN",
+                      "REJECTED"
+                    ]
+                  },
+                  "document": {
+                    "type": "object"
+                  }
+                }
+              },
+              "sourceRecord": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "resourceId",
+                  "sourceClass",
+                  "sourceRef",
+                  "sourceBytesBase64",
+                  "sourceDigest",
+                  "receiptId",
+                  "representationKind",
+                  "representationRef",
+                  "representationPointer",
+                  "representationDigest",
+                  "representation"
+                ],
+                "properties": {
+                  "resourceId": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "sourceClass": {
+                    "enum": [
+                      "CANONICAL_AUTHORITY",
+                      "ADMITTED_EVIDENCE"
+                    ]
+                  },
+                  "sourceRef": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "sourceBytesBase64": {
+                    "$ref": "#/$defs/base64"
+                  },
+                  "sourceDigest": {
+                    "$ref": "#/$defs/digest"
+                  },
+                  "receiptId": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "representationKind": {
+                    "enum": [
+                      "GHERKIN_COMPILATION",
+                      "SCHEMA_ADMITTED_JSON",
+                      "PROOF_BINDING_RECORD"
+                    ]
+                  },
+                  "representationRef": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "representationPointer": {
+                    "$ref": "#/$defs/jsonPointer"
+                  },
+                  "representationDigest": {
+                    "$ref": "#/$defs/digest"
+                  },
+                  "representation": {}
+                }
+              },
+              "reproduction": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "orderedInputDigest",
+                  "evaluationRuleIds"
+                ],
+                "properties": {
+                  "orderedInputDigest": {
+                    "$ref": "#/$defs/digest"
+                  },
+                  "evaluationRuleIds": {
+                    "type": "array",
+                    "minItems": 1,
+                    "uniqueItems": true,
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "semantic-corpus-derivation-evidence.v1": {
+          "schemaRef": "semantic-corpus-derivation-evidence.v1.schema.json",
+          "schemaId": "https://schemas.scenario-driven.dev/semantic-corpus/semantic-corpus-derivation-evidence.v1.schema.json",
+          "schemaDigest": "64ab64ebf6315fe27d153b5ee289ae52ae43fd85a3722a2efbe14afe82f3d77f",
+          "schema": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "$id": "https://schemas.scenario-driven.dev/semantic-corpus/semantic-corpus-derivation-evidence.v1.schema.json",
+            "title": "Profile-governed semantic corpus derivation evidence",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "contractId",
+              "snapshotDigest",
+              "authorityDigests",
+              "objects",
+              "relationships",
+              "findings",
+              "objectCatalogDigest",
+              "relationshipGraphDigest",
+              "findingSetDigest",
+              "reproduction",
+              "derivationDigest",
+              "disposition",
+              "authorityClaims"
+            ],
+            "properties": {
+              "contractId": {
+                "const": "semantic-corpus-derivation-evidence.v1"
+              },
+              "snapshotDigest": {
+                "$ref": "#/$defs/digest"
+              },
+              "authorityDigests": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "profile",
+                  "ontology",
+                  "ruleSet",
+                  "provider"
+                ],
+                "properties": {
+                  "profile": {
+                    "$ref": "#/$defs/digest"
+                  },
+                  "ontology": {
+                    "$ref": "#/$defs/digest"
+                  },
+                  "ruleSet": {
+                    "$ref": "#/$defs/digest"
+                  },
+                  "provider": {
+                    "$ref": "#/$defs/digest"
+                  }
+                }
+              },
+              "objects": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/objectRecord"
+                }
+              },
+              "relationships": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/relationshipRecord"
+                }
+              },
+              "findings": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/finding"
+                }
+              },
+              "objectCatalogDigest": {
+                "$ref": "#/$defs/digest"
+              },
+              "relationshipGraphDigest": {
+                "$ref": "#/$defs/digest"
+              },
+              "findingSetDigest": {
+                "$ref": "#/$defs/digest"
+              },
+              "reproduction": {
+                "$ref": "#/$defs/reproduction"
+              },
+              "derivationDigest": {
+                "$ref": "#/$defs/digest"
+              },
+              "disposition": {
+                "enum": [
+                  "DERIVED",
+                  "OPEN",
+                  "REJECTED"
+                ]
+              },
+              "authorityClaims": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "corpusAdmission",
+                  "corpusClosure",
+                  "artifactPublication",
+                  "proofDisposition"
+                ],
+                "properties": {
+                  "corpusAdmission": {
+                    "const": "NOT_CLAIMED"
+                  },
+                  "corpusClosure": {
+                    "const": "NOT_CLAIMED"
+                  },
+                  "artifactPublication": {
+                    "const": "NOT_CLAIMED"
+                  },
+                  "proofDisposition": {
+                    "const": "NOT_CLAIMED"
+                  }
+                }
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "type": "object",
+                  "properties": {
+                    "disposition": {
+                      "const": "DERIVED"
+                    }
+                  },
+                  "required": [
+                    "disposition"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "findings": {
+                      "not": {
+                        "type": "array",
+                        "contains": {
+                          "type": "object",
+                          "properties": {
+                            "severity": {
+                              "enum": [
+                                "ERROR",
+                                "FATAL"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "severity"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "type": "object",
+                  "properties": {
+                    "disposition": {
+                      "const": "OPEN"
+                    }
+                  },
+                  "required": [
+                    "disposition"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "findings": {
+                      "type": "array",
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "disposition": {
+                            "const": "OPEN"
+                          }
+                        },
+                        "required": [
+                          "disposition"
+                        ]
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "type": "object",
+                  "properties": {
+                    "disposition": {
+                      "const": "REJECTED"
+                    }
+                  },
+                  "required": [
+                    "disposition"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "objects": {
+                      "type": "array",
+                      "maxItems": 0
+                    },
+                    "relationships": {
+                      "type": "array",
+                      "maxItems": 0
+                    },
+                    "findings": {
+                      "type": "array",
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "disposition": {
+                            "const": "REJECTED"
+                          },
+                          "severity": {
+                            "enum": [
+                              "ERROR",
+                              "FATAL"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "disposition",
+                          "severity"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            "$defs": {
+              "digest": {
+                "type": "string",
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              },
+              "sourceLocator": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "sourceRef",
+                  "sourcePointer",
+                  "sourceDigest"
+                ],
+                "properties": {
+                  "sourceRef": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "sourcePointer": {
+                    "type": "string"
+                  },
+                  "sourceDigest": {
+                    "$ref": "#/$defs/digest"
+                  }
+                }
+              },
+              "objectRecord": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "semanticObjectId",
+                  "canonicalId",
+                  "kind",
+                  "sourceClass",
+                  "lifecycle",
+                  "sourceAttestations",
+                  "derivationRuleId",
+                  "snapshotDigest",
+                  "attributes"
+                ],
+                "properties": {
+                  "semanticObjectId": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "canonicalId": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "ownerSemanticObjectId": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "kind": {
+                    "type": "string",
+                    "pattern": "^[A-Z][A-Z0-9_]*$"
+                  },
+                  "sourceClass": {
+                    "enum": [
+                      "CANONICAL_AUTHORITY",
+                      "ADMITTED_EVIDENCE",
+                      "PROJECTION_EVIDENCE"
+                    ]
+                  },
+                  "lifecycle": {
+                    "enum": [
+                      "PROPOSED",
+                      "ADMITTED",
+                      "SUPERSEDED",
+                      "RETIRED",
+                      "HELD"
+                    ]
+                  },
+                  "sourceAttestations": {
+                    "type": "array",
+                    "minItems": 1,
+                    "uniqueItems": true,
+                    "items": {
+                      "$ref": "#/$defs/sourceLocator"
+                    }
+                  },
+                  "derivationRuleId": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "snapshotDigest": {
+                    "$ref": "#/$defs/digest"
+                  },
+                  "searchRepresentation": {
+                    "type": "string"
+                  },
+                  "attributes": {
+                    "type": "object"
+                  }
+                }
+              },
+              "relationshipRecord": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "relationshipId",
+                  "fromSemanticObjectId",
+                  "kind",
+                  "toSemanticObjectId",
+                  "disposition",
+                  "sourceLocator",
+                  "derivationRuleId"
+                ],
+                "properties": {
+                  "relationshipId": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "fromSemanticObjectId": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "kind": {
+                    "type": "string",
+                    "pattern": "^[A-Z][A-Z0-9_]*$"
+                  },
+                  "toSemanticObjectId": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "disposition": {
+                    "enum": [
+                      "DECLARED_RELATIONSHIP",
+                      "DETERMINISTIC_DERIVATION"
+                    ]
+                  },
+                  "sourceLocator": {
+                    "$ref": "#/$defs/sourceLocator"
+                  },
+                  "derivationRuleId": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              "finding": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "code",
+                  "severity",
+                  "message",
+                  "subjectRef",
+                  "disposition",
+                  "sourceRef",
+                  "sourcePointer",
+                  "relatedSourcePointers",
+                  "derivationRuleId"
+                ],
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "severity": {
+                    "enum": [
+                      "INFO",
+                      "WARNING",
+                      "ERROR",
+                      "FATAL"
+                    ]
+                  },
+                  "message": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "subjectRef": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "disposition": {
+                    "enum": [
+                      "OPEN",
+                      "REJECTED"
+                    ]
+                  },
+                  "sourceRef": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "sourcePointer": {
+                    "type": "string"
+                  },
+                  "relatedSourcePointers": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "derivationRuleId": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              "reproduction": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "orderedInputDigest",
+                  "evaluationRuleIds",
+                  "reproductionDisposition"
+                ],
+                "properties": {
+                  "orderedInputDigest": {
+                    "$ref": "#/$defs/digest"
+                  },
+                  "evaluationRuleIds": {
+                    "type": "array",
+                    "minItems": 1,
+                    "uniqueItems": true,
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "reproductionDisposition": {
+                    "enum": [
+                      "REPRODUCIBLE",
+                      "NOT_REPRODUCIBLE"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "admittedPlatformCapabilities": [
+      {
+        "capabilityId": "sda-node-consumer-runtime.v1",
+        "kind": "consumer-runtime",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform",
+        "providesMechanics": [
+          "scenario-orchestration",
+          "contract-document-reading",
+          "canonicalization",
+          "schema-admission",
+          "authority-resolution",
+          "semantic-execution",
+          "telemetry-observation",
+          "scenario-invocation",
+          "transition-binding-projection",
+          "interface-delivery",
+          "runtime-projection",
+          "artifact-result-delivery",
+          "authority-driven-transformation",
+          "durable-artifact-materialization"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "capabilityId": "sda-json-cli.v1",
+        "kind": "interface-delivery",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Interface.JsonCli",
+        "providesMechanics": [
+          "cli-delivery",
+          "json-reading",
+          "json-serialization"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "capabilityId": "sda-declarative-value-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Execution.DeclarativeValuePort",
+        "providesMechanics": [
+          "event-port-invocation"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "capabilityId": "sda-declarative-state-projection.v1",
+        "kind": "state-projection",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Projection.DeclarativeStateProjection",
+        "providesMechanics": [
+          "state-projection"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "capabilityId": "sda-fixture-contract-validator.v1",
+        "kind": "contract-validator",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Schema.FixtureContractValidator",
+        "providesMechanics": [
+          "contract-validation"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "capabilityId": "sda-schema-contract-admission.v1",
+        "kind": "contract-validator",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Schema.JsonSchemaContractAdmission",
+        "providesMechanics": [
+          "contract-validation",
+          "schema-admission"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "capabilityId": "sda-authority-transformation-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Execution.AuthorityTransformation",
+        "providesMechanics": [
+          "event-port-invocation",
+          "authority-driven-transformation"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "capabilityId": "sda-json-authority-ingestion-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Ingestion.ProfileGovernedJsonAuthority",
+        "providesMechanics": [
+          "event-port-invocation",
+          "exact-byte-json-observation",
+          "duplicate-key-detecting-lossless-json-parsing",
+          "declared-json-schema-authority-resolution",
+          "admitted-json-reference-closure",
+          "content-addressed-json-ingestion-receipt"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/json-authority-ingestion-provider.mjs",
+        "conformanceRef": "tools/tests/conformance/json-authority-ingestion.test.js",
+        "providerAuthorityRef": "capabilities/sda-platform/bind-profile-governed-json-authority-ingestion/profile-governed-json-authority-ingestor.authority.json",
+        "providerAuthorityDigest": "sha256:f39fb91732ee448ac56db23b8728add4b1477df2cf27a81740b6058e4c231546",
+        "conformanceDigest": "sha256:95fe7e8ddc70cad84a307a6670b455a65e35a2f3d5b3d365d685e6de77bb5502"
+      },
+      {
+        "capabilityId": "sda-proof-binding-evaluation-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Evaluation.ProfileGovernedProofBinding",
+        "providesMechanics": [
+          "event-port-invocation",
+          "profile-governed-proof-binding-evaluation",
+          "ordered-proof-lineage-admission",
+          "prohibited-basis-rejection",
+          "stale-or-mixed-lineage-rejection",
+          "deterministic-reproduction-pinning",
+          "exactly-one-obligation-disposition"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/proof-binding-evaluation-provider.mjs",
+        "conformanceRef": "tools/tests/conformance/proof-binding-evaluation.test.js",
+        "providerAuthorityRef": "capabilities/sda-platform/bind-profile-governed-proof-binding-evaluation/profile-governed-proof-binding-evaluator.authority.json",
+        "providerAuthorityDigest": "sha256:511ad3bba2ba7cabab021ffe6daf10b1b41fc385d0a69e29abdb71b0c0ed240b",
+        "conformanceDigest": "sha256:c5febeb91935f015fc996ee7bc600ecfaf6c6ff1c681d1505907d0146c4c75da"
+      },
+      {
+        "capabilityId": "sda-authority-state-projection.v1",
+        "kind": "state-projection",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Projection.AuthorityTransformation",
+        "providesMechanics": [
+          "state-projection",
+          "transition-binding-projection"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "capabilityId": "sda-filesystem-artifact-store.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Delivery.AtomicFilesystemArtifactStore",
+        "providesMechanics": [
+          "event-port-invocation",
+          "durable-artifact-materialization"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "capabilityId": "sda-external-observation-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Observation.HttpExternalObservationProvider",
+        "providesMechanics": [
+          "event-port-invocation",
+          "external-representation-observation"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/external-observation-port.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-external-credential-reference-binding-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Effects.ExternalCredentialReferenceBinding",
+        "providesMechanics": [
+          "event-port-invocation",
+          "external-credential-reference-binding",
+          "one-use-opaque-credential-handle",
+          "secret-non-disclosure"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/node-native-mechanic-providers.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/governed-http-effect-ports.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-governed-http-exchange-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Effects.GovernedHttpExchange",
+        "providesMechanics": [
+          "event-port-invocation",
+          "single-governed-http-exchange",
+          "bounded-response-observation",
+          "credential-injection-without-disclosure"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/node-native-mechanic-providers.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/governed-http-effect-ports.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-governed-repository-observation-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Observation.GovernedRepository",
+        "providesMechanics": [
+          "event-port-invocation",
+          "governed-repository-observation"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/node-native-mechanic-providers.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/governed-repository-observation-port.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-generic-llm-connector-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Cognition.GenericLlmConnector",
+        "providesMechanics": [
+          "event-port-invocation",
+          "governed-model-invocation",
+          "external-credential-reference",
+          "model-execution-lineage"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/node-native-mechanic-providers.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/generic-llm-connector-port.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-governed-tooling-binding-transaction-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Effects.GovernedToolingBindingTransaction",
+        "providesMechanics": [
+          "event-port-invocation",
+          "governed-binding-transaction",
+          "exact-byte-rollback",
+          "gate-execution-lineage"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/node-native-mechanic-providers.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/governed-tooling-binding-transaction-port.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-governed-tooling-migration-operation-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Effects.GovernedToolingMigrationOperation",
+        "providesMechanics": [
+          "event-port-invocation",
+          "governed-tooling-migration-operation",
+          "effect-lineage"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/node-native-mechanic-providers.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/governed-tooling-migration-operation-port.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-batch-filesystem-shaper-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Delivery.TransactionalBatchFilesystemShaper",
+        "providesMechanics": [
+          "event-port-invocation",
+          "closed-batch-file-system-shaping",
+          "staged-hash-verified-commit",
+          "rollback-evidence"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/node-native-mechanic-providers.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/batch-filesystem-shaper-port.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-governed-target-execution-observation-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Observation.GovernedTargetExecution",
+        "providesMechanics": [
+          "event-port-invocation",
+          "governed-target-execution-observation"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/node-native-mechanic-providers.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/governed-target-execution-observation-port.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-canonical-capability-feature-resolution-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Observation.CanonicalCapabilityFeatureResolution",
+        "providesMechanics": [
+          "event-port-invocation",
+          "governed-feature-reference-resolution",
+          "canonical-feature-byte-observation",
+          "canonical-root-identity-resolution"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/node-native-mechanic-providers.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/canonical-capability-feature-resolution-port.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-projected-capability-invocation-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Execution.ProjectedCapabilityInvocation",
+        "providesMechanics": [
+          "event-port-invocation",
+          "projected-capability-invocation"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/projected-capability-invocation-port.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-projected-capability-invocation-port.v2",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Execution.ProjectedCapabilityInvocationAndBinding",
+        "providesMechanics": [
+          "event-port-invocation",
+          "projected-capability-invocation",
+          "parent-carrier-preservation",
+          "nested-execution-lineage",
+          "pinned-capability-binding"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/projected-capability-invocation-port.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-governed-serial-execution-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Execution.GovernedSerialExecution",
+        "providesMechanics": [
+          "event-port-invocation",
+          "bounded-ordered-transaction-execution",
+          "projected-capability-invocation",
+          "nested-execution-lineage",
+          "continuation-authority-consultation"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/node-native-mechanic-providers.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/governed-serial-execution-port.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-json-query-cli.v1",
+        "kind": "interface-delivery",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Interface.JsonQueryCli",
+        "providesMechanics": [
+          "query-cli-delivery",
+          "declared-query-evaluation",
+          "json-reading",
+          "json-serialization"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/query-cli.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/query-cli.conformance.test.mjs"
+      }
+    ]
+  },
+  "expectedTelemetry": {
+    "traceType": "projected-expected-consumer-trace.v1",
+    "telemetryId": "consumer-scenario-execution-telemetry",
+    "capabilityId": "semantic-corpus-derivation",
+    "rootScenarioId": "derive-semantic-corpus-records",
+    "observationType": "scenario-execution-observation.v1",
+    "lineageFields": [
+      "executionId",
+      "rootExecutionId",
+      "parentExecutionId",
+      "scenarioId"
+    ],
+    "scenarios": [
+      {
+        "scenarioId": "derive-semantic-corpus-records",
+        "steps": [
+          "admit-input",
+          "resolve-event-authority",
+          "execute-event-authority",
+          "admit-outcome",
+          "resolve-disposition"
+        ],
+        "expectedTransitionId": null
+      }
+    ]
+  },
+  "mechanicResolution": {
+    "resolutionType": "consumer-platform-mechanic-resolution.v1",
+    "projectionTarget": "node",
+    "requirements": [
+      {
+        "mechanicId": "contract-document-reading",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "canonicalization",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "schema-admission",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "authority-resolution",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "semantic-execution",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "telemetry-observation",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "scenario-invocation",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "transition-binding-projection",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "interface-delivery",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "runtime-projection",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "artifact-result-delivery",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "authority-driven-transformation",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "durable-artifact-materialization",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "contract-validation",
+        "capabilityKind": "contract-validator",
+        "requiredBy": "scenario-contract-admission",
+        "requestedCapabilityId": "sda-schema-contract-admission.v1"
+      },
+      {
+        "mechanicId": "cli-delivery",
+        "capabilityKind": "interface-delivery",
+        "requiredBy": "interface:semantic-corpus-derivation-cli",
+        "requestedCapabilityId": "sda-json-cli.v1"
+      },
+      {
+        "mechanicId": "json-reading",
+        "capabilityKind": "interface-delivery",
+        "requiredBy": "interface:semantic-corpus-derivation-cli",
+        "requestedCapabilityId": "sda-json-cli.v1"
+      },
+      {
+        "mechanicId": "json-serialization",
+        "capabilityKind": "interface-delivery",
+        "requiredBy": "interface:semantic-corpus-derivation-cli",
+        "requestedCapabilityId": "sda-json-cli.v1"
+      },
+      {
+        "mechanicId": "event-port-invocation",
+        "capabilityKind": "event-port",
+        "requiredBy": "port:derive-semantic-corpus-records",
+        "requestedCapabilityId": "sda-authority-transformation-port.v1"
+      }
+    ],
+    "resolutions": [
+      {
+        "mechanicId": "contract-document-reading",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-node-consumer-runtime.v1",
+        "provider": "ScenarioKernel.NodePlatform",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "canonicalization",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-node-consumer-runtime.v1",
+        "provider": "ScenarioKernel.NodePlatform",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "schema-admission",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-node-consumer-runtime.v1",
+        "provider": "ScenarioKernel.NodePlatform",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "authority-resolution",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-node-consumer-runtime.v1",
+        "provider": "ScenarioKernel.NodePlatform",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "semantic-execution",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-node-consumer-runtime.v1",
+        "provider": "ScenarioKernel.NodePlatform",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "telemetry-observation",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-node-consumer-runtime.v1",
+        "provider": "ScenarioKernel.NodePlatform",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "scenario-invocation",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-node-consumer-runtime.v1",
+        "provider": "ScenarioKernel.NodePlatform",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "transition-binding-projection",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-node-consumer-runtime.v1",
+        "provider": "ScenarioKernel.NodePlatform",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "interface-delivery",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-node-consumer-runtime.v1",
+        "provider": "ScenarioKernel.NodePlatform",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "runtime-projection",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-node-consumer-runtime.v1",
+        "provider": "ScenarioKernel.NodePlatform",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "artifact-result-delivery",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-node-consumer-runtime.v1",
+        "provider": "ScenarioKernel.NodePlatform",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "authority-driven-transformation",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-node-consumer-runtime.v1",
+        "provider": "ScenarioKernel.NodePlatform",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "durable-artifact-materialization",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-node-consumer-runtime.v1",
+        "provider": "ScenarioKernel.NodePlatform",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "contract-validation",
+        "capabilityKind": "contract-validator",
+        "requiredBy": "scenario-contract-admission",
+        "requestedCapabilityId": "sda-schema-contract-admission.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-schema-contract-admission.v1",
+        "provider": "ScenarioKernel.NodePlatform.Schema.JsonSchemaContractAdmission",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "cli-delivery",
+        "capabilityKind": "interface-delivery",
+        "requiredBy": "interface:semantic-corpus-derivation-cli",
+        "requestedCapabilityId": "sda-json-cli.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-json-cli.v1",
+        "provider": "ScenarioKernel.NodePlatform.Interface.JsonCli",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "json-reading",
+        "capabilityKind": "interface-delivery",
+        "requiredBy": "interface:semantic-corpus-derivation-cli",
+        "requestedCapabilityId": "sda-json-cli.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-json-cli.v1",
+        "provider": "ScenarioKernel.NodePlatform.Interface.JsonCli",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "json-serialization",
+        "capabilityKind": "interface-delivery",
+        "requiredBy": "interface:semantic-corpus-derivation-cli",
+        "requestedCapabilityId": "sda-json-cli.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-json-cli.v1",
+        "provider": "ScenarioKernel.NodePlatform.Interface.JsonCli",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "event-port-invocation",
+        "capabilityKind": "event-port",
+        "requiredBy": "port:derive-semantic-corpus-records",
+        "requestedCapabilityId": "sda-authority-transformation-port.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-authority-transformation-port.v1",
+        "provider": "ScenarioKernel.NodePlatform.Execution.AuthorityTransformation",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      }
+    ],
+    "disposition": "RESOLVED"
+  },
+  "executableOrigin": {
+    "originType": "consumer-executable-origin.v1",
+    "disposition": "PROJECTED_ONLY",
+    "unauthorizedFiles": []
+  }
+}

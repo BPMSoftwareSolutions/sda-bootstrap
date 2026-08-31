@@ -1,0 +1,37 @@
+{
+  "scenarioId": "materialize-governed-artifact",
+  "input": {
+    "inputId": "governed-artifact-materialization-request",
+    "contract": {
+      "contractId": "governed-artifact-materialization-request.v1"
+    }
+  },
+  "event": {
+    "eventId": "materialize-governed-artifact",
+    "executionAuthorityId": "materialize-governed-artifact.v1"
+  },
+  "outcome": {
+    "outcomeId": "governed-artifact-reference",
+    "contract": {
+      "contractId": "governed-artifact-reference.v1"
+    },
+    "experience": {
+      "statement": "one content-addressed artifact reference is available"
+    }
+  },
+  "gherkin": {
+    "given": {
+      "semanticRef": "materialize-governed-artifact.given",
+      "text": "admitted artifact content and bounded destination authority"
+    },
+    "when": {
+      "semanticRef": "materialize-governed-artifact.when",
+      "text": "the governed artifact is materialized"
+    },
+    "then": {
+      "semanticRef": "materialize-governed-artifact.then",
+      "text": "one content-addressed artifact reference is available"
+    }
+  },
+  "name": "Materialize a governed artifact"
+}

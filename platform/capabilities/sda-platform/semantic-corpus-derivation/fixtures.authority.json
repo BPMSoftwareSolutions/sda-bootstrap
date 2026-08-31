@@ -1,0 +1,222 @@
+{
+  "fixtureType": "consumer-capability-fixtures.v1",
+  "fixtures": [
+    {
+      "fixtureId": "derive-profile-bound-generic-records",
+      "input": {
+        "contractId": "semantic-corpus-derivation-request.v1",
+        "profile": {"authorityId": "generic-semantic-corpus-derivation-profile.v1", "authorityRef": "../verify-semantic-corpus-derivation-conformance/fixtures/generic-semantic-corpus-derivation-profile.v1.json", "authorityDigest": "sha256:5aa91cfe1056d8d70462d25cff029645caa2a79c12b7aa0964399d0b51b57722"},
+        "snapshotDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "ontology": {"authorityId": "generic-semantic-corpus-ontology.v1", "authorityRef": "../verify-semantic-corpus-derivation-conformance/fixtures/generic-semantic-corpus-ontology.v1.json", "authorityDigest": "sha256:1e28409aca9838ccedb726d4699d2ff88d5ba426560434190dc2033a1a2e8a24"},
+        "ruleSet": {"authorityId": "generic-semantic-corpus-derivation-rule-set.v1", "authorityRef": "../verify-semantic-corpus-derivation-conformance/fixtures/generic-semantic-corpus-derivation-rule-set.v1.json", "authorityDigest": "sha256:3f50e145a02bee6da653aab29383524286237c73f4c9c834488c30140d8fb84e"},
+        "ingestionReceipts": [
+          {"receiptId": "gherkin-receipt", "receiptKind": "GHERKIN_COMPILATION", "receiptRef": "fixtures/gherkin-receipt.json", "receiptDigest": "sha256:c815c6fb81439ba339bbffe69407c4e8f4a30c79515bfd4ed728cca6f420432b", "snapshotDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "disposition": "ADMITTED", "document": {"disposition": "ADMITTED"}},
+          {"receiptId": "json-receipt", "receiptKind": "JSON_AUTHORITY_INGESTION", "receiptRef": "fixtures/json-receipt.json", "receiptDigest": "sha256:c815c6fb81439ba339bbffe69407c4e8f4a30c79515bfd4ed728cca6f420432b", "snapshotDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "disposition": "ADMITTED", "document": {"disposition": "ADMITTED"}}
+        ],
+        "declaredResourceOrder": ["gherkin-alpha", "json-contracts"],
+        "sourceRecords": [
+          {
+            "resourceId": "json-contracts", "sourceClass": "ADMITTED_EVIDENCE", "sourceRef": "fixtures/contracts.json", "sourceBytesBase64": "eyJzY2hlbWFzIjpbImV2aWRlbmNlIiwicmVxdWVzdCJdfQ==", "sourceDigest": "sha256:43cfe4b2d745f40193ec6bef04a1ca94048344757fed1f78ab9d1c2fb0e34ac7", "receiptId": "json-receipt", "representationKind": "SCHEMA_ADMITTED_JSON", "representationRef": "fixtures/contracts.representation.json", "representationPointer": "", "representationDigest": "sha256:6dcf211abf278787b3c17bf0b98858319161f6e4d5bbcb2f832f9a76b5eb547f",
+            "representation": {"schemas": [{"schemaId": "evidence", "title": "Evidence"}, {"schemaId": "request", "title": "Request"}], "relationships": [{"fromSemanticObjectId": "schema:request", "toSemanticObjectId": "schema:evidence"}]}
+          },
+          {
+            "resourceId": "gherkin-alpha", "sourceClass": "CANONICAL_AUTHORITY", "sourceRef": "fixtures/alpha.feature", "sourceBytesBase64": "RmVhdHVyZTogQWxwaGEKICBTY2VuYXJpbzogT25lCg==", "sourceDigest": "sha256:45f58e07518477b209d9a8c799f406f2005ae12299f06cd8ca293c37e532e765", "receiptId": "gherkin-receipt", "representationKind": "GHERKIN_COMPILATION", "representationRef": "fixtures/alpha.compilation.json", "representationPointer": "", "representationDigest": "sha256:93c70826e67b5e7c5009797fd54b2496ee0fc1030b8d501b0e6e76473c82e13c",
+            "representation": {"capabilities": [{"capabilityId": "alpha", "name": "Alpha"}], "scenarios": [{"scenarioId": "one", "ownerSemanticObjectId": "capability:alpha", "name": "One"}], "relationships": [{"fromSemanticObjectId": "capability:alpha", "toSemanticObjectId": "scenario:capability:alpha:one"}]}
+          }
+        ],
+        "reproduction": {"orderedInputDigest": "sha256:57b62daabb7085f31422b2b9196300889bcffbfbc7b18d0be7b4b42e819a8eda", "evaluationRuleIds": ["top-level-semantic-object-identity.v1", "owner-scoped-semantic-object-identity.v1", "gherkin-capability-object.v1", "gherkin-scenario-object.v1", "json-schema-object.v1", "gherkin-capability-scenario-relationship.v1", "json-contract-schema-relationship.v1"]}
+      },
+      "portOutcomes": {"authority-driven-composition": {"authority": "interfaces.authority.json"}},
+      "expected": {
+        "disposition": "terminated",
+        "terminalScenarioId": "derive-semantic-corpus-records",
+        "scenarioSequence": ["derive-semantic-corpus-records"],
+        "outcomeAssertions": [
+          {"conditionId": "profile-bound-request-derived", "path": "disposition", "operator": "equals", "value": "DERIVED"},
+          {"conditionId": "first-id-is-canonical", "path": "objects.0.semanticObjectId", "operator": "equals", "value": "capability:alpha"},
+          {"conditionId": "last-id-is-canonical", "path": "objects.3.semanticObjectId", "operator": "equals", "value": "schema:request"},
+          {"conditionId": "relationship-derived", "path": "relationships.1.relationshipId", "operator": "equals", "value": "contract-validated-by-schema:schema:request->schema:evidence"},
+          {"conditionId": "no-authority-claimed", "path": "authorityClaims.corpusAdmission", "operator": "equals", "value": "NOT_CLAIMED"}
+        ]
+      }
+    },
+    {
+      "fixtureId": "derive-in-declared-order-not-discovery-order",
+      "input": {
+        "contractId": "semantic-corpus-derivation-request.v1",
+        "profile": {"authorityId": "generic-semantic-corpus-derivation-profile.v1", "authorityRef": "../verify-semantic-corpus-derivation-conformance/fixtures/generic-semantic-corpus-derivation-profile.v1.json", "authorityDigest": "sha256:5aa91cfe1056d8d70462d25cff029645caa2a79c12b7aa0964399d0b51b57722"},
+        "snapshotDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "ontology": {"authorityId": "generic-semantic-corpus-ontology.v1", "authorityRef": "../verify-semantic-corpus-derivation-conformance/fixtures/generic-semantic-corpus-ontology.v1.json", "authorityDigest": "sha256:1e28409aca9838ccedb726d4699d2ff88d5ba426560434190dc2033a1a2e8a24"},
+        "ruleSet": {"authorityId": "generic-semantic-corpus-derivation-rule-set.v1", "authorityRef": "../verify-semantic-corpus-derivation-conformance/fixtures/generic-semantic-corpus-derivation-rule-set.v1.json", "authorityDigest": "sha256:3f50e145a02bee6da653aab29383524286237c73f4c9c834488c30140d8fb84e"},
+        "ingestionReceipts": [
+          {"receiptId": "gherkin-receipt", "receiptKind": "GHERKIN_COMPILATION", "receiptRef": "fixtures/gherkin-receipt.json", "receiptDigest": "sha256:c815c6fb81439ba339bbffe69407c4e8f4a30c79515bfd4ed728cca6f420432b", "snapshotDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "disposition": "ADMITTED", "document": {"disposition": "ADMITTED"}},
+          {"receiptId": "json-receipt", "receiptKind": "JSON_AUTHORITY_INGESTION", "receiptRef": "fixtures/json-receipt.json", "receiptDigest": "sha256:c815c6fb81439ba339bbffe69407c4e8f4a30c79515bfd4ed728cca6f420432b", "snapshotDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "disposition": "ADMITTED", "document": {"disposition": "ADMITTED"}}
+        ],
+        "declaredResourceOrder": ["gherkin-alpha", "gherkin-zeta", "json-empty"],
+        "sourceRecords": [
+          {"resourceId": "gherkin-zeta", "sourceClass": "CANONICAL_AUTHORITY", "sourceRef": "fixtures/zeta.feature", "sourceBytesBase64": "RmVhdHVyZTogWmV0YQo=", "sourceDigest": "sha256:bfe5e01bd1a9d0c83d83e9156edd4397eb8bc2249d3cc74f1c58a46a22ce5b6b", "receiptId": "gherkin-receipt", "representationKind": "GHERKIN_COMPILATION", "representationRef": "fixtures/zeta.compilation.json", "representationPointer": "", "representationDigest": "sha256:c55ce47bfedab3017e898a5aad4157767f4f3be61d21b6788e399d9a3a6c50b9", "representation": {"capabilities": [{"capabilityId": "zeta", "name": "Zeta"}], "scenarios": [{"scenarioId": "same", "ownerSemanticObjectId": "capability:zeta", "name": "Same"}], "relationships": []}},
+          {"resourceId": "json-empty", "sourceClass": "ADMITTED_EVIDENCE", "sourceRef": "fixtures/empty.json", "sourceBytesBase64": "e30=", "sourceDigest": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a", "receiptId": "json-receipt", "representationKind": "SCHEMA_ADMITTED_JSON", "representationRef": "fixtures/empty.representation.json", "representationPointer": "", "representationDigest": "sha256:3d86dd203870111386671963bd83a786635c7eae6da0ab40d580a6a9788703b9", "representation": {"schemas": [], "relationships": []}},
+          {"resourceId": "gherkin-alpha", "sourceClass": "CANONICAL_AUTHORITY", "sourceRef": "fixtures/alpha.feature", "sourceBytesBase64": "RmVhdHVyZTogQWxwaGEK", "sourceDigest": "sha256:28e190ee53d7dd539b31a496624b0de613f32e7b62c52702e70ca3aa087d4ae0", "receiptId": "gherkin-receipt", "representationKind": "GHERKIN_COMPILATION", "representationRef": "fixtures/alpha.compilation.json", "representationPointer": "", "representationDigest": "sha256:a00472544fe7b81f1cbf75c51e2fbf77d2c888a0062bc03529ab98c959d33e42", "representation": {"capabilities": [{"capabilityId": "alpha", "name": "Alpha"}], "scenarios": [{"scenarioId": "same", "ownerSemanticObjectId": "capability:alpha", "name": "Same"}], "relationships": []}}
+        ],
+        "reproduction": {"orderedInputDigest": "sha256:7b9f0ea8cc27a1f324a7a134a0321453996e875ff8da9720b646571841668a7c", "evaluationRuleIds": ["top-level-semantic-object-identity.v1", "owner-scoped-semantic-object-identity.v1", "gherkin-capability-object.v1", "gherkin-scenario-object.v1", "json-schema-object.v1", "gherkin-capability-scenario-relationship.v1", "json-contract-schema-relationship.v1"]}
+      },
+      "portOutcomes": {"authority-driven-composition": {"authority": "interfaces.authority.json"}},
+      "expected": {"disposition": "terminated", "terminalScenarioId": "derive-semantic-corpus-records", "scenarioSequence": ["derive-semantic-corpus-records"], "outcomeAssertions": [
+        {"conditionId": "reordered-input-derived", "path": "disposition", "operator": "equals", "value": "DERIVED"},
+        {"conditionId": "declared-alpha-first", "path": "objects.0.semanticObjectId", "operator": "equals", "value": "capability:alpha"},
+        {"conditionId": "declared-zeta-second", "path": "objects.1.semanticObjectId", "operator": "equals", "value": "capability:zeta"},
+        {"conditionId": "reproduction-pin-retained", "path": "reproduction.reproductionDisposition", "operator": "equals", "value": "REPRODUCIBLE"}
+      ]}
+    },
+    {
+      "fixtureId": "retain-absent-endpoint-as-open",
+      "input": {
+        "contractId": "semantic-corpus-derivation-request.v1",
+        "profile": {"authorityId": "generic-semantic-corpus-derivation-profile.v1", "authorityRef": "../verify-semantic-corpus-derivation-conformance/fixtures/generic-semantic-corpus-derivation-profile.v1.json", "authorityDigest": "sha256:5aa91cfe1056d8d70462d25cff029645caa2a79c12b7aa0964399d0b51b57722"},
+        "snapshotDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "ontology": {"authorityId": "generic-semantic-corpus-ontology.v1", "authorityRef": "../verify-semantic-corpus-derivation-conformance/fixtures/generic-semantic-corpus-ontology.v1.json", "authorityDigest": "sha256:1e28409aca9838ccedb726d4699d2ff88d5ba426560434190dc2033a1a2e8a24"},
+        "ruleSet": {"authorityId": "generic-semantic-corpus-derivation-rule-set.v1", "authorityRef": "../verify-semantic-corpus-derivation-conformance/fixtures/generic-semantic-corpus-derivation-rule-set.v1.json", "authorityDigest": "sha256:3f50e145a02bee6da653aab29383524286237c73f4c9c834488c30140d8fb84e"},
+        "ingestionReceipts": [
+          {"receiptId": "gherkin-receipt", "receiptKind": "GHERKIN_COMPILATION", "receiptRef": "fixtures/gherkin-receipt.json", "receiptDigest": "sha256:c815c6fb81439ba339bbffe69407c4e8f4a30c79515bfd4ed728cca6f420432b", "snapshotDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "disposition": "ADMITTED", "document": {"disposition": "ADMITTED"}},
+          {"receiptId": "json-receipt", "receiptKind": "JSON_AUTHORITY_INGESTION", "receiptRef": "fixtures/json-receipt.json", "receiptDigest": "sha256:c815c6fb81439ba339bbffe69407c4e8f4a30c79515bfd4ed728cca6f420432b", "snapshotDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "disposition": "ADMITTED", "document": {"disposition": "ADMITTED"}}
+        ],
+        "declaredResourceOrder": ["gherkin-open", "json-empty"],
+        "sourceRecords": [
+          {"resourceId": "json-empty", "sourceClass": "ADMITTED_EVIDENCE", "sourceRef": "fixtures/empty.json", "sourceBytesBase64": "e30=", "sourceDigest": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a", "receiptId": "json-receipt", "representationKind": "SCHEMA_ADMITTED_JSON", "representationRef": "fixtures/empty.representation.json", "representationPointer": "", "representationDigest": "sha256:3d86dd203870111386671963bd83a786635c7eae6da0ab40d580a6a9788703b9", "representation": {"schemas": [], "relationships": []}},
+          {"resourceId": "gherkin-open", "sourceClass": "CANONICAL_AUTHORITY", "sourceRef": "fixtures/open.feature", "sourceBytesBase64": "RmVhdHVyZTogT3Blbgo=", "sourceDigest": "sha256:c27fcdc66752878305d1609971f41cb490c6c958a90fc5a55b1fc185c57311e0", "receiptId": "gherkin-receipt", "representationKind": "GHERKIN_COMPILATION", "representationRef": "fixtures/open.compilation.json", "representationPointer": "", "representationDigest": "sha256:edddf28b60f501c4ec6463cda1c5dd5e22141c5beabc445d77b963e47beecbaa", "representation": {"capabilities": [{"capabilityId": "open", "name": "Open"}], "scenarios": [], "relationships": [{"fromSemanticObjectId": "capability:open", "toSemanticObjectId": "scenario:capability:open:missing"}]}}
+        ],
+        "reproduction": {"orderedInputDigest": "sha256:3b811909cb7771f3f2a4ec247206c27412c5bb74224dd55664ad9dc9c690b0aa", "evaluationRuleIds": ["top-level-semantic-object-identity.v1", "owner-scoped-semantic-object-identity.v1", "gherkin-capability-object.v1", "gherkin-scenario-object.v1", "json-schema-object.v1", "gherkin-capability-scenario-relationship.v1", "json-contract-schema-relationship.v1"]}
+      },
+      "portOutcomes": {"authority-driven-composition": {"authority": "interfaces.authority.json"}},
+      "expected": {"disposition": "terminated", "terminalScenarioId": "derive-semantic-corpus-records", "scenarioSequence": ["derive-semantic-corpus-records"], "outcomeAssertions": [
+        {"conditionId": "absent-endpoint-is-open", "path": "disposition", "operator": "equals", "value": "OPEN"},
+        {"conditionId": "open-finding-attributed", "path": "findings.0.code", "operator": "equals", "value": "SEMANTIC_CORPUS_REFERENCE_OPEN"},
+        {"conditionId": "no-relationship-invented", "path": "relationships", "operator": "equals", "value": []}
+      ]}
+    },
+    {
+      "fixtureId": "reject-mixed-receipt-snapshot",
+      "input": {
+        "contractId": "semantic-corpus-derivation-request.v1",
+        "profile": {"authorityId": "generic-semantic-corpus-derivation-profile.v1", "authorityRef": "../verify-semantic-corpus-derivation-conformance/fixtures/generic-semantic-corpus-derivation-profile.v1.json", "authorityDigest": "sha256:5aa91cfe1056d8d70462d25cff029645caa2a79c12b7aa0964399d0b51b57722"},
+        "snapshotDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "ontology": {"authorityId": "generic-semantic-corpus-ontology.v1", "authorityRef": "../verify-semantic-corpus-derivation-conformance/fixtures/generic-semantic-corpus-ontology.v1.json", "authorityDigest": "sha256:1e28409aca9838ccedb726d4699d2ff88d5ba426560434190dc2033a1a2e8a24"},
+        "ruleSet": {"authorityId": "generic-semantic-corpus-derivation-rule-set.v1", "authorityRef": "../verify-semantic-corpus-derivation-conformance/fixtures/generic-semantic-corpus-derivation-rule-set.v1.json", "authorityDigest": "sha256:3f50e145a02bee6da653aab29383524286237c73f4c9c834488c30140d8fb84e"},
+        "ingestionReceipts": [
+          {"receiptId": "gherkin-receipt", "receiptKind": "GHERKIN_COMPILATION", "receiptRef": "fixtures/gherkin-receipt.json", "receiptDigest": "sha256:c815c6fb81439ba339bbffe69407c4e8f4a30c79515bfd4ed728cca6f420432b", "snapshotDigest": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", "disposition": "ADMITTED", "document": {"disposition": "ADMITTED"}},
+          {"receiptId": "json-receipt", "receiptKind": "JSON_AUTHORITY_INGESTION", "receiptRef": "fixtures/json-receipt.json", "receiptDigest": "sha256:c815c6fb81439ba339bbffe69407c4e8f4a30c79515bfd4ed728cca6f420432b", "snapshotDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "disposition": "ADMITTED", "document": {"disposition": "ADMITTED"}}
+        ],
+        "declaredResourceOrder": ["gherkin-alpha", "json-contracts"],
+        "sourceRecords": [
+          {"resourceId": "json-contracts", "sourceClass": "ADMITTED_EVIDENCE", "sourceRef": "fixtures/contracts.json", "sourceBytesBase64": "eyJzY2hlbWFzIjpbImV2aWRlbmNlIiwicmVxdWVzdCJdfQ==", "sourceDigest": "sha256:43cfe4b2d745f40193ec6bef04a1ca94048344757fed1f78ab9d1c2fb0e34ac7", "receiptId": "json-receipt", "representationKind": "SCHEMA_ADMITTED_JSON", "representationRef": "fixtures/contracts.representation.json", "representationPointer": "", "representationDigest": "sha256:6dcf211abf278787b3c17bf0b98858319161f6e4d5bbcb2f832f9a76b5eb547f", "representation": {"schemas": [{"schemaId": "evidence", "title": "Evidence"}, {"schemaId": "request", "title": "Request"}], "relationships": [{"fromSemanticObjectId": "schema:request", "toSemanticObjectId": "schema:evidence"}]}},
+          {"resourceId": "gherkin-alpha", "sourceClass": "CANONICAL_AUTHORITY", "sourceRef": "fixtures/alpha.feature", "sourceBytesBase64": "RmVhdHVyZTogQWxwaGEKICBTY2VuYXJpbzogT25lCg==", "sourceDigest": "sha256:45f58e07518477b209d9a8c799f406f2005ae12299f06cd8ca293c37e532e765", "receiptId": "gherkin-receipt", "representationKind": "GHERKIN_COMPILATION", "representationRef": "fixtures/alpha.compilation.json", "representationPointer": "", "representationDigest": "sha256:93c70826e67b5e7c5009797fd54b2496ee0fc1030b8d501b0e6e76473c82e13c", "representation": {"capabilities": [{"capabilityId": "alpha", "name": "Alpha"}], "scenarios": [{"scenarioId": "one", "ownerSemanticObjectId": "capability:alpha", "name": "One"}], "relationships": [{"fromSemanticObjectId": "capability:alpha", "toSemanticObjectId": "scenario:capability:alpha:one"}]}}
+        ],
+        "reproduction": {"orderedInputDigest": "sha256:57b62daabb7085f31422b2b9196300889bcffbfbc7b18d0be7b4b42e819a8eda", "evaluationRuleIds": ["top-level-semantic-object-identity.v1", "owner-scoped-semantic-object-identity.v1", "gherkin-capability-object.v1", "gherkin-scenario-object.v1", "json-schema-object.v1", "gherkin-capability-scenario-relationship.v1", "json-contract-schema-relationship.v1"]}
+      },
+      "portOutcomes": {"authority-driven-composition": {"authority": "interfaces.authority.json"}},
+      "expected": {"disposition": "terminated", "terminalScenarioId": "derive-semantic-corpus-records", "scenarioSequence": ["derive-semantic-corpus-records"], "outcomeAssertions": [
+        {"conditionId": "mixed-snapshot-rejected", "path": "disposition", "operator": "equals", "value": "REJECTED"},
+        {"conditionId": "mixed-snapshot-attributed", "path": "findings.0.code", "operator": "equals", "value": "SEMANTIC_CORPUS_MIXED_GENERATION"}
+      ]}
+    },
+    {
+      "fixtureId": "reject-receipt-document-digest-mismatch",
+      "input": {
+        "contractId": "semantic-corpus-derivation-request.v1",
+        "profile": {"authorityId": "generic-semantic-corpus-derivation-profile.v1", "authorityRef": "../verify-semantic-corpus-derivation-conformance/fixtures/generic-semantic-corpus-derivation-profile.v1.json", "authorityDigest": "sha256:5aa91cfe1056d8d70462d25cff029645caa2a79c12b7aa0964399d0b51b57722"},
+        "snapshotDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "ontology": {"authorityId": "generic-semantic-corpus-ontology.v1", "authorityRef": "../verify-semantic-corpus-derivation-conformance/fixtures/generic-semantic-corpus-ontology.v1.json", "authorityDigest": "sha256:1e28409aca9838ccedb726d4699d2ff88d5ba426560434190dc2033a1a2e8a24"},
+        "ruleSet": {"authorityId": "generic-semantic-corpus-derivation-rule-set.v1", "authorityRef": "../verify-semantic-corpus-derivation-conformance/fixtures/generic-semantic-corpus-derivation-rule-set.v1.json", "authorityDigest": "sha256:3f50e145a02bee6da653aab29383524286237c73f4c9c834488c30140d8fb84e"},
+        "ingestionReceipts": [
+          {"receiptId": "gherkin-receipt", "receiptKind": "GHERKIN_COMPILATION", "receiptRef": "fixtures/gherkin-receipt.json", "receiptDigest": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", "snapshotDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "disposition": "ADMITTED", "document": {"disposition": "ADMITTED"}},
+          {"receiptId": "json-receipt", "receiptKind": "JSON_AUTHORITY_INGESTION", "receiptRef": "fixtures/json-receipt.json", "receiptDigest": "sha256:c815c6fb81439ba339bbffe69407c4e8f4a30c79515bfd4ed728cca6f420432b", "snapshotDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "disposition": "ADMITTED", "document": {"disposition": "ADMITTED"}}
+        ],
+        "declaredResourceOrder": ["gherkin-alpha", "json-contracts"],
+        "sourceRecords": [
+          {"resourceId": "json-contracts", "sourceClass": "ADMITTED_EVIDENCE", "sourceRef": "fixtures/contracts.json", "sourceBytesBase64": "eyJzY2hlbWFzIjpbImV2aWRlbmNlIiwicmVxdWVzdCJdfQ==", "sourceDigest": "sha256:43cfe4b2d745f40193ec6bef04a1ca94048344757fed1f78ab9d1c2fb0e34ac7", "receiptId": "json-receipt", "representationKind": "SCHEMA_ADMITTED_JSON", "representationRef": "fixtures/contracts.representation.json", "representationPointer": "", "representationDigest": "sha256:6dcf211abf278787b3c17bf0b98858319161f6e4d5bbcb2f832f9a76b5eb547f", "representation": {"schemas": [{"schemaId": "evidence", "title": "Evidence"}, {"schemaId": "request", "title": "Request"}], "relationships": [{"fromSemanticObjectId": "schema:request", "toSemanticObjectId": "schema:evidence"}]}},
+          {"resourceId": "gherkin-alpha", "sourceClass": "CANONICAL_AUTHORITY", "sourceRef": "fixtures/alpha.feature", "sourceBytesBase64": "RmVhdHVyZTogQWxwaGEKICBTY2VuYXJpbzogT25lCg==", "sourceDigest": "sha256:45f58e07518477b209d9a8c799f406f2005ae12299f06cd8ca293c37e532e765", "receiptId": "gherkin-receipt", "representationKind": "GHERKIN_COMPILATION", "representationRef": "fixtures/alpha.compilation.json", "representationPointer": "", "representationDigest": "sha256:93c70826e67b5e7c5009797fd54b2496ee0fc1030b8d501b0e6e76473c82e13c", "representation": {"capabilities": [{"capabilityId": "alpha", "name": "Alpha"}], "scenarios": [{"scenarioId": "one", "ownerSemanticObjectId": "capability:alpha", "name": "One"}], "relationships": [{"fromSemanticObjectId": "capability:alpha", "toSemanticObjectId": "scenario:capability:alpha:one"}]}}
+        ],
+        "reproduction": {"orderedInputDigest": "sha256:57b62daabb7085f31422b2b9196300889bcffbfbc7b18d0be7b4b42e819a8eda", "evaluationRuleIds": ["top-level-semantic-object-identity.v1", "owner-scoped-semantic-object-identity.v1", "gherkin-capability-object.v1", "gherkin-scenario-object.v1", "json-schema-object.v1", "gherkin-capability-scenario-relationship.v1", "json-contract-schema-relationship.v1"]}
+      },
+      "portOutcomes": {"authority-driven-composition": {"authority": "interfaces.authority.json"}},
+      "expected": {"disposition": "terminated", "terminalScenarioId": "derive-semantic-corpus-records", "scenarioSequence": ["derive-semantic-corpus-records"], "outcomeAssertions": [
+        {"conditionId": "receipt-digest-rejected", "path": "disposition", "operator": "equals", "value": "REJECTED"},
+        {"conditionId": "receipt-digest-attributed", "path": "findings.0.code", "operator": "equals", "value": "SEMANTIC_CORPUS_RECEIPT_DIGEST_MISMATCH"}
+      ]}
+    },
+    {
+      "fixtureId": "reject-source-bytes-digest-mismatch",
+      "input": {
+        "contractId": "semantic-corpus-derivation-request.v1",
+        "profile": {"authorityId": "generic-semantic-corpus-derivation-profile.v1", "authorityRef": "../verify-semantic-corpus-derivation-conformance/fixtures/generic-semantic-corpus-derivation-profile.v1.json", "authorityDigest": "sha256:5aa91cfe1056d8d70462d25cff029645caa2a79c12b7aa0964399d0b51b57722"},
+        "snapshotDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "ontology": {"authorityId": "generic-semantic-corpus-ontology.v1", "authorityRef": "../verify-semantic-corpus-derivation-conformance/fixtures/generic-semantic-corpus-ontology.v1.json", "authorityDigest": "sha256:1e28409aca9838ccedb726d4699d2ff88d5ba426560434190dc2033a1a2e8a24"},
+        "ruleSet": {"authorityId": "generic-semantic-corpus-derivation-rule-set.v1", "authorityRef": "../verify-semantic-corpus-derivation-conformance/fixtures/generic-semantic-corpus-derivation-rule-set.v1.json", "authorityDigest": "sha256:3f50e145a02bee6da653aab29383524286237c73f4c9c834488c30140d8fb84e"},
+        "ingestionReceipts": [
+          {"receiptId": "gherkin-receipt", "receiptKind": "GHERKIN_COMPILATION", "receiptRef": "fixtures/gherkin-receipt.json", "receiptDigest": "sha256:c815c6fb81439ba339bbffe69407c4e8f4a30c79515bfd4ed728cca6f420432b", "snapshotDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "disposition": "ADMITTED", "document": {"disposition": "ADMITTED"}},
+          {"receiptId": "json-receipt", "receiptKind": "JSON_AUTHORITY_INGESTION", "receiptRef": "fixtures/json-receipt.json", "receiptDigest": "sha256:c815c6fb81439ba339bbffe69407c4e8f4a30c79515bfd4ed728cca6f420432b", "snapshotDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "disposition": "ADMITTED", "document": {"disposition": "ADMITTED"}}
+        ],
+        "declaredResourceOrder": ["gherkin-alpha", "json-contracts"],
+        "sourceRecords": [
+          {"resourceId": "json-contracts", "sourceClass": "ADMITTED_EVIDENCE", "sourceRef": "fixtures/contracts.json", "sourceBytesBase64": "eyJzY2hlbWFzIjpbImV2aWRlbmNlIiwicmVxdWVzdCJdfQ==", "sourceDigest": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", "receiptId": "json-receipt", "representationKind": "SCHEMA_ADMITTED_JSON", "representationRef": "fixtures/contracts.representation.json", "representationPointer": "", "representationDigest": "sha256:6dcf211abf278787b3c17bf0b98858319161f6e4d5bbcb2f832f9a76b5eb547f", "representation": {"schemas": [{"schemaId": "evidence", "title": "Evidence"}, {"schemaId": "request", "title": "Request"}], "relationships": [{"fromSemanticObjectId": "schema:request", "toSemanticObjectId": "schema:evidence"}]}},
+          {"resourceId": "gherkin-alpha", "sourceClass": "CANONICAL_AUTHORITY", "sourceRef": "fixtures/alpha.feature", "sourceBytesBase64": "RmVhdHVyZTogQWxwaGEKICBTY2VuYXJpbzogT25lCg==", "sourceDigest": "sha256:45f58e07518477b209d9a8c799f406f2005ae12299f06cd8ca293c37e532e765", "receiptId": "gherkin-receipt", "representationKind": "GHERKIN_COMPILATION", "representationRef": "fixtures/alpha.compilation.json", "representationPointer": "", "representationDigest": "sha256:93c70826e67b5e7c5009797fd54b2496ee0fc1030b8d501b0e6e76473c82e13c", "representation": {"capabilities": [{"capabilityId": "alpha", "name": "Alpha"}], "scenarios": [{"scenarioId": "one", "ownerSemanticObjectId": "capability:alpha", "name": "One"}], "relationships": [{"fromSemanticObjectId": "capability:alpha", "toSemanticObjectId": "scenario:capability:alpha:one"}]}}
+        ],
+        "reproduction": {"orderedInputDigest": "sha256:57b62daabb7085f31422b2b9196300889bcffbfbc7b18d0be7b4b42e819a8eda", "evaluationRuleIds": ["top-level-semantic-object-identity.v1", "owner-scoped-semantic-object-identity.v1", "gherkin-capability-object.v1", "gherkin-scenario-object.v1", "json-schema-object.v1", "gherkin-capability-scenario-relationship.v1", "json-contract-schema-relationship.v1"]}
+      },
+      "portOutcomes": {"authority-driven-composition": {"authority": "interfaces.authority.json"}},
+      "expected": {"disposition": "terminated", "terminalScenarioId": "derive-semantic-corpus-records", "scenarioSequence": ["derive-semantic-corpus-records"], "outcomeAssertions": [
+        {"conditionId": "source-digest-rejected", "path": "disposition", "operator": "equals", "value": "REJECTED"},
+        {"conditionId": "source-digest-attributed", "path": "findings.0.code", "operator": "equals", "value": "SEMANTIC_CORPUS_SOURCE_DIGEST_MISMATCH"}
+      ]}
+    },
+    {
+      "fixtureId": "reject-representation-digest-mismatch",
+      "input": {
+        "contractId": "semantic-corpus-derivation-request.v1",
+        "profile": {"authorityId": "generic-semantic-corpus-derivation-profile.v1", "authorityRef": "../verify-semantic-corpus-derivation-conformance/fixtures/generic-semantic-corpus-derivation-profile.v1.json", "authorityDigest": "sha256:5aa91cfe1056d8d70462d25cff029645caa2a79c12b7aa0964399d0b51b57722"},
+        "snapshotDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "ontology": {"authorityId": "generic-semantic-corpus-ontology.v1", "authorityRef": "../verify-semantic-corpus-derivation-conformance/fixtures/generic-semantic-corpus-ontology.v1.json", "authorityDigest": "sha256:1e28409aca9838ccedb726d4699d2ff88d5ba426560434190dc2033a1a2e8a24"},
+        "ruleSet": {"authorityId": "generic-semantic-corpus-derivation-rule-set.v1", "authorityRef": "../verify-semantic-corpus-derivation-conformance/fixtures/generic-semantic-corpus-derivation-rule-set.v1.json", "authorityDigest": "sha256:3f50e145a02bee6da653aab29383524286237c73f4c9c834488c30140d8fb84e"},
+        "ingestionReceipts": [
+          {"receiptId": "gherkin-receipt", "receiptKind": "GHERKIN_COMPILATION", "receiptRef": "fixtures/gherkin-receipt.json", "receiptDigest": "sha256:c815c6fb81439ba339bbffe69407c4e8f4a30c79515bfd4ed728cca6f420432b", "snapshotDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "disposition": "ADMITTED", "document": {"disposition": "ADMITTED"}},
+          {"receiptId": "json-receipt", "receiptKind": "JSON_AUTHORITY_INGESTION", "receiptRef": "fixtures/json-receipt.json", "receiptDigest": "sha256:c815c6fb81439ba339bbffe69407c4e8f4a30c79515bfd4ed728cca6f420432b", "snapshotDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "disposition": "ADMITTED", "document": {"disposition": "ADMITTED"}}
+        ],
+        "declaredResourceOrder": ["gherkin-alpha", "json-contracts"],
+        "sourceRecords": [
+          {"resourceId": "json-contracts", "sourceClass": "ADMITTED_EVIDENCE", "sourceRef": "fixtures/contracts.json", "sourceBytesBase64": "eyJzY2hlbWFzIjpbImV2aWRlbmNlIiwicmVxdWVzdCJdfQ==", "sourceDigest": "sha256:43cfe4b2d745f40193ec6bef04a1ca94048344757fed1f78ab9d1c2fb0e34ac7", "receiptId": "json-receipt", "representationKind": "SCHEMA_ADMITTED_JSON", "representationRef": "fixtures/contracts.representation.json", "representationPointer": "", "representationDigest": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", "representation": {"schemas": [{"schemaId": "evidence", "title": "Evidence"}, {"schemaId": "request", "title": "Request"}], "relationships": [{"fromSemanticObjectId": "schema:request", "toSemanticObjectId": "schema:evidence"}]}},
+          {"resourceId": "gherkin-alpha", "sourceClass": "CANONICAL_AUTHORITY", "sourceRef": "fixtures/alpha.feature", "sourceBytesBase64": "RmVhdHVyZTogQWxwaGEKICBTY2VuYXJpbzogT25lCg==", "sourceDigest": "sha256:45f58e07518477b209d9a8c799f406f2005ae12299f06cd8ca293c37e532e765", "receiptId": "gherkin-receipt", "representationKind": "GHERKIN_COMPILATION", "representationRef": "fixtures/alpha.compilation.json", "representationPointer": "", "representationDigest": "sha256:93c70826e67b5e7c5009797fd54b2496ee0fc1030b8d501b0e6e76473c82e13c", "representation": {"capabilities": [{"capabilityId": "alpha", "name": "Alpha"}], "scenarios": [{"scenarioId": "one", "ownerSemanticObjectId": "capability:alpha", "name": "One"}], "relationships": [{"fromSemanticObjectId": "capability:alpha", "toSemanticObjectId": "scenario:capability:alpha:one"}]}}
+        ],
+        "reproduction": {"orderedInputDigest": "sha256:57b62daabb7085f31422b2b9196300889bcffbfbc7b18d0be7b4b42e819a8eda", "evaluationRuleIds": ["top-level-semantic-object-identity.v1", "owner-scoped-semantic-object-identity.v1", "gherkin-capability-object.v1", "gherkin-scenario-object.v1", "json-schema-object.v1", "gherkin-capability-scenario-relationship.v1", "json-contract-schema-relationship.v1"]}
+      },
+      "portOutcomes": {"authority-driven-composition": {"authority": "interfaces.authority.json"}},
+      "expected": {"disposition": "terminated", "terminalScenarioId": "derive-semantic-corpus-records", "scenarioSequence": ["derive-semantic-corpus-records"], "outcomeAssertions": [
+        {"conditionId": "representation-digest-rejected", "path": "disposition", "operator": "equals", "value": "REJECTED"},
+        {"conditionId": "representation-digest-attributed", "path": "findings.0.code", "operator": "equals", "value": "SEMANTIC_CORPUS_REPRESENTATION_DIGEST_MISMATCH"}
+      ]}
+    },
+    {
+      "fixtureId": "reject-unbound-rule-set-digest",
+      "input": {
+        "contractId": "semantic-corpus-derivation-request.v1",
+        "profile": {"authorityId": "generic-semantic-corpus-derivation-profile.v1", "authorityRef": "../verify-semantic-corpus-derivation-conformance/fixtures/generic-semantic-corpus-derivation-profile.v1.json", "authorityDigest": "sha256:5aa91cfe1056d8d70462d25cff029645caa2a79c12b7aa0964399d0b51b57722"},
+        "snapshotDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "ontology": {"authorityId": "generic-semantic-corpus-ontology.v1", "authorityRef": "../verify-semantic-corpus-derivation-conformance/fixtures/generic-semantic-corpus-ontology.v1.json", "authorityDigest": "sha256:1e28409aca9838ccedb726d4699d2ff88d5ba426560434190dc2033a1a2e8a24"},
+        "ruleSet": {"authorityId": "generic-semantic-corpus-derivation-rule-set.v1", "authorityRef": "../verify-semantic-corpus-derivation-conformance/fixtures/generic-semantic-corpus-derivation-rule-set.v1.json", "authorityDigest": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"},
+        "ingestionReceipts": [{"receiptId": "gherkin-receipt", "receiptKind": "GHERKIN_COMPILATION", "receiptRef": "fixtures/gherkin-receipt.json", "receiptDigest": "sha256:c815c6fb81439ba339bbffe69407c4e8f4a30c79515bfd4ed728cca6f420432b", "snapshotDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "disposition": "ADMITTED", "document": {"disposition": "ADMITTED"}}],
+        "declaredResourceOrder": ["gherkin-alpha"],
+        "sourceRecords": [{"resourceId": "gherkin-alpha", "sourceClass": "CANONICAL_AUTHORITY", "sourceRef": "fixtures/alpha.feature", "sourceBytesBase64": "RmVhdHVyZTogQWxwaGEKICBTY2VuYXJpbzogT25lCg==", "sourceDigest": "sha256:45f58e07518477b209d9a8c799f406f2005ae12299f06cd8ca293c37e532e765", "receiptId": "gherkin-receipt", "representationKind": "GHERKIN_COMPILATION", "representationRef": "fixtures/alpha.compilation.json", "representationPointer": "", "representationDigest": "sha256:93c70826e67b5e7c5009797fd54b2496ee0fc1030b8d501b0e6e76473c82e13c", "representation": {"capabilities": [{"capabilityId": "alpha", "name": "Alpha"}], "scenarios": [{"scenarioId": "one", "ownerSemanticObjectId": "capability:alpha", "name": "One"}], "relationships": []}}],
+        "reproduction": {"orderedInputDigest": "sha256:be60eba0ba56f8cbe6ea05f237916ca7b7f71059a848133ae2894c295a3e6a43", "evaluationRuleIds": ["top-level-semantic-object-identity.v1", "owner-scoped-semantic-object-identity.v1", "gherkin-capability-object.v1", "gherkin-scenario-object.v1", "json-schema-object.v1", "gherkin-capability-scenario-relationship.v1", "json-contract-schema-relationship.v1"]}
+      },
+      "portOutcomes": {"authority-driven-composition": {"authority": "interfaces.authority.json"}},
+      "expected": {
+        "disposition": "terminated",
+        "terminalScenarioId": "derive-semantic-corpus-records",
+        "scenarioSequence": ["derive-semantic-corpus-records"],
+        "outcomeAssertions": [
+          {"conditionId": "unbound-rule-set-rejected", "path": "disposition", "operator": "equals", "value": "REJECTED"},
+          {"conditionId": "forbidden-rule-authority-cannot-enter", "path": "findings.0.code", "operator": "equals", "value": "SEMANTIC_CORPUS_AUTHORITY_DIGEST_MISMATCH"}
+        ]
+      }
+    }
+  ]
+}

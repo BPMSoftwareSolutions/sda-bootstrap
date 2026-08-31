@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/scenario-kernel-projection-conformance.v1.schema.json",
+  "title": "Scenario Kernel Projection Conformance",
+  "description": "Recorded evidence that a language's strict-TypeScript structural projection provider, driven by its projection profile, reproduces that language's admitted structural shape. This is a computed observation document, not hand-authored authority.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "projectionConformanceType",
+    "language",
+    "implementationId",
+    "observedAt",
+    "profilePath",
+    "disposition",
+    "generation",
+    "toolchainValidation",
+    "structuralComparison",
+    "conforming"
+  ],
+  "properties": {
+    "projectionConformanceType": {
+      "const": "scenario-kernel-projection-conformance.v1"
+    },
+    "language": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$"
+    },
+    "implementationId": { "type": "string", "minLength": 1 },
+    "observedAt": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?Z$"
+    },
+    "profilePath": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Repo-relative path to the scenario-kernel-language-projection-profile.v1 instance this observation used."
+    },
+    "disposition": {
+      "type": "string",
+      "enum": ["SATISFIED", "NOT_SATISFIED", "NOT_OBSERVABLE"],
+      "description": "Explicit evidence closure. NOT_OBSERVABLE means the required target toolchain could not be exercised; it is distinct from a projection defect."
+    },
+    "generation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["typesGenerated", "outputDirectory"],
+      "properties": {
+        "typesGenerated": { "type": "integer", "minimum": 0 },
+        "outputDirectory": { "type": "string", "minLength": 1 }
+      }
+    },
+    "toolchainValidation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["command", "ran", "conforming"],
+      "properties": {
+        "command": { "type": "string", "minLength": 1 },
+        "ran": { "type": "boolean" },
+        "exitCode": { "type": ["integer", "null"] },
+        "conforming": { "type": "boolean" },
+        "reason": { "type": "string" },
+        "stderr": { "type": "string" }
+      },
+      "description": "The real compiler/type-checker's verdict on the generated files alone (dotnet build / tsc --noEmit / mypy --strict). Proves the generated code is VALID; does not by itself prove it MATCHES the admitted shape — that is structuralComparison's job. Neither is sufficient alone, matching the finding that motivated this schema: generated code can compile cleanly while still being semantically wrong relative to admitted authority."
+    },
+    "structuralComparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["totalTypes", "matched", "mismatched", "handWrittenOnly", "generatedOnly"],
+      "properties": {
+        "totalTypes": { "type": "integer", "minimum": 0 },
+        "matched": { "type": "integer", "minimum": 0 },
+        "mismatched": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["typeName", "detail"],
+            "properties": {
+              "typeName": { "type": "string", "minLength": 1 },
+              "detail": { "type": "string" }
+            }
+          }
+        },
+        "handWrittenOnly": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "description": "Types present in the hand-written source with no generated counterpart — e.g. a profile whose objects[] list doesn't yet cover every hand-written type."
+        },
+        "generatedOnly": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "description": "Types the projector produced with no hand-written counterpart to compare against."
+        }
+      }
+    },
+    "conforming": {
+      "type": "boolean",
+      "description": "True iff toolchainValidation.conforming is true AND structuralComparison shows zero mismatches, zero handWrittenOnly, and zero generatedOnly. The single verdict downstream consumers (evaluates-projection-conformance.js) read — everything else on this document is supporting evidence for a human, not something a consumer should re-derive."
+    }
+  }
+}

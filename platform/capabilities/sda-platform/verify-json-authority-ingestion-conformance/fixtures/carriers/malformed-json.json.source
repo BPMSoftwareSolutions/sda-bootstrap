@@ -1,0 +1,6 @@
+{
+  "$schema": "schema:generic-json-authority.v1",
+  "documentType": "generic-json-authority.v1",
+  "id": "malformed-json",
+  "value": "missing close",
+  "references": []

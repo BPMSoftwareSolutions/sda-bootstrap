@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/user-story.v1.schema.json",
+  "title": "User Story",
+  "description": "Actor/intent/outcome narrative bound to a capability.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["actor", "intent", "outcome"],
+  "properties": {
+    "actor": { "type": "string", "minLength": 1 },
+    "intent": { "type": "string", "minLength": 1 },
+    "outcome": { "type": "string", "minLength": 1 }
+  }
+}

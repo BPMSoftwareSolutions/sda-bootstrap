@@ -1,0 +1,428 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/platform/ui-presentation/sda-ui-presentation-ir.v2.schema.json",
+  "title": "SDA target-neutral UI presentation IR v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["presentationIrType", "protocol", "source", "application", "requiredFeatureIds"],
+  "properties": {
+    "presentationIrType": { "const": "sda-ui-presentation-ir.v2" },
+    "protocol": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaDigest", "compatibilityPolicyDigest"],
+      "properties": {
+        "schemaDigest": { "$ref": "#/$defs/digest" },
+        "compatibilityPolicyDigest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authorityType", "authorityDigest", "adapterId"],
+      "properties": {
+        "authorityType": { "const": "consumer-ui-authority.v1" },
+        "authorityDigest": { "$ref": "#/$defs/digest" },
+        "adapterId": { "const": "consumer-ui-v1-to-presentation-ir-v2.v1" }
+      }
+    },
+    "application": { "$ref": "#/$defs/application" },
+    "requiredFeatureIds": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/id" }
+    }
+  },
+  "$defs": {
+    "id": { "type": "string", "minLength": 1, "maxLength": 200, "pattern": "^[a-z0-9][a-z0-9._:-]*$" },
+    "digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "accessibility": {
+      "type": "object", "additionalProperties": false, "required": ["name", "live"],
+      "properties": {
+        "name": { "type": "string" }, "description": { "type": "string" },
+        "live": { "enum": ["off", "polite", "assertive"] }
+      }
+    },
+    "semanticReference": {
+      "type": "object", "additionalProperties": false, "required": ["semanticKind", "refId"],
+      "properties": {
+        "semanticKind": { "enum": ["information", "input", "action", "collection", "feedback"] },
+        "refId": { "$ref": "#/$defs/id" }
+      }
+    },
+    "experience": {
+      "type": "object", "additionalProperties": false,
+      "required": ["experienceId", "actor", "promise", "conditions"],
+      "properties": {
+        "experienceId": { "$ref": "#/$defs/id" }, "actor": { "type": "string", "minLength": 1 },
+        "promise": { "type": "string", "minLength": 1 },
+        "conditions": { "type": "array", "minItems": 1, "items": {
+          "type": "object", "additionalProperties": false, "required": ["conditionId", "assertion"],
+          "properties": { "conditionId": { "$ref": "#/$defs/id" }, "assertion": { "type": "string", "minLength": 1 } }
+        } }
+      }
+    },
+    "stateBinding": {
+      "type": "object", "additionalProperties": false,
+      "required": ["stateId", "valueIntent", "source", "path", "initialValue"],
+      "properties": {
+        "stateId": { "$ref": "#/$defs/id" },
+        "valueIntent": { "enum": ["text", "structured", "boolean", "status", "collection"] },
+        "source": { "enum": ["user-input", "execution-busy", "execution-status", "execution-result", "query-result", "execution-error", "outcome"] },
+        "path": { "type": "string" }, "initialValue": { "type": ["string", "boolean"] }
+      }
+    },
+    "information": {
+      "type": "object", "additionalProperties": false,
+      "required": ["informationId", "content", "importance", "accessibility"],
+      "properties": {
+        "informationId": { "$ref": "#/$defs/id" }, "content": { "type": "string" },
+        "importance": { "enum": ["primary", "supporting"] }, "accessibility": { "$ref": "#/$defs/accessibility" }
+      }
+    },
+    "input": {
+      "type": "object", "additionalProperties": false,
+      "required": ["inputId", "label", "inputIntent", "stateId", "commitEventId", "acceptedFileTypes", "placeholder", "accessibility"],
+      "properties": {
+        "inputId": { "$ref": "#/$defs/id" }, "label": { "type": "string" },
+        "inputIntent": { "enum": ["text", "structured-text", "single-choice", "boolean-choice", "date", "file-selection"] },
+        "stateId": { "$ref": "#/$defs/id" }, "commitEventId": { "type": "string" },
+        "acceptedFileTypes": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+        "placeholder": { "type": "string" }, "accessibility": { "$ref": "#/$defs/accessibility" }
+      }
+    },
+    "availability": {
+      "type": "object", "additionalProperties": false, "required": ["stateId", "operator", "value"],
+      "properties": {
+        "stateId": { "$ref": "#/$defs/id" }, "operator": { "enum": ["equals", "not-equals"] },
+        "value": { "type": ["string", "boolean", "number"] }
+      }
+    },
+    "action": {
+      "type": "object", "additionalProperties": false,
+      "required": ["actionId", "label", "eventId", "importance", "availability", "accessibility"],
+      "properties": {
+        "actionId": { "$ref": "#/$defs/id" }, "label": { "type": "string" }, "eventId": { "$ref": "#/$defs/id" },
+        "importance": { "enum": ["primary", "secondary", "destructive"] },
+        "availability": { "$ref": "#/$defs/availability" }, "accessibility": { "$ref": "#/$defs/accessibility" }
+      }
+    },
+    "collection": {
+      "type": "object", "additionalProperties": false,
+      "required": ["collectionId", "label", "stateId", "presentationIntent", "fields", "accessibility"],
+      "properties": {
+        "collectionId": { "$ref": "#/$defs/id" }, "label": { "type": "string" }, "stateId": { "$ref": "#/$defs/id" },
+        "presentationIntent": { "enum": ["tabular", "cards", "metrics", "lineage", "steps", "navigation"] },
+        "fields": { "type": "array", "minItems": 1, "items": {
+          "type": "object", "additionalProperties": false, "required": ["fieldId", "label", "path"],
+          "properties": { "fieldId": { "$ref": "#/$defs/id" }, "label": { "type": "string" }, "path": { "type": "string", "minLength": 1 } }
+        } },
+        "accessibility": { "$ref": "#/$defs/accessibility" }
+      }
+    },
+    "feedback": {
+      "type": "object", "additionalProperties": false,
+      "required": ["feedbackId", "label", "feedbackIntent", "presentationIntent", "stateId", "accessibility"],
+      "properties": {
+        "feedbackId": { "$ref": "#/$defs/id" }, "label": { "type": "string" },
+        "feedbackIntent": { "enum": ["status", "result", "error", "document"] },
+        "presentationIntent": { "enum": ["plain", "context", "registration", "lineage", "proof"] },
+        "stateId": { "$ref": "#/$defs/id" }, "accessibility": { "$ref": "#/$defs/accessibility" }
+      }
+    },
+    "operation": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["operationId", "kind", "arguments"],
+          "properties": {
+            "operationId": { "$ref": "#/$defs/id" },
+            "kind": { "const": "load-fixture" },
+            "arguments": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["fixtureId", "targetStateId"],
+              "properties": {
+                "fixtureId": { "$ref": "#/$defs/id" },
+                "targetStateId": { "$ref": "#/$defs/id" }
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["operationId", "kind", "arguments"],
+          "properties": {
+            "operationId": { "$ref": "#/$defs/id" },
+            "kind": { "const": "execute-capability" },
+            "arguments": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["inputStateId"],
+              "properties": {
+                "inputStateId": { "$ref": "#/$defs/id" },
+                "targetBindings": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["path", "stateId"],
+                    "properties": {
+                      "path": { "type": "string", "minLength": 1 },
+                      "stateId": { "$ref": "#/$defs/id" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["operationId", "kind", "arguments"],
+          "properties": {
+            "operationId": { "$ref": "#/$defs/id" },
+            "kind": { "const": "execute-query" },
+            "arguments": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["queryId"],
+              "properties": {
+                "queryId": { "$ref": "#/$defs/id" },
+                "parameterBindings": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["parameter", "stateId"],
+                    "properties": {
+                      "parameter": { "type": "string", "minLength": 1 },
+                      "stateId": { "$ref": "#/$defs/id" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["operationId", "kind", "arguments"],
+          "properties": {
+            "operationId": { "$ref": "#/$defs/id" },
+            "kind": { "const": "resolve-input" },
+            "arguments": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["authorityRef", "authorityDigest", "recipeId", "sourceBindings", "targetBindings"],
+              "properties": {
+                "authorityRef": { "type": "string", "minLength": 1 },
+                "authorityDigest": { "$ref": "#/$defs/digest" },
+                "recipeId": { "$ref": "#/$defs/id" },
+                "sourceBindings": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["role", "stateId"],
+                    "properties": {
+                      "role": { "$ref": "#/$defs/id" },
+                      "stateId": { "$ref": "#/$defs/id" }
+                    }
+                  }
+                },
+                "targetBindings": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["role", "stateId"],
+                    "properties": {
+                      "role": { "$ref": "#/$defs/id" },
+                      "stateId": { "$ref": "#/$defs/id" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["operationId", "kind", "arguments"],
+          "properties": {
+            "operationId": { "$ref": "#/$defs/id" },
+            "kind": { "const": "cancel" },
+            "arguments": { "type": "object", "additionalProperties": false, "maxProperties": 0 }
+          }
+        }
+      ]
+    },
+    "validation": {
+      "type": "object", "additionalProperties": false, "required": ["validationId", "stateId", "rule", "message"],
+      "properties": {
+        "validationId": { "$ref": "#/$defs/id" }, "stateId": { "$ref": "#/$defs/id" },
+        "rule": { "enum": ["required", "json"] }, "message": { "type": "string" }
+      }
+    },
+    "navigation": {
+      "type": "object", "additionalProperties": false, "required": ["navigationId", "fromViewId", "toViewId", "actionId"],
+      "properties": {
+        "navigationId": { "$ref": "#/$defs/id" }, "fromViewId": { "$ref": "#/$defs/id" },
+        "toViewId": { "$ref": "#/$defs/id" }, "actionId": { "$ref": "#/$defs/id" }
+      }
+    },
+    "semanticEvent": {
+      "type": "object", "additionalProperties": false,
+      "required": ["eventId", "eventType", "sourceElementId", "operationId"],
+      "properties": {
+        "eventId": { "$ref": "#/$defs/id" },
+        "eventType": { "enum": ["ui.action-invoked.v1", "ui.input-committed.v1"] },
+        "sourceElementId": { "$ref": "#/$defs/id" }, "operationId": { "$ref": "#/$defs/id" }
+      }
+    },
+    "statePatch": {
+      "type": "object", "additionalProperties": false, "required": ["patchId", "operationId", "mode", "assignments"],
+      "properties": {
+        "patchId": { "$ref": "#/$defs/id" }, "operationId": { "$ref": "#/$defs/id" }, "mode": { "const": "replace" },
+        "assignments": { "type": "array", "minItems": 1, "items": {
+          "type": "object", "additionalProperties": false, "required": ["stateId", "sourceKind", "sourcePath"],
+          "properties": {
+            "stateId": { "$ref": "#/$defs/id" },
+            "sourceKind": { "enum": ["fixture-value", "outcome-path", "semantic-output-role"] }, "sourcePath": { "type": "string", "minLength": 1 }
+          }
+        } }
+      }
+    },
+    "view": {
+      "type": "object", "additionalProperties": false, "required": ["viewId", "title", "sizeIntent", "layoutIntent", "regions"],
+      "properties": {
+        "viewId": { "$ref": "#/$defs/id" }, "title": { "type": "string" },
+        "sizeIntent": { "enum": ["compact", "standard", "workspace"] },
+        "layoutIntent": { "enum": ["stack", "row", "column", "split", "workspace"] },
+        "regions": { "type": "array", "minItems": 1, "items": {
+          "type": "object", "additionalProperties": false,
+          "required": ["regionId", "title", "layoutIntent", "role", "importance", "elements"],
+          "properties": {
+            "regionId": { "$ref": "#/$defs/id" }, "title": { "type": "string" },
+            "layoutIntent": { "enum": ["group", "stack", "row", "column", "primary-action-region", "supporting-information"] },
+            "role": { "enum": ["navigation", "hero", "context", "summary", "primary-content", "document", "assurance", "proof", "actions"] },
+            "importance": { "enum": ["primary", "secondary", "supporting"] },
+            "elements": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/semanticReference" } }
+          }
+        } }
+      }
+    },
+    "typographyToken": {
+      "type": "object", "additionalProperties": false, "required": ["size", "weight"],
+      "properties": { "size": { "type": "number", "minimum": 8, "maximum": 64 }, "weight": { "enum": ["regular", "medium", "strong"] } }
+    },
+    "color": { "type": "string", "pattern": "^#[A-Fa-f0-9]{6}$" },
+    "tokens": {
+      "type": "object", "additionalProperties": false, "required": ["colors", "spacing", "typography", "shape", "elevation"],
+      "properties": {
+        "colors": { "type": "object", "additionalProperties": false,
+          "required": ["pageSurface", "contentSurface", "supportingSurface", "border", "textPrimary", "textSupporting", "primaryAction", "primaryActionContent", "secondaryAction", "secondaryActionContent", "destructiveAction", "destructiveActionContent", "statusSurface", "statusAccent", "errorSurface", "errorAccent", "focus"],
+          "properties": {
+            "pageSurface": { "$ref": "#/$defs/color" }, "contentSurface": { "$ref": "#/$defs/color" },
+            "supportingSurface": { "$ref": "#/$defs/color" }, "border": { "$ref": "#/$defs/color" },
+            "textPrimary": { "$ref": "#/$defs/color" }, "textSupporting": { "$ref": "#/$defs/color" },
+            "primaryAction": { "$ref": "#/$defs/color" }, "primaryActionContent": { "$ref": "#/$defs/color" },
+            "secondaryAction": { "$ref": "#/$defs/color" }, "secondaryActionContent": { "$ref": "#/$defs/color" },
+            "destructiveAction": { "$ref": "#/$defs/color" }, "destructiveActionContent": { "$ref": "#/$defs/color" },
+            "statusSurface": { "$ref": "#/$defs/color" }, "statusAccent": { "$ref": "#/$defs/color" },
+            "errorSurface": { "$ref": "#/$defs/color" }, "errorAccent": { "$ref": "#/$defs/color" }, "focus": { "$ref": "#/$defs/color" }
+          } },
+        "spacing": { "type": "object", "additionalProperties": false, "required": ["xs", "sm", "md", "lg", "xl"], "properties": {
+          "xs": { "type": "number" }, "sm": { "type": "number" }, "md": { "type": "number" }, "lg": { "type": "number" }, "xl": { "type": "number" }
+        } },
+        "typography": { "type": "object", "additionalProperties": false, "required": ["display", "section", "body", "label", "supporting"], "properties": {
+          "display": { "$ref": "#/$defs/typographyToken" }, "section": { "$ref": "#/$defs/typographyToken" },
+          "body": { "$ref": "#/$defs/typographyToken" }, "label": { "$ref": "#/$defs/typographyToken" }, "supporting": { "$ref": "#/$defs/typographyToken" }
+        } },
+        "shape": { "type": "object", "additionalProperties": false, "required": ["controlRadius", "panelRadius"], "properties": {
+          "controlRadius": { "type": "number" }, "panelRadius": { "type": "number" }
+        } },
+        "elevation": { "type": "object", "additionalProperties": false, "required": ["panel"], "properties": { "panel": { "enum": ["none", "subtle", "moderate"] } } }
+      }
+    },
+    "presentationIntent": {
+      "type": "object", "additionalProperties": false,
+      "required": ["experiencePattern", "hierarchy", "surfaces", "actionEmphasis", "stateDistinction", "focus", "media", "motion", "platformAdaptation"],
+      "properties": {
+        "experiencePattern": { "enum": ["standard", "assurance-workspace"] },
+        "hierarchy": { "type": "object", "additionalProperties": false, "required": ["pageTitle", "regionTitle", "itemLabel"],
+          "properties": { "pageTitle": { "const": "display" }, "regionTitle": { "const": "section" }, "itemLabel": { "const": "label" } } },
+        "surfaces": { "type": "object", "additionalProperties": false,
+          "required": ["page", "region", "control", "status", "error", "result", "document", "collection"], "properties": {
+            "page": { "const": "page" }, "region": { "enum": ["panel", "elevated-panel"] }, "control": { "const": "control" },
+            "status": { "const": "status" }, "error": { "const": "error" }, "result": { "const": "supporting" },
+            "document": { "const": "document-canvas" }, "collection": { "const": "collection" }
+          } },
+        "actionEmphasis": { "type": "object", "additionalProperties": false, "required": ["primary", "secondary", "destructive"],
+          "properties": { "primary": { "const": "prominent" }, "secondary": { "const": "standard" }, "destructive": { "const": "caution" } } },
+        "stateDistinction": { "type": "object", "additionalProperties": false, "required": ["disabled", "status", "error"],
+          "properties": { "disabled": { "const": "muted" }, "status": { "const": "informative" }, "error": { "const": "assertive" } } },
+        "focus": { "const": "prominent" }, "media": { "enum": ["none-required", "semantically-required"] },
+        "motion": { "type": "object", "additionalProperties": false, "required": ["stateChange", "reducedMotionBehavior"],
+          "properties": { "stateChange": { "enum": ["immediate", "subtle"] }, "reducedMotionBehavior": { "const": "immediate" } } },
+        "platformAdaptation": { "const": "native-controls" }
+      }
+    },
+    "adaptation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["compactMaximumWidth", "wideMinimumWidth", "contentWidth", "actionFlow", "collectionOverflow", "textScale", "compactRegionOrder", "standardRegionOrder", "wideRegionOrder"],
+      "properties": {
+        "compactMaximumWidth": { "type": "number" }, "wideMinimumWidth": { "type": "number" },
+        "contentWidth": { "const": "bounded-fluid" }, "actionFlow": { "const": "wrap" }, "collectionOverflow": { "const": "horizontal-scroll" },
+        "textScale": { "const": "preserve" },
+        "compactRegionOrder": { "type": "array", "items": { "$ref": "#/$defs/id" } },
+        "standardRegionOrder": { "type": "array", "items": { "$ref": "#/$defs/id" } },
+        "wideRegionOrder": { "type": "array", "items": { "$ref": "#/$defs/id" } }
+      }
+    },
+    "presentation": {
+      "type": "object", "additionalProperties": false, "required": ["profileId", "density", "tokens", "intent", "adaptation", "views"],
+      "properties": {
+        "profileId": { "$ref": "#/$defs/id" }, "density": { "enum": ["compact", "comfortable", "spacious"] },
+        "tokens": { "$ref": "#/$defs/tokens" }, "intent": { "$ref": "#/$defs/presentationIntent" },
+        "adaptation": { "$ref": "#/$defs/adaptation" }, "views": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/view" } }
+      }
+    },
+    "interaction": {
+      "type": "object", "additionalProperties": false,
+      "required": ["startViewId", "stateBindings", "information", "inputs", "actions", "collections", "feedback", "operations", "validation", "navigation", "events", "statePatches"],
+      "properties": {
+        "startViewId": { "$ref": "#/$defs/id" },
+        "stateBindings": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/stateBinding" } },
+        "information": { "type": "array", "items": { "$ref": "#/$defs/information" } },
+        "inputs": { "type": "array", "items": { "$ref": "#/$defs/input" } },
+        "actions": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/action" } },
+        "collections": { "type": "array", "items": { "$ref": "#/$defs/collection" } },
+        "feedback": { "type": "array", "items": { "$ref": "#/$defs/feedback" } },
+        "operations": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/operation" } },
+        "validation": { "type": "array", "items": { "$ref": "#/$defs/validation" } },
+        "navigation": { "type": "array", "items": { "$ref": "#/$defs/navigation" } },
+        "events": { "type": "array", "items": { "$ref": "#/$defs/semanticEvent" } },
+        "statePatches": { "type": "array", "items": { "$ref": "#/$defs/statePatch" } }
+      }
+    },
+    "application": {
+      "type": "object", "additionalProperties": false,
+      "required": ["applicationId", "title", "experience", "interaction", "presentation"],
+      "properties": {
+        "applicationId": { "$ref": "#/$defs/id" }, "title": { "type": "string", "minLength": 1 },
+        "experience": { "$ref": "#/$defs/experience" }, "interaction": { "$ref": "#/$defs/interaction" },
+        "presentation": { "$ref": "#/$defs/presentation" }
+      }
+    }
+  }
+}

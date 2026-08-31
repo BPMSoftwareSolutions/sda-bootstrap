@@ -1,0 +1,39 @@
+{
+  "$schema": "fixture-manifest.authority.schema.json",
+  "fixtureType": "semantic-corpus-artifact-repository-fixture-manifest.v1",
+  "lifecycle": "ADMITTED",
+  "repositoryAuthorityRef": "repository-authority.v1.json",
+  "repositoryAuthorityDigest": "sha256:4f1eae11041c8ce43b0c7b0aa7d3ecb48bf12073cf727b8b9ba3950c2da1269e",
+  "carriers": [
+    {"carrierRef": "carriers/closure-alpha.closed.json", "carrierCanonicalDigest": "sha256:d9fd08b6555d835b1728e8191abc1d9f06f4f1aaf604607d7a3608e39588a021"},
+    {"carrierRef": "carriers/closure-alpha.open.json", "carrierCanonicalDigest": "sha256:5c4c3ad479d11f634181c2e74218fdd6d86b62756489c078e5187467c041d3d1"},
+    {"carrierRef": "carriers/closure-alpha.stale.json", "carrierCanonicalDigest": "sha256:206ff381c2463ed422cc3d6f65d96539fac1cc146b20abf59cf6ed351c611082"},
+    {"carrierRef": "carriers/closure-beta.closed.json", "carrierCanonicalDigest": "sha256:a1aa8de88d0b637c353b0640e82dd9e0286f0ac8822421808cd8e2fcfac59af8"},
+    {"carrierRef": "carriers/missing.read-request.json", "carrierCanonicalDigest": "sha256:979686c9408dcbc6a14032fbd72f4bc29377818e5068968610e36b8d3c0ad4a0"},
+    {"carrierRef": "carriers/pointer-alpha.open.update-request.json", "carrierCanonicalDigest": "sha256:af5f22ebcc79d1a4bd3864551fac19ea463a3b359ca9ca4d998b883b53129e6e"},
+    {"carrierRef": "carriers/pointer-alpha.stale.update-request.json", "carrierCanonicalDigest": "sha256:b4029a9f07c3076d630706c6129cd7d519f0c74185a3364e1683a0b11587579f"},
+    {"carrierRef": "carriers/pointer-alpha.update-request.json", "carrierCanonicalDigest": "sha256:ce5bf4c9b62d96b507276bc87a589bd3412262c5f824222c5d77ffd149be4511"},
+    {"carrierRef": "carriers/pointer-beta.update-request.json", "carrierCanonicalDigest": "sha256:ce2cd9b08c4bc7eb019cc96dcf4a6d7ce809881bc5f34a5ca26212ed9cfd5a16"},
+    {"carrierRef": "carriers/snapshot-alpha.publication-request.json", "carrierCanonicalDigest": "sha256:5d1ab19407b75e3d62a22a40b0eafccfeabe97d88b24d70d10ac348ca1dce832"},
+    {"carrierRef": "carriers/snapshot-alpha.read-request.json", "carrierCanonicalDigest": "sha256:46646fa0b456457f606af6e6ca210819d0991e23ab177a54084bff75cbd621a7"},
+    {"carrierRef": "carriers/snapshot-alpha.retained-read-request.json", "carrierCanonicalDigest": "sha256:681e1dc27e0b8d5e3ef3ab66dd1e10d8919dd0563edc3098acfa78a78859aeda"},
+    {"carrierRef": "carriers/snapshot-beta.publication-request.json", "carrierCanonicalDigest": "sha256:ed0522802c9d5d94c90559b3a12da57926c3520fd64cc38cddde3ad0f129b2b6"}
+  ],
+  "cases": [
+    {"fixtureId": "publish-canonical-snapshot", "scenarioId": "publish-immutable-semantic-corpus-artifact", "carrierRefs": ["carriers/snapshot-alpha.publication-request.json"], "setupFixtureIds": [], "mutation": "NONE", "expectedDisposition": "PUBLISHED", "expectedFindingCodes": []},
+    {"fixtureId": "match-idempotent-publication", "scenarioId": "publish-immutable-semantic-corpus-artifact", "carrierRefs": ["carriers/snapshot-alpha.publication-request.json"], "setupFixtureIds": ["publish-canonical-snapshot"], "mutation": "NONE", "expectedDisposition": "ALREADY_PRESENT", "expectedFindingCodes": []},
+    {"fixtureId": "reject-input-digest-mismatch", "scenarioId": "reject-semantic-corpus-artifact-publication-conflict", "carrierRefs": ["carriers/snapshot-alpha.publication-request.json"], "setupFixtureIds": [], "mutation": "EXPECTED_DIGEST_MISMATCH", "expectedDisposition": "REJECTED", "expectedFindingCodes": ["ARTIFACT_DIGEST_MISMATCH"]},
+    {"fixtureId": "reject-occupied-address-conflict", "scenarioId": "reject-semantic-corpus-artifact-publication-conflict", "carrierRefs": ["carriers/snapshot-alpha.publication-request.json"], "setupFixtureIds": ["publish-canonical-snapshot"], "mutation": "OCCUPIED_ADDRESS_DIFFERENT_BYTES", "expectedDisposition": "REJECTED", "expectedFindingCodes": ["CONTENT_ADDRESS_OCCUPIED_BY_DIFFERENT_BYTES"]},
+    {"fixtureId": "read-exact-published-snapshot", "scenarioId": "read-immutable-semantic-corpus-artifact", "carrierRefs": ["carriers/snapshot-alpha.read-request.json"], "setupFixtureIds": ["publish-canonical-snapshot"], "mutation": "NONE", "expectedDisposition": "READ", "expectedFindingCodes": []},
+    {"fixtureId": "report-missing-artifact", "scenarioId": "read-immutable-semantic-corpus-artifact", "carrierRefs": ["carriers/missing.read-request.json"], "setupFixtureIds": [], "mutation": "NONE", "expectedDisposition": "MISSING", "expectedFindingCodes": ["ARTIFACT_NOT_FOUND"]},
+    {"fixtureId": "report-corrupted-artifact", "scenarioId": "read-immutable-semantic-corpus-artifact", "carrierRefs": ["carriers/snapshot-alpha.read-request.json"], "setupFixtureIds": ["publish-canonical-snapshot"], "mutation": "STORED_BYTES_CORRUPTED", "expectedDisposition": "CORRUPTED", "expectedFindingCodes": ["ARTIFACT_STORED_DIGEST_MISMATCH"]},
+    {"fixtureId": "reject-unauthorized-read", "scenarioId": "read-immutable-semantic-corpus-artifact", "carrierRefs": ["carriers/snapshot-alpha.read-request.json"], "setupFixtureIds": [], "mutation": "REPOSITORY_AUTHORITY_MISMATCH", "expectedDisposition": "UNAUTHORIZED", "expectedFindingCodes": ["REPOSITORY_AUTHORITY_NOT_AUTHORIZED"]},
+    {"fixtureId": "read-retained-non-current-snapshot", "scenarioId": "retain-referenced-semantic-corpus-snapshot", "carrierRefs": ["carriers/snapshot-alpha.retained-read-request.json"], "setupFixtureIds": ["advance-pointer-to-beta"], "mutation": "NONE", "expectedDisposition": "READ", "expectedFindingCodes": []},
+    {"fixtureId": "advance-pointer-with-current-closure", "scenarioId": "update-current-semantic-corpus-pointer", "carrierRefs": ["carriers/pointer-alpha.update-request.json", "carriers/closure-alpha.closed.json"], "setupFixtureIds": ["publish-canonical-snapshot"], "mutation": "NONE", "expectedDisposition": "UPDATED", "expectedFindingCodes": []},
+    {"fixtureId": "reject-stale-compare-and-swap", "scenarioId": "update-current-semantic-corpus-pointer", "carrierRefs": ["carriers/pointer-alpha.update-request.json", "carriers/closure-alpha.closed.json"], "setupFixtureIds": ["advance-pointer-with-current-closure"], "mutation": "REPLAY_STALE_EXPECTATION", "expectedDisposition": "CONFLICT", "expectedFindingCodes": ["CURRENT_POINTER_COMPARE_AND_SWAP_CONFLICT"]},
+    {"fixtureId": "reject-open-closure", "scenarioId": "reject-open-semantic-corpus-pointer-update", "carrierRefs": ["carriers/pointer-alpha.open.update-request.json", "carriers/closure-alpha.open.json"], "setupFixtureIds": ["publish-canonical-snapshot"], "mutation": "NONE", "expectedDisposition": "REJECTED", "expectedFindingCodes": ["CANDIDATE_CORPUS_NOT_CLOSED"]},
+    {"fixtureId": "reject-stale-closure", "scenarioId": "reject-open-semantic-corpus-pointer-update", "carrierRefs": ["carriers/pointer-alpha.stale.update-request.json", "carriers/closure-alpha.stale.json"], "setupFixtureIds": ["publish-canonical-snapshot"], "mutation": "NONE", "expectedDisposition": "REJECTED", "expectedFindingCodes": ["CLOSURE_RECEIPT_STALE"]},
+    {"fixtureId": "admit-one-concurrent-pointer-winner", "scenarioId": "update-current-semantic-corpus-pointer", "carrierRefs": ["carriers/pointer-alpha.update-request.json", "carriers/closure-alpha.closed.json"], "setupFixtureIds": ["publish-canonical-snapshot"], "mutation": "CONCURRENT_IDENTICAL_CAS", "expectedDisposition": "SINGLE_WINNER", "expectedFindingCodes": ["CURRENT_POINTER_COMPARE_AND_SWAP_CONFLICT"]},
+    {"fixtureId": "reproduce-content-address", "scenarioId": "reproduce-semantic-corpus-artifact-address", "carrierRefs": ["carriers/snapshot-alpha.publication-request.json"], "setupFixtureIds": [], "mutation": "NONE", "expectedDisposition": "PUBLISHED", "expectedFindingCodes": []}
+  ]
+}

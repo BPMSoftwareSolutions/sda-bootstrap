@@ -1,0 +1,149 @@
+{
+  "fixtureType": "consumer-capability-fixtures.v1",
+  "fixtures": [
+    {
+      "fixtureId": "verify-conformant-realization",
+      "input": {
+        "contractId": "execution-plan-realization-verification-request.v1",
+        "carrierType": "execution-plan-realization-verification-request.v1",
+        "expected": {
+          "capabilityId": "realize-sda-execution-plan-mechanics",
+          "disposition": "REALIZED",
+          "mechanicSet": ["path", "map", "sha256", "read-file-bytes", "perform-http-exchange"]
+        },
+        "observed": {
+          "capabilityId": "realize-sda-execution-plan-mechanics",
+          "disposition": "REALIZED",
+          "mechanicSet": ["path", "map", "sha256", "read-file-bytes", "perform-http-exchange"]
+        },
+        "verificationContext": {
+          "expected": {
+            "capabilityId": "realize-sda-execution-plan-mechanics",
+            "disposition": "REALIZED",
+            "mechanicSet": ["path", "map", "sha256", "read-file-bytes", "perform-http-exchange"],
+            "trace": {"steps": ["admit-input", "resolve-event-authority", "execute-event-authority", "admit-outcome", "resolve-disposition"]},
+            "artifactRefs": [{"path": "generated/artifact.json", "sha256": "sha256:1111111111111111111111111111111111111111111111111111111111111111"}],
+            "originDisposition": "PROJECTED_ONLY",
+            "resolutions": ["sda-authority-transformation-port.v1", "sda-json-cli.v1", "sda-schema-contract-admission.v1"],
+            "requiredMechanics": ["path", "map", "sha256", "read-file-bytes", "perform-http-exchange"],
+            "languages": [
+              {"language": "node", "mechanicSet": ["path", "map", "sha256", "read-file-bytes", "perform-http-exchange"]},
+              {"language": "csharp", "mechanicSet": ["path", "map", "sha256", "read-file-bytes", "perform-http-exchange"]},
+              {"language": "python", "mechanicSet": ["path", "map", "sha256", "read-file-bytes", "perform-http-exchange"]}
+            ],
+            "targetOutcomes": [
+              {"target": "node", "outcomeDigest": "sha256:1111111111111111111111111111111111111111111111111111111111111111"},
+              {"target": "csharp", "outcomeDigest": "sha256:1111111111111111111111111111111111111111111111111111111111111111"},
+              {"target": "python", "outcomeDigest": "sha256:1111111111111111111111111111111111111111111111111111111111111111"}
+            ]
+          },
+          "observed": {
+            "capabilityId": "realize-sda-execution-plan-mechanics",
+            "disposition": "REALIZED",
+            "mechanicSet": ["path", "map", "sha256", "read-file-bytes", "perform-http-exchange"],
+            "trace": {"steps": ["admit-input", "resolve-event-authority", "execute-event-authority", "admit-outcome", "resolve-disposition"]},
+            "artifactRefs": [{"path": "generated/artifact.json", "sha256": "sha256:1111111111111111111111111111111111111111111111111111111111111111"}],
+            "originDisposition": "PROJECTED_ONLY",
+            "resolutions": ["sda-authority-transformation-port.v1", "sda-json-cli.v1", "sda-schema-contract-admission.v1"],
+            "requiredMechanics": ["path", "map", "sha256", "read-file-bytes", "perform-http-exchange"],
+            "languages": [
+              {"language": "node", "mechanicSet": ["path", "map", "sha256", "read-file-bytes", "perform-http-exchange"]},
+              {"language": "csharp", "mechanicSet": ["path", "map", "sha256", "read-file-bytes", "perform-http-exchange"]},
+              {"language": "python", "mechanicSet": ["path", "map", "sha256", "read-file-bytes", "perform-http-exchange"]}
+            ],
+            "targetOutcomes": [
+              {"target": "node", "outcomeDigest": "sha256:1111111111111111111111111111111111111111111111111111111111111111"},
+              {"target": "csharp", "outcomeDigest": "sha256:1111111111111111111111111111111111111111111111111111111111111111"},
+              {"target": "python", "outcomeDigest": "sha256:1111111111111111111111111111111111111111111111111111111111111111"}
+            ]
+          }
+        },
+        "requestLineage": ["harness-fixture"]
+      },
+      "portOutcomes": {"unused-fixture-stub": {"output": {}}},
+      "expected": {
+        "disposition": "terminated",
+        "terminalScenarioId": "verify-canonical-outcome-parity",
+        "scenarioSequence": ["verify-sda-execution-plan-realization", "verify-expected-execution-trace", "verify-artifact-materialization", "verify-projected-executable-origin", "verify-mechanic-resolution", "verify-language-mechanic-parity", "verify-canonical-outcome-parity"],
+        "outcomeAssertions": [
+          {"conditionId": "chain-conformant", "path": "disposition", "operator": "equals", "value": "CONFORMANT"},
+          {"conditionId": "trace-verified", "path": "verifiedSteps.0", "operator": "equals", "value": "admit-input"},
+          {"conditionId": "origin-verified", "path": "verifiedOriginDisposition", "operator": "equals", "value": "PROJECTED_ONLY"},
+          {"conditionId": "parity-verified", "path": "verifiedLanguages.0.language", "operator": "equals", "value": "node"},
+          {"conditionId": "no-claims-made", "path": "authorityClaims.projection", "operator": "equals", "value": "NOT_CLAIMED"}
+        ]
+      }
+    },
+    {
+      "fixtureId": "verify-mechanic-set-divergence",
+      "input": {
+        "contractId": "execution-plan-realization-verification-request.v1",
+        "carrierType": "execution-plan-realization-verification-request.v1",
+        "expected": {
+          "capabilityId": "realize-sda-execution-plan-mechanics",
+          "disposition": "REALIZED",
+          "mechanicSet": ["path", "map", "sha256"]
+        },
+        "observed": {
+          "capabilityId": "realize-sda-execution-plan-mechanics",
+          "disposition": "REALIZED",
+          "mechanicSet": ["path", "map"]
+        },
+        "verificationContext": {
+          "expected": {
+            "capabilityId": "realize-sda-execution-plan-mechanics",
+            "disposition": "REALIZED",
+            "mechanicSet": ["path", "map", "sha256", "read-file-bytes", "perform-http-exchange"],
+            "trace": {"steps": ["admit-input", "resolve-event-authority", "execute-event-authority", "admit-outcome", "resolve-disposition"]},
+            "artifactRefs": [{"path": "generated/artifact.json", "sha256": "sha256:1111111111111111111111111111111111111111111111111111111111111111"}],
+            "originDisposition": "PROJECTED_ONLY",
+            "resolutions": ["sda-authority-transformation-port.v1", "sda-json-cli.v1", "sda-schema-contract-admission.v1"],
+            "requiredMechanics": ["path", "map", "sha256", "read-file-bytes", "perform-http-exchange"],
+            "languages": [
+              {"language": "node", "mechanicSet": ["path", "map", "sha256", "read-file-bytes", "perform-http-exchange"]},
+              {"language": "csharp", "mechanicSet": ["path", "map", "sha256", "read-file-bytes", "perform-http-exchange"]},
+              {"language": "python", "mechanicSet": ["path", "map", "sha256", "read-file-bytes", "perform-http-exchange"]}
+            ],
+            "targetOutcomes": [
+              {"target": "node", "outcomeDigest": "sha256:1111111111111111111111111111111111111111111111111111111111111111"},
+              {"target": "csharp", "outcomeDigest": "sha256:1111111111111111111111111111111111111111111111111111111111111111"},
+              {"target": "python", "outcomeDigest": "sha256:1111111111111111111111111111111111111111111111111111111111111111"}
+            ]
+          },
+          "observed": {
+            "capabilityId": "realize-sda-execution-plan-mechanics",
+            "disposition": "REALIZED",
+            "mechanicSet": ["path", "map"],
+            "trace": {"steps": ["admit-input", "resolve-event-authority", "execute-event-authority", "admit-outcome"]},
+            "artifactRefs": [{"path": "generated/artifact.json", "sha256": "sha256:1111111111111111111111111111111111111111111111111111111111111111"}],
+            "originDisposition": "PROJECTED_ONLY",
+            "resolutions": ["sda-authority-transformation-port.v1", "sda-json-cli.v1", "sda-schema-contract-admission.v1"],
+            "requiredMechanics": ["path", "map", "sha256", "read-file-bytes", "perform-http-exchange"],
+            "languages": [
+              {"language": "node", "mechanicSet": ["path", "map", "sha256", "read-file-bytes", "perform-http-exchange"]},
+              {"language": "csharp", "mechanicSet": ["path", "map", "sha256", "read-file-bytes", "perform-http-exchange"]},
+              {"language": "python", "mechanicSet": ["path", "map", "sha256", "read-file-bytes", "perform-http-exchange"]}
+            ],
+            "targetOutcomes": [
+              {"target": "node", "outcomeDigest": "sha256:1111111111111111111111111111111111111111111111111111111111111111"},
+              {"target": "csharp", "outcomeDigest": "sha256:1111111111111111111111111111111111111111111111111111111111111111"},
+              {"target": "python", "outcomeDigest": "sha256:1111111111111111111111111111111111111111111111111111111111111111"}
+            ]
+          }
+        },
+        "requestLineage": ["harness-fixture"]
+      },
+      "portOutcomes": {"unused-fixture-stub": {"output": {}}},
+      "expected": {
+        "disposition": "terminated",
+        "terminalScenarioId": "verify-canonical-outcome-parity",
+        "scenarioSequence": ["verify-sda-execution-plan-realization", "verify-expected-execution-trace", "verify-artifact-materialization", "verify-projected-executable-origin", "verify-mechanic-resolution", "verify-language-mechanic-parity", "verify-canonical-outcome-parity"],
+        "outcomeAssertions": [
+          {"conditionId": "divergence-propagates", "path": "disposition", "operator": "equals", "value": "NON_CONFORMANT"},
+          {"conditionId": "divergence-attributed", "path": "findings.0.code", "operator": "equals", "value": "PRECONDITION_UNSATISFIED"},
+          {"conditionId": "verification-claims-nothing", "path": "authorityClaims.projection", "operator": "equals", "value": "NOT_CLAIMED"}
+        ]
+      }
+    }
+  ]
+}

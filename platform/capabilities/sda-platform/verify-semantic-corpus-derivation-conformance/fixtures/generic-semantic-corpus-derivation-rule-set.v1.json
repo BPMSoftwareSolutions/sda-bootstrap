@@ -1,0 +1,76 @@
+{
+  "ruleSetType": "semantic-corpus-derivation-rule-set.v1",
+  "authorityId": "generic-semantic-corpus-derivation-rule-set.v1",
+  "authorityVersion": "1.0.0",
+  "lifecycle": "ADMITTED",
+  "ontologyId": "generic-semantic-corpus-ontology.v1",
+  "identityRuleIds": ["top-level-semantic-object-identity.v1", "owner-scoped-semantic-object-identity.v1"],
+  "objectRules": [
+    {
+      "ruleId": "gherkin-capability-object.v1",
+      "representationKind": "GHERKIN_COMPILATION",
+      "collectionPath": ["capabilities", "*"],
+      "canonicalIdPath": ["capabilityId"],
+      "searchRepresentationPath": ["name"],
+      "kind": "CAPABILITY",
+      "identityMode": "TOP_LEVEL",
+      "lifecycle": "ADMITTED",
+      "basisKind": "EXPLICIT_AUTHORITY",
+      "permittedSourceClasses": ["CANONICAL_AUTHORITY", "ADMITTED_EVIDENCE"],
+      "attributeSelectors": {"name": ["name"]}
+    },
+    {
+      "ruleId": "gherkin-scenario-object.v1",
+      "representationKind": "GHERKIN_COMPILATION",
+      "collectionPath": ["scenarios", "*"],
+      "canonicalIdPath": ["scenarioId"],
+      "ownerSemanticObjectIdPath": ["ownerSemanticObjectId"],
+      "searchRepresentationPath": ["name"],
+      "kind": "SCENARIO",
+      "identityMode": "OWNER_SCOPED",
+      "lifecycle": "ADMITTED",
+      "basisKind": "DETERMINISTIC_RULE",
+      "permittedSourceClasses": ["CANONICAL_AUTHORITY", "ADMITTED_EVIDENCE"],
+      "attributeSelectors": {"name": ["name"]}
+    },
+    {
+      "ruleId": "json-schema-object.v1",
+      "representationKind": "SCHEMA_ADMITTED_JSON",
+      "collectionPath": ["schemas", "*"],
+      "canonicalIdPath": ["schemaId"],
+      "searchRepresentationPath": ["title"],
+      "kind": "SCHEMA",
+      "identityMode": "TOP_LEVEL",
+      "lifecycle": "ADMITTED",
+      "basisKind": "EXPLICIT_AUTHORITY",
+      "permittedSourceClasses": ["CANONICAL_AUTHORITY", "ADMITTED_EVIDENCE"],
+      "attributeSelectors": {"title": ["title"]}
+    }
+  ],
+  "relationshipRules": [
+    {
+      "ruleId": "gherkin-capability-scenario-relationship.v1",
+      "representationKind": "GHERKIN_COMPILATION",
+      "collectionPath": ["relationships", "*"],
+      "fromSemanticObjectIdPath": ["fromSemanticObjectId"],
+      "toSemanticObjectIdPath": ["toSemanticObjectId"],
+      "kind": "CAPABILITY_HAS_SCENARIO",
+      "disposition": "DECLARED_RELATIONSHIP",
+      "endpointPolicy": "OPEN_IF_ABSENT",
+      "basisKind": "EXPLICIT_AUTHORITY",
+      "permittedSourceClasses": ["CANONICAL_AUTHORITY", "ADMITTED_EVIDENCE"]
+    },
+    {
+      "ruleId": "json-contract-schema-relationship.v1",
+      "representationKind": "SCHEMA_ADMITTED_JSON",
+      "collectionPath": ["relationships", "*"],
+      "fromSemanticObjectIdPath": ["fromSemanticObjectId"],
+      "toSemanticObjectIdPath": ["toSemanticObjectId"],
+      "kind": "CONTRACT_VALIDATED_BY_SCHEMA",
+      "disposition": "DETERMINISTIC_DERIVATION",
+      "endpointPolicy": "OPEN_IF_ABSENT",
+      "basisKind": "DETERMINISTIC_RULE",
+      "permittedSourceClasses": ["CANONICAL_AUTHORITY", "ADMITTED_EVIDENCE"]
+    }
+  ]
+}

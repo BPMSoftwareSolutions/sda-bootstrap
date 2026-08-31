@@ -1,0 +1,158 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/semantic-corpus/semantic-corpus-derivation-evidence.v1.schema.json",
+  "title": "Profile-governed semantic corpus derivation evidence",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contractId", "snapshotDigest", "authorityDigests", "objects", "relationships", "findings", "objectCatalogDigest", "relationshipGraphDigest", "findingSetDigest", "reproduction", "derivationDigest", "disposition", "authorityClaims"],
+  "properties": {
+    "contractId": {"const": "semantic-corpus-derivation-evidence.v1"},
+    "snapshotDigest": {"$ref": "#/$defs/digest"},
+    "authorityDigests": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["profile", "ontology", "ruleSet", "provider"],
+      "properties": {
+        "profile": {"$ref": "#/$defs/digest"},
+        "ontology": {"$ref": "#/$defs/digest"},
+        "ruleSet": {"$ref": "#/$defs/digest"},
+        "provider": {"$ref": "#/$defs/digest"}
+      }
+    },
+    "objects": {"type": "array", "items": {"$ref": "#/$defs/objectRecord"}},
+    "relationships": {"type": "array", "items": {"$ref": "#/$defs/relationshipRecord"}},
+    "findings": {"type": "array", "items": {"$ref": "#/$defs/finding"}},
+    "objectCatalogDigest": {"$ref": "#/$defs/digest"},
+    "relationshipGraphDigest": {"$ref": "#/$defs/digest"},
+    "findingSetDigest": {"$ref": "#/$defs/digest"},
+    "reproduction": {"$ref": "#/$defs/reproduction"},
+    "derivationDigest": {"$ref": "#/$defs/digest"},
+    "disposition": {"enum": ["DERIVED", "OPEN", "REJECTED"]},
+    "authorityClaims": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["corpusAdmission", "corpusClosure", "artifactPublication", "proofDisposition"],
+      "properties": {
+        "corpusAdmission": {"const": "NOT_CLAIMED"},
+        "corpusClosure": {"const": "NOT_CLAIMED"},
+        "artifactPublication": {"const": "NOT_CLAIMED"},
+        "proofDisposition": {"const": "NOT_CLAIMED"}
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {"type": "object", "properties": {"disposition": {"const": "DERIVED"}}, "required": ["disposition"]},
+      "then": {
+        "properties": {
+          "findings": {
+            "not": {
+              "type": "array",
+              "contains": {
+                "type": "object",
+                "properties": {"severity": {"enum": ["ERROR", "FATAL"]}},
+                "required": ["severity"]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {"type": "object", "properties": {"disposition": {"const": "OPEN"}}, "required": ["disposition"]},
+      "then": {
+        "properties": {
+          "findings": {
+            "type": "array",
+            "contains": {
+              "type": "object",
+              "properties": {"disposition": {"const": "OPEN"}},
+              "required": ["disposition"]
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {"type": "object", "properties": {"disposition": {"const": "REJECTED"}}, "required": ["disposition"]},
+      "then": {
+        "properties": {
+          "objects": {"type": "array", "maxItems": 0},
+          "relationships": {"type": "array", "maxItems": 0},
+          "findings": {"type": "array", "contains": {"type": "object", "properties": {"disposition": {"const": "REJECTED"}, "severity": {"enum": ["ERROR", "FATAL"]}}, "required": ["disposition", "severity"]}}
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "digest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "sourceLocator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceRef", "sourcePointer", "sourceDigest"],
+      "properties": {
+        "sourceRef": {"type": "string", "minLength": 1},
+        "sourcePointer": {"type": "string"},
+        "sourceDigest": {"$ref": "#/$defs/digest"}
+      }
+    },
+    "objectRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["semanticObjectId", "canonicalId", "kind", "sourceClass", "lifecycle", "sourceAttestations", "derivationRuleId", "snapshotDigest", "attributes"],
+      "properties": {
+        "semanticObjectId": {"type": "string", "minLength": 1},
+        "canonicalId": {"type": "string", "minLength": 1},
+        "ownerSemanticObjectId": {"type": "string", "minLength": 1},
+        "kind": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]*$"},
+        "sourceClass": {"enum": ["CANONICAL_AUTHORITY", "ADMITTED_EVIDENCE", "PROJECTION_EVIDENCE"]},
+        "lifecycle": {"enum": ["PROPOSED", "ADMITTED", "SUPERSEDED", "RETIRED", "HELD"]},
+        "sourceAttestations": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/sourceLocator"}},
+        "derivationRuleId": {"type": "string", "minLength": 1},
+        "snapshotDigest": {"$ref": "#/$defs/digest"},
+        "searchRepresentation": {"type": "string"},
+        "attributes": {"type": "object"}
+      }
+    },
+    "relationshipRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["relationshipId", "fromSemanticObjectId", "kind", "toSemanticObjectId", "disposition", "sourceLocator", "derivationRuleId"],
+      "properties": {
+        "relationshipId": {"type": "string", "minLength": 1},
+        "fromSemanticObjectId": {"type": "string", "minLength": 1},
+        "kind": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]*$"},
+        "toSemanticObjectId": {"type": "string", "minLength": 1},
+        "disposition": {"enum": ["DECLARED_RELATIONSHIP", "DETERMINISTIC_DERIVATION"]},
+        "sourceLocator": {"$ref": "#/$defs/sourceLocator"},
+        "derivationRuleId": {"type": "string", "minLength": 1}
+      }
+    },
+    "finding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "severity", "message", "subjectRef", "disposition", "sourceRef", "sourcePointer", "relatedSourcePointers", "derivationRuleId"],
+      "properties": {
+        "code": {"type": "string", "minLength": 1},
+        "severity": {"enum": ["INFO", "WARNING", "ERROR", "FATAL"]},
+        "message": {"type": "string", "minLength": 1},
+        "subjectRef": {"type": "string", "minLength": 1},
+        "disposition": {"enum": ["OPEN", "REJECTED"]},
+        "sourceRef": {"type": "string", "minLength": 1},
+        "sourcePointer": {"type": "string"},
+        "relatedSourcePointers": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+        "derivationRuleId": {"type": "string", "minLength": 1}
+      }
+    },
+    "reproduction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["orderedInputDigest", "evaluationRuleIds", "reproductionDisposition"],
+      "properties": {
+        "orderedInputDigest": {"$ref": "#/$defs/digest"},
+        "evaluationRuleIds": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "reproductionDisposition": {"enum": ["REPRODUCIBLE", "NOT_REPRODUCIBLE"]}
+      }
+    }
+  }
+}

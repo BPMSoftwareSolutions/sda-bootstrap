@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/json-ingestion/declared-json-schema-authority-resolution-request.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contractId", "parseEvidence", "parseEvidenceDigest", "schemaDeclaration", "schemaCatalogBinding", "versionPolicyBinding", "resolverBinding"],
+  "properties": {
+    "contractId": {"const": "declared-json-schema-authority-resolution-request.v1"},
+    "parseEvidence": {"$ref": "https://schemas.scenario-driven.dev/json-ingestion/lossless-json-parse-evidence.v1.schema.json"},
+    "parseEvidenceDigest": {"$ref": "#/$defs/digest"},
+    "schemaDeclaration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaRef", "schemaDigest", "schemaDialect", "documentVersion"],
+      "properties": {
+        "schemaRef": {"type": "string", "minLength": 1},
+        "schemaDigest": {"$ref": "#/$defs/digest"},
+        "schemaDialect": {"const": "https://json-schema.org/draft/2020-12/schema"},
+        "documentVersion": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"}
+      }
+    },
+    "schemaCatalogBinding": {"$ref": "#/$defs/externalAuthorityBinding"},
+    "versionPolicyBinding": {"$ref": "#/$defs/externalAuthorityBinding"},
+    "resolverBinding": {"$ref": "#/$defs/resolverBinding"}
+  },
+  "$defs": {
+    "digest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "externalAuthorityBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authorityId", "authorityRef", "authorityDigest"],
+      "properties": {
+        "authorityId": {"type": "string", "minLength": 1},
+        "authorityRef": {"type": "string", "minLength": 1},
+        "authorityDigest": {"$ref": "#/$defs/digest"}
+      }
+    },
+    "resolverBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authorityId", "authorityRef", "authorityDigest"],
+      "properties": {
+        "authorityId": {"const": "declared-json-schema-authority-resolver.v1"},
+        "authorityRef": {"const": "capabilities/sda-platform/resolve-declared-json-schema-authority/declared-json-schema-authority-resolver.authority.json"},
+        "authorityDigest": {"$ref": "#/$defs/digest"}
+      }
+    }
+  }
+}

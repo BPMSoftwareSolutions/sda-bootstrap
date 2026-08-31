@@ -1,0 +1,7 @@
+{
+  "$schema": "schema:generic-json-authority.v1",
+  "documentType": "generic-json-authority.v1",
+  "id": "closed-reference",
+  "value": "closed",
+  "references": ["subject:alpha"]
+}

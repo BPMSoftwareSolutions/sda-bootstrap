@@ -1,0 +1,80 @@
+{
+  "capabilityType": "scenario-driven-capability.v1",
+  "capabilityId": "semantic-corpus-derivation",
+  "userStory": {
+    "actor": "semantic corpus maintainer",
+    "intent": "derive canonical semantic objects, relationships, and attributable findings from one pinned source generation",
+    "outcome": "semantic corpus candidates remain exact, reproducible, and non-authoritative for admission or proof"
+  },
+  "scenarios": [
+    {
+      "scenarioId": "derive-semantic-corpus-records",
+      "input": {
+        "inputId": "admitted-semantic-corpus-derivation-request",
+        "contract": {
+          "contractId": "semantic-corpus-derivation-request.v1"
+        }
+      },
+      "event": {
+        "eventId": "semantic-corpus-derivation-requested",
+        "executionAuthorityId": "semantic-corpus-derivation.v1"
+      },
+      "outcome": {
+        "outcomeId": "semantic-corpus-derivation-evidence",
+        "contract": {
+          "contractId": "semantic-corpus-derivation-evidence.v1"
+        },
+        "experience": {
+          "statement": "ordered records and attributable findings are returned with zero path, prose, similarity, or model-derived authority inventions"
+        },
+        "terminal": true
+      },
+      "gherkin": {
+        "given": {
+          "semanticRef": "derive-semantic-corpus-records.given",
+          "text": "one snapshot, admitted ingestion receipts, ontology, and deterministic object and relationship derivation rules"
+        },
+        "when": {
+          "semanticRef": "derive-semantic-corpus-records.when",
+          "text": "rules select exact compiler or JSON pointers and derive owner-scoped identities and edges"
+        },
+        "then": {
+          "semanticRef": "derive-semantic-corpus-records.then",
+          "text": "ordered records and attributable findings are returned with zero path, prose, similarity, or model-derived authority inventions"
+        }
+      },
+      "name": "Apply admitted rules without inventing semantic authority"
+    }
+  ],
+  "transitions": [],
+  "rootScenarioId": "derive-semantic-corpus-records",
+  "name": "Derive semantic corpus records",
+  "experience": {
+    "experienceType": "promised-experience.v1",
+    "experienceId": "semantic-corpus-derivation-is-exact-and-reproducible",
+    "actor": "semantic corpus maintainer",
+    "promise": "The projected capability either returns exact deterministic derivation evidence or an attributable rejection without inventing semantic authority.",
+    "observableConditions": [
+      {
+        "conditionId": "authority-and-lineage-bindings-are-exact",
+        "statement": "profile, ontology, rule, receipt, source-byte, representation, and snapshot identities are recomputed before derivation"
+      },
+      {
+        "conditionId": "objects-and-relationships-follow-admitted-rules",
+        "statement": "only admitted explicit or deterministic rule bases may create canonical records"
+      },
+      {
+        "conditionId": "absent-endpoints-remain-open",
+        "statement": "declared relationships with absent endpoints produce attributable open findings and no invented endpoint"
+      },
+      {
+        "conditionId": "record-order-and-digests-are-reproducible",
+        "statement": "discovery order, locale, time, and randomness do not influence ordered records or evidence digests"
+      },
+      {
+        "conditionId": "unavailable-pure-mechanics-reject-without-claims",
+        "statement": "a projection missing required pure mechanics returns rejected evidence and claims no corpus, proof, publication, or conformance authority"
+      }
+    ]
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/sda-platform/durable-store-mechanic-admission.v1.schema.json",
+  "title": "Durable store mechanic admission conformance v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "conformanceType",
+    "lifecycle",
+    "phase",
+    "mechanicAuthorities",
+    "registryBinding",
+    "partitions",
+    "counts",
+    "findings",
+    "disposition",
+    "receiptDigest",
+    "receiptDigestAlgorithm"
+  ],
+  "properties": {
+    "$schema": { "type": "string" },
+    "conformanceType": { "const": "durable-store-mechanic-admission.v1" },
+    "lifecycle": { "enum": ["PROPOSED", "ADMITTED", "SUPERSEDED", "RETIRED", "HELD"] },
+    "phase": { "const": "PHASE_1_GENERIC_STORE_MECHANIC_ADMISSION" },
+    "mechanicAuthorities": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["mechanicFamilyId", "sourceRef", "sourceDigest", "authorityDigest", "admittedMechanics"],
+        "properties": {
+          "mechanicFamilyId": { "type": "string", "minLength": 1 },
+          "sourceRef": { "type": "string", "minLength": 1 },
+          "sourceDigest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+          "authorityDigest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+          "admittedMechanics": {
+            "type": "array",
+            "minItems": 2,
+            "uniqueItems": true,
+            "items": { "type": "string", "minLength": 1 }
+          }
+        }
+      }
+    },
+    "registryBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["registryRef", "registryDigest", "pinnedMechanicAuthorityDigests"],
+      "properties": {
+        "registryRef": { "type": "string", "minLength": 1 },
+        "registryDigest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+        "pinnedMechanicAuthorityDigests": {
+          "type": "array",
+          "minItems": 2,
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }
+        }
+      }
+    },
+    "predecessor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["priorReceiptDigest", "priorRegistryDigest", "reissueReason"],
+      "properties": {
+        "priorReceiptDigest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+        "priorRegistryDigest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+        "reissueReason": { "type": "string", "minLength": 1 }
+      }
+    },
+    "partitions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["partitionId", "proves", "disposition"],
+        "properties": {
+          "partitionId": { "type": "string", "minLength": 1 },
+          "proves": { "type": "string", "minLength": 1 },
+          "evidenceDigests": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }
+          },
+          "disposition": { "enum": ["SATISFIED", "NOT_SATISFIED", "NOT_OBSERVABLE", "NOT_APPLICABLE"] }
+        }
+      }
+    },
+    "counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["partitionCount", "admittedMechanicCount"],
+      "properties": {
+        "partitionCount": { "type": "integer", "minimum": 1 },
+        "admittedMechanicCount": { "type": "integer", "minimum": 4 }
+      }
+    },
+    "findings": { "type": "array", "items": { "type": "object" } },
+    "disposition": { "type": "string", "minLength": 1 },
+    "receiptDigest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "receiptDigestAlgorithm": { "type": "string", "minLength": 1 }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "fixtureType": "semantic-corpus-derivation-carrier.v1",
+  "fixtureId": "mixed-generation",
+  "scenarioId": "reject-mixed-semantic-corpus-generation",
+  "variants": [
+    {
+      "variantId": "lineage-mutations",
+      "declaredResourceOrder": [],
+      "sourceRecords": [],
+      "mutations": [
+        {"target": "ingestionReceipts[0].snapshotDigest", "value": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", "expectedDisposition": "REJECTED", "expectedFindingCode": "SEMANTIC_CORPUS_MIXED_GENERATION"},
+        {"target": "ingestionReceipts[0].receiptDigest", "value": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", "expectedDisposition": "REJECTED", "expectedFindingCode": "SEMANTIC_CORPUS_RECEIPT_DIGEST_MISMATCH"},
+        {"target": "sourceRecords[0].sourceDigest", "value": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", "expectedDisposition": "REJECTED", "expectedFindingCode": "SEMANTIC_CORPUS_SOURCE_DIGEST_MISMATCH"},
+        {"target": "sourceRecords[0].representationDigest", "value": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", "expectedDisposition": "REJECTED", "expectedFindingCode": "SEMANTIC_CORPUS_REPRESENTATION_DIGEST_MISMATCH"},
+        {"target": "profile.authorityDigest", "value": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", "expectedDisposition": "REJECTED", "expectedFindingCode": "SEMANTIC_CORPUS_AUTHORITY_DIGEST_MISMATCH"},
+        {"target": "sourceRecords[0].sourceClass", "value": "PROJECTION_EVIDENCE", "expectedDisposition": "REJECTED", "expectedFindingCode": "SEMANTIC_CORPUS_SOURCE_CLASS_NOT_PERMITTED"}
+      ]
+    }
+  ],
+  "expected": {"disposition": "VARIANT_SPECIFIC", "findingCodes": [], "objectIds": [], "relationshipIds": []},
+  "provesPartitions": ["EXACT_LINEAGE_VALIDATION", "MIXED_GENERATION_REJECTION", "SOURCE_CLASS_NON_ESCALATION"]
+}

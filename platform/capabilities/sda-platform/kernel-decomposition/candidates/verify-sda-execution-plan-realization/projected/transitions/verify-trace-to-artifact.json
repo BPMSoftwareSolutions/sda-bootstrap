@@ -1,0 +1,15 @@
+{
+  "transitionId": "verify-trace-to-artifact",
+  "from": {
+    "scenarioId": "verify-expected-execution-trace",
+    "outcomeId": "execution-trace-conformance",
+    "contractId": "execution-trace-conformance.v1"
+  },
+  "to": {
+    "scenarioId": "verify-artifact-materialization",
+    "inputId": "artifact-materialization-verification-request",
+    "contractId": "artifact-materialization-verification-request.v1"
+  },
+  "semanticProgress": "monotonic",
+  "bindingAuthorityId": "project-trace-to-artifact"
+}

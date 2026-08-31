@@ -1,0 +1,38 @@
+{
+  "scenarioId": "decide-tooling-migration",
+  "input": {
+    "inputId": "tooling-migration-facts",
+    "contract": {
+      "contractId": "tooling-migration-decision-input.v1"
+    }
+  },
+  "event": {
+    "eventId": "tooling-migration-decision-requested",
+    "executionAuthorityId": "tooling-migration-decision.v1"
+  },
+  "outcome": {
+    "outcomeId": "tooling-migration-decision-known",
+    "contract": {
+      "contractId": "tooling-migration-decision.v1"
+    },
+    "experience": {
+      "statement": "the deterministic inventory, replacement, promotion, evidence, or run decision is returned"
+    },
+    "terminal": true
+  },
+  "gherkin": {
+    "given": {
+      "semanticRef": "decide-tooling-migration.given",
+      "text": "tooling inventory, binding, gate, and run facts have been observed"
+    },
+    "when": {
+      "semanticRef": "decide-tooling-migration.when",
+      "text": "a tooling migration decision is requested"
+    },
+    "then": {
+      "semanticRef": "decide-tooling-migration.then",
+      "text": "the deterministic inventory, replacement, promotion, evidence, or run decision is returned"
+    }
+  },
+  "name": "Decide the next tooling migration outcome from admitted facts"
+}

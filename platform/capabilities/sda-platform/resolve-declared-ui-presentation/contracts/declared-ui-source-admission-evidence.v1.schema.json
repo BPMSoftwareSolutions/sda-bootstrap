@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/platform/ui/declared-ui-source-admission-evidence.v1.schema.json",
+  "title": "Declared UI source admission evidence",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["evidenceType", "authorityId", "declaredAuthorityDigest", "observedAuthorityDigest", "findings", "disposition"],
+  "properties": {
+    "evidenceType": { "const": "declared-ui-source-admission-evidence.v1" },
+    "authorityId": { "$ref": "declared-ui-authority.v1.schema.json#/$defs/id" },
+    "declaredAuthorityDigest": { "$ref": "declared-ui-authority.v1.schema.json#/$defs/digest" },
+    "observedAuthorityDigest": { "$ref": "declared-ui-authority.v1.schema.json#/$defs/digest" },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["code", "subjectRef"],
+        "properties": {
+          "code": { "enum": ["DECLARED_UI_AUTHORITY_DIGEST_MISMATCH", "DUPLICATE_SEMANTIC_ELEMENT", "DUPLICATE_SEMANTIC_RELATIONSHIP", "DUPLICATE_ADAPTATION_INTENT", "DUPLICATE_PROMISED_EXPERIENCE"] },
+          "subjectRef": { "$ref": "declared-ui-authority.v1.schema.json#/$defs/id" }
+        }
+      }
+    },
+    "disposition": { "enum": ["ADMITTED", "REJECTED"] }
+  }
+}

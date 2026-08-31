@@ -1,0 +1,38 @@
+{
+  "scenarioId": "retain-referenced-semantic-corpus-snapshot",
+  "input": {
+    "inputId": "semantic-corpus-artifact-read-request",
+    "contract": {
+      "contractId": "semantic-corpus-artifact-read-request.v1"
+    }
+  },
+  "event": {
+    "eventId": "retained-semantic-corpus-snapshot-read-requested",
+    "executionAuthorityId": "retain-referenced-semantic-corpus-snapshot.v1"
+  },
+  "outcome": {
+    "outcomeId": "semantic-corpus-artifact-read-evidence",
+    "contract": {
+      "contractId": "semantic-corpus-artifact-read-evidence.v1"
+    },
+    "experience": {
+      "statement": "its original bytes and digest are returned independently of the current pointer generation"
+    },
+    "terminal": true
+  },
+  "gherkin": {
+    "given": {
+      "semanticRef": "retain-referenced-semantic-corpus-snapshot.given",
+      "text": "a non-current snapshot digest is still referenced by a retained query, publication, or authoring receipt"
+    },
+    "when": {
+      "semanticRef": "retain-referenced-semantic-corpus-snapshot.when",
+      "text": "that exact content address is read"
+    },
+    "then": {
+      "semanticRef": "retain-referenced-semantic-corpus-snapshot.then",
+      "text": "its original bytes and digest are returned independently of the current pointer generation"
+    }
+  },
+  "name": "Read an older snapshot retained by receipt lineage"
+}

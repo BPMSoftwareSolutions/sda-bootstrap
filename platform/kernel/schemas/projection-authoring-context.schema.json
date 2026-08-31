@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/projection/projection-authoring-context.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "contextType", "lifecycle", "capabilityId", "sourceFeature", "retainedAuthorities", "requiredMechanics", "executablePolicy", "disposition", "claims"],
+  "properties": {
+    "$schema": {"const": "../../../kernel/schemas/projection-authoring-context.schema.json"},
+    "contextType": {"const": "projection-authoring-context.v1"},
+    "lifecycle": {"const": "FROZEN_CANDIDATE_AUTHORITY"},
+    "capabilityId": {"type": "string", "minLength": 1},
+    "sourceFeature": {"$ref": "#/$defs/sourceBinding"},
+    "retainedAuthorities": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/authorityBinding"}
+    },
+    "requiredMechanics": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/mechanicRequirement"}
+    },
+    "executablePolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["generatedExecutableOnly", "consumerSeam", "forbiddenDomainRuntimeRefs"],
+      "properties": {
+        "generatedExecutableOnly": {"const": true},
+        "consumerSeam": {"const": "sda-projected-capability-invocation-port.v2"},
+        "forbiddenDomainRuntimeRefs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "disposition": {"enum": ["BLOCKED_ON_GENERIC_MECHANICS", "GENERIC_MECHANICS_ADMITTED_AWAITING_PROVIDER_BINDING", "READY_FOR_GOVERNED_AUTHORING", "READY_FOR_PROJECTION"]},
+    "claims": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["providerAdmission", "projectionConformance", "runtimeAdmission"],
+      "properties": {
+        "providerAdmission": {"const": "NOT_CLAIMED"},
+        "projectionConformance": {"const": "NOT_CLAIMED"},
+        "runtimeAdmission": {"const": "NOT_CLAIMED"}
+      }
+    }
+  },
+  "$defs": {
+    "digest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "sourceBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ref", "digest"],
+      "properties": {
+        "ref": {"type": "string", "minLength": 1},
+        "digest": {"$ref": "#/$defs/digest"}
+      }
+    },
+    "authorityBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["role", "ref", "digest", "status"],
+      "properties": {
+        "role": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]*$"},
+        "ref": {"type": "string", "minLength": 1},
+        "digest": {"$ref": "#/$defs/digest"},
+        "status": {"enum": ["ADMITTED_SOURCE_AUTHORITY", "FROZEN_CANDIDATE_AUTHORITY", "FROZEN_FIXTURE_AUTHORITY"]}
+      }
+    },
+    "mechanicRequirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mechanicId", "kind", "status", "proves"],
+      "properties": {
+        "mechanicId": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+        "kind": {"enum": ["PURE", "EFFECT"]},
+        "status": {"enum": ["ADMITTED", "UNADMITTED"]},
+        "proves": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]*$"}
+        },
+        "admissionReceiptRef": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/consumer-ui-presentation-testimony.v1.schema.json",
+  "title": "Consumer UI Presentation Testimony",
+  "description": "Native rendered evidence that an embodiment preserved framework-neutral presentation intent without requiring pixel identity.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "presentationTestimonyType", "applicationId", "embodimentTarget", "authorityDigest",
+    "presentationProfileDigest", "renderContexts", "observations", "platformNativeDisposition"
+  ],
+  "properties": {
+    "presentationTestimonyType": { "const": "consumer-ui-presentation-testimony.v1" },
+    "applicationId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "embodimentTarget": { "$ref": "consumer-ui-parity-evidence.schema.json#/$defs/target" },
+    "authorityDigest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "presentationProfileDigest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "renderContexts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["contextId", "viewport", "scale", "theme", "reducedMotion"],
+        "properties": {
+          "contextId": { "type": "string", "enum": ["compact", "standard", "wide"] },
+          "viewport": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["width", "height"],
+            "properties": {
+              "width": { "type": "number", "minimum": 1 },
+              "height": { "type": "number", "minimum": 1 }
+            }
+          },
+          "scale": { "type": "number", "exclusiveMinimum": 0 },
+          "theme": { "type": "string", "enum": ["light", "dark", "high-contrast"] },
+          "reducedMotion": { "type": "boolean" },
+          "screenshotDigest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }
+        }
+      }
+    },
+    "observations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["dimension", "target", "declaredIntent", "disposition", "nativeEvidence"],
+        "properties": {
+          "dimension": {
+            "type": "string",
+            "enum": [
+              "hierarchy", "grouping", "action-emphasis", "typography", "spacing-density", "surface",
+              "state-distinction", "responsive-adaptive", "focus", "media", "motion", "platform-adaptation"
+            ]
+          },
+          "target": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "declaredIntent": true,
+          "disposition": { "type": "string", "enum": ["OBSERVED", "NOT_OBSERVED"] },
+          "nativeEvidence": {
+            "type": "object",
+            "required": ["mechanism", "locator"],
+            "properties": {
+              "mechanism": { "type": "string", "minLength": 1 },
+              "locator": { "type": "string", "minLength": 1 }
+            },
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    "platformNativeDisposition": { "type": "string", "enum": ["PASS", "FAIL"] }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "$schema": "../../../schemas/node-mechanic-registration-authority.v1.schema.json",
+  "registrationAuthorityType": "node-mechanic-registration-authority.v1",
+  "authorityId": "node-proof-binding-evaluation-registration.v1",
+  "platformCapabilityId": "sda-proof-binding-evaluation-port.v1",
+  "kind": "direct",
+  "providerModule": "proof-binding-evaluation-provider.mjs",
+  "providerExport": "invokeProofBindingEvaluation",
+  "invocation": "url-context",
+  "authorityDigestAlgorithm": "sha256 of canonical recursive-key-order JSON excluding authorityDigest",
+  "authorityDigest": "sha256:be66ce1fca0c919a7671639b813c8e2dd9829aa65496440091d03b0cc64d32eb"
+}

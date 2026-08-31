@@ -1,0 +1,17 @@
+{
+  "ontologyType": "semantic-corpus-ontology.v1",
+  "authorityId": "generic-semantic-corpus-ontology.v1",
+  "authorityVersion": "1.0.0",
+  "lifecycle": "ADMITTED",
+  "objectKinds": ["CAPABILITY", "SCENARIO", "SCHEMA"],
+  "relationshipKinds": ["CAPABILITY_HAS_SCENARIO", "CONTRACT_VALIDATED_BY_SCHEMA"],
+  "sourceClasses": ["CANONICAL_AUTHORITY", "ADMITTED_EVIDENCE", "PROJECTION_EVIDENCE"],
+  "relationshipDispositions": ["DECLARED_RELATIONSHIP", "DETERMINISTIC_DERIVATION"],
+  "laws": {
+    "topLevelIdentity": "kind + canonical local ID",
+    "ownedIdentity": "kind + owning semantic object ID + canonical local ID",
+    "pathIsStableSemanticIdentity": false,
+    "digestIsStableSemanticIdentity": false,
+    "absentRelationshipMayBeInvented": false
+  }
+}

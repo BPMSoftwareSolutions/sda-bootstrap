@@ -1,0 +1,261 @@
+{
+  "catalogType": "sda-ui-embodiment-feature-catalog.v1",
+  "protocol": {
+    "authorityType": "consumer-ui-authority.v1",
+    "schemaRef": "kernel/schemas/consumer-ui-authority.schema.json",
+    "schemaDigest": "sha256:06caa7d4910a21dc6e50c6ad79d0ac0151b6dc879c7e9fae0e54086b25dd6786"
+  },
+  "profiles": [
+    {
+      "profileId": "consumer-ui-v1-reference.v1",
+      "featureIds": [
+        "ui.accessibility-live-assertive.v1",
+        "ui.accessibility-name.v1",
+        "ui.action-destructive.v1",
+        "ui.action-primary.v1",
+        "ui.action-secondary.v1",
+        "ui.action.v1",
+        "ui.application.v1",
+        "ui.availability-equals.v1",
+        "ui.density-comfortable.v1",
+        "ui.feedback-error.v1",
+        "ui.feedback-presentation-plain.v1",
+        "ui.feedback-result.v1",
+        "ui.feedback-status.v1",
+        "ui.information-supporting.v1",
+        "ui.information.v1",
+        "ui.input-structured-text.v1",
+        "ui.operation-cancel.v1",
+        "ui.operation-execute-capability.v1",
+        "ui.operation-execute-query.v1",
+        "ui.operation-load-fixture.v1",
+        "ui.presentation-profile.v1",
+        "ui.presentation-view-standard.v1",
+        "ui.region-layout-group.v1",
+        "ui.state-binding.v1",
+        "ui.state-source-execution-busy.v1",
+        "ui.state-source-execution-error.v1",
+        "ui.state-source-execution-result.v1",
+        "ui.state-source-execution-status.v1",
+        "ui.state-source-query-result.v1",
+        "ui.state-source-user-input.v1",
+        "ui.state-value-boolean.v1",
+        "ui.state-value-status.v1",
+        "ui.state-value-structured.v1",
+        "ui.state-value-text.v1",
+        "ui.validation-json.v1",
+        "ui.validation-required.v1",
+        "ui.view-layout-stack.v1",
+        "ui.view-topology.v1"
+      ]
+    },
+    {
+      "profileId": "consumer-ui-v1-browser-reference.v1",
+      "extends": "consumer-ui-v1-reference.v1",
+      "featureIds": [
+        "ui.adaptation.v1",
+        "ui.presentation-intent.v1",
+        "ui.presentation-tokens.v1"
+      ]
+    },
+    {
+      "profileId": "consumer-ui-v1-rich-desktop.v1",
+      "extends": "consumer-ui-v1-browser-reference.v1",
+      "featureIds": [
+        "ui.accessibility-live-polite.v1",
+        "ui.collection-cards.v1",
+        "ui.collection-lineage.v1",
+        "ui.collection-metrics.v1",
+        "ui.feedback-document.v1",
+        "ui.feedback-presentation-context.v1",
+        "ui.feedback-presentation-lineage.v1",
+        "ui.feedback-presentation-proof.v1",
+        "ui.feedback-presentation-registration.v1",
+        "ui.input-accepted-file-types.v1",
+        "ui.input-commit-operation.v1",
+        "ui.input-file-selection.v1",
+        "ui.input-placeholder.v1",
+        "ui.input-text.v1",
+        "ui.information-primary.v1",
+        "ui.operation-resolve-input.v1",
+        "ui.presentation-view-workspace.v1",
+        "ui.region-importance-primary.v1",
+        "ui.region-importance-secondary.v1",
+        "ui.region-importance-supporting.v1",
+        "ui.region-layout-stack.v1",
+        "ui.region-layout-supporting-information.v1",
+        "ui.region-role-assurance.v1",
+        "ui.region-role-context.v1",
+        "ui.region-role-document.v1",
+        "ui.region-role-hero.v1",
+        "ui.region-role-navigation.v1",
+        "ui.region-role-primary-content.v1",
+        "ui.region-role-proof.v1",
+        "ui.region-role-summary.v1",
+        "ui.state-source-outcome.v1",
+        "ui.state-value-collection.v1",
+        "ui.view-layout-workspace.v1"
+      ]
+    }
+  ],
+  "providers": [
+    {
+      "capabilityId": "sda-wpf-ui.v1",
+      "embodimentTarget": "wpf",
+      "featureProfileId": "consumer-ui-v1-rich-desktop.v1",
+      "evidenceRefs": [
+        "languages/csharp/src/ScenarioKernel.Wpf.Conformance/Program.cs",
+        "languages/csharp/tests/ScenarioKernel.Wpf.ConformanceTests/AuthorityBackedViewModelTests.cs"
+      ],
+      "adaptedFeatures": [
+        {
+          "featureId": "ui.experience.v1",
+          "adaptationId": "experience-promise-and-evidence.v1",
+          "evidenceRefs": ["languages/csharp/src/ScenarioKernel.Wpf.Conformance/Program.cs"]
+        }
+      ]
+    },
+    {
+      "capabilityId": "sda-avalonia-ui.v1",
+      "embodimentTarget": "avalonia",
+      "featureProfileId": "consumer-ui-v1-rich-desktop.v1",
+      "evidenceRefs": [
+        "languages/csharp/src/ScenarioKernel.Avalonia.Conformance/Program.cs",
+        "languages/csharp/tests/ScenarioKernel.Avalonia.ConformanceTests/AuthorityCollectionSurfaceTests.cs"
+      ],
+      "adaptedFeatures": [
+        {
+          "featureId": "ui.experience.v1",
+          "adaptationId": "experience-promise-and-evidence.v1",
+          "evidenceRefs": ["languages/csharp/src/ScenarioKernel.Avalonia.Conformance/Program.cs"]
+        }
+      ]
+    },
+    {
+      "capabilityId": "sda-react-ui.v1",
+      "embodimentTarget": "react",
+      "featureProfileId": "consumer-ui-v1-rich-desktop.v1",
+      "evidenceRefs": [
+        "languages/typescript/presentation/react/conformance/browser-vector-driver.mjs",
+        "languages/typescript/presentation/react/runtime/authority-backed-application.mjs"
+      ],
+      "adaptedFeatures": [
+        {
+          "featureId": "ui.experience.v1",
+          "adaptationId": "experience-promise-and-evidence.v1",
+          "evidenceRefs": ["languages/typescript/presentation/react/conformance/browser-vector-driver.mjs"]
+        }
+      ]
+    },
+    {
+      "capabilityId": "sda-html-ui.v1",
+      "embodimentTarget": "html",
+      "featureProfileId": "consumer-ui-v1-browser-reference.v1",
+      "evidenceRefs": [
+        "languages/typescript/presentation/browser-dom/conformance/browser-vector-driver.mjs",
+        "languages/typescript/presentation/browser-dom/runtime/authority-backed-dom-application.mjs"
+      ],
+      "adaptedFeatures": [
+        {
+          "featureId": "ui.experience.v1",
+          "adaptationId": "experience-promise-and-evidence.v1",
+          "evidenceRefs": ["languages/typescript/presentation/browser-dom/conformance/browser-vector-driver.mjs"]
+        }
+      ]
+    },
+    {
+      "capabilityId": "sda-javafx-ui.v1",
+      "embodimentTarget": "javafx",
+      "featureProfileId": "consumer-ui-v1-rich-desktop.v1",
+      "evidenceRefs": [
+        "languages/java/presentation/javafx/src/test/java/scenario/kernel/javafx/NativeJavaFxProofTest.java",
+        "languages/java/presentation/javafx/src/main/java/scenario/kernel/javafx/AuthorityBackedJavaFxApplication.java"
+      ],
+      "adaptedFeatures": [
+        {
+          "featureId": "ui.experience.v1",
+          "adaptationId": "experience-promise-and-evidence.v1",
+          "evidenceRefs": ["languages/java/presentation/javafx/src/test/java/scenario/kernel/javafx/NativeJavaFxProofTest.java"]
+        }
+      ]
+    },
+    {
+      "capabilityId": "sda-swiftui-ui.v1",
+      "embodimentTarget": "swiftui",
+      "featureProfileId": "consumer-ui-v1-reference.v1",
+      "evidenceRefs": [
+        "languages/swift/presentation/swiftui/NativeProofUITests/NativeSwiftUiProofTests.swift",
+        "languages/swift/presentation/swiftui/conformance/semantic-implementation.json"
+      ],
+      "adaptedFeatures": [
+        {
+          "featureId": "ui.experience.v1",
+          "adaptationId": "experience-promise-and-evidence.v1",
+          "evidenceRefs": ["languages/swift/presentation/swiftui/NativeProofUITests/NativeSwiftUiProofTests.swift"]
+        },
+        {
+          "featureId": "ui.adaptation.v1",
+          "adaptationId": "native-scroll-and-stack-adaptation.v1",
+          "evidenceRefs": ["languages/swift/presentation/swiftui/Sources/ScenarioKernelSwiftUI/AuthorityBackedApplication.swift"]
+        },
+        {
+          "featureId": "ui.presentation-intent.v1",
+          "adaptationId": "native-swiftui-presentation.v1",
+          "evidenceRefs": ["languages/swift/presentation/swiftui/Sources/ScenarioKernelSwiftUI/AuthorityBackedApplication.swift"]
+        },
+        {
+          "featureId": "ui.presentation-tokens.v1",
+          "adaptationId": "native-swiftui-token-subset.v1",
+          "evidenceRefs": ["languages/swift/presentation/swiftui/Sources/ScenarioKernelSwiftUI/AuthorityBackedApplication.swift"]
+        }
+      ]
+    },
+    {
+      "capabilityId": "sda-cpp-appkit-ui.v1",
+      "embodimentTarget": "cpp-appkit",
+      "featureProfileId": "consumer-ui-v1-rich-desktop.v1",
+      "evidenceRefs": [
+        "languages/cpp/conformance/ui_parity_test.cpp",
+        "languages/cpp/ui/authority_backed_appkit_application.cpp"
+      ],
+      "adaptedFeatures": [
+        {
+          "featureId": "ui.experience.v1",
+          "adaptationId": "experience-promise-and-evidence.v1",
+          "evidenceRefs": ["languages/cpp/conformance/ui_parity_test.cpp"]
+        }
+      ]
+    },
+    {
+      "capabilityId": "sda-android-compose-ui.v1",
+      "embodimentTarget": "android-compose",
+      "featureProfileId": "consumer-ui-v1-reference.v1",
+      "evidenceRefs": [
+        "languages/kotlin/presentation/android-compose/runtime/src/androidTest/kotlin/dev/scenariodriven/compose/NativeComposeProofTest.kt",
+        "languages/kotlin/presentation/android-compose/conformance/semantic-implementation.json"
+      ],
+      "adaptedFeatures": [
+        {
+          "featureId": "ui.experience.v1",
+          "adaptationId": "experience-promise-and-evidence.v1",
+          "evidenceRefs": ["languages/kotlin/presentation/android-compose/runtime/src/androidTest/kotlin/dev/scenariodriven/compose/NativeComposeProofTest.kt"]
+        },
+        {
+          "featureId": "ui.adaptation.v1",
+          "adaptationId": "native-scroll-and-flow-adaptation.v1",
+          "evidenceRefs": ["languages/kotlin/presentation/android-compose/runtime/src/main/kotlin/dev/scenariodriven/compose/AuthorityBackedComposeApplication.kt"]
+        },
+        {
+          "featureId": "ui.presentation-intent.v1",
+          "adaptationId": "native-compose-presentation.v1",
+          "evidenceRefs": ["languages/kotlin/presentation/android-compose/runtime/src/main/kotlin/dev/scenariodriven/compose/AuthorityBackedComposeApplication.kt"]
+        },
+        {
+          "featureId": "ui.presentation-tokens.v1",
+          "adaptationId": "native-compose-token-subset.v1",
+          "evidenceRefs": ["languages/kotlin/presentation/android-compose/runtime/src/main/kotlin/dev/scenariodriven/compose/AuthorityBackedComposeApplication.kt"]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/consumer-execution-authorities.v2.schema.json",
+  "title": "Consumer execution authorities v2",
+  "description": "Compilation authority whose operations carry stable child-cell identity and explicit dependencies; it is never a runtime instruction list.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["authorityType", "executionAuthorities"],
+  "properties": {
+    "authorityType": { "const": "execution-authorities.v2" },
+    "executionAuthorities": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "authorityDigest", "owningScenarioId", "operations"],
+        "properties": {
+          "id": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "authorityDigest": { "$ref": "semantic-primitives.schema.json#/$defs/digest" },
+          "owningScenarioId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "operations": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/operation" } }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operationId", "cellId", "kind", "inputContractId", "outcomeContractId", "dependsOnOperationIds", "sourcePointer"],
+      "properties": {
+        "operationId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+        "cellId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+        "kind": { "type": "string", "enum": ["invoke-port", "invoke-scenario", "project-state"] },
+        "portId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+        "scenarioId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+        "projectionId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+        "providerSlotId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+        "inputContractId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+        "outcomeContractId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+        "dependsOnOperationIds": { "type": "array", "uniqueItems": true, "items": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" } },
+        "sourcePointer": { "type": "string", "minLength": 1 }
+      },
+      "allOf": [
+        { "if": { "properties": { "kind": { "const": "invoke-port" } } }, "then": { "required": ["portId", "providerSlotId"] } },
+        { "if": { "properties": { "kind": { "const": "invoke-scenario" } } }, "then": { "required": ["scenarioId"] } },
+        { "if": { "properties": { "kind": { "const": "project-state" } } }, "then": { "required": ["projectionId", "providerSlotId"] } }
+      ]
+    }
+  }
+}

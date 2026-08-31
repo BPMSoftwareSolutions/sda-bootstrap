@@ -1,0 +1,85 @@
+{
+  "$schema": "contracts/sda-annotated-gherkin-profile.v1.schema.json",
+  "profileType": "sda-annotated-gherkin-profile.v1",
+  "lifecycle": "ADMITTED",
+  "grammarProviderRequirement": {
+    "providerFamily": "OFFICIAL_CUCUMBER_GHERKIN",
+    "exactSourceBytesRetained": true,
+    "astLocationsRetained": true,
+    "commentsRetained": true,
+    "picklesRetained": true
+  },
+  "requiredFeatureTags": [
+    "capability",
+    "root-scenario"
+  ],
+  "requiredScenarioTags": [
+    "scenario",
+    "input",
+    "input-contract",
+    "event",
+    "event-authority",
+    "outcome",
+    "outcome-contract"
+  ],
+  "optionalScenarioTags": [
+    "outcome-terminal"
+  ],
+  "sharedContractIds": [],
+  "cardinality": {
+    "featuresPerDocument": 1,
+    "requiredFeatureTagOccurrences": 1,
+    "requiredScenarioTagOccurrences": 1,
+    "terminalTagMaximumOccurrences": 1
+  },
+  "admittedConstructs": [
+    "FEATURE",
+    "SCENARIO",
+    "GIVEN",
+    "WHEN",
+    "THEN",
+    "AND",
+    "BUT",
+    "COMMENT",
+    "NARRATIVE",
+    "TAG"
+  ],
+  "parsedButProfileHeldConstructs": [
+    "RULE",
+    "BACKGROUND",
+    "SCENARIO_OUTLINE",
+    "EXAMPLES",
+    "DATA_TABLE",
+    "DOC_STRING",
+    "LOCALIZED_DIALECT"
+  ],
+  "identityRules": {
+    "featureIdentitySource": "@capability value",
+    "scenarioIdentitySource": "@scenario value",
+    "ownedIdentityScope": "owning scenario semantic object ID",
+    "sourceDerivedNodeIdentity": "sourceDigest + source span + node kind",
+    "duplicateIdentityDisposition": "REJECTED",
+    "rootScenarioMustResolve": true,
+    "sharedContractIdentityRequiresExplicitPolicy": true
+  },
+  "semanticRules": {
+    "orderedStepsRetained": true,
+    "orderedTagsRetained": true,
+    "commentsAreExecutableAuthority": false,
+    "narrativesAreExecutableAuthority": false,
+    "providerOrFrameworkIdentityAllowedInSemanticAuthority": false,
+    "executableCodeAllowedInSemanticAuthority": false,
+    "unsupportedConstructsMayBeSilentlyDropped": false
+  },
+  "diagnosticCodes": [
+    "GHERKIN_PARSE_ERROR",
+    "UNSUPPORTED_DIALECT",
+    "PROFILE_CONSTRUCT_HELD",
+    "MISSING_REQUIRED_TAG",
+    "REPEATED_REQUIRED_TAG",
+    "DUPLICATE_SEMANTIC_IDENTITY",
+    "ROOT_SCENARIO_NOT_FOUND",
+    "DANGLING_OUTLINE_PLACEHOLDER",
+    "FORBIDDEN_SEMANTIC_CONTENT"
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "contractId": "gherkin-semantic-ingestion-conformance.v1",
+  "compilerDigest": "sha256:8b91a7ab51b4a6977427597c54a71e1d94ca6cae76003043381ebcc098a7f196",
+  "grammarDigest": "sha256:27ca7210edf736d0e8fce5afd9f61386c3105653f3f75b632bca9b283f920afd",
+  "profileDigest": "sha256:18de78cbe08dbab6a1ee658d437561f635a77889868d59eb82cd9daa9e8d8ebe",
+  "fixtureSetDigest": "sha256:f852639c84b73fb26af55f706f9b35bddee37953ce5c2d003c3065bf5d1bf8b3",
+  "partitions": [
+    {
+      "partitionId": "EXACT_BYTES",
+      "disposition": "SATISFIED",
+      "evidenceDigests": [
+        "sha256:0104f0c32008605851ea4a8d45ed57bae6554fe97fda88bbce01eebefff3235d",
+        "sha256:35c50675663c8abd7fddc8a0e71812dd662420cf67527627d3bbabd14182cb96",
+        "sha256:5985a2c80afb00294e719eae613ae340dbb1274eb3af492519029a0c8250f74e",
+        "sha256:71f1fc33588e4dff08b03435224fd08926e77e9b1e49d77c31bb90ef9ac7b3a3",
+        "sha256:b1aa980c8e83912453e424ffd8255e3ccc8e08cd08af78ccb2202844ab92a4a9",
+        "sha256:dad296ad4df33f8d825a01d4f763d25e31d93562e011149c2a843b308240c9f2",
+        "sha256:fb64dd2117fa3f12ac779bf35f3c8635cd2238c52510a73525bdc38d32f2e0d7"
+      ]
+    },
+    {
+      "partitionId": "FEATURE_IDENTITY",
+      "disposition": "SATISFIED",
+      "evidenceDigests": [
+        "sha256:5985a2c80afb00294e719eae613ae340dbb1274eb3af492519029a0c8250f74e",
+        "sha256:71f1fc33588e4dff08b03435224fd08926e77e9b1e49d77c31bb90ef9ac7b3a3",
+        "sha256:bb4e81a21e9fec37b9da5d728c6f29ef4f6a1f87ca05ca2fb78e35a637896cf4"
+      ]
+    },
+    {
+      "partitionId": "SCENARIO_IDENTITY",
+      "disposition": "SATISFIED",
+      "evidenceDigests": [
+        "sha256:5985a2c80afb00294e719eae613ae340dbb1274eb3af492519029a0c8250f74e",
+        "sha256:71f1fc33588e4dff08b03435224fd08926e77e9b1e49d77c31bb90ef9ac7b3a3",
+        "sha256:bb4e81a21e9fec37b9da5d728c6f29ef4f6a1f87ca05ca2fb78e35a637896cf4"
+      ]
+    },
+    {
+      "partitionId": "ORDERED_STEPS",
+      "disposition": "SATISFIED",
+      "evidenceDigests": [
+        "sha256:35c50675663c8abd7fddc8a0e71812dd662420cf67527627d3bbabd14182cb96",
+        "sha256:5985a2c80afb00294e719eae613ae340dbb1274eb3af492519029a0c8250f74e",
+        "sha256:71f1fc33588e4dff08b03435224fd08926e77e9b1e49d77c31bb90ef9ac7b3a3"
+      ]
+    },
+    {
+      "partitionId": "STEP_ARGUMENTS",
+      "disposition": "SATISFIED",
+      "evidenceDigests": [
+        "sha256:35c50675663c8abd7fddc8a0e71812dd662420cf67527627d3bbabd14182cb96"
+      ]
+    },
+    {
+      "partitionId": "COMMENTS_AND_NARRATIVE",
+      "disposition": "SATISFIED",
+      "evidenceDigests": [
+        "sha256:35c50675663c8abd7fddc8a0e71812dd662420cf67527627d3bbabd14182cb96"
+      ]
+    },
+    {
+      "partitionId": "DIALECT_AND_ADVANCED_CONSTRUCTS",
+      "disposition": "SATISFIED",
+      "evidenceDigests": [
+        "sha256:0104f0c32008605851ea4a8d45ed57bae6554fe97fda88bbce01eebefff3235d",
+        "sha256:35c50675663c8abd7fddc8a0e71812dd662420cf67527627d3bbabd14182cb96"
+      ]
+    },
+    {
+      "partitionId": "CONNECTOR_REFERENCES",
+      "disposition": "SATISFIED",
+      "evidenceDigests": [
+        "sha256:230164da2592bf8329137fb575a2673e8348a40e602012fbff06f10fe5ddbf8b",
+        "sha256:3fe3aa0936d10fc0128d557e9f4bf19455d9604c23dbd57d4aa1089d9787aa31",
+        "sha256:5985a2c80afb00294e719eae613ae340dbb1274eb3af492519029a0c8250f74e",
+        "sha256:71f1fc33588e4dff08b03435224fd08926e77e9b1e49d77c31bb90ef9ac7b3a3",
+        "sha256:8033b79788edf3acd81ba065be112d5326359faa5535709e1eb290f57b32d1de",
+        "sha256:bb4e81a21e9fec37b9da5d728c6f29ef4f6a1f87ca05ca2fb78e35a637896cf4"
+      ]
+    },
+    {
+      "partitionId": "COMPILER_IDENTITIES",
+      "disposition": "SATISFIED",
+      "evidenceDigests": [
+        "sha256:5985a2c80afb00294e719eae613ae340dbb1274eb3af492519029a0c8250f74e",
+        "sha256:dad296ad4df33f8d825a01d4f763d25e31d93562e011149c2a843b308240c9f2",
+        "sha256:fb64dd2117fa3f12ac779bf35f3c8635cd2238c52510a73525bdc38d32f2e0d7"
+      ]
+    },
+    {
+      "partitionId": "AST_CASE_COMPILATION_DIGESTS",
+      "disposition": "SATISFIED",
+      "evidenceDigests": [
+        "sha256:0104f0c32008605851ea4a8d45ed57bae6554fe97fda88bbce01eebefff3235d",
+        "sha256:35c50675663c8abd7fddc8a0e71812dd662420cf67527627d3bbabd14182cb96",
+        "sha256:5985a2c80afb00294e719eae613ae340dbb1274eb3af492519029a0c8250f74e",
+        "sha256:71f1fc33588e4dff08b03435224fd08926e77e9b1e49d77c31bb90ef9ac7b3a3",
+        "sha256:bb4e81a21e9fec37b9da5d728c6f29ef4f6a1f87ca05ca2fb78e35a637896cf4",
+        "sha256:dad296ad4df33f8d825a01d4f763d25e31d93562e011149c2a843b308240c9f2",
+        "sha256:fb64dd2117fa3f12ac779bf35f3c8635cd2238c52510a73525bdc38d32f2e0d7"
+      ]
+    },
+    {
+      "partitionId": "TYPED_DIAGNOSTICS",
+      "disposition": "SATISFIED",
+      "evidenceDigests": [
+        "sha256:1aa2ae3c68f49418d5836b95651efca09abc08148dd2a67622fb46c62c722e51",
+        "sha256:230164da2592bf8329137fb575a2673e8348a40e602012fbff06f10fe5ddbf8b",
+        "sha256:3fe3aa0936d10fc0128d557e9f4bf19455d9604c23dbd57d4aa1089d9787aa31",
+        "sha256:4611943ad599ad70433183eceb8d6ac2236f918038c47f73d689369fd5919cfc",
+        "sha256:74022cd6bfed9a86b950127ffb28dbbefb3f5f37816a378113939eb0a04c222a",
+        "sha256:767230ba07fffeaf8c64d82385a6441f2aca9befb54496a956eaac23d7a03f2e",
+        "sha256:8033b79788edf3acd81ba065be112d5326359faa5535709e1eb290f57b32d1de",
+        "sha256:99337379acc5585a42fe6c6d15920a8659e9b238242305bf7166632d7d422c40",
+        "sha256:b1aa980c8e83912453e424ffd8255e3ccc8e08cd08af78ccb2202844ab92a4a9"
+      ]
+    },
+    {
+      "partitionId": "REORDERED_REPRODUCTION",
+      "disposition": "SATISFIED",
+      "evidenceDigests": [
+        "sha256:a9a11d1ef2d41e85c35dd4f739f6c0f893876d8fa3e0f3ba7323d8f74718173b",
+        "sha256:dad296ad4df33f8d825a01d4f763d25e31d93562e011149c2a843b308240c9f2",
+        "sha256:fb64dd2117fa3f12ac779bf35f3c8635cd2238c52510a73525bdc38d32f2e0d7"
+      ]
+    }
+  ],
+  "findings": [],
+  "disposition": "GHERKIN_SEMANTIC_INGESTION_CONFORMANT",
+  "receiptDigest": "sha256:904f59e58d5e1af95a3fb3f05e7bf15fe89c967c54c851b0867f52fff4cf724c"
+}

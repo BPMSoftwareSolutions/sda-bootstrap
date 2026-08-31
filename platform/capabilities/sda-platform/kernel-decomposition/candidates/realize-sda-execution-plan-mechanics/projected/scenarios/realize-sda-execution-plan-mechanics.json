@@ -1,0 +1,37 @@
+{
+  "scenarioId": "realize-sda-execution-plan-mechanics",
+  "input": {
+    "inputId": "sda-execution-plan-realization-request",
+    "contract": {
+      "contractId": "sda-execution-plan-realization-request.v1"
+    }
+  },
+  "event": {
+    "eventId": "realize-sda-execution-plan-mechanics",
+    "executionAuthorityId": "realize-sda-execution-plan-mechanics.v1"
+  },
+  "outcome": {
+    "outcomeId": "sda-execution-plan-realization",
+    "contract": {
+      "contractId": "sda-execution-plan-realization.v1"
+    },
+    "experience": {
+      "statement": "one authority-derived execution-plan realization is available"
+    }
+  },
+  "gherkin": {
+    "given": {
+      "semanticRef": "realize-sda-execution-plan-mechanics.given",
+      "text": "an admitted execution plan and target-language projection profile"
+    },
+    "when": {
+      "semanticRef": "realize-sda-execution-plan-mechanics.when",
+      "text": "the required execution mechanics are realized"
+    },
+    "then": {
+      "semanticRef": "realize-sda-execution-plan-mechanics.then",
+      "text": "one authority-derived execution-plan realization is available"
+    }
+  },
+  "name": "Realize the mechanics required by an execution plan"
+}

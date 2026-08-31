@@ -1,0 +1,124 @@
+{
+  "projectionManifestType": "consumer-capability-projection-manifest.v1",
+  "generator": "scenario-driven-architecture/tools/src/consumer-projection",
+  "authorityRefs": [
+    "capability.feature",
+    "capability.authority.json",
+    "semantic-graph.authority.json",
+    "execution-authorities.authority.json",
+    "projection-authorities.authority.json",
+    "interfaces.authority.json",
+    "fixtures.authority.json",
+    "../../../kernel/semantic-authority/consumer/scenario-conformance-closure.query-authority.json",
+    "../../../kernel/semantic-authority/consumer/scenario-execution.telemetry-authority.json"
+  ],
+  "admittedPlatformCapabilities": [
+    "sda-authority-state-projection.v1",
+    "sda-authority-transformation-port.v1",
+    "sda-batch-filesystem-shaper-port.v1",
+    "sda-canonical-capability-feature-resolution-port.v1",
+    "sda-declarative-state-projection.v1",
+    "sda-declarative-value-port.v1",
+    "sda-external-credential-reference-binding-port.v1",
+    "sda-external-observation-port.v1",
+    "sda-filesystem-artifact-store.v1",
+    "sda-fixture-contract-validator.v1",
+    "sda-generic-llm-connector-port.v1",
+    "sda-governed-http-exchange-port.v1",
+    "sda-governed-repository-observation-port.v1",
+    "sda-governed-serial-execution-port.v1",
+    "sda-governed-target-execution-observation-port.v1",
+    "sda-governed-tooling-binding-transaction-port.v1",
+    "sda-governed-tooling-migration-operation-port.v1",
+    "sda-json-authority-ingestion-port.v1",
+    "sda-json-cli.v1",
+    "sda-json-query-cli.v1",
+    "sda-node-consumer-runtime.v1",
+    "sda-projected-capability-invocation-port.v1",
+    "sda-projected-capability-invocation-port.v2",
+    "sda-proof-binding-evaluation-port.v1",
+    "sda-schema-contract-admission.v1"
+  ],
+  "files": [
+    {
+      "path": "application-binding.json",
+      "executableOrigin": "PROJECTED",
+      "sha256": "304f54de4f1bd10a573331518ad67faddc327c98e9049d32a6fd17b039b99257"
+    },
+    {
+      "path": "application-binding.node.json",
+      "executableOrigin": "PROJECTED",
+      "sha256": "304f54de4f1bd10a573331518ad67faddc327c98e9049d32a6fd17b039b99257"
+    },
+    {
+      "path": "capability.json",
+      "executableOrigin": "PROJECTED",
+      "sha256": "e57cbfeb5299592b20ead4113d84eb848a86ba3704ba4286381ea919db7e15f7"
+    },
+    {
+      "path": "execution-plans/consumer-execution-plan.node.json",
+      "executableOrigin": "PROJECTED",
+      "sha256": "2bef592ca0ad9c96c0b755f5fff9ac28382264fc1e6a497312c28250280e936e"
+    },
+    {
+      "path": "fixtures/fixtures.json",
+      "executableOrigin": "PROJECTED",
+      "sha256": "c15df4065ffed0d9c4eb551ee59b6cac18e8e516e019d908cedba1debba695e5"
+    },
+    {
+      "path": "node/capability-runtime.generated.mjs",
+      "executableOrigin": "PROJECTED",
+      "sha256": "b22e962ed9ba8e119126c88d22edf3576b69954eb3848f8588f2d52164b5ac26"
+    },
+    {
+      "path": "node/capability.projected.test.mjs",
+      "executableOrigin": "PROJECTED",
+      "sha256": "2b3773a1c004f9d2958fc8a554c5fb2e43dfeac2bb9491dfa4a94ed8fe69d04b"
+    },
+    {
+      "path": "node/conformance-query.generated.mjs",
+      "executableOrigin": "PROJECTED",
+      "sha256": "c4ef7d1428895e27032309df9b46620bff17c47a3756d90b17e3881d17f4c1d3"
+    },
+    {
+      "path": "node/semantic-corpus-derivation-cli.generated.mjs",
+      "executableOrigin": "PROJECTED",
+      "sha256": "e165c7e72c5d68e9da9ca0cd577525db9f3c65c5a8f959f4e03b206bf0c3e67f"
+    },
+    {
+      "path": "projection-conformance.json",
+      "executableOrigin": "PROJECTED",
+      "sha256": "eff29d9d763919b405a021fc126f66b5b0c552c3cbe74d8ddb85f9781e4b2eed"
+    },
+    {
+      "path": "query/conformance-query.json",
+      "executableOrigin": "PROJECTED",
+      "sha256": "b2a89df1da2f0269e4d69268f3c86df1cd371035ac416073b0a1f95cf42204b8"
+    },
+    {
+      "path": "query/conformance-query.node.json",
+      "executableOrigin": "PROJECTED",
+      "sha256": "b2a89df1da2f0269e4d69268f3c86df1cd371035ac416073b0a1f95cf42204b8"
+    },
+    {
+      "path": "query/platform-mechanic-resolution.json",
+      "executableOrigin": "PROJECTED",
+      "sha256": "93def7172a360bbed7dac95adb4a81c393345495df900484d51a1fa0141d8e9c"
+    },
+    {
+      "path": "query/platform-mechanic-resolution.node.json",
+      "executableOrigin": "PROJECTED",
+      "sha256": "93def7172a360bbed7dac95adb4a81c393345495df900484d51a1fa0141d8e9c"
+    },
+    {
+      "path": "scenarios/derive-semantic-corpus-records.json",
+      "executableOrigin": "PROJECTED",
+      "sha256": "5c107ad35d73dc86c1feeefd17ee01b65cdfc96de5f5fceead1f3513eab91d35"
+    },
+    {
+      "path": "telemetry/expected-trace.json",
+      "executableOrigin": "PROJECTED",
+      "sha256": "781676ba8267a3d668183639c0f687f7752b8a5c0b9b36ad1b7fbbc3b574ed00"
+    }
+  ]
+}

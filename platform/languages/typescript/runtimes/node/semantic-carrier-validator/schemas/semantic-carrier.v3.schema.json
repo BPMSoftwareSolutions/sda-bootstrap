@@ -1,0 +1,1248 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://semantic-carrier.local/schemas/scenario-semantic-carrier.v3.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "capability",
+    "feature",
+    "contracts",
+    "scenarios",
+    "management"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "scenario-semantic-carrier.v3"
+    },
+    "capability": {
+      "$ref": "#/$defs/capability"
+    },
+    "feature": {
+      "$ref": "#/$defs/namedIdentity"
+    },
+    "contracts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/contract"
+      }
+    },
+    "scenarios": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/scenario"
+      }
+    },
+    "management": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile",
+        "workspaceProfile",
+        "featureDescription",
+        "userStory",
+        "experience",
+        "projectionTargets",
+        "interface",
+        "requiredPlatformObligations",
+        "contractSchemas",
+        "transformations",
+        "eventBindings",
+        "routeBindings",
+        "routeGroups",
+        "fixtures",
+        "precedents",
+        "realizations",
+        "authorities"
+      ],
+      "properties": {
+        "profile": {
+          "const": "sidefx-managed-capability.v1"
+        },
+        "workspaceProfile": {
+          "const": "agentic-harness-local.v1"
+        },
+        "featureDescription": {
+          "type": "string",
+          "minLength": 1
+        },
+        "userStory": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "actor",
+            "intent",
+            "outcome"
+          ],
+          "properties": {
+            "actor": {
+              "type": "string",
+              "minLength": 1
+            },
+            "intent": {
+              "type": "string",
+              "minLength": 1
+            },
+            "outcome": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "experience": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "experienceId",
+            "actor",
+            "promise",
+            "observableConditions"
+          ],
+          "properties": {
+            "experienceId": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(-[a-z0-9]+)*(\\.v[0-9]+)?$"
+            },
+            "actor": {
+              "type": "string",
+              "minLength": 1
+            },
+            "promise": {
+              "type": "string",
+              "minLength": 1
+            },
+            "observableConditions": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(-[a-z0-9]+)*(\\.v[0-9]+)?$"
+              }
+            }
+          }
+        },
+        "projectionTargets": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "node",
+              "csharp",
+              "python"
+            ]
+          }
+        },
+        "interface": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "interfaceId",
+            "kind",
+            "platformCapabilityId"
+          ],
+          "properties": {
+            "interfaceId": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(-[a-z0-9]+)*(\\.v[0-9]+)?$"
+            },
+            "kind": {
+              "const": "cli"
+            },
+            "platformCapabilityId": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(-[a-z0-9]+)*(\\.v[0-9]+)?$"
+            }
+          }
+        },
+        "requiredPlatformObligations": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(-[a-z0-9]+)*(\\.v[0-9]+)?$"
+          }
+        },
+        "contractSchemas": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "contractRef",
+              "fileName",
+              "schema"
+            ],
+            "properties": {
+              "contractRef": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(-[a-z0-9]+)*(\\.v[0-9]+)?$"
+              },
+              "fileName": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(-[a-z0-9]+)*\\.schema\\.json$"
+              },
+              "schema": {
+                "type": "object",
+                "minProperties": 1,
+                "additionalProperties": true
+              }
+            }
+          }
+        },
+        "transformations": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "expression"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(-[a-z0-9]+)*(\\.v[0-9]+)?$"
+              },
+              "expression": {
+                "type": "object",
+                "minProperties": 1,
+                "additionalProperties": true
+              }
+            }
+          }
+        },
+        "eventBindings": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "eventRef",
+              "authorityId",
+              "portId",
+              "platformCapabilityId",
+              "transformationRef"
+            ],
+            "properties": {
+              "eventRef": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(-[a-z0-9]+)*(\\.v[0-9]+)?$"
+              },
+              "authorityId": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(-[a-z0-9]+)*(\\.v[0-9]+)?$"
+              },
+              "portId": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(-[a-z0-9]+)*(\\.v[0-9]+)?$"
+              },
+              "platformCapabilityId": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(-[a-z0-9]+)*(\\.v[0-9]+)?$"
+              },
+              "transformationRef": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(-[a-z0-9]+)*(\\.v[0-9]+)?$"
+              }
+            }
+          }
+        },
+        "routeBindings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "routeRef",
+              "bindingAuthorityId",
+              "semanticProgress"
+            ],
+            "properties": {
+              "routeRef": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(-[a-z0-9]+)*(\\.v[0-9]+)?$"
+              },
+              "bindingAuthorityId": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(-[a-z0-9]+)*(\\.v[0-9]+)?$"
+              },
+              "semanticProgress": {
+                "enum": [
+                  "preserving",
+                  "narrowing",
+                  "expanding",
+                  "converging",
+                  "terminating"
+                ]
+              }
+            }
+          }
+        },
+        "routeGroups": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "scenarioRef",
+              "groupId",
+              "policy",
+              "exhaustive",
+              "exclusive",
+              "defaultRouteRef"
+            ],
+            "properties": {
+              "scenarioRef": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(-[a-z0-9]+)*(\\.v[0-9]+)?$"
+              },
+              "groupId": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(-[a-z0-9]+)*(\\.v[0-9]+)?$"
+              },
+              "policy": {
+                "enum": [
+                  "exactly-one",
+                  "first-admitted",
+                  "first-match",
+                  "priority"
+                ]
+              },
+              "exhaustive": {
+                "type": "boolean"
+              },
+              "exclusive": {
+                "type": "boolean"
+              },
+              "defaultRouteRef": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^[a-z0-9]+(-[a-z0-9]+)*(\\.v[0-9]+)?$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "fixtures": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "fixtureId",
+              "input",
+              "expected"
+            ],
+            "properties": {
+              "fixtureId": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(-[a-z0-9]+)*(\\.v[0-9]+)?$"
+              },
+              "input": {
+                "type": "object",
+                "additionalProperties": true
+              },
+              "expected": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "disposition",
+                  "terminalScenarioId",
+                  "scenarioSequence",
+                  "outcomeAssertions"
+                ],
+                "properties": {
+                  "disposition": {
+                    "const": "terminated"
+                  },
+                  "terminalScenarioId": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9]+(-[a-z0-9]+)*(\\.v[0-9]+)?$"
+                  },
+                  "scenarioSequence": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*(\\.v[0-9]+)?$"
+                    }
+                  },
+                  "outcomeAssertions": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "conditionId",
+                        "path",
+                        "operator",
+                        "value"
+                      ],
+                      "properties": {
+                        "conditionId": {
+                          "type": "string",
+                          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*(\\.v[0-9]+)?$"
+                        },
+                        "path": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "operator": {
+                          "const": "equals"
+                        },
+                        "value": {}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "precedents": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "authorityId",
+              "digest"
+            ],
+            "properties": {
+              "authorityId": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(-[a-z0-9]+)*(\\.v[0-9]+)?$"
+              },
+              "digest": {
+                "type": "string",
+                "pattern": "^sha256:[0-9a-f]{64}$"
+              }
+            }
+          }
+        },
+        "realizations": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "obligationId",
+              "finalPath",
+              "semantics",
+              "source",
+              "authority",
+              "sourcePath",
+              "derivation",
+              "targetSupport",
+              "effectEvidence",
+              "falsification"
+            ],
+            "properties": {
+              "obligationId": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(-[a-z0-9]+)*(\\.v[0-9]+)?$"
+              },
+              "finalPath": {
+                "type": "string",
+                "minLength": 1
+              },
+              "semantics": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "type",
+                  "optionality",
+                  "cardinality",
+                  "encoding",
+                  "unit"
+                ],
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "optionality": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "cardinality": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "encoding": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "unit": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              "source": {
+                "enum": [
+                  "INPUT",
+                  "PROVIDER",
+                  "DEPENDENCY",
+                  "CONSTANT",
+                  "DERIVATION"
+                ]
+              },
+              "authority": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "authorityId",
+                  "digest"
+                ],
+                "properties": {
+                  "authorityId": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9]+(-[a-z0-9]+)*(\\.v[0-9]+)?$"
+                  },
+                  "digest": {
+                    "type": "string",
+                    "pattern": "^sha256:[0-9a-f]{64}$"
+                  }
+                }
+              },
+              "sourcePath": {
+                "type": "string",
+                "minLength": 1
+              },
+              "derivation": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "targetSupport": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "authorityId",
+                    "digest"
+                  ],
+                  "properties": {
+                    "authorityId": {
+                      "type": "string",
+                      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*(\\.v[0-9]+)?$"
+                    },
+                    "digest": {
+                      "type": "string",
+                      "pattern": "^sha256:[0-9a-f]{64}$"
+                    }
+                  }
+                }
+              },
+              "effectEvidence": {
+                "type": "string",
+                "minLength": 1
+              },
+              "falsification": {
+                "type": "array",
+                "minItems": 1,
+                "items": {}
+              }
+            }
+          }
+        },
+        "authorities": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "architecture",
+            "blueprintBinding",
+            "observability",
+            "structuralMapping",
+            "serviceLevel",
+            "crossApply",
+            "asciiProjection",
+            "mermaidProjection"
+          ],
+          "properties": {
+            "architecture": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "authorityId",
+                "digest"
+              ],
+              "properties": {
+                "authorityId": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(-[a-z0-9]+)*(\\.v[0-9]+)?$"
+                },
+                "digest": {
+                  "type": "string",
+                  "pattern": "^sha256:[0-9a-f]{64}$"
+                }
+              }
+            },
+            "blueprintBinding": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "authorityId",
+                "digest"
+              ],
+              "properties": {
+                "authorityId": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(-[a-z0-9]+)*(\\.v[0-9]+)?$"
+                },
+                "digest": {
+                  "type": "string",
+                  "pattern": "^sha256:[0-9a-f]{64}$"
+                }
+              }
+            },
+            "observability": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "authorityId",
+                "digest"
+              ],
+              "properties": {
+                "authorityId": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(-[a-z0-9]+)*(\\.v[0-9]+)?$"
+                },
+                "digest": {
+                  "type": "string",
+                  "pattern": "^sha256:[0-9a-f]{64}$"
+                }
+              }
+            },
+            "structuralMapping": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "authorityId",
+                "digest"
+              ],
+              "properties": {
+                "authorityId": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(-[a-z0-9]+)*(\\.v[0-9]+)?$"
+                },
+                "digest": {
+                  "type": "string",
+                  "pattern": "^sha256:[0-9a-f]{64}$"
+                }
+              }
+            },
+            "serviceLevel": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "authorityId",
+                "digest"
+              ],
+              "properties": {
+                "authorityId": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(-[a-z0-9]+)*(\\.v[0-9]+)?$"
+                },
+                "digest": {
+                  "type": "string",
+                  "pattern": "^sha256:[0-9a-f]{64}$"
+                }
+              }
+            },
+            "crossApply": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "authorityId",
+                "digest"
+              ],
+              "properties": {
+                "authorityId": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(-[a-z0-9]+)*(\\.v[0-9]+)?$"
+                },
+                "digest": {
+                  "type": "string",
+                  "pattern": "^sha256:[0-9a-f]{64}$"
+                }
+              }
+            },
+            "asciiProjection": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "authorityId",
+                "digest"
+              ],
+              "properties": {
+                "authorityId": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(-[a-z0-9]+)*(\\.v[0-9]+)?$"
+                },
+                "digest": {
+                  "type": "string",
+                  "pattern": "^sha256:[0-9a-f]{64}$"
+                }
+              }
+            },
+            "mermaidProjection": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "authorityId",
+                "digest"
+              ],
+              "properties": {
+                "authorityId": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(-[a-z0-9]+)*(\\.v[0-9]+)?$"
+                },
+                "digest": {
+                  "type": "string",
+                  "pattern": "^sha256:[0-9a-f]{64}$"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "identity": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*(?:\\.v[0-9]+)?$"
+    },
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "namedIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identity"
+        },
+        "name": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      }
+    },
+    "digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "authorityRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "authorityId",
+        "digest"
+      ],
+      "properties": {
+        "authorityId": {
+          "$ref": "#/$defs/identity"
+        },
+        "digest": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "capability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "version",
+        "rootExperience",
+        "terminalDispositions"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identity"
+        },
+        "name": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "version": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "rootExperience": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "terminalDispositions": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9_]*$"
+          }
+        }
+      }
+    },
+    "contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "kind",
+        "shape"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identity"
+        },
+        "name": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "kind": {
+          "enum": [
+            "data",
+            "product",
+            "state"
+          ]
+        },
+        "shape": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "type",
+            "description"
+          ],
+          "properties": {
+            "type": {
+              "enum": [
+                "string",
+                "number",
+                "integer",
+                "boolean",
+                "object",
+                "array"
+              ]
+            },
+            "description": {
+              "$ref": "#/$defs/nonEmptyString"
+            }
+          }
+        }
+      }
+    },
+    "input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "contractRef",
+        "gherkin"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identity"
+        },
+        "name": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "contractRef": {
+          "$ref": "#/$defs/identity"
+        },
+        "gherkin": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      }
+    },
+    "operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "predecessorRefs",
+        "mechanicRefs",
+        "providerBoundaryRefs",
+        "effectRefs"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identity"
+        },
+        "name": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "predecessorRefs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/identity"
+          }
+        },
+        "mechanicRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/identity"
+          }
+        },
+        "providerBoundaryRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/identity"
+          }
+        },
+        "effectRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/identity"
+          }
+        }
+      }
+    },
+    "jsonValue": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/jsonValue"
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/jsonValue"
+          }
+        }
+      ]
+    },
+    "mechanic": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "kind",
+        "config"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identity"
+        },
+        "name": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "kind": {
+          "enum": [
+            "native",
+            "classification",
+            "bounded-iteration"
+          ]
+        },
+        "config": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/jsonValue"
+          }
+        }
+      }
+    },
+    "providerBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "provider"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identity"
+        },
+        "name": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "provider": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      }
+    },
+    "effect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "kind",
+        "providerBoundaryRef",
+        "observable"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identity"
+        },
+        "name": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "kind": {
+          "enum": [
+            "read",
+            "write",
+            "network",
+            "process",
+            "display"
+          ]
+        },
+        "providerBoundaryRef": {
+          "$ref": "#/$defs/identity"
+        },
+        "observable": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      }
+    },
+    "execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operations",
+        "mechanics",
+        "providerBoundaries",
+        "effects"
+      ],
+      "properties": {
+        "operations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/operation"
+          }
+        },
+        "mechanics": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/mechanic"
+          }
+        },
+        "providerBoundaries": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/providerBoundary"
+          }
+        },
+        "effects": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/effect"
+          }
+        }
+      }
+    },
+    "event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "responsibility",
+        "gherkin",
+        "execution"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identity"
+        },
+        "name": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "responsibility": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "gherkin": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "execution": {
+          "$ref": "#/$defs/execution"
+        }
+      }
+    },
+    "product": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "contractRef"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identity"
+        },
+        "name": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "contractRef": {
+          "$ref": "#/$defs/identity"
+        }
+      }
+    },
+    "outcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "experience",
+        "product",
+        "terminal",
+        "terminalDisposition",
+        "gherkin"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identity"
+        },
+        "name": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "experience": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "product": {
+          "$ref": "#/$defs/product"
+        },
+        "terminal": {
+          "type": "boolean"
+        },
+        "terminalDisposition": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[A-Z][A-Z0-9_]*$"
+        },
+        "gherkin": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      }
+    },
+    "routeCondition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "selector"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "always",
+            "variant",
+            "success",
+            "failure",
+            "cancel"
+          ]
+        },
+        "selector": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "route": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "toScenarioRef",
+        "when"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identity"
+        },
+        "toScenarioRef": {
+          "$ref": "#/$defs/identity"
+        },
+        "when": {
+          "$ref": "#/$defs/routeCondition"
+        }
+      }
+    },
+    "scenario": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "input",
+        "event",
+        "outcome",
+        "routes"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identity"
+        },
+        "name": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "input": {
+          "$ref": "#/$defs/input"
+        },
+        "event": {
+          "$ref": "#/$defs/event"
+        },
+        "outcome": {
+          "$ref": "#/$defs/outcome"
+        },
+        "routes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/route"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "contractId": "semantic-corpus-current-pointer-update-request.v1",
+  "repositoryAuthorityRef": "repository-authority.v1.json",
+  "repositoryAuthorityDigest": "sha256:4f1eae11041c8ce43b0c7b0aa7d3ecb48bf12073cf727b8b9ba3950c2da1269e",
+  "pointerId": "CurrentSemanticCorpus",
+  "expectedGeneration": 1,
+  "expectedCurrentSnapshotDigest": "sha256:15ec0b65d3bd9e18030633def91fad03d05735c706f05c4bdb0c9d56cccb8197",
+  "candidateArtifactKind": "CORPUS_SNAPSHOT",
+  "candidateSnapshotDigest": "sha256:94af9279ba18e6c5a4fdd5d0eed6cd0f7df19de0b7305a2f28c25eb04f62d794",
+  "closureReceiptRef": "objects/a1/a1aa8de88d0b637c353b0640e82dd9e0286f0ac8822421808cd8e2fcfac59af8.json",
+  "closureReceiptDigest": "sha256:a1aa8de88d0b637c353b0640e82dd9e0286f0ac8822421808cd8e2fcfac59af8",
+  "closureReceiptContractId": "semantic-corpus-closure-receipt.v1"
+}

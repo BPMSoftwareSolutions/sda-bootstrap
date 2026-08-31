@@ -1,0 +1,113 @@
+{
+  "$schema": "contracts/scenario-semantic-carrier-validator.authority.schema.json",
+  "authorityType": "scenario-semantic-carrier-validator-provider-authority.v1",
+  "authorityId": "scenario-semantic-carrier-validator-provider.v1",
+  "authorityRef": "capabilities/sda-platform/bind-scenario-semantic-carrier-validation/scenario-semantic-carrier-validator.authority.json",
+  "authorityVersion": "1.0.0",
+  "platformCapabilityId": "sda-scenario-semantic-carrier-validation-port.v1",
+  "lifecycle": "ADMITTED",
+  "authorityDigestAlgorithm": "sha256 of canonical recursive-key-order JSON excluding authorityDigest",
+  "inputContracts": [
+    "semantic-carrier-validation-request.v1"
+  ],
+  "outputContracts": [
+    "semantic-carrier-validation-result.v1",
+    "scenario-semantic-carrier-validation-provider-conformance.v1"
+  ],
+  "subordinateAuthorities": [],
+  "responsibility": "Parse only the admitted literal Scenario Semantic Carrier v2 or managed-capability v3 grammar, apply exact schema and semantic-reference conformance including complete management closure, and return one deterministic conformant or rejected receipt without executing carrier source.",
+  "prohibitedResponsibilities": [
+    "carrier repair",
+    "canonical graph extraction",
+    "projection",
+    "provider resolution",
+    "fixture invention",
+    "review-ready adjudication"
+  ],
+  "compositionRules": [
+    "exact-source-bytes-and-safe-relative-source-identity-required",
+    "carrier-source-is-parsed-as-typescript-ast-and-never-executed",
+    "only-the-admitted-literal-carrier-export-is-observed",
+    "hidden-executable-meaning-rejects-before-carrier-admission",
+    "v2-or-v3-schema-and-semantic-reference-closure-required",
+    "v3-management-authority-must-be-complete-and-reference-closed",
+    "findings-are-deterministically-ordered",
+    "receipt-identity-is-derived-from-canonical-json",
+    "validator-does-not-extract-or-project"
+  ],
+  "grammarAuthority": {
+    "grammarVersion": "scenario-semantic-carrier.v2",
+    "grammarRef": "languages/typescript/runtimes/node/semantic-carrier-validator/schemas/semantic-carrier.schema.json",
+    "grammarDigest": "sha256:4956f3095cd47b720c46ecb00c0f4ba37983433347fa12800d0d25b8ea6d3433"
+  },
+  "managedGrammarAuthority": {
+    "grammarVersion": "scenario-semantic-carrier.v3",
+    "grammarRef": "languages/typescript/runtimes/node/semantic-carrier-validator/schemas/semantic-carrier.v3.schema.json",
+    "grammarDigest": "sha256:9f27b1b3e1c443bebdd308b05d113bca836a08c143da877f95713146c56a1387"
+  },
+  "providerObservation": {
+    "disposition": "SATISFIED",
+    "providerSourceSet": [
+      {
+        "sourceRef": "languages/typescript/runtimes/node/semantic-carrier-validator/index.mjs",
+        "sourceDigest": "sha256:44ac0e1c9b9dbf958ed7e7ddddf4b5acab9c2f204a9c037ea85765a5932f70c0"
+      },
+      {
+        "sourceRef": "languages/typescript/runtimes/node/semantic-carrier-validator/src/parse-carrier.js",
+        "sourceDigest": "sha256:60eef8a5e11d51622bddf43e2209e4b18d1def3a06c38a252abb69919a7aada6"
+      },
+      {
+        "sourceRef": "languages/typescript/runtimes/node/semantic-carrier-validator/src/stable.js",
+        "sourceDigest": "sha256:33ea675ed777aa2bb9a760c16845efba7fac3efe5e1d4bac6e1df529eb4688be"
+      },
+      {
+        "sourceRef": "languages/typescript/runtimes/node/semantic-carrier-validator/src/validate.js",
+        "sourceDigest": "sha256:ddfa4a289ecdcaf5f2386bd0794a1ca9a9802867f6fa6ea2c677ba98e0003ac5"
+      },
+      {
+        "sourceRef": "languages/typescript/runtimes/node/semantic-carrier-validator/src/validate-managed.js",
+        "sourceDigest": "sha256:6a30a3feb979fc4419b152c1e78f20cde8ccf158984f867cce66bbba87d6006b"
+      },
+      {
+        "sourceRef": "languages/typescript/runtimes/node/semantic-carrier-validator/schemas/semantic-carrier.schema.json",
+        "sourceDigest": "sha256:4956f3095cd47b720c46ecb00c0f4ba37983433347fa12800d0d25b8ea6d3433"
+      },
+      {
+        "sourceRef": "languages/typescript/runtimes/node/semantic-carrier-validator/schemas/semantic-carrier.v3.schema.json",
+        "sourceDigest": "sha256:9f27b1b3e1c443bebdd308b05d113bca836a08c143da877f95713146c56a1387"
+      },
+      {
+        "sourceRef": "languages/typescript/runtimes/node/semantic-carrier-validator/schemas/canonical-circuit-blueprint.schema.json",
+        "sourceDigest": "sha256:dc3a4cf1c75ca3ebdf51e83b6047bde6c5cd45674798cb31a7e14d1585a12d02"
+      },
+      {
+        "sourceRef": "languages/typescript/runtimes/node/semantic-carrier-validator/schemas/canonical-circuit-blueprint.schema.authority.json",
+        "sourceDigest": "sha256:b6d6d92001683b0d474473a83fe1b765e5f6dd2bd2262a2e9e1d990e6f48e24b"
+      },
+      {
+        "sourceRef": "languages/typescript/runtimes/node/node-mechanic-registry-loader.mjs",
+        "sourceDigest": "sha256:9a29843fac88fefaeb9308c14a661904d41744f5c9e1a43ab98d7f1646d12704"
+      }
+    ],
+    "implementationVersion": "1.1.0",
+    "registryBindingRef": "kernel/semantic-authority/consumer/node-mechanic-registrations/scenario-semantic-carrier-validation.registration.authority.json",
+    "registryBindingDigest": "sha256:7e7a0944efef74a9599311403a647939406fcdfd278f8ba7954f8c398528ad41"
+  },
+  "runtimeDependencies": {
+    "packageLockRef": "package-lock.json",
+    "packageLockDigest": "sha256:57d058a1f9924b7a6f283f2a1704b485c4eb321a1011544fba97999126878b0f",
+    "packages": [
+      {
+        "packageName": "ajv",
+        "packageVersion": "8.20.0",
+        "integrity": "sha512-Thbli+OlOj+iMPYFBVBfJ3OmCAnaSyNn4M1vz9T6Gka5Jt9ba/HIR56joy65tY6kx/FCF5VXNB819Y7/GUrBGA=="
+      },
+      {
+        "packageName": "typescript",
+        "packageVersion": "5.9.3",
+        "integrity": "sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw=="
+      }
+    ]
+  },
+  "authorityDigest": "sha256:96b374c40dc4cb183a3e928acd209e0b6889e5166341f0caec8edd08a362b819"
+}

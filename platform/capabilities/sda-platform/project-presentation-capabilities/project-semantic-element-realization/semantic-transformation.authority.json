@@ -1,0 +1,68 @@
+{
+  "authorityType": "semantic-transformation-authority.v1",
+  "transformations": [
+    {
+      "id": "project-semantic-element-realization.v1",
+      "expression": {
+        "op": "object",
+        "fields": {
+          "instructionId": {
+            "op": "path",
+            "from": "input",
+            "path": "instruction.instructionId"
+          },
+          "instructionKind": {
+            "op": "path",
+            "from": "input",
+            "path": "instruction.instructionKind"
+          },
+          "sourceRef": {
+            "op": "path",
+            "from": "input",
+            "path": "instruction.sourceRef"
+          },
+          "capabilityId": {
+            "op": "path",
+            "from": "input",
+            "path": "instruction.capabilityId"
+          },
+          "mechanicId": {
+            "op": "path",
+            "from": "input",
+            "path": "instruction.mechanicId"
+          },
+          "semanticKind": {
+            "op": "path",
+            "from": "input",
+            "path": "instruction.semanticKind"
+          },
+          "semanticRole": {
+            "op": "path",
+            "from": "input",
+            "path": "instruction.semanticRole"
+          },
+          "content": {
+            "op": "path",
+            "from": "input",
+            "path": "instruction.content"
+          },
+          "stateRefs": {
+            "op": "path",
+            "from": "input",
+            "path": "instruction.stateRefs"
+          },
+          "eventRefs": {
+            "op": "path",
+            "from": "input",
+            "path": "instruction.eventRefs"
+          },
+          "lineage": {
+            "op": "path",
+            "from": "input",
+            "path": "instruction.lineage"
+          }
+        }
+      }
+    }
+  ]
+}

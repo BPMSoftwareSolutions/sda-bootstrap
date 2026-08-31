@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.sda.local/execution-plan-realization-conformance.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contractId", "capabilityId", "disposition", "findings", "authorityClaims", "lineage", "verificationContext"],
+  "properties": {
+    "contractId": {"const": "execution-plan-realization-conformance.v1"},
+    "capabilityId": {"type": "string"},
+    "disposition": {"enum": ["CONFORMANT", "NON_CONFORMANT"]},
+    "verificationContext": {"type": "object", "additionalProperties": true},
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["code", "severity", "message", "subjectRef"],
+        "properties": {
+          "code": {"type": "string"},
+          "severity": {"const": "FATAL"},
+          "message": {"type": "string"},
+          "subjectRef": {"type": "string"}
+        }
+      }
+    },
+    "authorityClaims": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["projection", "promotion", "behavioralConformance"],
+      "properties": {
+        "projection": {"const": "NOT_CLAIMED"},
+        "promotion": {"const": "NOT_CLAIMED"},
+        "behavioralConformance": {"const": "NOT_CLAIMED"}
+      }
+    },
+    "lineage": {"type": "array", "items": {"type": "string"}}
+  }
+}

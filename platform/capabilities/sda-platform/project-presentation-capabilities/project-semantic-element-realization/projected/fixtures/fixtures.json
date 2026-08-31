@@ -1,0 +1,713 @@
+{
+  "fixtureType": "consumer-capability-fixtures.v1",
+  "fixtures": [
+    {
+      "fixtureId": "fixture-1-information-literal",
+      "input": {
+        "instruction": {
+          "instructionId": "inst-1",
+          "instructionKind": "REALIZE_SEMANTIC_ELEMENT",
+          "sourceRef": "src-1",
+          "capabilityId": "content.semantic-element.v1",
+          "mechanicId": "proof.content.semantic-element.v1",
+          "semanticKind": "INFORMATION",
+          "semanticRole": "label",
+          "content": {
+            "kind": "LITERAL",
+            "value": "Hello World"
+          },
+          "stateRefs": [],
+          "eventRefs": [],
+          "lineage": [
+            "root"
+          ]
+        }
+      },
+      "portOutcomes": {
+        "authority-driven-composition": {
+          "authority": "interfaces.authority.json"
+        }
+      },
+      "expected": {
+        "disposition": "terminated",
+        "terminalScenarioId": "project-semantic-element-realization",
+        "scenarioSequence": [
+          "project-semantic-element-realization"
+        ],
+        "outcomeAssertions": [
+          {
+            "conditionId": "instruction-id-is-preserved",
+            "path": "instructionId",
+            "operator": "equals",
+            "value": "inst-1"
+          },
+          {
+            "conditionId": "instruction-kind-is-preserved",
+            "path": "instructionKind",
+            "operator": "equals",
+            "value": "REALIZE_SEMANTIC_ELEMENT"
+          },
+          {
+            "conditionId": "source-ref-is-preserved",
+            "path": "sourceRef",
+            "operator": "equals",
+            "value": "src-1"
+          },
+          {
+            "conditionId": "capability-id-is-preserved",
+            "path": "capabilityId",
+            "operator": "equals",
+            "value": "content.semantic-element.v1"
+          },
+          {
+            "conditionId": "mechanic-id-is-preserved",
+            "path": "mechanicId",
+            "operator": "equals",
+            "value": "proof.content.semantic-element.v1"
+          },
+          {
+            "conditionId": "semantic-kind-is-preserved",
+            "path": "semanticKind",
+            "operator": "equals",
+            "value": "INFORMATION"
+          },
+          {
+            "conditionId": "semantic-role-is-preserved",
+            "path": "semanticRole",
+            "operator": "equals",
+            "value": "label"
+          },
+          {
+            "conditionId": "content-is-preserved",
+            "path": "content",
+            "operator": "equals",
+            "value": {
+              "kind": "LITERAL",
+              "value": "Hello World"
+            }
+          },
+          {
+            "conditionId": "state-refs-is-preserved",
+            "path": "stateRefs",
+            "operator": "equals",
+            "value": []
+          },
+          {
+            "conditionId": "event-refs-is-preserved",
+            "path": "eventRefs",
+            "operator": "equals",
+            "value": []
+          },
+          {
+            "conditionId": "lineage-is-preserved",
+            "path": "lineage",
+            "operator": "equals",
+            "value": [
+              "root"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fixtureId": "fixture-2-action-readmodel",
+      "input": {
+        "instruction": {
+          "instructionId": "inst-2",
+          "instructionKind": "REALIZE_SEMANTIC_ELEMENT",
+          "sourceRef": "src-2",
+          "capabilityId": "content.semantic-element.v1",
+          "mechanicId": "proof.content.semantic-element.v1",
+          "semanticKind": "ACTION",
+          "semanticRole": "submit-button",
+          "content": {
+            "kind": "READ_MODEL_REF",
+            "value": "model.buttonText"
+          },
+          "stateRefs": [
+            "state-enabled",
+            "state-visible"
+          ],
+          "eventRefs": [
+            "click-event",
+            "hover-event"
+          ],
+          "lineage": [
+            "root",
+            "form",
+            "submit-section"
+          ]
+        }
+      },
+      "portOutcomes": {
+        "authority-driven-composition": {
+          "authority": "interfaces.authority.json"
+        }
+      },
+      "expected": {
+        "disposition": "terminated",
+        "terminalScenarioId": "project-semantic-element-realization",
+        "scenarioSequence": [
+          "project-semantic-element-realization"
+        ],
+        "outcomeAssertions": [
+          {
+            "conditionId": "instruction-id-is-preserved",
+            "path": "instructionId",
+            "operator": "equals",
+            "value": "inst-2"
+          },
+          {
+            "conditionId": "instruction-kind-is-preserved",
+            "path": "instructionKind",
+            "operator": "equals",
+            "value": "REALIZE_SEMANTIC_ELEMENT"
+          },
+          {
+            "conditionId": "source-ref-is-preserved",
+            "path": "sourceRef",
+            "operator": "equals",
+            "value": "src-2"
+          },
+          {
+            "conditionId": "capability-id-is-preserved",
+            "path": "capabilityId",
+            "operator": "equals",
+            "value": "content.semantic-element.v1"
+          },
+          {
+            "conditionId": "mechanic-id-is-preserved",
+            "path": "mechanicId",
+            "operator": "equals",
+            "value": "proof.content.semantic-element.v1"
+          },
+          {
+            "conditionId": "semantic-kind-is-preserved",
+            "path": "semanticKind",
+            "operator": "equals",
+            "value": "ACTION"
+          },
+          {
+            "conditionId": "semantic-role-is-preserved",
+            "path": "semanticRole",
+            "operator": "equals",
+            "value": "submit-button"
+          },
+          {
+            "conditionId": "content-is-preserved",
+            "path": "content",
+            "operator": "equals",
+            "value": {
+              "kind": "READ_MODEL_REF",
+              "value": "model.buttonText"
+            }
+          },
+          {
+            "conditionId": "state-refs-is-preserved",
+            "path": "stateRefs",
+            "operator": "equals",
+            "value": [
+              "state-enabled",
+              "state-visible"
+            ]
+          },
+          {
+            "conditionId": "event-refs-is-preserved",
+            "path": "eventRefs",
+            "operator": "equals",
+            "value": [
+              "click-event",
+              "hover-event"
+            ]
+          },
+          {
+            "conditionId": "lineage-is-preserved",
+            "path": "lineage",
+            "operator": "equals",
+            "value": [
+              "root",
+              "form",
+              "submit-section"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fixtureId": "fixture-3-input-literal",
+      "input": {
+        "instruction": {
+          "instructionId": "inst-3",
+          "instructionKind": "REALIZE_SEMANTIC_ELEMENT",
+          "sourceRef": "src-3",
+          "capabilityId": "content.semantic-element.v1",
+          "mechanicId": "proof.content.semantic-element.v1",
+          "semanticKind": "INPUT",
+          "semanticRole": "text-field",
+          "content": {
+            "kind": "LITERAL",
+            "value": "Enter text here"
+          },
+          "stateRefs": [
+            "state-value"
+          ],
+          "eventRefs": [],
+          "lineage": [
+            "root",
+            "form",
+            "input-group"
+          ]
+        }
+      },
+      "portOutcomes": {
+        "authority-driven-composition": {
+          "authority": "interfaces.authority.json"
+        }
+      },
+      "expected": {
+        "disposition": "terminated",
+        "terminalScenarioId": "project-semantic-element-realization",
+        "scenarioSequence": [
+          "project-semantic-element-realization"
+        ],
+        "outcomeAssertions": [
+          {
+            "conditionId": "instruction-id-is-preserved",
+            "path": "instructionId",
+            "operator": "equals",
+            "value": "inst-3"
+          },
+          {
+            "conditionId": "instruction-kind-is-preserved",
+            "path": "instructionKind",
+            "operator": "equals",
+            "value": "REALIZE_SEMANTIC_ELEMENT"
+          },
+          {
+            "conditionId": "source-ref-is-preserved",
+            "path": "sourceRef",
+            "operator": "equals",
+            "value": "src-3"
+          },
+          {
+            "conditionId": "capability-id-is-preserved",
+            "path": "capabilityId",
+            "operator": "equals",
+            "value": "content.semantic-element.v1"
+          },
+          {
+            "conditionId": "mechanic-id-is-preserved",
+            "path": "mechanicId",
+            "operator": "equals",
+            "value": "proof.content.semantic-element.v1"
+          },
+          {
+            "conditionId": "semantic-kind-is-preserved",
+            "path": "semanticKind",
+            "operator": "equals",
+            "value": "INPUT"
+          },
+          {
+            "conditionId": "semantic-role-is-preserved",
+            "path": "semanticRole",
+            "operator": "equals",
+            "value": "text-field"
+          },
+          {
+            "conditionId": "content-is-preserved",
+            "path": "content",
+            "operator": "equals",
+            "value": {
+              "kind": "LITERAL",
+              "value": "Enter text here"
+            }
+          },
+          {
+            "conditionId": "state-refs-is-preserved",
+            "path": "stateRefs",
+            "operator": "equals",
+            "value": [
+              "state-value"
+            ]
+          },
+          {
+            "conditionId": "event-refs-is-preserved",
+            "path": "eventRefs",
+            "operator": "equals",
+            "value": []
+          },
+          {
+            "conditionId": "lineage-is-preserved",
+            "path": "lineage",
+            "operator": "equals",
+            "value": [
+              "root",
+              "form",
+              "input-group"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fixtureId": "fixture-4-navigation-readmodel",
+      "input": {
+        "instruction": {
+          "instructionId": "inst-4",
+          "instructionKind": "REALIZE_SEMANTIC_ELEMENT",
+          "sourceRef": "src-4",
+          "capabilityId": "content.semantic-element.v1",
+          "mechanicId": "proof.content.semantic-element.v1",
+          "semanticKind": "NAVIGATION",
+          "semanticRole": "nav-link",
+          "content": {
+            "kind": "READ_MODEL_REF",
+            "value": "navigation.targetUrl"
+          },
+          "stateRefs": [],
+          "eventRefs": [
+            "navigate-event"
+          ],
+          "lineage": [
+            "root",
+            "header",
+            "nav-bar"
+          ]
+        }
+      },
+      "portOutcomes": {
+        "authority-driven-composition": {
+          "authority": "interfaces.authority.json"
+        }
+      },
+      "expected": {
+        "disposition": "terminated",
+        "terminalScenarioId": "project-semantic-element-realization",
+        "scenarioSequence": [
+          "project-semantic-element-realization"
+        ],
+        "outcomeAssertions": [
+          {
+            "conditionId": "instruction-id-is-preserved",
+            "path": "instructionId",
+            "operator": "equals",
+            "value": "inst-4"
+          },
+          {
+            "conditionId": "instruction-kind-is-preserved",
+            "path": "instructionKind",
+            "operator": "equals",
+            "value": "REALIZE_SEMANTIC_ELEMENT"
+          },
+          {
+            "conditionId": "source-ref-is-preserved",
+            "path": "sourceRef",
+            "operator": "equals",
+            "value": "src-4"
+          },
+          {
+            "conditionId": "capability-id-is-preserved",
+            "path": "capabilityId",
+            "operator": "equals",
+            "value": "content.semantic-element.v1"
+          },
+          {
+            "conditionId": "mechanic-id-is-preserved",
+            "path": "mechanicId",
+            "operator": "equals",
+            "value": "proof.content.semantic-element.v1"
+          },
+          {
+            "conditionId": "semantic-kind-is-preserved",
+            "path": "semanticKind",
+            "operator": "equals",
+            "value": "NAVIGATION"
+          },
+          {
+            "conditionId": "semantic-role-is-preserved",
+            "path": "semanticRole",
+            "operator": "equals",
+            "value": "nav-link"
+          },
+          {
+            "conditionId": "content-is-preserved",
+            "path": "content",
+            "operator": "equals",
+            "value": {
+              "kind": "READ_MODEL_REF",
+              "value": "navigation.targetUrl"
+            }
+          },
+          {
+            "conditionId": "state-refs-is-preserved",
+            "path": "stateRefs",
+            "operator": "equals",
+            "value": []
+          },
+          {
+            "conditionId": "event-refs-is-preserved",
+            "path": "eventRefs",
+            "operator": "equals",
+            "value": [
+              "navigate-event"
+            ]
+          },
+          {
+            "conditionId": "lineage-is-preserved",
+            "path": "lineage",
+            "operator": "equals",
+            "value": [
+              "root",
+              "header",
+              "nav-bar"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fixtureId": "fixture-5-feedback-literal",
+      "input": {
+        "instruction": {
+          "instructionId": "inst-5",
+          "instructionKind": "REALIZE_SEMANTIC_ELEMENT",
+          "sourceRef": "src-5",
+          "capabilityId": "content.semantic-element.v1",
+          "mechanicId": "proof.content.semantic-element.v1",
+          "semanticKind": "FEEDBACK",
+          "semanticRole": "toast",
+          "content": {
+            "kind": "LITERAL",
+            "value": "Operation successful"
+          },
+          "stateRefs": [
+            "state-active"
+          ],
+          "eventRefs": [
+            "dismiss-event"
+          ],
+          "lineage": [
+            "root",
+            "notifications"
+          ]
+        }
+      },
+      "portOutcomes": {
+        "authority-driven-composition": {
+          "authority": "interfaces.authority.json"
+        }
+      },
+      "expected": {
+        "disposition": "terminated",
+        "terminalScenarioId": "project-semantic-element-realization",
+        "scenarioSequence": [
+          "project-semantic-element-realization"
+        ],
+        "outcomeAssertions": [
+          {
+            "conditionId": "instruction-id-is-preserved",
+            "path": "instructionId",
+            "operator": "equals",
+            "value": "inst-5"
+          },
+          {
+            "conditionId": "instruction-kind-is-preserved",
+            "path": "instructionKind",
+            "operator": "equals",
+            "value": "REALIZE_SEMANTIC_ELEMENT"
+          },
+          {
+            "conditionId": "source-ref-is-preserved",
+            "path": "sourceRef",
+            "operator": "equals",
+            "value": "src-5"
+          },
+          {
+            "conditionId": "capability-id-is-preserved",
+            "path": "capabilityId",
+            "operator": "equals",
+            "value": "content.semantic-element.v1"
+          },
+          {
+            "conditionId": "mechanic-id-is-preserved",
+            "path": "mechanicId",
+            "operator": "equals",
+            "value": "proof.content.semantic-element.v1"
+          },
+          {
+            "conditionId": "semantic-kind-is-preserved",
+            "path": "semanticKind",
+            "operator": "equals",
+            "value": "FEEDBACK"
+          },
+          {
+            "conditionId": "semantic-role-is-preserved",
+            "path": "semanticRole",
+            "operator": "equals",
+            "value": "toast"
+          },
+          {
+            "conditionId": "content-is-preserved",
+            "path": "content",
+            "operator": "equals",
+            "value": {
+              "kind": "LITERAL",
+              "value": "Operation successful"
+            }
+          },
+          {
+            "conditionId": "state-refs-is-preserved",
+            "path": "stateRefs",
+            "operator": "equals",
+            "value": [
+              "state-active"
+            ]
+          },
+          {
+            "conditionId": "event-refs-is-preserved",
+            "path": "eventRefs",
+            "operator": "equals",
+            "value": [
+              "dismiss-event"
+            ]
+          },
+          {
+            "conditionId": "lineage-is-preserved",
+            "path": "lineage",
+            "operator": "equals",
+            "value": [
+              "root",
+              "notifications"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fixtureId": "fixture-6-region-readmodel",
+      "input": {
+        "instruction": {
+          "instructionId": "inst-6",
+          "instructionKind": "REALIZE_SEMANTIC_ELEMENT",
+          "sourceRef": "src-6",
+          "capabilityId": "content.semantic-element.v1",
+          "mechanicId": "proof.content.semantic-element.v1",
+          "semanticKind": "REGION",
+          "semanticRole": "main-content",
+          "content": {
+            "kind": "READ_MODEL_REF",
+            "value": "layout.mainRegion"
+          },
+          "stateRefs": [
+            "state-expanded",
+            "state-focused"
+          ],
+          "eventRefs": [
+            "resize-event",
+            "scroll-event"
+          ],
+          "lineage": [
+            "root",
+            "viewport",
+            "main",
+            "container"
+          ]
+        }
+      },
+      "portOutcomes": {
+        "authority-driven-composition": {
+          "authority": "interfaces.authority.json"
+        }
+      },
+      "expected": {
+        "disposition": "terminated",
+        "terminalScenarioId": "project-semantic-element-realization",
+        "scenarioSequence": [
+          "project-semantic-element-realization"
+        ],
+        "outcomeAssertions": [
+          {
+            "conditionId": "instruction-id-is-preserved",
+            "path": "instructionId",
+            "operator": "equals",
+            "value": "inst-6"
+          },
+          {
+            "conditionId": "instruction-kind-is-preserved",
+            "path": "instructionKind",
+            "operator": "equals",
+            "value": "REALIZE_SEMANTIC_ELEMENT"
+          },
+          {
+            "conditionId": "source-ref-is-preserved",
+            "path": "sourceRef",
+            "operator": "equals",
+            "value": "src-6"
+          },
+          {
+            "conditionId": "capability-id-is-preserved",
+            "path": "capabilityId",
+            "operator": "equals",
+            "value": "content.semantic-element.v1"
+          },
+          {
+            "conditionId": "mechanic-id-is-preserved",
+            "path": "mechanicId",
+            "operator": "equals",
+            "value": "proof.content.semantic-element.v1"
+          },
+          {
+            "conditionId": "semantic-kind-is-preserved",
+            "path": "semanticKind",
+            "operator": "equals",
+            "value": "REGION"
+          },
+          {
+            "conditionId": "semantic-role-is-preserved",
+            "path": "semanticRole",
+            "operator": "equals",
+            "value": "main-content"
+          },
+          {
+            "conditionId": "content-is-preserved",
+            "path": "content",
+            "operator": "equals",
+            "value": {
+              "kind": "READ_MODEL_REF",
+              "value": "layout.mainRegion"
+            }
+          },
+          {
+            "conditionId": "state-refs-is-preserved",
+            "path": "stateRefs",
+            "operator": "equals",
+            "value": [
+              "state-expanded",
+              "state-focused"
+            ]
+          },
+          {
+            "conditionId": "event-refs-is-preserved",
+            "path": "eventRefs",
+            "operator": "equals",
+            "value": [
+              "resize-event",
+              "scroll-event"
+            ]
+          },
+          {
+            "conditionId": "lineage-is-preserved",
+            "path": "lineage",
+            "operator": "equals",
+            "value": [
+              "root",
+              "viewport",
+              "main",
+              "container"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

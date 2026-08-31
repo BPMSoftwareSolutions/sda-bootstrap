@@ -1,0 +1,42 @@
+{
+  "evidenceType": "presentation-capability-native-equivalence-evidence.v1",
+  "capabilityId": "project-semantic-element-realization",
+  "bindingRequirementsRef": "native-binding-requirements.authority.json",
+  "oracleManifestRef": "../legacy-oracles.v1.json",
+  "semanticProjection": {
+    "languages": ["node", "python", "csharp"],
+    "disposition": "EQUIVALENT"
+  },
+  "observedNativeOracles": [
+    "browser-dom-web",
+    "react-web",
+    "wpf",
+    "avalonia"
+  ],
+  "verifiedOracleBehavior": [
+    "semantic-kind-to-native-role",
+    "literal-and-read-model-content-binding",
+    "declared-event-dispatch",
+    "live-feedback-accessibility",
+    "authority-deletion"
+  ],
+  "projectedNativeExecutables": [
+    {
+      "targetProfile": "wpf",
+      "projectionManifestRef": "projected/wpf/projection-manifest.json",
+      "projectionManifestHash": "sha256:b9759be89e5947dfb1cf177fae0195e4cd6390127dc02fc07ca458e6c4b132c9",
+      "origin": "PROJECTED_ONLY",
+      "oracleEquivalence": "EQUIVALENT"
+    }
+  ],
+  "nativeRealizationDisposition": "WPF_ELEMENT_REALIZATION_EQUIVALENT_OTHER_TARGETS_OPEN",
+  "missingProjectedMechanics": [
+    "browser-dom-projected-native-realization",
+    "react-projected-native-realization",
+    "avalonia-projected-native-realization",
+    "wpf-flow-composition"
+  ],
+  "legacyOracleDisposition": "RETAIN_FROZEN",
+  "promotionDisposition": "NOT_PROMOTED",
+  "disposition": "FIRST_NATIVE_TARGET_EQUIVALENT_MULTI_TARGET_REPLACEMENT_OPEN"
+}

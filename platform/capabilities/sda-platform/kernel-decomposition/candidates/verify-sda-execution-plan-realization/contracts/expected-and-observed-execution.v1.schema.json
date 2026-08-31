@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.sda.local/expected-and-observed-execution.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contractId", "carrierType", "priorDisposition", "priorFindings", "expected", "observed"],
+  "properties": {
+    "contractId": {"const": "expected-and-observed-execution.v1"},
+    "carrierType": {"const": "expected-and-observed-execution.v1"},
+    "priorDisposition": {"type": "string", "minLength": 1},
+    "priorFindings": {"type": "array", "items": {"type": "object"}},
+    "expected": {"type": "object", "required": ["trace"], "properties": {"trace": {"type": "object", "additionalProperties": true}}, "additionalProperties": true},
+    "observed": {"type": "object", "required": ["trace"], "properties": {"trace": {"type": "object", "additionalProperties": true}}, "additionalProperties": true}
+  }
+}

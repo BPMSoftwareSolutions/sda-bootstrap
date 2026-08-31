@@ -1,0 +1,124 @@
+{
+  "$schema": "contracts/ui-embodiment-provider-registry.v2.schema.json",
+  "registryType": "ui-embodiment-provider-registry.v2",
+  "protocolType": "sda-ui-presentation-ir.v3",
+  "protocolSchemaDigest": "sha256:a075cd28d63f51500018549feacca600f2dacb769c06f386c559d9e39b2f8f53",
+  "providers": [
+    {
+      "providerId": "sda-avalonia-v3-embodiment-provider.v1",
+      "providerVersion": "1.0.0",
+      "providerDigest": "sha256:edeb7e88421a678c8858145a2af72c52b05a799cacfbdf192b516adacdfcddde",
+      "admissionStatus": "PROVIDER_ADMITTED",
+      "targetKinds": ["avalonia-v3"],
+      "priority": 100,
+      "features": [
+        { "capabilityId": "accessibility.live-feedback.v1", "mechanicId": "csharp.accessibility.live-feedback.v1", "versionRange": "1.x" },
+        { "capabilityId": "accessibility.name.v1", "mechanicId": "csharp.accessibility.name.v1", "versionRange": "1.x" },
+        { "capabilityId": "accessibility.operable-action.v1", "mechanicId": "csharp.accessibility.operable-action.v1", "versionRange": "1.x" },
+        { "capabilityId": "adaptation.grouping.v1", "mechanicId": "csharp.adaptation.grouping.v1", "versionRange": "1.x" },
+        { "capabilityId": "adaptation.order.v1", "mechanicId": "csharp.adaptation.order.v1", "versionRange": "1.x" },
+        { "capabilityId": "composition.flow.v1", "mechanicId": "csharp.composition.flow.v1", "versionRange": "1.x" },
+        { "capabilityId": "content.semantic-element.v1", "mechanicId": "csharp.content.semantic-element.v1", "versionRange": "1.x" },
+        { "capabilityId": "interaction.activate.v1", "mechanicId": "csharp.interaction.activate.v1", "versionRange": "1.x" },
+        { "capabilityId": "profile.reference.v1", "mechanicId": "csharp.profile.reference.v1", "versionRange": "1.x" }
+      ],
+      "evidenceCapabilities": ["ACCESSIBILITY", "ADAPTATION", "OBSERVATION"],
+      "observationCapability": "STRUCTURAL",
+      "knownConstraints": ["Avalonia controls are constructed in-process; successor native automation testimony remains required for native-proof admission."],
+      "implementationRef": "languages/csharp/src/ScenarioKernel.Avalonia/V3PlanEmbodiment.cs"
+    },
+    {
+      "providerId": "sda-browser-dom-v3-embodiment-provider.v1",
+      "providerVersion": "1.0.0",
+      "providerDigest": "sha256:1315af332833596f980bbb4f0433d965b5cedc9f50cae9b99328a1a16be90d58",
+      "admissionStatus": "PROVIDER_ADMITTED",
+      "targetKinds": ["browser-dom-web"],
+      "priority": 100,
+      "features": [
+        { "capabilityId": "accessibility.live-feedback.v1", "mechanicId": "web.accessibility.live-feedback.v1", "versionRange": "1.x" },
+        { "capabilityId": "accessibility.name.v1", "mechanicId": "web.accessibility.name.v1", "versionRange": "1.x" },
+        { "capabilityId": "accessibility.operable-action.v1", "mechanicId": "web.accessibility.operable-action.v1", "versionRange": "1.x" },
+        { "capabilityId": "adaptation.grouping.v1", "mechanicId": "web.adaptation.grouping.v1", "versionRange": "1.x" },
+        { "capabilityId": "adaptation.order.v1", "mechanicId": "web.adaptation.order.v1", "versionRange": "1.x" },
+        { "capabilityId": "composition.flow.v1", "mechanicId": "web.composition.flow.v1", "versionRange": "1.x" },
+        { "capabilityId": "content.semantic-element.v1", "mechanicId": "web.content.semantic-element.v1", "versionRange": "1.x" },
+        { "capabilityId": "interaction.activate.v1", "mechanicId": "web.interaction.activate.v1", "versionRange": "1.x" },
+        { "capabilityId": "profile.reference.v1", "mechanicId": "web.profile.reference.v1", "versionRange": "1.x" }
+      ],
+      "evidenceCapabilities": ["ACCESSIBILITY", "ADAPTATION", "OBSERVATION"],
+      "observationCapability": "STRUCTURAL",
+      "knownConstraints": ["Structural browser testimony is admitted; browser-native automation remains required for native-proof admission."],
+      "implementationRef": "languages/typescript/presentation/browser-dom/runtime/v3-plan-embodiment.mjs"
+    },
+    {
+      "providerId": "sda-headless-v3-proof-provider.v1",
+      "providerVersion": "1.0.0",
+      "providerDigest": "sha256:50a8920c65c79493cf696bfd7589bd85dba4313e59b183d815f3afd405d5eefa",
+      "admissionStatus": "PLANNING_ONLY",
+      "targetKinds": ["headless-proof"],
+      "priority": 100,
+      "features": [
+        { "capabilityId": "accessibility.live-feedback.v1", "mechanicId": "proof.accessibility.live-feedback.v1", "versionRange": "1.x" },
+        { "capabilityId": "accessibility.name.v1", "mechanicId": "proof.accessibility.name.v1", "versionRange": "1.x" },
+        { "capabilityId": "accessibility.operable-action.v1", "mechanicId": "proof.accessibility.operable-action.v1", "versionRange": "1.x" },
+        { "capabilityId": "adaptation.grouping.v1", "mechanicId": "proof.adaptation.grouping.v1", "versionRange": "1.x" },
+        { "capabilityId": "adaptation.order.v1", "mechanicId": "proof.adaptation.order.v1", "versionRange": "1.x" },
+        { "capabilityId": "composition.flow.v1", "mechanicId": "proof.composition.flow.v1", "versionRange": "1.x" },
+        { "capabilityId": "content.semantic-element.v1", "mechanicId": "proof.content.semantic-element.v1", "versionRange": "1.x" },
+        { "capabilityId": "interaction.activate.v1", "mechanicId": "proof.interaction.activate.v1", "versionRange": "1.x" },
+        { "capabilityId": "profile.reference.v1", "mechanicId": "proof.profile.reference.v1", "versionRange": "1.x" }
+      ],
+      "evidenceCapabilities": ["ACCESSIBILITY", "ADAPTATION", "OBSERVATION"],
+      "observationCapability": "PLAN_ONLY",
+      "knownConstraints": ["Planning fixture only; it does not materialize or observe a native UI."],
+      "implementationRef": "capabilities/sda-platform/resolve-ui-embodiment-provider/provider-registry.v2.json"
+    },
+    {
+      "providerId": "sda-react-v3-embodiment-provider.v1",
+      "providerVersion": "1.0.0",
+      "providerDigest": "sha256:57a3ae228af7fdbc020b635745607f80443ebf2230a6684e43da1f5e8c5bcf2a",
+      "admissionStatus": "PROVIDER_ADMITTED",
+      "targetKinds": ["react-web"],
+      "priority": 100,
+      "features": [
+        { "capabilityId": "accessibility.live-feedback.v1", "mechanicId": "web.accessibility.live-feedback.v1", "versionRange": "1.x" },
+        { "capabilityId": "accessibility.name.v1", "mechanicId": "web.accessibility.name.v1", "versionRange": "1.x" },
+        { "capabilityId": "accessibility.operable-action.v1", "mechanicId": "web.accessibility.operable-action.v1", "versionRange": "1.x" },
+        { "capabilityId": "adaptation.grouping.v1", "mechanicId": "web.adaptation.grouping.v1", "versionRange": "1.x" },
+        { "capabilityId": "adaptation.order.v1", "mechanicId": "web.adaptation.order.v1", "versionRange": "1.x" },
+        { "capabilityId": "composition.flow.v1", "mechanicId": "web.composition.flow.v1", "versionRange": "1.x" },
+        { "capabilityId": "content.semantic-element.v1", "mechanicId": "web.content.semantic-element.v1", "versionRange": "1.x" },
+        { "capabilityId": "interaction.activate.v1", "mechanicId": "web.interaction.activate.v1", "versionRange": "1.x" },
+        { "capabilityId": "profile.reference.v1", "mechanicId": "web.profile.reference.v1", "versionRange": "1.x" }
+      ],
+      "evidenceCapabilities": ["ACCESSIBILITY", "ADAPTATION", "OBSERVATION"],
+      "observationCapability": "STRUCTURAL",
+      "knownConstraints": ["Structural React testimony is admitted; browser-native automation remains required for native-proof admission."],
+      "implementationRef": "languages/typescript/presentation/react/runtime/v3-plan-embodiment.mjs"
+    },
+    {
+      "providerId": "sda-wpf-v3-embodiment-provider.v1",
+      "providerVersion": "1.0.0",
+      "providerDigest": "sha256:2ba347ce751bf2067d87077031c63bd0557acc11b0a55e03bea8aee9f2392071",
+      "admissionStatus": "PROVIDER_ADMITTED",
+      "targetKinds": ["wpf-v3"],
+      "priority": 100,
+      "features": [
+        { "capabilityId": "accessibility.live-feedback.v1", "mechanicId": "csharp.accessibility.live-feedback.v1", "versionRange": "1.x" },
+        { "capabilityId": "accessibility.name.v1", "mechanicId": "csharp.accessibility.name.v1", "versionRange": "1.x" },
+        { "capabilityId": "accessibility.operable-action.v1", "mechanicId": "csharp.accessibility.operable-action.v1", "versionRange": "1.x" },
+        { "capabilityId": "adaptation.grouping.v1", "mechanicId": "csharp.adaptation.grouping.v1", "versionRange": "1.x" },
+        { "capabilityId": "adaptation.order.v1", "mechanicId": "csharp.adaptation.order.v1", "versionRange": "1.x" },
+        { "capabilityId": "composition.flow.v1", "mechanicId": "csharp.composition.flow.v1", "versionRange": "1.x" },
+        { "capabilityId": "content.semantic-element.v1", "mechanicId": "csharp.content.semantic-element.v1", "versionRange": "1.x" },
+        { "capabilityId": "interaction.activate.v1", "mechanicId": "csharp.interaction.activate.v1", "versionRange": "1.x" },
+        { "capabilityId": "profile.reference.v1", "mechanicId": "csharp.profile.reference.v1", "versionRange": "1.x" }
+      ],
+      "evidenceCapabilities": ["ACCESSIBILITY", "ADAPTATION", "OBSERVATION"],
+      "observationCapability": "STRUCTURAL",
+      "knownConstraints": ["WPF controls are constructed in-process; successor UI Automation testimony remains required for native-proof admission."],
+      "implementationRef": "languages/csharp/src/ScenarioKernel.Wpf/V3PlanEmbodiment.cs"
+    }
+  ],
+  "catalogDigest": "sha256:c08d8a3ab929f2de86bad48d70a065047c8c82a8b510e449b7720d524a228407"
+}

@@ -1,0 +1,30 @@
+{
+  "evidenceType": "presentation-capability-candidate-calibration.v1",
+  "capabilityId": "project-semantic-element-realization",
+  "featureRef": "capabilities/sda-platform/project-presentation-capabilities/features/project-semantic-element-realization.feature",
+  "providerAuthorityId": "primary-cognitive-provider",
+  "resolvedModel": "gemini-flash-latest",
+  "attemptCount": 1,
+  "requestId": "author-project-semantic-element-realization",
+  "requestHash": "sha256:a9a77e6b2d31291b23c8cf6ff805b0cf1f4805d9da7e261908e816b8fd30c507",
+  "responseHash": "sha256:afef13c3834a0ba7197ad7423f5d34c4a360d28c3b3fb04080afb558a4c2af01",
+  "candidateClaims": {
+    "contractAdmission": "NOT_CLAIMED",
+    "behavioralConformance": "NOT_CLAIMED",
+    "projection": "NOT_CLAIMED",
+    "promotion": "NOT_CLAIMED",
+    "handwrittenExecutableCode": false
+  },
+  "findings": [
+    { "code": "RAW_RESPONSE_NOT_DURABLY_RETAINED", "subjectRef": "author-project-semantic-element-realization" },
+    { "code": "SEMANTIC_KIND_VOCABULARY_INVENTED", "subjectRef": "fixtures.authority.json" },
+    { "code": "LIST_CARDINALITY_COLLAPSED", "subjectRef": "contracts/input.schema.json" },
+    { "code": "MECHANIC_BINDING_OMITTED", "subjectRef": "contracts/outcome.schema.json" },
+    { "code": "MULTI_LANGUAGE_TARGET_COVERAGE_MISSING", "subjectRef": "consumer-workspace.authority.json" }
+  ],
+  "rawResponseRetention": "MISSING",
+  "workbenchDisposition": "NOT_DERIVED",
+  "projectionDisposition": "NOT_ATTEMPTED",
+  "promotionDisposition": "NOT_ATTEMPTED",
+  "disposition": "HELD"
+}

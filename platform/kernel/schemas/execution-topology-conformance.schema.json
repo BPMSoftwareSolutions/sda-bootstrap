@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/execution-topology-conformance.v1.schema.json",
+  "title": "SDA execution topology conformance v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["conformanceType", "graphId", "canonicalGraphDigest", "observedPathDigest", "disposition", "plannedCellIds", "observedCellIds", "plannedEdgeIds", "observedEdgeIds", "findings"],
+  "properties": {
+    "conformanceType": { "const": "execution-topology-conformance.v1" },
+    "graphId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "canonicalGraphDigest": { "$ref": "semantic-primitives.schema.json#/$defs/digest" },
+    "observedPathDigest": { "$ref": "semantic-primitives.schema.json#/$defs/digest" },
+    "disposition": { "type": "string", "enum": ["CONFORMING", "NON_CONFORMING", "HELD"] },
+    "plannedCellIds": { "type": "array", "uniqueItems": true, "items": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" } },
+    "observedCellIds": { "type": "array", "uniqueItems": true, "items": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" } },
+    "plannedEdgeIds": { "type": "array", "uniqueItems": true, "items": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" } },
+    "observedEdgeIds": { "type": "array", "uniqueItems": true, "items": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" } },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["code", "subjectId", "message"],
+        "properties": {
+          "code": {
+            "type": "string",
+            "enum": ["UNDECLARED_EXECUTION_MECHANIC", "UNDECLARED_PHYSICAL_EFFECT", "DECLARED_CELL_NOT_EXECUTED", "UNEXPECTED_CELL_EXECUTED", "UNEXPECTED_EDGE_TRAVERSED", "EDGE_CONTRACT_MISMATCH", "BRANCH_AUTHORITY_MISMATCH", "NON_EXHAUSTIVE_BRANCH_AUTHORITY", "JOIN_INPUT_UNSATISFIED", "UNDECLARED_RECURRENCE", "RECURRENCE_BOUND_EXCEEDED", "PROVIDER_BINDING_DIVERGENCE", "PROVIDER_TESTIMONY_GAP", "CANONICAL_TOPOLOGY_DIVERGENCE", "OBSERVED_TOPOLOGY_DIVERGENCE", "CROSS_APPLY_INCOMPLETE", "LANGUAGE_MECHANIC_PARITY_FAILURE"]
+          },
+          "subjectId": { "type": "string", "minLength": 1 },
+          "message": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  }
+}

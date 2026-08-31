@@ -1,0 +1,28 @@
+{
+  "contractId": "profile-governed-proof-binding-evaluation-input.v1",
+  "payload": {
+    "evaluationCaseId": "mixed-lineage-binding-candidate",
+    "profileId": "generic-proof-binding-evaluation-conformance-profile.v1",
+    "snapshotDigest": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "proofObligationId": "obligation:mixed-lineage",
+    "subjectSemanticObjectId": "scenario:mixed-lineage",
+    "authorityApplicability": "REQUIRED",
+    "bindingCandidates": [
+      {
+        "fromSemanticObjectId": "evidence:mixed",
+        "relationshipKind": "EVIDENCE_PROVES_SUBJECT",
+        "toSemanticObjectId": "obligation:mixed-lineage",
+        "basis": "DETERMINISTIC_RULE",
+        "lineageState": "MIXED"
+      }
+    ],
+    "evidenceState": "CURRENT_PASSING",
+    "reproduction": {
+      "orderedInputDigest": "sha256:ebda1f9b22e3f6a9f6c99136668bfc55a6da671436889920f8b4097fc72006b6",
+      "evaluationRuleIds": [
+        "evaluation-order.v1",
+        "bind-evidence-subject.v1"
+      ]
+    }
+  }
+}

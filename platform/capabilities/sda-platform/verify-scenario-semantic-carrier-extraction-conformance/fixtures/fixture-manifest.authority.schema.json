@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/semantic-carrier/extraction-fixture-manifest.authority.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "manifestType",
+    "fixtureRoot",
+    "artifacts",
+    "fixtureSetDigest"
+  ],
+  "properties": {
+    "manifestType": {
+      "const": "scenario-semantic-carrier-extraction-fixture-manifest.v1"
+    },
+    "fixtureRoot": {
+      "const": "capabilities/sda-platform/verify-scenario-semantic-carrier-extraction-conformance/fixtures"
+    },
+    "artifacts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "sourceDigest"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "sourceDigest": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          }
+        }
+      }
+    },
+    "fixtureSetDigest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    }
+  }
+}

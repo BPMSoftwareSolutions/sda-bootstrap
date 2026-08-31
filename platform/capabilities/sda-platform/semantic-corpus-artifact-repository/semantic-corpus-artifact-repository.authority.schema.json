@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/semantic-corpus/semantic-corpus-artifact-repository.authority.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "authorityType", "lifecycle", "authorityId", "repositoryId", "repositoryRootAuthorityId", "addressing", "pointerPolicy", "allowedArtifactKinds", "canonicalizationAuthorities", "closureReceiptPolicy", "retentionPolicy", "authorityDigest"],
+  "properties": {
+    "$schema": {"const": "semantic-corpus-artifact-repository.authority.schema.json"},
+    "authorityType": {"const": "semantic-corpus-artifact-repository-authority.v1"},
+    "lifecycle": {"const": "ADMITTED"},
+    "authorityId": {"type": "string", "pattern": "^[a-z][a-z0-9.-]*\\.v[0-9]+$"},
+    "repositoryId": {"type": "string", "pattern": "^[a-z][a-z0-9.-]*$"},
+    "repositoryRootAuthorityId": {"type": "string", "pattern": "^[a-z][a-z0-9.-]*\\.v[0-9]+$"},
+    "addressing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["digestAlgorithm", "objectsDirectory", "hexShardLength", "fileExtension"],
+      "properties": {
+        "digestAlgorithm": {"const": "SHA-256"},
+        "objectsDirectory": {"const": "objects"},
+        "hexShardLength": {"const": 2},
+        "fileExtension": {"const": ".json"}
+      }
+    },
+    "pointerPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pointersDirectory", "generationWidth", "resolution", "allowedPointerIds"],
+      "properties": {
+        "pointersDirectory": {"const": "pointers"},
+        "generationWidth": {"const": 12},
+        "resolution": {"const": "HIGHEST_CONTIGUOUS_IMMUTABLE_GENERATION"},
+        "allowedPointerIds": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9._-]{0,127}$"}}
+      }
+    },
+    "allowedArtifactKinds": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/artifactKind"}},
+    "canonicalizationAuthorities": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["authorityId", "authorityDigest", "algorithm", "artifactKinds"],
+        "properties": {
+          "authorityId": {"type": "string", "pattern": "^[a-z][a-z0-9.-]*\\.v[0-9]+$"},
+          "authorityDigest": {"$ref": "#/$defs/digest"},
+          "algorithm": {"const": "RECURSIVE_CODE_POINT_KEY_ORDER_JSON_V1"},
+          "artifactKinds": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/artifactKind"}}
+        }
+      }
+    },
+    "closureReceiptPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contractId", "requiredDisposition", "requireExactExpectedGeneration", "requireExactExpectedCurrentSnapshot"],
+      "properties": {
+        "contractId": {"const": "semantic-corpus-closure-receipt.v1"},
+        "requiredDisposition": {"const": "CORPUS_CLOSED"},
+        "requireExactExpectedGeneration": {"const": true},
+        "requireExactExpectedCurrentSnapshot": {"const": true}
+      }
+    },
+    "retentionPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["receiptContractIds", "requireDigestBinding"],
+      "properties": {
+        "receiptContractIds": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "requireDigestBinding": {"const": true}
+      }
+    },
+    "authorityDigest": {"$ref": "#/$defs/digest"}
+  },
+  "$defs": {
+    "digest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "artifactKind": {"enum": ["SOURCE_MANIFEST", "CORPUS_SNAPSHOT", "OBJECT_CATALOG", "RELATIONSHIP_GRAPH", "IDENTITY_INDEX", "LEXICAL_INDEX", "QUERY_RECEIPT", "AUTHORING_RECEIPT", "CLOSURE_RECEIPT", "PUBLICATION_RECEIPT"]}
+  }
+}

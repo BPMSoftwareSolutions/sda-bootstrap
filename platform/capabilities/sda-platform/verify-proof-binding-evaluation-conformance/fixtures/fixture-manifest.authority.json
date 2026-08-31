@@ -1,0 +1,379 @@
+{
+  "$schema": "fixture-manifest.authority.schema.json",
+  "fixtureType": "proof-binding-evaluation-provider-fixture-manifest.v1",
+  "lifecycle": "ADMITTED",
+  "fixtureSetDigest": "sha256:23948392cd0d8926f0238e65a0eaa4e0c40debcfea033b3e6a70c1bc334cc264",
+  "fixtureSetDigestAlgorithm": "sha256 over UTF-8 path, NUL, sha256 exact artifact-file bytes digest, LF records sorted by bytewise path",
+  "artifacts": [
+    {
+      "artifactId": "explicit-current-passing-source",
+      "path": "carriers/explicit-current-passing.evaluation.json",
+      "role": "JSON_DOCUMENT",
+      "digestSubject": "EXACT_CARRIER_FILE_BYTES",
+      "sourceDigest": "sha256:c007bc0216e59c5e7c2bfe7107c346b771bd8d83c2c82577446eed7ef40c20ae"
+    },
+    {
+      "artifactId": "missing-evidence-source",
+      "path": "carriers/missing-evidence-is-not-observable.evaluation.json",
+      "role": "JSON_DOCUMENT",
+      "digestSubject": "EXACT_CARRIER_FILE_BYTES",
+      "sourceDigest": "sha256:63a744844e51b764abed6bf1cfeb831cd8a4a8751b3cd1f7f0054d126595e08b"
+    },
+    {
+      "artifactId": "current-failing-source",
+      "path": "carriers/current-failing-evidence-is-not-satisfied.evaluation.json",
+      "role": "JSON_DOCUMENT",
+      "digestSubject": "EXACT_CARRIER_FILE_BYTES",
+      "sourceDigest": "sha256:1aee32a28c614ee2d1f9b78fe5a8d458288494ca1dc9739de16ce9b62cd4d66d"
+    },
+    {
+      "artifactId": "admitted-exclusion-source",
+      "path": "carriers/admitted-exclusion-is-not-applicable.evaluation.json",
+      "role": "JSON_DOCUMENT",
+      "digestSubject": "EXACT_CARRIER_FILE_BYTES",
+      "sourceDigest": "sha256:db4519b638e1c79861bf158fe25f8d6d2b6a1f4ee1a39ca10714bb86cc6ca022"
+    },
+    {
+      "artifactId": "prohibited-proximity-source",
+      "path": "carriers/prohibited-proximity-basis-is-rejected.evaluation.json",
+      "role": "JSON_DOCUMENT",
+      "digestSubject": "EXACT_CARRIER_FILE_BYTES",
+      "sourceDigest": "sha256:a2cdcc1d12a0f04615c92ee98853b50b6e09205aae477ac916a117a966ebc5ad"
+    },
+    {
+      "artifactId": "stale-lineage-source",
+      "path": "carriers/stale-or-mixed-lineage-is-rejected.evaluation.json",
+      "role": "JSON_DOCUMENT",
+      "digestSubject": "EXACT_CARRIER_FILE_BYTES",
+      "sourceDigest": "sha256:f5de4a4b6d6481093aef7ac9c1df92d30f31748630235459f12ee5815a391480"
+    },
+    {
+      "artifactId": "pinned-reproduction-source",
+      "path": "carriers/pinned-inputs-reproduce-deterministically.evaluation.json",
+      "role": "JSON_DOCUMENT",
+      "digestSubject": "EXACT_CARRIER_FILE_BYTES",
+      "sourceDigest": "sha256:5237f94ef5c32abadefc80d55c963ab1a968110826725b277ee79f45726138ad"
+    },
+    {
+      "artifactId": "stale-evidence-source",
+      "path": "carriers/stale-evidence-current-binding.evaluation.json",
+      "role": "JSON_DOCUMENT",
+      "digestSubject": "EXACT_CARRIER_FILE_BYTES",
+      "sourceDigest": "sha256:4e6ebe454528a8282f5ca93d8449eeae9aa9998e2c2528ca20a963042b221892"
+    },
+    {
+      "artifactId": "mixed-lineage-source",
+      "path": "carriers/mixed-lineage-binding-candidate.evaluation.json",
+      "role": "JSON_DOCUMENT",
+      "digestSubject": "EXACT_CARRIER_FILE_BYTES",
+      "sourceDigest": "sha256:bc7ca28b1b2f052e666f5d51b4e54e462f218e40db83b00228bab3714c5b8c47"
+    },
+    {
+      "artifactId": "matching-prose-source",
+      "path": "carriers/prohibited-matching-prose-basis.evaluation.json",
+      "role": "JSON_DOCUMENT",
+      "digestSubject": "EXACT_CARRIER_FILE_BYTES",
+      "sourceDigest": "sha256:352e94402be794da5c4c901a9582b527c51bbcd9dfc85e24b1fd7a0654635f2a"
+    },
+    {
+      "artifactId": "pin-mismatch-source",
+      "path": "carriers/reproduction-pin-mismatch.evaluation.json",
+      "role": "JSON_DOCUMENT",
+      "digestSubject": "EXACT_CARRIER_FILE_BYTES",
+      "sourceDigest": "sha256:8d482ade57f5c778995c1d137ef94da0b93ec7586c03cd78d04c3c5851c82477"
+    },
+    {
+      "artifactId": "reordered-a-source",
+      "path": "carriers/reordered-discovery-a.evaluation.json",
+      "role": "JSON_DOCUMENT",
+      "digestSubject": "EXACT_CARRIER_FILE_BYTES",
+      "sourceDigest": "sha256:745fd001a8a86be98c62c51ce30d3c760b0df4c062d135f7f81212378d042352"
+    },
+    {
+      "artifactId": "reordered-b-source",
+      "path": "carriers/reordered-discovery-b.evaluation.json",
+      "role": "JSON_DOCUMENT",
+      "digestSubject": "EXACT_CARRIER_FILE_BYTES",
+      "sourceDigest": "sha256:9fef282f221d027b3fee5593e9a7295b024f1e737b205718f0b8da29c7227edc"
+    },
+    {
+      "artifactId": "proof-binding-profile",
+      "path": "generic-proof-binding-profile.v1.json",
+      "role": "PROFILE",
+      "digestSubject": "EXACT_CARRIER_FILE_BYTES",
+      "sourceDigest": "sha256:57342f94d143f26b734981bd53aff1f27a0e6637cd62ece9e1c3e9fa7296ea3a"
+    }
+  ],
+  "cases": [
+    {
+      "fixtureId": "explicit-current-passing-binding",
+      "carrierArtifactId": "explicit-current-passing-source",
+      "carrierEncoding": "JSON_DOCUMENT",
+      "evaluationCaseId": "explicit-current-passing-binding",
+      "expected": {
+        "obligationDisposition": "SATISFIED",
+        "bindingDisposition": "BOUND",
+        "findingCodes": [],
+        "reproductionDisposition": "REPRODUCIBLE"
+      },
+      "provesPartitions": [
+        "PROFILE_BOUNDARY_AND_EVALUATION_ORDER",
+        "CURRENT_PASSING_SATISFIED",
+        "CONTRACT_ADMISSION_AND_RECEIPT_DIGEST",
+        "PROVIDER_AND_AUTHORITY_IDENTITIES"
+      ]
+    },
+    {
+      "fixtureId": "missing-evidence-is-not-observable",
+      "carrierArtifactId": "missing-evidence-source",
+      "carrierEncoding": "JSON_DOCUMENT",
+      "evaluationCaseId": "missing-evidence-is-not-observable",
+      "expected": {
+        "obligationDisposition": "NOT_OBSERVABLE",
+        "bindingDisposition": "NOT_OBSERVABLE",
+        "findingCodes": [
+          "REQUIRED_EVIDENCE_ABSENT"
+        ],
+        "reproductionDisposition": "REPRODUCIBLE"
+      },
+      "provesPartitions": [
+        "PROFILE_BOUNDARY_AND_EVALUATION_ORDER",
+        "ABSENCE_DOES_NOT_MEAN_FAILURE",
+        "ORDERED_EVIDENCE_FINDINGS"
+      ]
+    },
+    {
+      "fixtureId": "current-failing-evidence-is-not-satisfied",
+      "carrierArtifactId": "current-failing-source",
+      "carrierEncoding": "JSON_DOCUMENT",
+      "evaluationCaseId": "current-failing-evidence-is-not-satisfied",
+      "expected": {
+        "obligationDisposition": "NOT_SATISFIED",
+        "bindingDisposition": "BOUND",
+        "findingCodes": [
+          "CURRENT_EVIDENCE_EXPLICIT_FAILURE"
+        ],
+        "reproductionDisposition": "REPRODUCIBLE"
+      },
+      "provesPartitions": [
+        "PROFILE_BOUNDARY_AND_EVALUATION_ORDER",
+        "CURRENT_FAILING_NOT_SATISFIED",
+        "EXACTLY_ONE_DISPOSITION_PER_OBLIGATION",
+        "ORDERED_EVIDENCE_FINDINGS"
+      ]
+    },
+    {
+      "fixtureId": "admitted-exclusion-is-not-applicable",
+      "carrierArtifactId": "admitted-exclusion-source",
+      "carrierEncoding": "JSON_DOCUMENT",
+      "evaluationCaseId": "admitted-exclusion-is-not-applicable",
+      "expected": {
+        "obligationDisposition": "NOT_APPLICABLE",
+        "bindingDisposition": "NOT_EVALUATED",
+        "findingCodes": [
+          "OBLIGATION_EXCLUDED_BY_ADMITTED_AUTHORITY"
+        ],
+        "reproductionDisposition": "REPRODUCIBLE"
+      },
+      "provesPartitions": [
+        "PROFILE_BOUNDARY_AND_EVALUATION_ORDER",
+        "EXCLUDED_OBLIGATION_NOT_APPLICABLE",
+        "EXACTLY_ONE_DISPOSITION_PER_OBLIGATION",
+        "ORDERED_EVIDENCE_FINDINGS"
+      ]
+    },
+    {
+      "fixtureId": "prohibited-proximity-basis-is-rejected",
+      "carrierArtifactId": "prohibited-proximity-source",
+      "carrierEncoding": "JSON_DOCUMENT",
+      "evaluationCaseId": "prohibited-proximity-basis-is-rejected",
+      "expected": {
+        "obligationDisposition": "NOT_OBSERVABLE",
+        "bindingDisposition": "REJECTED",
+        "findingCodes": [
+          "PROHIBITED_PROOF_BINDING_BASIS"
+        ],
+        "reproductionDisposition": "REPRODUCIBLE"
+      },
+      "provesPartitions": [
+        "PROFILE_BOUNDARY_AND_EVALUATION_ORDER",
+        "PROHIBITED_BASIS_REJECTION",
+        "ORDERED_EVIDENCE_FINDINGS"
+      ]
+    },
+    {
+      "fixtureId": "stale-or-mixed-lineage-is-rejected",
+      "carrierArtifactId": "stale-lineage-source",
+      "carrierEncoding": "JSON_DOCUMENT",
+      "evaluationCaseId": "stale-or-mixed-lineage-is-rejected",
+      "expected": {
+        "obligationDisposition": "NOT_OBSERVABLE",
+        "bindingDisposition": "REJECTED",
+        "findingCodes": [
+          "STALE_OR_MIXED_PROOF_LINEAGE"
+        ],
+        "reproductionDisposition": "REPRODUCIBLE"
+      },
+      "provesPartitions": [
+        "PROFILE_BOUNDARY_AND_EVALUATION_ORDER",
+        "STALE_OR_MIXED_LINEAGE_REJECTION",
+        "ORDERED_EVIDENCE_FINDINGS"
+      ]
+    },
+    {
+      "fixtureId": "pinned-inputs-reproduce-deterministically",
+      "carrierArtifactId": "pinned-reproduction-source",
+      "carrierEncoding": "JSON_DOCUMENT",
+      "evaluationCaseId": "pinned-inputs-reproduce-deterministically",
+      "expected": {
+        "obligationDisposition": "SATISFIED",
+        "bindingDisposition": "BOUND",
+        "findingCodes": [],
+        "reproductionDisposition": "REPRODUCIBLE"
+      },
+      "provesPartitions": [
+        "PROFILE_BOUNDARY_AND_EVALUATION_ORDER",
+        "DETERMINISTIC_REPRODUCTION",
+        "CURRENT_PASSING_SATISFIED"
+      ]
+    },
+    {
+      "fixtureId": "stale-evidence-current-binding",
+      "carrierArtifactId": "stale-evidence-source",
+      "carrierEncoding": "JSON_DOCUMENT",
+      "evaluationCaseId": "stale-evidence-current-binding",
+      "expected": {
+        "obligationDisposition": "NOT_OBSERVABLE",
+        "bindingDisposition": "BOUND",
+        "findingCodes": [
+          "STALE_OR_MIXED_PROOF_LINEAGE"
+        ],
+        "reproductionDisposition": "REPRODUCIBLE"
+      },
+      "provesPartitions": [
+        "STALE_OR_MIXED_LINEAGE_REJECTION",
+        "EXACTLY_ONE_DISPOSITION_PER_OBLIGATION",
+        "ORDERED_EVIDENCE_FINDINGS"
+      ]
+    },
+    {
+      "fixtureId": "mixed-lineage-binding-candidate",
+      "carrierArtifactId": "mixed-lineage-source",
+      "carrierEncoding": "JSON_DOCUMENT",
+      "evaluationCaseId": "mixed-lineage-binding-candidate",
+      "expected": {
+        "obligationDisposition": "NOT_OBSERVABLE",
+        "bindingDisposition": "REJECTED",
+        "findingCodes": [
+          "STALE_OR_MIXED_PROOF_LINEAGE"
+        ],
+        "reproductionDisposition": "REPRODUCIBLE"
+      },
+      "provesPartitions": [
+        "STALE_OR_MIXED_LINEAGE_REJECTION"
+      ]
+    },
+    {
+      "fixtureId": "prohibited-matching-prose-basis",
+      "carrierArtifactId": "matching-prose-source",
+      "carrierEncoding": "JSON_DOCUMENT",
+      "evaluationCaseId": "prohibited-matching-prose-basis",
+      "expected": {
+        "obligationDisposition": "NOT_OBSERVABLE",
+        "bindingDisposition": "REJECTED",
+        "findingCodes": [
+          "PROHIBITED_PROOF_BINDING_BASIS"
+        ],
+        "reproductionDisposition": "REPRODUCIBLE"
+      },
+      "provesPartitions": [
+        "PROHIBITED_BASIS_REJECTION"
+      ]
+    },
+    {
+      "fixtureId": "reproduction-pin-mismatch",
+      "carrierArtifactId": "pin-mismatch-source",
+      "carrierEncoding": "JSON_DOCUMENT",
+      "evaluationCaseId": "reproduction-pin-mismatch",
+      "expected": {
+        "obligationDisposition": "SATISFIED",
+        "bindingDisposition": "BOUND",
+        "findingCodes": [
+          "REPRODUCTION_PIN_MISMATCH"
+        ],
+        "reproductionDisposition": "NOT_REPRODUCIBLE"
+      },
+      "provesPartitions": [
+        "DETERMINISTIC_REPRODUCTION",
+        "ORDERED_EVIDENCE_FINDINGS"
+      ]
+    },
+    {
+      "fixtureId": "reordered-discovery-a",
+      "carrierArtifactId": "reordered-a-source",
+      "carrierEncoding": "JSON_DOCUMENT",
+      "evaluationCaseId": "reordered-candidate-discovery",
+      "expected": {
+        "obligationDisposition": "SATISFIED",
+        "bindingDisposition": "BOUND",
+        "findingCodes": [],
+        "reproductionDisposition": "REPRODUCIBLE"
+      },
+      "provesPartitions": [
+        "DETERMINISTIC_REPRODUCTION",
+        "CURRENT_PASSING_SATISFIED"
+      ]
+    },
+    {
+      "fixtureId": "reordered-discovery-b",
+      "carrierArtifactId": "reordered-b-source",
+      "carrierEncoding": "JSON_DOCUMENT",
+      "evaluationCaseId": "reordered-candidate-discovery",
+      "expected": {
+        "obligationDisposition": "SATISFIED",
+        "bindingDisposition": "BOUND",
+        "findingCodes": [],
+        "reproductionDisposition": "REPRODUCIBLE"
+      },
+      "provesPartitions": [
+        "DETERMINISTIC_REPRODUCTION",
+        "CURRENT_PASSING_SATISFIED"
+      ]
+    }
+  ],
+  "reproductionSets": [
+    {
+      "reproductionSetId": "reordered-candidate-discovery",
+      "fixtureIds": [
+        "reordered-discovery-a",
+        "reordered-discovery-b"
+      ],
+      "canonicalCandidateOrder": [
+        "fixture:alpha",
+        "fixture:beta"
+      ],
+      "discoveryOrders": [
+        [
+          "reordered-discovery-a",
+          "reordered-discovery-b"
+        ],
+        [
+          "reordered-discovery-b",
+          "reordered-discovery-a"
+        ]
+      ],
+      "requiredEqualityFields": [
+        "ORDERED_INPUT_DIGEST",
+        "OBLIGATION_DISPOSITION",
+        "BINDING_DISPOSITION",
+        "FINDING_CODES",
+        "REPRODUCTION_DISPOSITION"
+      ]
+    }
+  ],
+  "admissionClaims": {
+    "providerConformance": "SATISFIED",
+    "runtimeProjection": "SATISFIED",
+    "receiptIssuance": "SATISFIED"
+  }
+}

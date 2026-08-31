@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/semantic-carrier/semantic-carrier-validation-result.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contractId", "sourceId", "sourceDigest", "grammarVersion", "disposition", "carrier", "findings", "receiptDigest"],
+  "properties": {
+    "contractId": {"const": "semantic-carrier-validation-result.v1"},
+    "sourceId": {"type": "string", "minLength": 1},
+    "sourceDigest": {"$ref": "#/$defs/digest"},
+    "grammarVersion": {"enum": ["scenario-semantic-carrier.v2", "scenario-semantic-carrier.v3"]},
+    "disposition": {"enum": ["CONFORMANT", "CARRIER_NOT_CONFORMANT"]},
+    "carrier": {"oneOf": [{"type": "object"}, {"type": "null"}]},
+    "findings": {"type": "array", "items": {"$ref": "#/$defs/finding"}},
+    "receiptDigest": {"$ref": "#/$defs/digest"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"disposition": {"const": "CONFORMANT"}}, "required": ["disposition"]},
+      "then": {"properties": {"carrier": {"type": "object"}, "findings": {"type": "array", "maxItems": 0}}}
+    },
+    {
+      "if": {"properties": {"disposition": {"const": "CARRIER_NOT_CONFORMANT"}}, "required": ["disposition"]},
+      "then": {"properties": {"carrier": {"type": "null"}, "findings": {"type": "array", "minItems": 1}}}
+    }
+  ],
+  "$defs": {
+    "digest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "finding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "path", "message"],
+      "properties": {
+        "code": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]*$"},
+        "path": {"type": "string", "minLength": 1},
+        "message": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

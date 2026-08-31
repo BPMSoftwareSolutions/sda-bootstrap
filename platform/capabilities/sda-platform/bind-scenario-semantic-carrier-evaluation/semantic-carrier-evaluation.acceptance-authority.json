@@ -1,0 +1,12 @@
+{
+  "authorityType": "semantic-carrier-evaluation-acceptance-authority.v1",
+  "authorityId": "semantic-carrier-compilation-evaluation-acceptance.v1",
+  "lifecycle": "ADMITTED",
+  "dispositions": [
+    "REVIEW_READY_NON_EVALUATOR_SUBJECT",
+    "EVALUATION_HELD",
+    "EVALUATOR_REPLACEMENT_REQUIRES_INDEPENDENT_ADJUDICATION"
+  ],
+  "independentDispositionResolverInvariant": "Only EVALUATOR_REPLACEMENT may select EVALUATOR_REPLACEMENT_REQUIRES_INDEPENDENT_ADJUDICATION; ordinary subjects can only be review-ready or held.",
+  "authorityDigest": "sha256:d0c9e08ec78fd0b98765df037bb3ec9ecd31f5f82060f01d547079ab293b9493"
+}

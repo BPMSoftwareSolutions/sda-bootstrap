@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/target-toolchain-profile.v1.schema.json",
+  "title": "SDA Target Toolchain Profile",
+  "description": "Closed argv operations for compiler-backed target projection proof. Shell strings and ambient working directories are forbidden.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["profileType", "targetId", "driver", "operations"],
+  "properties": {
+    "profileType": { "const": "target-toolchain-profile.v1" },
+    "targetId": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+    "driver": { "type": "string", "enum": ["legacy-built-in", "argv.v1"] },
+    "languageStandard": { "type": "string", "minLength": 1 },
+    "operations": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "availability": { "$ref": "#/$defs/operation" },
+        "structural": { "$ref": "#/$defs/operation" },
+        "execution": { "$ref": "#/$defs/operation" },
+        "behavior": { "$ref": "#/$defs/operation" },
+        "consumer": { "$ref": "#/$defs/operation" },
+        "ui": { "$ref": "#/$defs/operation" }
+      }
+    }
+  },
+  "$defs": {
+    "step": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["command", "args"],
+      "properties": {
+        "command": { "type": "string", "minLength": 1 },
+        "args": { "type": "array", "items": { "type": "string" } },
+        "workingDirectory": { "type": "string", "enum": ["repository", "target"] },
+        "ensureDirectories": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+        "timeoutMs": { "type": "integer", "minimum": 1000, "maximum": 600000 }
+      }
+    },
+    "operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["steps"],
+      "properties": {
+        "description": { "type": "string", "minLength": 1 },
+        "steps": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/step" } }
+      }
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "receiptType": "scenario-semantic-carrier-evaluation-provider-conformance.v1",
+  "platformCapabilityId": "sda-scenario-semantic-carrier-evaluation-port.v1",
+  "providerAuthorityRef": "capabilities/sda-platform/bind-scenario-semantic-carrier-evaluation/scenario-semantic-carrier-evaluator.authority.json",
+  "disposition": "SDA_SCENARIO_SEMANTIC_CARRIER_EVALUATION_PROVIDER_CONFORMANT",
+  "authorityDigests": {
+    "provider": "sha256:88309aeb76c31c86452bdaeeaa009a15a3c70e4124d18a097587dbb154e33a00",
+    "profile": "sha256:ba9e1f0f4484793cef81507dcd541cc86fe7f6230f12ab69ccc512bf34fee67c",
+    "acceptance": "sha256:d0c9e08ec78fd0b98765df037bb3ec9ecd31f5f82060f01d547079ab293b9493",
+    "registration": "sha256:5706f4c6a770d088ec2e7831407f7587e451f7af50b165bc57ee0af8249b468d"
+  },
+  "partitions": [
+    {
+      "partitionId": "complete-required-set",
+      "disposition": "SATISFIED"
+    },
+    {
+      "partitionId": "same-graph-lineage",
+      "disposition": "SATISFIED"
+    },
+    {
+      "partitionId": "independent-evidence-origin",
+      "disposition": "SATISFIED"
+    },
+    {
+      "partitionId": "ordinary-review-ready",
+      "disposition": "SATISFIED"
+    },
+    {
+      "partitionId": "attributable-held",
+      "disposition": "SATISFIED"
+    },
+    {
+      "partitionId": "evaluator-replacement-independent-diversion",
+      "disposition": "SATISFIED"
+    },
+    {
+      "partitionId": "deterministic-replay",
+      "disposition": "SATISFIED"
+    },
+    {
+      "partitionId": "real-registry",
+      "disposition": "SATISFIED"
+    }
+  ],
+  "evidence": [
+    {
+      "reference": "languages/typescript/runtimes/node/semantic-carrier-evaluator-provider.mjs",
+      "digest": "sha256:61725fa97a2a9e3f642e6b8d82784e0a0388b625c98daa496668d90f93ae1f23"
+    },
+    {
+      "reference": "tools/tests/conformance/scenario-semantic-carrier-evaluation.test.js",
+      "digest": "sha256:a3e4d060f9987fc1f4a0486b6e250cac298e70895d711922526b5e7fb41ba015"
+    }
+  ],
+  "findings": [],
+  "receiptDigest": "sha256:62d1242fb9562fbfc5e925147ce03677e93c6100aef64df7220c88329fadc318"
+}

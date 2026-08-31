@@ -1,0 +1,28 @@
+{
+  "authorityType": "execution-authorities.v1",
+  "executionAuthorities": [
+    {
+      "id": "bind-os-environment-credential.v1",
+      "owningScenarioId": "bind-os-environment-credential",
+      "operations": [
+        {"kind": "invoke-port", "portId": "bind-os-credential-port"},
+        {"kind": "invoke-scenario", "scenarioId": "hold-missing-os-environment-credential"},
+        {"kind": "invoke-scenario", "scenarioId": "reject-unauthorized-os-environment-credential-reference"}
+      ]
+    },
+    {
+      "id": "hold-missing-os-environment-credential.v1",
+      "owningScenarioId": "hold-missing-os-environment-credential",
+      "operations": [
+        {"kind": "invoke-port", "portId": "preserve-os-credential-evidence-port"}
+      ]
+    },
+    {
+      "id": "reject-unauthorized-os-environment-credential-reference.v1",
+      "owningScenarioId": "reject-unauthorized-os-environment-credential-reference",
+      "operations": [
+        {"kind": "invoke-port", "portId": "preserve-os-credential-evidence-port"}
+      ]
+    }
+  ]
+}

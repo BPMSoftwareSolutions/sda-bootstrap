@@ -1,0 +1,18 @@
+{
+  "contractId": "lossless-json-parse-request.v1",
+  "source": {
+    "sourceRef": "fixture:source-digest-mismatch",
+    "sourceBytesBase64": "eyJ2YWx1ZSI6ImRpZ2VzdC1taXNtYXRjaCJ9",
+    "sourceDigest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "sourceByteLength": 27,
+    "mediaType": "application/json",
+    "textEncoding": "UTF-8",
+    "byteOrderMarkPolicy": "REJECT",
+    "jsonPointer": ""
+  },
+  "parserBinding": {
+    "authorityId": "lossless-json-parser.v1",
+    "authorityRef": "capabilities/sda-platform/parse-lossless-json-document/lossless-json-parser.authority.json",
+    "authorityDigest": "sha256:bfdb36f3e056842de15ab5302cffc196762eb1330c9cb2d90d2598d69b56fbd9"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "$schema": "contracts/compile-semantic-presentation.authority.schema.json",
+  "authorityType": "semantic-presentation-compiler-authority.v1",
+  "authorityId": "compile-semantic-presentation.v1",
+  "authorityDigest": "sha256:f3b82ee8d5136d70006f68c4b619828995b9fcb915a02995fd0d869d66a22333",
+  "inputContractType": "sda-ui-semantic-presentation.v1",
+  "outputContractType": "sda-ui-presentation-ir.v3",
+  "defaultComposition": {
+    "kind": "FLOW",
+    "axis": "BLOCK",
+    "direction": "FORWARD",
+    "wrap": "NO_WRAP"
+  },
+  "supportedRelationshipKinds": ["FOLLOWS"],
+  "supportedAccessibilityObligationKinds": [
+    "NAME",
+    "DESCRIPTION",
+    "FOCUS_ORDER",
+    "LIVE_FEEDBACK",
+    "OPERABLE_ACTION",
+    "RELATIONSHIP"
+  ],
+  "presentationProfileHandling": "REFERENCE_ONLY",
+  "eventTriggers": {
+    "ACTION": "ACTIVATE",
+    "INPUT": "COMMIT",
+    "NAVIGATION": "NAVIGATE"
+  },
+  "adaptationOperations": {
+    "ORDER": "ORDER",
+    "VISIBILITY": "VISIBILITY",
+    "GROUPING": "GROUPING"
+  },
+  "rules": [
+    "rule.empty-remains-empty.v1",
+    "rule.default-root-flow.v1",
+    "rule.follows-order.v1",
+    "rule.semantic-event-trigger.v1",
+    "rule.explicit-adaptation-only.v1",
+    "rule.profile-indirection-only.v1"
+  ]
+}

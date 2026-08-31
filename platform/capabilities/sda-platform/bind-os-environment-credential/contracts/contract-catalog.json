@@ -1,0 +1,4 @@
+{
+  "os-environment-credential-binding-request.v1": "input.schema.json",
+  "os-environment-credential-binding-evidence.v1": "outcome.schema.json"
+}

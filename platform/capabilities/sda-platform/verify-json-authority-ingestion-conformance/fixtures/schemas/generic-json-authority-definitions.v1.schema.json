@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/json-ingestion/fixtures/generic-json-authority-definitions.v1.schema.json",
+  "$defs": {
+    "reference": {
+      "type": "string",
+      "pattern": "^subject:[a-z][a-z0-9-]*$"
+    }
+  }
+}

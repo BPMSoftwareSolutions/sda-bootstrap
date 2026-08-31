@@ -1,0 +1,8 @@
+{
+  "profileType": "ui-target-profile.v1",
+  "targetId": "target.wpf-v3",
+  "targetKind": "wpf-v3",
+  "requestedProviderId": null,
+  "requiredEvidenceCapabilities": ["ACCESSIBILITY", "ADAPTATION", "OBSERVATION"],
+  "canonicalDigest": "sha256:f0fa686a4e94f401eba5835cafc9c231e3dddc343067f3bb741fde1de898dbc7"
+}

@@ -1,0 +1,6 @@
+function declaredStepIds(manifest) { const steps = Array.isArray(manifest["executionStepEmbodiments"]) ? manifest["executionStepEmbodiments"] : []; return new Set(steps.flatMap((entry) => entry && typeof entry === "object" && typeof entry["stepId"] === "string" ? [entry["stepId"]] : [])); }
+export class ExecutionConformanceProvider {
+    responsibilityId = "compare-declared-step-embodiments-with-canonical-vector";
+    async execute(input) { const canonical = input.canonicalStepIds.value; if (!input.manifest)
+        return { language: input.language, manifestPath: input.manifestPath, manifestFound: false, steps: canonical.map((stepId) => ({ stepId, status: "MISSING" })), conforming: false }; const errors = (input.manifestValidation?.value.errors ?? []).filter((error) => error.instancePath === "/executionStepEmbodiments" || error.instancePath.startsWith("/executionStepEmbodiments/")); const manifestValid = errors.length === 0; const declared = declaredStepIds(input.manifest.value); const steps = canonical.map((stepId) => ({ stepId, status: declared.has(stepId) ? "PASS" : "MISSING" })); return { language: input.language, manifestPath: input.manifestPath, manifestFound: true, manifestValid, steps, conforming: manifestValid && steps.every((step) => step.status === "PASS") }; }
+}

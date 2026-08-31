@@ -1,0 +1,37 @@
+{
+  "scenarioId": "verify-mechanic-resolution",
+  "input": {
+    "inputId": "mechanic-resolution-verification-request",
+    "contract": {
+      "contractId": "mechanic-resolution-verification-request.v1"
+    }
+  },
+  "event": {
+    "eventId": "verify-mechanic-resolution",
+    "executionAuthorityId": "verify-mechanic-resolution.v1"
+  },
+  "outcome": {
+    "outcomeId": "mechanic-resolution-conformance",
+    "contract": {
+      "contractId": "mechanic-resolution-conformance.v1"
+    },
+    "experience": {
+      "statement": "one mechanic-resolution conformance disposition is established"
+    }
+  },
+  "gherkin": {
+    "given": {
+      "semanticRef": "verify-mechanic-resolution.given",
+      "text": "required execution mechanics and the admitted platform capability catalog"
+    },
+    "when": {
+      "semanticRef": "verify-mechanic-resolution.when",
+      "text": "mechanic resolution is verified"
+    },
+    "then": {
+      "semanticRef": "verify-mechanic-resolution.then",
+      "text": "one mechanic-resolution conformance disposition is established"
+    }
+  },
+  "name": "Verify mechanic resolution"
+}

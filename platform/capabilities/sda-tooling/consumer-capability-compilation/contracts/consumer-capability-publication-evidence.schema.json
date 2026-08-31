@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/tooling/consumer-capability-publication-evidence.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["evidenceType", "outputDirectory", "publishedFiles", "preservedTargets", "disposition"],
+  "properties": {
+    "evidenceType": { "const": "consumer-capability-publication-evidence.v1" },
+    "outputDirectory": { "type": "string" },
+    "publishedFiles": { "type": "array", "minItems": 1 },
+    "preservedTargets": { "type": "array" },
+    "disposition": { "const": "PUBLISHED" }
+  }
+}

@@ -1,0 +1,457 @@
+{
+  "fixtureType": "consumer-capability-fixtures.v1",
+  "fixtures": [
+    {
+      "fixtureId": "realize-declared-plan",
+      "input": {
+        "contractId": "sda-execution-plan-realization-request.v1",
+        "carrierType": "sda-execution-plan-realization-request.v1",
+        "executionPlan": {
+          "planId": "resolve-governed-task.node.v1",
+          "requiredMechanics": [
+            "path",
+            "map",
+            "sha256",
+            "read-file-bytes",
+            "perform-http-exchange"
+          ]
+        },
+        "targetLanguage": "node",
+        "requestLineage": [
+          "harness-fixture"
+        ],
+        "mechanicPayloads": {
+          "materialize-governed-artifact": {
+            "content": "{\"plan\":\"resolve-governed-task.node.v1\"}",
+            "directory": "generated/artifacts",
+            "logicalName": "realization.json"
+          },
+          "observe-governed-repository": {
+            "rootId": "projected-workspace",
+            "declaredResources": [
+              {
+                "semanticIdentity": "capability.feature",
+                "relativePath": "capability.feature"
+              },
+              {
+                "semanticIdentity": "capability.authority.json",
+                "relativePath": "capability.authority.json"
+              }
+            ],
+            "stableIdentityOrder": [
+              "capability.feature",
+              "capability.authority.json"
+            ]
+          },
+          "observe-external-representation": {
+            "referenceUrl": "https://schemas.sda.local/execution-plan-realization.v1.schema.json",
+            "allowedHosts": [
+              "schemas.sda.local"
+            ]
+          },
+          "bind-external-credential-reference": {
+            "credentialReference": "TEST_GOVERNED_MODEL_KEY",
+            "requestingCapabilityId": "realize-sda-execution-plan-mechanics",
+            "endpointAuthorityDigest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+            "effectScope": "model-invocation",
+            "credentialAuthorities": [
+              {
+                "referenceName": "TEST_GOVERNED_MODEL_KEY",
+                "requestingCapabilityIds": [
+                  "realize-sda-execution-plan-mechanics"
+                ],
+                "endpointAuthorityDigests": [
+                  "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+                ],
+                "effectScopes": [
+                  "model-invocation"
+                ]
+              }
+            ]
+          },
+          "execute-governed-http-exchange": {
+            "method": "POST",
+            "endpointAuthorityDigest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "urlPrefix": "https://generativelanguage.googleapis.com",
+            "admittedMethods": [
+              "POST"
+            ],
+            "maxResponseBytes": 1048576
+          },
+          "invoke-governed-model": {
+            "request": {
+              "model": "gemini-2.0-flash",
+              "messages": [
+                {
+                  "role": "user",
+                  "content": "plan"
+                }
+              ]
+            },
+            "providerAuthority": {
+              "providerKind": "gemini",
+              "resolvedModel": "gemini-2.0-flash"
+            }
+          },
+          "shape-file-system-batch": {
+            "shape": {
+              "files": [
+                {
+                  "logicalName": "manifest.json",
+                  "content": "{}"
+                }
+              ]
+            },
+            "sourceRoot": "../../../../../../",
+            "targetRoot": "projected"
+          },
+          "observe-governed-target-execution": {
+            "targets": [
+              {
+                "targetId": "node",
+                "executable": "node",
+                "args": [
+                  "--test"
+                ],
+                "fixtures": [
+                  {
+                    "fixtureId": "default",
+                    "args": []
+                  }
+                ]
+              }
+            ],
+            "stableTargetOrder": [
+              "node"
+            ]
+          },
+          "invoke-projected-capability": {
+            "bindingRef": "../realize-sda-execution-plan-mechanics/projected/application-binding.node.json",
+            "capabilityId": "realize-sda-execution-plan-mechanics",
+            "request": {
+              "carrierType": "sda-execution-plan-realization-request.v1",
+              "executionPlan": {
+                "planId": "nested.v1",
+                "requiredMechanics": [
+                  "path"
+                ]
+              },
+              "targetLanguage": "node"
+            }
+          },
+          "execute-governed-capability-sequence": {
+            "transactions": [
+              {
+                "capabilityId": "admit-contract-value",
+                "transactionId": "admit-1"
+              },
+              {
+                "capabilityId": "execute-authority-transformation",
+                "transactionId": "execute-1"
+              }
+            ],
+            "continuationAuthority": "realize-sda-execution-plan-mechanics"
+          },
+          "resolve-canonical-capability-feature": {
+            "featureReference": "realize-sda-execution-plan-mechanics",
+            "governedRoots": [
+              "capabilities"
+            ]
+          },
+          "transact-governed-tooling-binding": {
+            "responsibilityId": "derive-candidate-source-origin",
+            "replacementProviderId": "projected-provider.v1",
+            "lineageMode": "retain-effect-lineage"
+          },
+          "execute-governed-tooling-migration-operation": {
+            "operation": "verify",
+            "providerAuthorityDigest": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          "project-language-mechanic-registry": {
+            "targetLanguage": "node",
+            "mechanicFamilyRefs": [
+              "semantic-value-mechanics.v1",
+              "platform-effect-mechanics.v1"
+            ]
+          }
+        }
+      },
+      "portOutcomes": {
+        "unused-fixture-stub": {
+          "output": {}
+        }
+      },
+      "expected": {
+        "disposition": "terminated",
+        "terminalScenarioId": "project-language-mechanic-registry",
+        "scenarioSequence": [
+          "realize-sda-execution-plan-mechanics",
+          "admit-contract-value",
+          "execute-authority-transformation",
+          "evaluate-bounded-schema",
+          "materialize-governed-artifact",
+          "observe-governed-repository",
+          "observe-external-representation",
+          "bind-external-credential-reference",
+          "execute-governed-http-exchange",
+          "invoke-governed-model",
+          "shape-file-system-batch",
+          "observe-governed-target-execution",
+          "invoke-projected-capability",
+          "execute-governed-capability-sequence",
+          "resolve-canonical-capability-feature",
+          "transact-governed-tooling-binding",
+          "execute-governed-tooling-migration-operation",
+          "project-language-mechanic-registry"
+        ],
+        "outcomeAssertions": [
+          {
+            "conditionId": "chain-realizes",
+            "path": "disposition",
+            "operator": "equals",
+            "value": "SUCCEEDED"
+          },
+          {
+            "conditionId": "registry-projected",
+            "path": "evidence.generatedArtifact",
+            "operator": "equals",
+            "value": "node-mechanic-registry.generated.mjs"
+          },
+          {
+            "conditionId": "language-carried",
+            "path": "evidence.targetLanguage",
+            "operator": "equals",
+            "value": "node"
+          },
+          {
+            "conditionId": "no-claims-made",
+            "path": "authorityClaims.projection",
+            "operator": "equals",
+            "value": "NOT_CLAIMED"
+          }
+        ]
+      }
+    },
+    {
+      "fixtureId": "reject-undeclared-mechanic",
+      "input": {
+        "contractId": "sda-execution-plan-realization-request.v1",
+        "carrierType": "sda-execution-plan-realization-request.v1",
+        "executionPlan": {
+          "planId": "speculative-plan.v1",
+          "requiredMechanics": [
+            "teleport"
+          ]
+        },
+        "targetLanguage": "node",
+        "requestLineage": [
+          "harness-fixture"
+        ],
+        "mechanicPayloads": {
+          "materialize-governed-artifact": {
+            "content": "{\"plan\":\"resolve-governed-task.node.v1\"}",
+            "directory": "generated/artifacts",
+            "logicalName": "realization.json"
+          },
+          "observe-governed-repository": {
+            "rootId": "projected-workspace",
+            "declaredResources": [
+              {
+                "semanticIdentity": "capability.feature",
+                "relativePath": "capability.feature"
+              },
+              {
+                "semanticIdentity": "capability.authority.json",
+                "relativePath": "capability.authority.json"
+              }
+            ],
+            "stableIdentityOrder": [
+              "capability.feature",
+              "capability.authority.json"
+            ]
+          },
+          "observe-external-representation": {
+            "referenceUrl": "https://schemas.sda.local/execution-plan-realization.v1.schema.json",
+            "allowedHosts": [
+              "schemas.sda.local"
+            ]
+          },
+          "bind-external-credential-reference": {
+            "credentialReference": "TEST_GOVERNED_MODEL_KEY",
+            "requestingCapabilityId": "realize-sda-execution-plan-mechanics",
+            "endpointAuthorityDigest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+            "effectScope": "model-invocation",
+            "credentialAuthorities": [
+              {
+                "referenceName": "TEST_GOVERNED_MODEL_KEY",
+                "requestingCapabilityIds": [
+                  "realize-sda-execution-plan-mechanics"
+                ],
+                "endpointAuthorityDigests": [
+                  "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+                ],
+                "effectScopes": [
+                  "model-invocation"
+                ]
+              }
+            ]
+          },
+          "execute-governed-http-exchange": {
+            "method": "POST",
+            "endpointAuthorityDigest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "urlPrefix": "https://generativelanguage.googleapis.com",
+            "admittedMethods": [
+              "POST"
+            ],
+            "maxResponseBytes": 1048576
+          },
+          "invoke-governed-model": {
+            "request": {
+              "model": "gemini-2.0-flash",
+              "messages": [
+                {
+                  "role": "user",
+                  "content": "plan"
+                }
+              ]
+            },
+            "providerAuthority": {
+              "providerKind": "gemini",
+              "resolvedModel": "gemini-2.0-flash"
+            }
+          },
+          "shape-file-system-batch": {
+            "shape": {
+              "files": [
+                {
+                  "logicalName": "manifest.json",
+                  "content": "{}"
+                }
+              ]
+            },
+            "sourceRoot": "../../../../../../",
+            "targetRoot": "projected"
+          },
+          "observe-governed-target-execution": {
+            "targets": [
+              {
+                "targetId": "node",
+                "executable": "node",
+                "args": [
+                  "--test"
+                ],
+                "fixtures": [
+                  {
+                    "fixtureId": "default",
+                    "args": []
+                  }
+                ]
+              }
+            ],
+            "stableTargetOrder": [
+              "node"
+            ]
+          },
+          "invoke-projected-capability": {
+            "bindingRef": "../realize-sda-execution-plan-mechanics/projected/application-binding.node.json",
+            "capabilityId": "realize-sda-execution-plan-mechanics",
+            "request": {
+              "carrierType": "sda-execution-plan-realization-request.v1",
+              "executionPlan": {
+                "planId": "nested.v1",
+                "requiredMechanics": [
+                  "path"
+                ]
+              },
+              "targetLanguage": "node"
+            }
+          },
+          "execute-governed-capability-sequence": {
+            "transactions": [
+              {
+                "capabilityId": "admit-contract-value",
+                "transactionId": "admit-1"
+              },
+              {
+                "capabilityId": "execute-authority-transformation",
+                "transactionId": "execute-1"
+              }
+            ],
+            "continuationAuthority": "realize-sda-execution-plan-mechanics"
+          },
+          "resolve-canonical-capability-feature": {
+            "featureReference": "realize-sda-execution-plan-mechanics",
+            "governedRoots": [
+              "capabilities"
+            ]
+          },
+          "transact-governed-tooling-binding": {
+            "responsibilityId": "derive-candidate-source-origin",
+            "replacementProviderId": "projected-provider.v1",
+            "lineageMode": "retain-effect-lineage"
+          },
+          "execute-governed-tooling-migration-operation": {
+            "operation": "verify",
+            "providerAuthorityDigest": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          "project-language-mechanic-registry": {
+            "targetLanguage": "node",
+            "mechanicFamilyRefs": [
+              "semantic-value-mechanics.v1",
+              "platform-effect-mechanics.v1"
+            ]
+          }
+        }
+      },
+      "portOutcomes": {
+        "unused-fixture-stub": {
+          "output": {}
+        }
+      },
+      "expected": {
+        "disposition": "terminated",
+        "terminalScenarioId": "project-language-mechanic-registry",
+        "scenarioSequence": [
+          "realize-sda-execution-plan-mechanics",
+          "admit-contract-value",
+          "execute-authority-transformation",
+          "evaluate-bounded-schema",
+          "materialize-governed-artifact",
+          "observe-governed-repository",
+          "observe-external-representation",
+          "bind-external-credential-reference",
+          "execute-governed-http-exchange",
+          "invoke-governed-model",
+          "shape-file-system-batch",
+          "observe-governed-target-execution",
+          "invoke-projected-capability",
+          "execute-governed-capability-sequence",
+          "resolve-canonical-capability-feature",
+          "transact-governed-tooling-binding",
+          "execute-governed-tooling-migration-operation",
+          "project-language-mechanic-registry"
+        ],
+        "outcomeAssertions": [
+          {
+            "conditionId": "rejection-propagates",
+            "path": "disposition",
+            "operator": "equals",
+            "value": "REJECTED"
+          },
+          {
+            "conditionId": "rejection-attributed",
+            "path": "findings.0.code",
+            "operator": "equals",
+            "value": "PRECONDITION_UNSATISFIED"
+          },
+          {
+            "conditionId": "rejection-claims-nothing",
+            "path": "authorityClaims.projection",
+            "operator": "equals",
+            "value": "NOT_CLAIMED"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "receiptType": "scenario-semantic-carrier-extraction-provider-conformance.v1",
+  "platformCapabilityId": "sda-scenario-semantic-carrier-extraction-port.v1",
+  "providerAuthorityRef": "capabilities/sda-platform/bind-scenario-semantic-carrier-extraction/scenario-semantic-carrier-extractor.authority.json",
+  "disposition": "SDA_SCENARIO_SEMANTIC_CARRIER_EXTRACTION_PROVIDER_CONFORMANT",
+  "authorityDigests": {
+    "provider": "sha256:aaa5ba504de4efc04ed802c729c66c74e9a1770edf2589a24701ecd11ba20a18",
+    "registration": "sha256:dd95fa2be40b479c19ea0d957f92d7445dd68848a03dbada7fc2dfcccd1b9c16"
+  },
+  "fixtureManifestRef": "capabilities/sda-platform/verify-scenario-semantic-carrier-extraction-conformance/fixtures/fixture-manifest.authority.json",
+  "fixtureManifestDigest": "sha256:630d566c3509c1aa1bf13e02d3f7d340ee90c9cd8b87fe5eb0258a3f1f078f88",
+  "fixtureSetDigest": "sha256:f155b96bf61c8061a0fc2ce4cbf137020656c258ee82395c25c74c23165e7128",
+  "partitions": [
+    {
+      "partitionId": "exact-pass-receipt",
+      "disposition": "SATISFIED",
+      "reason": null
+    },
+    {
+      "partitionId": "same-carrier-binding",
+      "disposition": "SATISFIED",
+      "reason": null
+    },
+    {
+      "partitionId": "canonical-graph",
+      "disposition": "SATISFIED",
+      "reason": null
+    },
+    {
+      "partitionId": "managed-v3-authority-preservation",
+      "disposition": "SATISFIED",
+      "reason": null
+    },
+    {
+      "partitionId": "deterministic-replay",
+      "disposition": "SATISFIED",
+      "reason": null
+    },
+    {
+      "partitionId": "carrier-blackout",
+      "disposition": "SATISFIED",
+      "reason": null
+    },
+    {
+      "partitionId": "held-lineage",
+      "disposition": "SATISFIED",
+      "reason": null
+    },
+    {
+      "partitionId": "real-registry",
+      "disposition": "SATISFIED",
+      "reason": null
+    }
+  ],
+  "evidence": [
+    {
+      "reference": "languages/typescript/runtimes/node/semantic-carrier-extractor-provider.mjs",
+      "digest": "sha256:e936c097f3e5412f6cf4521ca4a841eff847de3fa63d0e71b266815d04a23983"
+    },
+    {
+      "reference": "tools/tests/conformance/scenario-semantic-carrier-extraction.test.js",
+      "digest": "sha256:9a93f339c29bb9cefba7018a7846d7b278445f05a922c691c2802982fd66d048"
+    }
+  ],
+  "findings": [],
+  "receiptDigest": "sha256:cf0b5b2ad74c78310518d435d2dbc153de9207a99374663a0c7eb2a428f63433"
+}

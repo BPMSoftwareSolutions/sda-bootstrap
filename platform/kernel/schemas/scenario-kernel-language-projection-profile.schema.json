@@ -1,0 +1,170 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/scenario-kernel-language-projection-profile.v1.schema.json",
+  "title": "Scenario Kernel Language Projection Profile",
+  "description": "Declares how one language's structural projector turns canonical kernel schemas into language-native source. Governs the DATA a projector consumes, not the projector's own mechanical schema-walking logic (that is shared across languages and does not vary). Every field here was reverse-derived from, and cross-checked against, an already-admitted hand-written embodiment before being formalized — this schema records real, verified policy, not aspirational design.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "projectionType",
+    "language",
+    "implementationId",
+    "typeStrategy",
+    "memberNaming",
+    "arrayStrategy",
+    "openPayloadType",
+    "defaultStrategy",
+    "outputDirectory",
+    "objects"
+  ],
+  "properties": {
+    "projectionType": {
+      "const": "scenario-kernel-language-projection.v1"
+    },
+    "language": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$",
+      "description": "Open target identity resolved through language-target-registration.v1."
+    },
+    "implementationId": { "type": "string", "minLength": 1 },
+    "description": { "type": "string" },
+
+    "typeStrategy": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Free-text label for the language construct emitted per canonical object, e.g. 'record', 'interface', 'frozen-dataclass'. Documentation, not machine-branched — the renderer's own emission function is what actually decides this, one per language."
+    },
+    "memberNaming": {
+      "type": "string",
+      "enum": ["pascal-case", "preserve", "snake_case"],
+      "description": "How a schema's camelCase property name becomes a member identifier."
+    },
+    "arrayStrategy": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Free-text label for how an array schema is rendered, e.g. 'ireadonlylist', 'array', 'tuple'."
+    },
+    "openPayloadType": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The type emitted for a fully open ({}) schema — e.g. 'object?', 'unknown', 'object'. Required-ness and nullability are independent for this type in every language observed so far, because JSON Schema's {} permits null as a value regardless of whether the key itself is required; each language's renderer applies its own type system's rule for expressing that, which is why this is a single string here rather than a nullable/non-nullable pair — the nullability handling itself is intrinsic to the language, not a policy choice this profile makes."
+    },
+    "defaultStrategy": {
+      "type": "string",
+      "enum": ["materialize-in-model", "preserve-optional"],
+      "description": "What an optional property with a schema-declared `default` becomes. 'materialize-in-model': bake the schema default in as the language's own default value, with a non-nullable type (C#'s verified choice: `bool Terminal = false`). 'preserve-optional': ignore the schema default for modeling purposes, always emit a nullable/optional member with no baked value, pushing the default to call sites (Node's and Python's verified choice, both with an explicit comment explaining why: `terminal?: boolean` / `terminal: bool | None = None`). This is a genuine per-language policy split, not a universal rule — verified 2-vs-1 across the three admitted embodiments, not assumed."
+    },
+
+    "closedVocabularyStrategy": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Free-text label for the default treatment of a closed (enum) string schema when no nestedTypeOverrides/enumTypeOverrides entry applies, e.g. 'string' (C#: every enum stays a plain string) or 'string-literal-union'/'typing.Literal' (Node/Python: MOST enums get a named type, via enumTypeOverrides below, but this is the fallback for ones that don't)."
+    },
+
+    "nestedTypeOverridesDescription": { "type": "string" },
+    "nestedTypeOverrides": {
+      "type": "object",
+      "description": "Explicit type names for local/inline schema shapes whose name is not mechanically derivable from parent+field — e.g. gherkin-binding.schema.json's local $defs/step (-> GherkinStep, not GherkinBindingStep) and capability.schema.json's scenarios reference-or-inline-stub union (-> ScenarioReference). Keyed by '<schemaFile>#<jsonPointer>'.",
+      "additionalProperties": { "type": "string", "minLength": 1 }
+    },
+
+    "enumTypeOverridesDescription": { "type": "string" },
+    "enumTypeOverrides": {
+      "type": "object",
+      "description": "Explicit named-type promotion for specific closed-enum properties, keyed by '<schemaFile>#<jsonPointer>'. A property with no entry here falls back to closedVocabularyStrategy's plain treatment — this is how a language whose default is 'hoist to named type' can still leave a specific property (e.g. language-binding.json's open-ended `implements`) as a plain string, verified as a real exception in both Node and Python rather than assumed uniform.",
+      "additionalProperties": { "type": "string", "minLength": 1 }
+    },
+
+    "namespace": {
+      "type": "string",
+      "minLength": 1,
+      "description": "C#-specific: the namespace generated types are emitted into, distinct from the hand-written namespace to avoid collision within the same implicitly-globbed project."
+    },
+    "reservedWordSuffix": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Python-specific: appended to a member name that collides with a language keyword after naming conversion (e.g. 'from' -> 'from_')."
+    },
+    "reservedWords": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true,
+      "description": "Python-specific: the keyword set checked against a converted member name before applying reservedWordSuffix."
+    },
+    "constNaming": {
+      "type": "string",
+      "description": "Free-text note on how a schema `const` property is named and where it is placed (e.g. C#: PascalCase static member inside the record body; Node/Python: SCREAMING_SNAKE_CASE hoisted to module scope, since interfaces/dataclasses cannot hold a value shared across all instances the way a C# record body can)."
+    },
+    "optionalFieldStrategy": {
+      "type": "string",
+      "description": "Free-text note on how non-required, non-defaulted properties are rendered (nullable-with-null-default, `?:`, `| None = None`, etc.) — the mechanical half of optionality; defaultStrategy above is the policy half (what happens when the schema also declares a default)."
+    },
+    "nestedInlineObjectNaming": {
+      "type": "string",
+      "description": "Free-text note on the default (override-less) naming rule for an inline nested object, e.g. '<ParentTypePascalCase><FieldPascalCase>'."
+    },
+    "nullViaOneOf": {
+      "type": "string",
+      "description": "Free-text note on how a oneOf[X, {type:'null'}] branch is rendered — independent of whether the property itself is required/optional."
+    },
+    "referenceOrInlineStubFlattening": {
+      "type": "string",
+      "description": "Free-text note describing the reference-or-inline-stub union pattern (oneOf[$ref, inline single-identifier-property object]) and that its result type name is never mechanically derivable, always requiring a nestedTypeOverrides entry."
+    },
+
+    "nativeTypePolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Optional data-driven native type policy used by targets whose type system is not one of the transitional built-in projections.",
+      "required": ["primitiveTypes", "arrayTypePattern", "nullableTypePattern", "referenceMemberNaming", "nullLiteral", "trueLiteral", "falseLiteral"],
+      "properties": {
+        "primitiveTypes": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["string", "boolean", "integer", "number"],
+          "properties": {
+            "string": { "type": "string", "minLength": 1 },
+            "boolean": { "type": "string", "minLength": 1 },
+            "integer": { "type": "string", "minLength": 1 },
+            "number": { "type": "string", "minLength": 1 }
+          }
+        },
+        "arrayTypePattern": { "type": "string", "pattern": "\\{item\\}" },
+        "nullableTypePattern": { "type": "string", "pattern": "\\{value\\}" },
+        "referenceMemberNaming": { "type": "string", "enum": ["pascal-case", "camel-case", "snake_case", "preserve"] },
+        "nullLiteral": { "type": "string", "minLength": 1 },
+        "trueLiteral": { "type": "string", "minLength": 1 },
+        "falseLiteral": { "type": "string", "minLength": 1 }
+      }
+    },
+
+    "outputDirectory": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Path, relative to the language's own directory under languages/, that generated files are written to. Must not overlap with the hand-written source directory."
+    },
+
+    "executionMechanics": {
+      "type": "object",
+      "description": "Language-specific execution embodiment mechanics such as async shape, cancellation, exception identity, construction style, and delegation policy. This section is open-shaped because these mechanics differ in kind by target. Strict-TypeScript target execution providers consume it only after canonical step order, protection kind, and failure disposition have been resolved from scenario-kernel-execution-vector.json into a target-neutral CanonicalExecutionGraph."
+    },
+
+    "objects": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["schemaRef", "typeName"],
+        "properties": {
+          "schemaRef": {
+            "type": "string",
+            "minLength": 1,
+            "description": "A kernel/schemas/*.schema.json file, optionally with a '#/$defs/<name>' fragment for a primitive-library definition."
+          },
+          "typeName": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "fixtureType": "consumer-capability-fixtures.v1",
+  "fixtures": [
+    {
+      "fixtureId": "reject-undeclared-reference-without-reading",
+      "input": {
+        "contractId": "os-environment-credential-binding-request.v1",
+        "credentialReference": "UNDECLARED_TEST_REFERENCE",
+        "invocationIdentity": "invocation-test-1",
+        "requestingCapabilityId": "obtain-governed-model-response",
+        "endpointAuthorityDigest": "sha256:57ab352b0978dca5e5ce33a28ccd7027c20df96da4138dbc7e8088f7c8fb0c04",
+        "effectScope": "governed-model-invocation"
+      },
+      "portOutcomes": {"authority-driven-composition": {"authority": "interfaces.authority.json"}},
+      "expected": {
+        "disposition": "terminated",
+        "terminalScenarioId": "bind-os-environment-credential",
+        "scenarioSequence": ["bind-os-environment-credential"],
+        "outcomeAssertions": [
+          {"conditionId": "unauthorized-refused", "path": "disposition", "operator": "equals", "value": "UNAUTHORIZED_REFERENCE"},
+          {"conditionId": "no-binding-created", "path": "opaqueBindingId", "operator": "equals", "value": "none"},
+          {"conditionId": "non-disclosure-preserved", "path": "nonDisclosureVerified", "operator": "equals", "value": true}
+        ]
+      }
+    },
+    {
+      "fixtureId": "reject-identity-mismatch",
+      "input": {
+        "contractId": "os-environment-credential-binding-request.v1",
+        "credentialReference": "LOC_GEMINI_API_KEY",
+        "invocationIdentity": "invocation-test-2",
+        "requestingCapabilityId": "unrelated-capability",
+        "endpointAuthorityDigest": "sha256:57ab352b0978dca5e5ce33a28ccd7027c20df96da4138dbc7e8088f7c8fb0c04",
+        "effectScope": "governed-model-invocation"
+      },
+      "portOutcomes": {"authority-driven-composition": {"authority": "interfaces.authority.json"}},
+      "expected": {
+        "disposition": "terminated",
+        "terminalScenarioId": "bind-os-environment-credential",
+        "scenarioSequence": ["bind-os-environment-credential"],
+        "outcomeAssertions": [
+          {"conditionId": "identity-mismatch-refused", "path": "disposition", "operator": "equals", "value": "IDENTITY_MISMATCH"},
+          {"conditionId": "no-binding-created", "path": "opaqueBindingId", "operator": "equals", "value": "none"},
+          {"conditionId": "non-disclosure-preserved", "path": "nonDisclosureVerified", "operator": "equals", "value": true}
+        ]
+      }
+    },
+    {
+      "fixtureId": "hold-absent-declared-reference",
+      "input": {
+        "contractId": "os-environment-credential-binding-request.v1",
+        "credentialReference": "SIDEFX_ABSENT_TEST_CREDENTIAL",
+        "invocationIdentity": "invocation-test-3",
+        "requestingCapabilityId": "execute-governed-model-invocation",
+        "endpointAuthorityDigest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+        "effectScope": "governed-model-invocation"
+      },
+      "portOutcomes": {"authority-driven-composition": {"authority": "interfaces.authority.json"}},
+      "expected": {
+        "disposition": "terminated",
+        "terminalScenarioId": "bind-os-environment-credential",
+        "scenarioSequence": ["bind-os-environment-credential"],
+        "outcomeAssertions": [
+          {"conditionId": "absence-held", "path": "disposition", "operator": "equals", "value": "CREDENTIAL_NOT_AVAILABLE"},
+          {"conditionId": "no-binding-created", "path": "opaqueBindingId", "operator": "equals", "value": "none"},
+          {"conditionId": "no-scope-invented", "path": "resolutionScope", "operator": "equals", "value": "NONE"},
+          {"conditionId": "non-disclosure-preserved", "path": "nonDisclosureVerified", "operator": "equals", "value": true}
+        ]
+      }
+    }
+  ]
+}

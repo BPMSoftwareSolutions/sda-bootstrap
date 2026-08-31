@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/scenario-event.v1.schema.json",
+  "title": "Scenario Event",
+  "description": "Canonical Scenario Kernel event definition. Identifies the semantic event and its execution authority.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["eventId", "executionAuthorityId"],
+  "properties": {
+    "eventId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "executionAuthorityId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "executionAuthorityVersion": { "$ref": "semantic-primitives.schema.json#/$defs/semanticVersion" },
+    "executionAuthorityDigest": { "$ref": "semantic-primitives.schema.json#/$defs/digest" }
+  }
+}

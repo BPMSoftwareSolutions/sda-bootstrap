@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/scenario-transition.v2.schema.json",
+  "title": "Scenario transition v2",
+  "description": "Separates executable topology kind from the semantic-progress claim.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["transitionType", "transitionId", "topologyKind", "from", "to", "semanticProgress"],
+  "properties": {
+    "transitionType": { "const": "scenario-transition.v2" },
+    "transitionId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "topologyKind": { "type": "string", "enum": ["sequence", "selection", "broadcast", "join", "recurrence", "return", "failure", "cancellation"] },
+    "from": { "$ref": "scenario-transition.schema.json#/properties/from" },
+    "to": { "$ref": "scenario-transition.schema.json#/properties/to" },
+    "selectsVariant": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$" },
+    "edgeGroupId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "bindingAuthorityId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "recurrenceAuthorityId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "semanticProgress": { "type": "string", "enum": ["preserving", "narrowing", "expanding", "converging", "recurring", "terminating"] }
+  }
+}

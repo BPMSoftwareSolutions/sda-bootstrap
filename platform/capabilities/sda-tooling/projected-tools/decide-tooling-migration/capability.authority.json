@@ -1,0 +1,31 @@
+{
+  "capabilityId": "decide-tooling-migration",
+  "name": "Decide tooling migration",
+  "mode": ["feature", "capability"],
+  "userStory": {
+    "actor": "SDA maintainer",
+    "intent": "derive tooling migration policy decisions from observed facts",
+    "outcome": "deterministic inventory, replacement, promotion, evidence, and continuation decisions"
+  },
+  "experience": {
+    "experienceType": "promised-experience.v1",
+    "experienceId": "test-signal-drives-tooling-replacement",
+    "actor": "SDA maintainer",
+    "promise": "the test signal determines whether projected tooling is retained or rolled back",
+    "observableConditions": [
+      {
+        "conditionId": "requested-decision-is-returned",
+        "statement": "the returned decision type matches the admitted request"
+      },
+      {
+        "conditionId": "failed-gate-requires-exact-rollback",
+        "statement": "a nonzero full-gate exit requires the original provider binding to be restored"
+      },
+      {
+        "conditionId": "independent-candidates-continue-after-rejection",
+        "statement": "a rejected candidate does not stop independent candidates from being evaluated"
+      }
+    ]
+  },
+  "rootScenarioId": "decide-tooling-migration"
+}

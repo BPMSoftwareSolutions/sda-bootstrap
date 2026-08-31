@@ -1,0 +1,15 @@
+{
+  "transitionId": "model-to-shape",
+  "from": {
+    "scenarioId": "invoke-governed-model",
+    "outcomeId": "governed-model-response-evidence",
+    "contractId": "governed-model-response-evidence.v1"
+  },
+  "to": {
+    "scenarioId": "shape-file-system-batch",
+    "inputId": "batch-file-system-shape-request",
+    "contractId": "batch-file-system-shape-request.v1"
+  },
+  "semanticProgress": "monotonic",
+  "bindingAuthorityId": "project-model-to-shape"
+}

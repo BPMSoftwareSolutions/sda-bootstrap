@@ -1,0 +1,25 @@
+{
+  "capabilityId": "semantic-corpus-artifact-repository",
+  "name": "Operate a semantic corpus artifact repository",
+  "mode": ["feature", "capability"],
+  "userStory": {
+    "actor": "semantic corpus maintainer",
+    "intent": "publish, read, and pointer-advance semantic corpus artifacts by canonical content address under one bounded repository authority",
+    "outcome": "exact bytes are retained once or matched idempotently without overwrite, reads verify digests without fallback, and pointer movement is one compare-and-swap permitted only after corpus closure"
+  },
+  "experience": {
+    "experienceType": "promised-experience.v1",
+    "experienceId": "semantic-corpus-artifact-repository-is-content-addressed-and-immutable",
+    "actor": "semantic corpus maintainer",
+    "promise": "The projected capability either returns exact publication, read, or pointer evidence, or an attributable rejection with named findings; storage never changes semantic identity or meaning.",
+    "observableConditions": [
+      {"conditionId": "repository-authority-binding-is-exact", "statement": "repository authority reference and digest are admitted before any evaluation"},
+      {"conditionId": "artifact-bytes-verify-before-retention", "statement": "supplied bytes must recompute the expected digest exactly; mismatched bytes are rejected without write"},
+      {"conditionId": "occupied-addresses-never-overwrite", "statement": "a content address occupied by different bytes rejects publication and mutates nothing"},
+      {"conditionId": "reads-verify-without-fallback", "statement": "reads return the exact artifact or an attributable missing, corrupted, or unauthorized finding; no current or latest fallback"},
+      {"conditionId": "pointer-advances-only-after-closure", "statement": "the pointer advances exactly one generation by compare-and-swap only when the candidate corpus closed; conflicts change no state"},
+      {"conditionId": "missing-mechanics-hold-with-typed-findings", "statement": "a scenario requiring an unadmitted mechanic returns a typed finding naming that mechanic and claims no publication, read, or pointer authority"}
+    ]
+  },
+  "rootScenarioId": "publish-immutable-semantic-corpus-artifact"
+}

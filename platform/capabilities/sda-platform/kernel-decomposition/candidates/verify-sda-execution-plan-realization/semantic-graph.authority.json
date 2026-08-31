@@ -1,0 +1,94 @@
+{
+  "transitions": [
+    {
+      "transitionId": "verify-root-to-trace",
+      "from": {
+        "scenarioId": "verify-sda-execution-plan-realization",
+        "outcomeId": "execution-plan-realization-conformance",
+        "contractId": "execution-plan-realization-conformance.v1"
+      },
+      "to": {
+        "scenarioId": "verify-expected-execution-trace",
+        "inputId": "expected-and-observed-execution",
+        "contractId": "expected-and-observed-execution.v1"
+      },
+      "semanticProgress": "monotonic",
+      "bindingAuthorityId": "project-verification-to-trace"
+    },
+    {
+      "transitionId": "verify-trace-to-artifact",
+      "from": {
+        "scenarioId": "verify-expected-execution-trace",
+        "outcomeId": "execution-trace-conformance",
+        "contractId": "execution-trace-conformance.v1"
+      },
+      "to": {
+        "scenarioId": "verify-artifact-materialization",
+        "inputId": "artifact-materialization-verification-request",
+        "contractId": "artifact-materialization-verification-request.v1"
+      },
+      "semanticProgress": "monotonic",
+      "bindingAuthorityId": "project-trace-to-artifact"
+    },
+    {
+      "transitionId": "verify-artifact-to-origin",
+      "from": {
+        "scenarioId": "verify-artifact-materialization",
+        "outcomeId": "artifact-materialization-conformance",
+        "contractId": "artifact-materialization-conformance.v1"
+      },
+      "to": {
+        "scenarioId": "verify-projected-executable-origin",
+        "inputId": "projected-executable-origin-verification-request",
+        "contractId": "projected-executable-origin-verification-request.v1"
+      },
+      "semanticProgress": "monotonic",
+      "bindingAuthorityId": "project-artifact-to-origin"
+    },
+    {
+      "transitionId": "verify-origin-to-mechanic-resolution",
+      "from": {
+        "scenarioId": "verify-projected-executable-origin",
+        "outcomeId": "projected-executable-origin-conformance",
+        "contractId": "projected-executable-origin-conformance.v1"
+      },
+      "to": {
+        "scenarioId": "verify-mechanic-resolution",
+        "inputId": "mechanic-resolution-verification-request",
+        "contractId": "mechanic-resolution-verification-request.v1"
+      },
+      "semanticProgress": "monotonic",
+      "bindingAuthorityId": "project-origin-to-mechanic-resolution"
+    },
+    {
+      "transitionId": "verify-mechanic-resolution-to-parity",
+      "from": {
+        "scenarioId": "verify-mechanic-resolution",
+        "outcomeId": "mechanic-resolution-conformance",
+        "contractId": "mechanic-resolution-conformance.v1"
+      },
+      "to": {
+        "scenarioId": "verify-language-mechanic-parity",
+        "inputId": "language-mechanic-parity-verification-request",
+        "contractId": "language-mechanic-parity-verification-request.v1"
+      },
+      "semanticProgress": "monotonic",
+      "bindingAuthorityId": "project-mechanic-resolution-to-parity"
+    },
+    {
+      "transitionId": "verify-parity-to-outcome-parity",
+      "from": {
+        "scenarioId": "verify-language-mechanic-parity",
+        "outcomeId": "language-mechanic-parity-conformance",
+        "contractId": "language-mechanic-parity-conformance.v1"
+      },
+      "to": {
+        "scenarioId": "verify-canonical-outcome-parity",
+        "inputId": "canonical-outcome-parity-verification-request",
+        "contractId": "canonical-outcome-parity-verification-request.v1"
+      },
+      "semanticProgress": "monotonic",
+      "bindingAuthorityId": "project-parity-to-outcome-parity"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "transitionId": "verify-root-to-trace",
+  "from": {
+    "scenarioId": "verify-sda-execution-plan-realization",
+    "outcomeId": "execution-plan-realization-conformance",
+    "contractId": "execution-plan-realization-conformance.v1"
+  },
+  "to": {
+    "scenarioId": "verify-expected-execution-trace",
+    "inputId": "expected-and-observed-execution",
+    "contractId": "expected-and-observed-execution.v1"
+  },
+  "semanticProgress": "monotonic",
+  "bindingAuthorityId": "project-verification-to-trace"
+}

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/cell-execution-protocol.v1.schema.json",
+  "title": "SDA cell execution protocol v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["protocolType", "protocolId", "steps", "routingAuthority", "undeclaredControlFlowDisposition"],
+  "properties": {
+    "protocolType": { "const": "cell-execution-protocol.v1" },
+    "protocolId": { "const": "cell-execution-protocol.v1" },
+    "steps": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["stepId", "sequence", "consumes", "produces"],
+        "properties": {
+          "stepId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "sequence": { "type": "integer", "minimum": 0, "maximum": 4 },
+          "consumes": { "type": "string", "minLength": 1 },
+          "produces": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "routingAuthority": { "const": "outcome-variant-and-declared-edge-only" },
+    "undeclaredControlFlowDisposition": { "const": "reject" }
+  }
+}

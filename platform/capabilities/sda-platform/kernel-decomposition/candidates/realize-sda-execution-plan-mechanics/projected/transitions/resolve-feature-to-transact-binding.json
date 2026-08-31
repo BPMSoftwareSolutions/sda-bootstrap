@@ -1,0 +1,15 @@
+{
+  "transitionId": "resolve-feature-to-transact-binding",
+  "from": {
+    "scenarioId": "resolve-canonical-capability-feature",
+    "outcomeId": "canonical-capability-feature",
+    "contractId": "canonical-capability-feature.v1"
+  },
+  "to": {
+    "scenarioId": "transact-governed-tooling-binding",
+    "inputId": "governed-tooling-binding-transaction-request",
+    "contractId": "governed-tooling-binding-transaction-request.v1"
+  },
+  "semanticProgress": "monotonic",
+  "bindingAuthorityId": "project-resolve-feature-to-transact-binding"
+}

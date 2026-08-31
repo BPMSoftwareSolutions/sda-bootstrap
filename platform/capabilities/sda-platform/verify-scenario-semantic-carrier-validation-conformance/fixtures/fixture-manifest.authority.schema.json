@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/semantic-carrier/scenario-semantic-carrier-validation-fixture-manifest.authority.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "fixtureType", "lifecycle", "fixtureRoot", "fixtureSetDigest", "fixtureSetDigestAlgorithm", "artifacts", "cases", "admissionClaims"],
+  "properties": {
+    "$schema": {"const": "fixture-manifest.authority.schema.json"},
+    "fixtureType": {"const": "scenario-semantic-carrier-validation-provider-fixture-manifest.v1"},
+    "lifecycle": {"const": "ADMITTED"},
+    "fixtureRoot": {"const": "capabilities/sda-platform/verify-scenario-semantic-carrier-validation-conformance/fixtures"},
+    "fixtureSetDigest": {"$ref": "#/$defs/digest"},
+    "fixtureSetDigestAlgorithm": {"const": "sha256 over UTF-8 path, NUL, sha256 exact artifact-file bytes digest, LF records sorted by bytewise path"},
+    "artifacts": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["artifactId", "path", "role", "digestSubject", "sourceDigest"],
+        "properties": {
+          "artifactId": {"type": "string", "minLength": 1},
+          "path": {"type": "string", "pattern": "^[^/]+\\.carrier\\.ts$"},
+          "role": {"const": "EXACT_CARRIER_SOURCE"},
+          "digestSubject": {"const": "EXACT_CARRIER_FILE_BYTES"},
+          "sourceDigest": {"$ref": "#/$defs/digest"}
+        }
+      }
+    },
+    "cases": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["fixtureId", "carrierArtifactId", "expectedDisposition", "expectedFindingCodes", "provesPartitions"],
+        "properties": {
+          "fixtureId": {"type": "string", "minLength": 1},
+          "carrierArtifactId": {"type": "string", "minLength": 1},
+          "expectedDisposition": {"enum": ["CONFORMANT", "CARRIER_NOT_CONFORMANT"]},
+          "expectedFindingCodes": {"type": "array", "uniqueItems": true, "items": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]*$"}},
+          "provesPartitions": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/partitionId"}}
+        }
+      }
+    },
+    "admissionClaims": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["providerConformance", "runtimeProjection", "receiptIssuance"],
+      "properties": {
+        "providerConformance": {"const": "SATISFIED"},
+        "runtimeProjection": {"const": "SATISFIED"},
+        "receiptIssuance": {"const": "SATISFIED"}
+      }
+    }
+  },
+  "$defs": {
+    "digest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "partitionId": {
+      "enum": [
+        "EXACT_SOURCE_IDENTITY",
+        "LITERAL_AST_ADMISSION",
+        "HIDDEN_EXECUTABLE_MEANING_REJECTION",
+        "SCHEMA_ADMISSION",
+        "SEMANTIC_REFERENCE_CLOSURE",
+        "MANAGED_V3_SCHEMA_AND_REFERENCE_CLOSURE",
+        "DETERMINISTIC_FINDINGS_AND_RECEIPTS",
+        "PROVIDER_AND_REGISTRY_BINDING",
+        "REAL_RUNTIME_INVOCATION"
+      ]
+    }
+  }
+}

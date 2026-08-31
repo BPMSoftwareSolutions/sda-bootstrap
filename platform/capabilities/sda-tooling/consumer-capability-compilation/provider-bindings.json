@@ -1,0 +1,11 @@
+{
+  "bindingType": "responsibility-provider-bindings.v1",
+  "bindings": [
+    { "responsibilityId": "load-validate-digest-and-relate-consumer-authority", "providerId": "typescript-consumer-source-admission-provider.v1", "implementationRef": "artifacts/tools/dist/capabilities/consumer-capability-compilation/admit-consumer-source-facts/provider.js", "requires": ["consumer-workspace-repository"] },
+    { "responsibilityId": "construct-canonical-consumer-capability-graph", "providerId": "typescript-canonical-consumer-graph-provider.v1", "implementationRef": "artifacts/tools/dist/capabilities/consumer-capability-compilation/compose-canonical-scenario-graph/provider.js", "requires": ["gherkin-parser"] },
+    { "responsibilityId": "bind-required-mechanics-to-admitted-target-providers", "providerId": "typescript-platform-responsibility-provider.v1", "implementationRef": "artifacts/tools/dist/capabilities/consumer-capability-compilation/resolve-platform-responsibilities/provider.js", "requires": ["platform-capability-repository"] },
+    { "responsibilityId": "construct-complete-in-memory-consumer-file-plan", "providerId": "typescript-consumer-projection-plan-provider.v1", "implementationRef": "artifacts/tools/dist/capabilities/consumer-capability-compilation/construct-consumer-projection-plan/provider.js", "requires": ["consumer-target-provider-registry"] },
+    { "responsibilityId": "detect-hidden-mechanics-in-planned-consumer-artifacts", "providerId": "typescript-prepublication-sterility-provider.v1", "implementationRef": "artifacts/tools/dist/capabilities/consumer-capability-compilation/prove-projected-sterility-before-publication/provider.js", "requires": [] },
+    { "responsibilityId": "atomically-publish-proven-consumer-projection", "providerId": "typescript-consumer-publication-provider.v1", "implementationRef": "artifacts/tools/dist/capabilities/consumer-capability-compilation/publish-projected-capability/provider.js", "requires": ["consumer-projection-artifact-store"] }
+  ]
+}

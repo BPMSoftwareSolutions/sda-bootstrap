@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/gherkin/sda-annotated-gherkin-profile.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "profileType", "lifecycle", "grammarProviderRequirement", "requiredFeatureTags", "requiredScenarioTags", "optionalScenarioTags", "sharedContractIds", "cardinality", "admittedConstructs", "parsedButProfileHeldConstructs", "identityRules", "semanticRules", "diagnosticCodes"],
+  "properties": {
+    "$schema": {"const": "contracts/sda-annotated-gherkin-profile.v1.schema.json"},
+    "profileType": {"const": "sda-annotated-gherkin-profile.v1"},
+    "lifecycle": {"enum": ["PROPOSED", "ADMITTED", "RETIRED"]},
+    "grammarProviderRequirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["providerFamily", "exactSourceBytesRetained", "astLocationsRetained", "commentsRetained", "picklesRetained"],
+      "properties": {
+        "providerFamily": {"const": "OFFICIAL_CUCUMBER_GHERKIN"},
+        "exactSourceBytesRetained": {"const": true},
+        "astLocationsRetained": {"const": true},
+        "commentsRetained": {"const": true},
+        "picklesRetained": {"const": true}
+      }
+    },
+    "requiredFeatureTags": {"type": "array", "minItems": 2, "uniqueItems": true, "items": {"type": "string"}},
+    "requiredScenarioTags": {"type": "array", "minItems": 7, "uniqueItems": true, "items": {"type": "string"}},
+    "optionalScenarioTags": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+    "sharedContractIds": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+    "cardinality": {"type": "object", "additionalProperties": {"type": "integer", "minimum": 1}},
+    "admittedConstructs": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}},
+    "parsedButProfileHeldConstructs": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+    "identityRules": {"type": "object", "minProperties": 1},
+    "semanticRules": {"type": "object", "minProperties": 1},
+    "diagnosticCodes": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}}
+  }
+}

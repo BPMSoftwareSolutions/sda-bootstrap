@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.sda.local/execution-plan-realization-verification-request.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contractId", "carrierType", "expected", "observed", "verificationContext"],
+  "properties": {
+    "contractId": {"const": "execution-plan-realization-verification-request.v1"},
+    "carrierType": {"const": "execution-plan-realization-verification-request.v1"},
+    "expected": {"$ref": "#/$defs/realizationObservation"},
+    "observed": {"$ref": "#/$defs/realizationObservation"},
+    "verificationContext": {"type": "object", "additionalProperties": true},
+    "requestLineage": {"type": "array", "items": {"type": "string"}}
+  },
+  "$defs": {
+    "realizationObservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["capabilityId", "disposition", "mechanicSet"],
+      "properties": {
+        "capabilityId": {"type": "string", "minLength": 1},
+        "disposition": {"type": "string", "minLength": 1},
+        "mechanicSet": {"type": "array", "items": {"type": "string", "minLength": 1}}
+      }
+    }
+  }
+}

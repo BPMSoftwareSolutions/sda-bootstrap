@@ -1,0 +1,136 @@
+{
+  "capabilityType": "scenario-driven-capability.v2",
+  "capabilityId": "consumer-capability-compilation",
+  "name": "Consumer Capability Compilation",
+  "purpose": "produce executable consumer surfaces from unchanged admitted semantic authority",
+  "consumer": { "actor": "consumer author" },
+  "interfaces": [],
+  "scenarios": [
+    {
+      "scenarioType": "scenario.v2",
+      "scenarioId": "admit-consumer-source-facts",
+      "name": "Admit consumer source facts",
+      "input": { "inputId": "consumer-workspace-source-facts", "contract": { "contractId": "admit-consumer-source-facts-input.v1" } },
+      "event": {
+        "eventId": "consumer-source-admission-requested",
+        "responsibility": { "responsibilityId": "load-validate-digest-and-relate-consumer-authority", "statement": "load, validate, digest, and relate every declared consumer authority once" },
+        "executionAuthorityId": "consumer-source-admission.v1"
+      },
+      "outcome": {
+        "outcomeId": "consumer-source-admission-known",
+        "obligation": {
+          "obligationId": "every-required-consumer-source-is-admitted-with-provenance",
+          "statement": "every required consumer source is admitted with provenance or rejected",
+          "observableConditions": [{ "conditionId": "all-declared-consumer-sources-have-current-digests", "statement": "all declared source facts name their source and content digest" }]
+        },
+        "evidence": { "contract": { "contractId": "consumer-source-admission-evidence.v1" } },
+        "experience": { "experienceId": "consumer-compilation-authority-is-exact", "actor": "consumer author", "promise": "the author knows compilation uses the exact declared authority" }
+      }
+    },
+    {
+      "scenarioType": "scenario.v2",
+      "scenarioId": "compose-canonical-scenario-graph",
+      "name": "Compose canonical scenario graph",
+      "input": { "inputId": "admitted-consumer-authority", "contract": { "contractId": "compose-canonical-scenario-graph-input.v1" } },
+      "event": {
+        "eventId": "canonical-scenario-composition-requested",
+        "responsibility": { "responsibilityId": "construct-canonical-consumer-capability-graph", "statement": "compose Gherkin bindings and declared transitions into one canonical consumer capability" },
+        "executionAuthorityId": "canonical-consumer-scenario-composition.v1"
+      },
+      "outcome": {
+        "outcomeId": "canonical-scenario-graph-known",
+        "obligation": {
+          "obligationId": "every-consumer-scenario-and-transition-is-explicit-valid-and-traceable",
+          "statement": "every scenario and transition is explicit, valid, and traceable to admitted authority",
+          "observableConditions": [{ "conditionId": "canonical-consumer-graph-has-complete-lineage", "statement": "scenario and transition identities resolve with source lineage" }]
+        },
+        "evidence": { "contract": { "contractId": "canonical-consumer-scenario-graph-evidence.v1" } },
+        "experience": { "experienceId": "one-coherent-consumer-behavior-graph", "actor": "consumer author", "promise": "the author sees one coherent behavioral capability" }
+      }
+    },
+    {
+      "scenarioType": "scenario.v2",
+      "scenarioId": "resolve-platform-responsibilities",
+      "name": "Resolve platform responsibilities",
+      "input": { "inputId": "consumer-graph-profile-and-target-facts", "contract": { "contractId": "resolve-platform-responsibilities-input.v1" } },
+      "event": {
+        "eventId": "platform-responsibility-resolution-requested",
+        "responsibility": { "responsibilityId": "bind-required-mechanics-to-admitted-target-providers", "statement": "bind every required mechanic to admitted providers for each requested target" },
+        "executionAuthorityId": "consumer-platform-responsibility-resolution.v1"
+      },
+      "outcome": {
+        "outcomeId": "platform-responsibility-resolutions-known",
+        "obligation": {
+          "obligationId": "every-required-mechanic-has-one-resolution-or-a-precise-gap",
+          "statement": "every mechanic requirement has an admitted provider or precise missing-capability finding",
+          "observableConditions": [{ "conditionId": "all-requested-target-mechanics-resolve-to-admitted-providers", "statement": "every requested target has complete mechanic resolution" }]
+        },
+        "evidence": { "contract": { "contractId": "platform-responsibility-resolution-evidence.v1" } },
+        "experience": { "experienceId": "consumer-target-hostability-is-known", "actor": "consumer author", "promise": "the author knows whether each target can realize the capability" }
+      }
+    },
+    {
+      "scenarioType": "scenario.v2",
+      "scenarioId": "construct-consumer-projection-plan",
+      "name": "Construct consumer projection plan",
+      "input": { "inputId": "consumer-projection-planning-facts", "contract": { "contractId": "construct-consumer-projection-plan-input.v1" } },
+      "event": {
+        "eventId": "consumer-projection-planning-requested",
+        "responsibility": { "responsibilityId": "construct-complete-in-memory-consumer-file-plan", "statement": "ask pure target providers for a complete in-memory file plan" },
+        "executionAuthorityId": "consumer-projection-planning.v1"
+      },
+      "outcome": {
+        "outcomeId": "consumer-projection-plan-known",
+        "obligation": {
+          "obligationId": "every-requested-consumer-artifact-is-planned-without-publication",
+          "statement": "every requested interface and runtime artifact is planned without touching admitted output",
+          "observableConditions": [{ "conditionId": "consumer-plan-covers-shared-and-requested-target-artifacts", "statement": "the plan contains unique paths, deterministic digests, and source pointers" }]
+        },
+        "evidence": { "contract": { "contractId": "consumer-projection-plan-evidence.v1" } },
+        "experience": { "experienceId": "consumer-embodiment-is-previewable", "actor": "consumer author", "promise": "the author can preview a complete reproducible embodiment" }
+      }
+    },
+    {
+      "scenarioType": "scenario.v2",
+      "scenarioId": "prove-projected-sterility-before-publication",
+      "name": "Prove projected sterility before publication",
+      "input": { "inputId": "consumer-plan-and-sterility-policy", "contract": { "contractId": "prove-projected-sterility-before-publication-input.v1" } },
+      "event": {
+        "eventId": "prepublication-sterility-proof-requested",
+        "responsibility": { "responsibilityId": "detect-hidden-mechanics-in-planned-consumer-artifacts", "statement": "inspect planned executable files for hidden mechanics before publication" },
+        "executionAuthorityId": "consumer-prepublication-sterility-proof.v1"
+      },
+      "outcome": {
+        "outcomeId": "planned-projection-sterility-known",
+        "obligation": {
+          "obligationId": "every-planned-executable-file-has-an-explicit-sterility-disposition",
+          "statement": "every planned executable file is mechanical or has a precise violation",
+          "observableConditions": [{ "conditionId": "planned-consumer-executables-are-mechanically-sterile", "statement": "no planned executable contains unauthorized mechanics or domain meaning" }]
+        },
+        "evidence": { "contract": { "contractId": "prepublication-sterility-evidence.v1" } },
+        "experience": { "experienceId": "consumer-projection-remains-authority-only", "actor": "consumer author", "promise": "the author trusts that domain meaning stayed in authority" }
+      }
+    },
+    {
+      "scenarioType": "scenario.v2",
+      "scenarioId": "publish-projected-capability",
+      "name": "Publish projected capability",
+      "input": { "inputId": "proven-consumer-plan-and-destination-facts", "contract": { "contractId": "publish-projected-capability-input.v1" } },
+      "event": {
+        "eventId": "projected-capability-publication-requested",
+        "responsibility": { "responsibilityId": "atomically-publish-proven-consumer-projection", "statement": "atomically publish the proven plan and write its manifest last" },
+        "executionAuthorityId": "consumer-capability-publication.v1"
+      },
+      "outcome": {
+        "outcomeId": "projected-capability-published",
+        "obligation": {
+          "obligationId": "published-bytes-match-the-proven-plan-and-preserve-untargeted-output",
+          "statement": "published bytes match the plan and untargeted output remains unchanged",
+          "observableConditions": [{ "conditionId": "consumer-publication-is-atomic-complete-and-isolated", "statement": "publication completes atomically with exact digests and preserved untargeted targets" }]
+        },
+        "evidence": { "contract": { "contractId": "consumer-capability-publication-evidence.v1" } },
+        "experience": { "experienceId": "consumer-executable-surface-is-safe", "actor": "consumer author", "promise": "the author receives a complete executable surface without collateral loss" }
+      }
+    }
+  ]
+}

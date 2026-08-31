@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/native-runtime-boundary.v1.schema.json",
+  "title": "Native Runtime Boundary",
+  "description": "Declares the compiler and physical target admitted for a native language embodiment and proves that its semantic execution boundary contains no foreign runtime dependency or delegation.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "boundaryType",
+    "targetId",
+    "implementationLanguage",
+    "languageStandard",
+    "compiler",
+    "physicalTarget",
+    "canonicalCorpus",
+    "permittedRuntimeCommands",
+    "foreignRuntimeDependencies",
+    "foreignSemanticDelegations"
+  ],
+  "properties": {
+    "boundaryType": { "const": "native-runtime-boundary.v1" },
+    "targetId": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+    "implementationLanguage": { "type": "string", "minLength": 1 },
+    "languageStandard": { "type": "string", "minLength": 1 },
+    "compiler": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["family", "driver"],
+      "properties": {
+        "family": { "type": "string", "minLength": 1 },
+        "driver": { "type": "string", "minLength": 1 }
+      }
+    },
+    "physicalTarget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operatingSystem", "architecture", "binaryFormat"],
+      "properties": {
+        "operatingSystem": { "type": "string", "minLength": 1 },
+        "architecture": { "type": "string", "minLength": 1 },
+        "binaryFormat": { "type": "string", "minLength": 1 }
+      }
+    },
+    "canonicalCorpus": { "type": "string", "minLength": 1 },
+    "permittedRuntimeCommands": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "foreignRuntimeDependencies": {
+      "type": "array",
+      "maxItems": 0
+    },
+    "foreignSemanticDelegations": {
+      "type": "array",
+      "maxItems": 0
+    }
+  }
+}

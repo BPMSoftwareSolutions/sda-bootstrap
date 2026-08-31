@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/promised-experience.v2.schema.json",
+  "title": "Promised Scenario Experience v2",
+  "description": "The consumer reality promised by one atomic scenario after its obligation is satisfied.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["experienceId", "actor", "promise"],
+  "properties": {
+    "experienceId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "actor": { "type": "string", "minLength": 1 },
+    "promise": { "type": "string", "minLength": 1 }
+  }
+}

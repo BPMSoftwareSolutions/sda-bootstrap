@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/semantic-corpus/semantic-corpus-derivation-fixture-manifest.authority.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "fixtureType", "lifecycle", "fixtureSetDigest", "fixtureSetDigestAlgorithm", "artifacts", "cases", "reproductionSets", "admissionClaims"],
+  "properties": {
+    "$schema": {"const": "fixture-manifest.authority.schema.json"},
+    "fixtureType": {"const": "semantic-corpus-derivation-projection-fixture-manifest.v1"},
+    "lifecycle": {"enum": ["PROPOSED", "ADMITTED"]},
+    "fixtureSetDigest": {"$ref": "#/$defs/digest"},
+    "fixtureSetDigestAlgorithm": {"const": "sha256 over UTF-8 path, NUL, sha256 exact artifact-file bytes digest, LF records sorted by bytewise path"},
+    "artifacts": {"type": "array", "minItems": 9, "maxItems": 9, "uniqueItems": true, "items": {"$ref": "#/$defs/artifact"}},
+    "cases": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/case"},
+      "allOf": [
+        {"contains": {"type": "object", "properties": {"scenarioId": {"const": "derive-semantic-corpus-records"}}, "required": ["scenarioId"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "properties": {"scenarioId": {"const": "retain-open-semantic-references"}}, "required": ["scenarioId"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "properties": {"scenarioId": {"const": "reject-unadmitted-semantic-basis"}}, "required": ["scenarioId"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "properties": {"scenarioId": {"const": "reject-mixed-semantic-corpus-generation"}}, "required": ["scenarioId"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "properties": {"scenarioId": {"const": "reproduce-semantic-corpus-derivation"}}, "required": ["scenarioId"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "properties": {"provesPartitions": {"type": "array", "contains": {"const": "AUTHORITY_SCHEMA_BOUNDARY"}}}, "required": ["provesPartitions"]}},
+        {"contains": {"type": "object", "properties": {"provesPartitions": {"type": "array", "contains": {"const": "EXACT_LINEAGE_VALIDATION"}}}, "required": ["provesPartitions"]}},
+        {"contains": {"type": "object", "properties": {"provesPartitions": {"type": "array", "contains": {"const": "CANONICAL_OBJECT_DERIVATION"}}}, "required": ["provesPartitions"]}},
+        {"contains": {"type": "object", "properties": {"provesPartitions": {"type": "array", "contains": {"const": "OWNER_SCOPED_IDENTITY"}}}, "required": ["provesPartitions"]}},
+        {"contains": {"type": "object", "properties": {"provesPartitions": {"type": "array", "contains": {"const": "RELATIONSHIP_DERIVATION"}}}, "required": ["provesPartitions"]}},
+        {"contains": {"type": "object", "properties": {"provesPartitions": {"type": "array", "contains": {"const": "OPEN_REFERENCE_NON_INVENTION"}}}, "required": ["provesPartitions"]}},
+        {"contains": {"type": "object", "properties": {"provesPartitions": {"type": "array", "contains": {"const": "PROHIBITED_BASIS_REJECTION"}}}, "required": ["provesPartitions"]}},
+        {"contains": {"type": "object", "properties": {"provesPartitions": {"type": "array", "contains": {"const": "MIXED_GENERATION_REJECTION"}}}, "required": ["provesPartitions"]}},
+        {"contains": {"type": "object", "properties": {"provesPartitions": {"type": "array", "contains": {"const": "SOURCE_CLASS_NON_ESCALATION"}}}, "required": ["provesPartitions"]}},
+        {"contains": {"type": "object", "properties": {"provesPartitions": {"type": "array", "contains": {"const": "DETERMINISTIC_ORDERING"}}}, "required": ["provesPartitions"]}},
+        {"contains": {"type": "object", "properties": {"provesPartitions": {"type": "array", "contains": {"const": "REPRODUCTION_IDENTITY"}}}, "required": ["provesPartitions"]}},
+        {"contains": {"type": "object", "properties": {"provesPartitions": {"type": "array", "contains": {"const": "PROJECTED_INVOCATION_AND_RECEIPT"}}}, "required": ["provesPartitions"]}}
+      ]
+    },
+    "reproductionSets": {
+      "const": [
+        {
+          "reproductionSetId": "reordered-input-discovery",
+          "fixtureId": "reordered-reproduction",
+          "variantIds": ["order-a", "order-b"],
+          "requiredEqualityFields": ["orderedInputDigest", "objects", "relationships", "findings", "derivationDigest"]
+        }
+      ]
+    },
+    "admissionClaims": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["projectionConformance", "runtimeProjection", "receiptIssuance"],
+      "properties": {
+        "projectionConformance": {"const": "NOT_CLAIMED"},
+        "runtimeProjection": {"const": "NOT_CLAIMED"},
+        "receiptIssuance": {"const": "NOT_CLAIMED"}
+      }
+    }
+  },
+  "$defs": {
+    "digest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "id": {"type": "string", "pattern": "^[a-z][a-z0-9-]*$"},
+    "partitionId": {"enum": ["AUTHORITY_SCHEMA_BOUNDARY", "EXACT_LINEAGE_VALIDATION", "CANONICAL_OBJECT_DERIVATION", "OWNER_SCOPED_IDENTITY", "RELATIONSHIP_DERIVATION", "OPEN_REFERENCE_NON_INVENTION", "PROHIBITED_BASIS_REJECTION", "MIXED_GENERATION_REJECTION", "SOURCE_CLASS_NON_ESCALATION", "DETERMINISTIC_ORDERING", "REPRODUCTION_IDENTITY", "PROJECTED_INVOCATION_AND_RECEIPT"]},
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["artifactId", "path", "role", "digestSubject", "sourceDigest"],
+      "properties": {
+        "artifactId": {"$ref": "#/$defs/id"},
+        "path": {"type": "string", "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[A-Za-z0-9._/-]+$"},
+        "role": {"enum": ["ONTOLOGY", "PROFILE", "RULE_SET", "CARRIER_SCHEMA", "CARRIER"]},
+        "digestSubject": {"const": "EXACT_FIXTURE_FILE_BYTES"},
+        "sourceDigest": {"$ref": "#/$defs/digest"}
+      }
+    },
+    "case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fixtureId", "carrierArtifactId", "scenarioId", "provesPartitions"],
+      "properties": {
+        "fixtureId": {"$ref": "#/$defs/id"},
+        "carrierArtifactId": {"$ref": "#/$defs/id"},
+        "scenarioId": {"enum": ["derive-semantic-corpus-records", "retain-open-semantic-references", "reject-unadmitted-semantic-basis", "reject-mixed-semantic-corpus-generation", "reproduce-semantic-corpus-derivation"]},
+        "provesPartitions": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/partitionId"}}
+      }
+    }
+  }
+}

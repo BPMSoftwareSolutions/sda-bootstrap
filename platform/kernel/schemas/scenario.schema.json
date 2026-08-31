@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/scenario.v1.schema.json",
+  "title": "Scenario Definition",
+  "description": "Canonical Scenario Kernel definition. A Scenario is exactly one Input, one Event, and one Outcome.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["scenarioId", "input", "event", "outcome"],
+  "properties": {
+    "scenarioId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "name": { "type": "string", "minLength": 1 },
+    "description": { "type": "string", "minLength": 1 },
+    "gherkin": { "$ref": "gherkin-binding.schema.json" },
+    "input": {
+      "$ref": "scenario-input.schema.json"
+    },
+    "event": {
+      "$ref": "scenario-event.schema.json"
+    },
+    "outcome": {
+      "$ref": "scenario-outcome.schema.json"
+    }
+  }
+}

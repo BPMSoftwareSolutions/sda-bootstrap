@@ -1,0 +1,8 @@
+{
+  "profileType": "ui-target-profile.v1",
+  "targetId": "target.browser-dom-web",
+  "targetKind": "browser-dom-web",
+  "requestedProviderId": null,
+  "requiredEvidenceCapabilities": ["ACCESSIBILITY", "ADAPTATION", "OBSERVATION"],
+  "canonicalDigest": "sha256:d55a2dcfba5f6cf79437b4924a77f8d6b408cb95205cac829162c545c7f778bd"
+}

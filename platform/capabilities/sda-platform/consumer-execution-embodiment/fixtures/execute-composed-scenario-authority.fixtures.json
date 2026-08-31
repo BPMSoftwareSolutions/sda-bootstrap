@@ -1,0 +1,143 @@
+{
+  "$schema": "../contracts/execute-composed-scenario-authority.fixtures.schema.json",
+  "fixtureType": "composed-scenario-execution-fixtures.v1",
+  "protocolContractRef": "../contracts/consumer-execution-embodiment-plan.v2.schema.json",
+  "fixtures": [
+    {
+      "fixtureId": "ordered-composition-terminates-with-last-admitted-carrier",
+      "input": {
+        "rootScenarioId": "author-tooling-capability-candidate",
+        "declaredScenarioOrder": ["admit-canonical-capability-feature", "resolve-capability-authoring-profile", "obtain-capability-ontology-testimony", "assemble-projectable-source-bundle"],
+        "availableScenarioIds": ["author-tooling-capability-candidate", "admit-canonical-capability-feature", "resolve-capability-authoring-profile", "obtain-capability-ontology-testimony", "assemble-projectable-source-bundle"],
+        "fault": null
+      },
+      "expected": {
+        "disposition": "TERMINATED",
+        "executedScenarioIds": ["author-tooling-capability-candidate", "admit-canonical-capability-feature", "resolve-capability-authoring-profile", "obtain-capability-ontology-testimony", "assemble-projectable-source-bundle"],
+        "stoppedAt": null,
+        "finalCarrierOwner": "assemble-projectable-source-bundle",
+        "laterScenarioExecution": "FORBIDDEN",
+        "lineageMode": "retain-root-and-parent-execution"
+      }
+    },
+    {
+      "fixtureId": "unknown-scenario-stops-before-invocation",
+      "input": {
+        "rootScenarioId": "author-tooling-capability-candidate",
+        "declaredScenarioOrder": ["missing-capability-scenario", "assemble-projectable-source-bundle"],
+        "availableScenarioIds": ["author-tooling-capability-candidate", "assemble-projectable-source-bundle"],
+        "fault": { "kind": "unknown-scenario", "scenarioId": "missing-capability-scenario" }
+      },
+      "expected": {
+        "disposition": "UNKNOWN_SCENARIO_REJECTED",
+        "executedScenarioIds": ["author-tooling-capability-candidate"],
+        "stoppedAt": "missing-capability-scenario",
+        "finalCarrierOwner": "author-tooling-capability-candidate",
+        "laterScenarioExecution": "FORBIDDEN",
+        "lineageMode": "retain-root-and-parent-execution"
+      }
+    },
+    {
+      "fixtureId": "recursive-invocation-stops-at-cycle-edge",
+      "input": {
+        "rootScenarioId": "author-tooling-capability-candidate",
+        "declaredScenarioOrder": ["admit-canonical-capability-feature", "author-tooling-capability-candidate", "assemble-projectable-source-bundle"],
+        "availableScenarioIds": ["author-tooling-capability-candidate", "admit-canonical-capability-feature", "assemble-projectable-source-bundle"],
+        "fault": { "kind": "recursive-invocation", "scenarioId": "author-tooling-capability-candidate" }
+      },
+      "expected": {
+        "disposition": "RECURSIVE_INVOCATION_REJECTED",
+        "executedScenarioIds": ["author-tooling-capability-candidate", "admit-canonical-capability-feature"],
+        "stoppedAt": "author-tooling-capability-candidate",
+        "finalCarrierOwner": "admit-canonical-capability-feature",
+        "laterScenarioExecution": "FORBIDDEN",
+        "lineageMode": "retain-root-and-parent-execution"
+      }
+    },
+    {
+      "fixtureId": "intermediate-contract-mismatch-stops-before-child-input",
+      "input": {
+        "rootScenarioId": "author-tooling-capability-candidate",
+        "declaredScenarioOrder": ["admit-canonical-capability-feature", "resolve-capability-authoring-profile", "assemble-projectable-source-bundle"],
+        "availableScenarioIds": ["author-tooling-capability-candidate", "admit-canonical-capability-feature", "resolve-capability-authoring-profile", "assemble-projectable-source-bundle"],
+        "fault": { "kind": "intermediate-contract-mismatch", "scenarioId": "resolve-capability-authoring-profile" }
+      },
+      "expected": {
+        "disposition": "INTERMEDIATE_CONTRACT_REJECTED",
+        "executedScenarioIds": ["author-tooling-capability-candidate", "admit-canonical-capability-feature"],
+        "stoppedAt": "resolve-capability-authoring-profile",
+        "finalCarrierOwner": "admit-canonical-capability-feature",
+        "laterScenarioExecution": "FORBIDDEN",
+        "lineageMode": "retain-root-and-parent-execution"
+      }
+    },
+    {
+      "fixtureId": "unadmitted-binding-authority-stops-before-projection",
+      "input": {
+        "rootScenarioId": "author-tooling-capability-candidate",
+        "declaredScenarioOrder": ["admit-canonical-capability-feature", "resolve-capability-authoring-profile", "assemble-projectable-source-bundle"],
+        "availableScenarioIds": ["author-tooling-capability-candidate", "admit-canonical-capability-feature", "resolve-capability-authoring-profile", "assemble-projectable-source-bundle"],
+        "fault": { "kind": "unadmitted-binding-authority", "scenarioId": "resolve-capability-authoring-profile" }
+      },
+      "expected": {
+        "disposition": "BINDING_AUTHORITY_REJECTED",
+        "executedScenarioIds": ["author-tooling-capability-candidate", "admit-canonical-capability-feature"],
+        "stoppedAt": "resolve-capability-authoring-profile",
+        "finalCarrierOwner": "admit-canonical-capability-feature",
+        "laterScenarioExecution": "FORBIDDEN",
+        "lineageMode": "retain-root-and-parent-execution"
+      }
+    },
+    {
+      "fixtureId": "intermediate-input-rejection-stops-before-event",
+      "input": {
+        "rootScenarioId": "author-tooling-capability-candidate",
+        "declaredScenarioOrder": ["admit-canonical-capability-feature", "resolve-capability-authoring-profile", "assemble-projectable-source-bundle"],
+        "availableScenarioIds": ["author-tooling-capability-candidate", "admit-canonical-capability-feature", "resolve-capability-authoring-profile", "assemble-projectable-source-bundle"],
+        "fault": { "kind": "input-rejected", "scenarioId": "resolve-capability-authoring-profile" }
+      },
+      "expected": {
+        "disposition": "INPUT_REJECTED",
+        "executedScenarioIds": ["author-tooling-capability-candidate", "admit-canonical-capability-feature", "resolve-capability-authoring-profile"],
+        "stoppedAt": "resolve-capability-authoring-profile",
+        "finalCarrierOwner": "admit-canonical-capability-feature",
+        "laterScenarioExecution": "FORBIDDEN",
+        "lineageMode": "retain-root-and-parent-execution"
+      }
+    },
+    {
+      "fixtureId": "child-event-failure-stops-before-later-scenario",
+      "input": {
+        "rootScenarioId": "author-tooling-capability-candidate",
+        "declaredScenarioOrder": ["admit-canonical-capability-feature", "obtain-capability-ontology-testimony", "assemble-projectable-source-bundle"],
+        "availableScenarioIds": ["author-tooling-capability-candidate", "admit-canonical-capability-feature", "obtain-capability-ontology-testimony", "assemble-projectable-source-bundle"],
+        "fault": { "kind": "event-failed", "scenarioId": "obtain-capability-ontology-testimony" }
+      },
+      "expected": {
+        "disposition": "EVENT_FAILED",
+        "executedScenarioIds": ["author-tooling-capability-candidate", "admit-canonical-capability-feature", "obtain-capability-ontology-testimony"],
+        "stoppedAt": "obtain-capability-ontology-testimony",
+        "finalCarrierOwner": "admit-canonical-capability-feature",
+        "laterScenarioExecution": "FORBIDDEN",
+        "lineageMode": "retain-root-and-parent-execution"
+      }
+    },
+    {
+      "fixtureId": "child-outcome-rejection-stops-before-later-scenario",
+      "input": {
+        "rootScenarioId": "author-tooling-capability-candidate",
+        "declaredScenarioOrder": ["admit-canonical-capability-feature", "obtain-capability-ontology-testimony", "assemble-projectable-source-bundle"],
+        "availableScenarioIds": ["author-tooling-capability-candidate", "admit-canonical-capability-feature", "obtain-capability-ontology-testimony", "assemble-projectable-source-bundle"],
+        "fault": { "kind": "outcome-rejected", "scenarioId": "obtain-capability-ontology-testimony" }
+      },
+      "expected": {
+        "disposition": "OUTCOME_REJECTED",
+        "executedScenarioIds": ["author-tooling-capability-candidate", "admit-canonical-capability-feature", "obtain-capability-ontology-testimony"],
+        "stoppedAt": "obtain-capability-ontology-testimony",
+        "finalCarrierOwner": "admit-canonical-capability-feature",
+        "laterScenarioExecution": "FORBIDDEN",
+        "lineageMode": "retain-root-and-parent-execution"
+      }
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "semantic-corpus-artifact-publication-request.v1": "semantic-corpus-artifact-publication-request.v1.schema.json",
+  "semantic-corpus-artifact-publication-evidence.v1": "semantic-corpus-artifact-publication-evidence.v1.schema.json",
+  "semantic-corpus-artifact-read-request.v1": "semantic-corpus-artifact-read-request.v1.schema.json",
+  "semantic-corpus-artifact-read-evidence.v1": "semantic-corpus-artifact-read-evidence.v1.schema.json",
+  "semantic-corpus-current-pointer-update-request.v1": "semantic-corpus-current-pointer-update-request.v1.schema.json",
+  "semantic-corpus-current-pointer-update-evidence.v1": "semantic-corpus-current-pointer-update-evidence.v1.schema.json",
+  "semantic-corpus-closure-receipt.v1": "semantic-corpus-closure-receipt.v1.schema.json"
+}

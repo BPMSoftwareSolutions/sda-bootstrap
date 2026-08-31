@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/json-ingestion/fixtures/generic-json-authority.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "documentType", "id", "value", "references"],
+  "properties": {
+    "$schema": {"const": "schema:generic-json-authority.v1"},
+    "documentType": {"const": "generic-json-authority.v1"},
+    "id": {"type": "string", "pattern": "^[a-z][a-z0-9-]*$"},
+    "value": {"type": "string", "minLength": 1},
+    "numericValues": {"type": "array", "items": {"type": "number"}},
+    "references": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"$ref": "generic-json-authority-definitions.v1.schema.json#/$defs/reference"}
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/scenario-kernel-execution-vector.v1.schema.json",
+  "title": "Scenario Kernel Execution Vector",
+  "description": "The canonical, language-neutral runtime flow every conforming Scenario Kernel embodiment must preserve. The schema family defines the nouns (Scenario, Input, Event, Outcome, Transition); executionLaws in scenario-kernel.schema.json define compact invariants; this defines the verb — the ordered steps from admitted input to resolved disposition. Cross-step consumes/produces linkage is descriptive, not schema-enforced: proving a given embodiment actually threads data through these steps in order is a semantic-authority/conformance-layer concern, not something JSON Schema can check by validating this document alone.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["vectorType", "kernelSpecification", "steps"],
+  "properties": {
+    "vectorType": {
+      "const": "scenario-kernel-execution-vector.v1"
+    },
+    "kernelSpecification": {
+      "$ref": "semantic-primitives.schema.json#/$defs/kernelSpecificationReference"
+    },
+    "steps": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/step" }
+    }
+  },
+  "$defs": {
+    "step": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stepId", "kind", "consumes", "produces"],
+      "properties": {
+        "stepId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+        "kind": { "enum": ["admission", "execution", "unprotected"] },
+        "onFailureDisposition": { "enum": ["rejected", "failed"] },
+        "description": { "type": "string", "minLength": 1 },
+        "consumes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" }
+        },
+        "produces": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "kind": { "enum": ["admission", "execution"] } }, "required": ["kind"] },
+          "then": { "required": ["onFailureDisposition"] }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "unprotected" } }, "required": ["kind"] },
+          "then": { "not": { "required": ["onFailureDisposition"] } }
+        }
+      ]
+    }
+  }
+}

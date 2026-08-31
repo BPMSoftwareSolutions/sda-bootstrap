@@ -1,0 +1,96 @@
+{
+  "interfaceAuthorityType": "consumer-interface-authority.v1",
+  "contractValidatorCapabilityId": "sda-schema-contract-admission.v1",
+  "contractCatalog": "contracts/contract-catalog.json",
+  "requiredPlatformObligations": [
+    "dynamic-semantic-execution",
+    "domain-contract-admission"
+  ],
+  "interfaces": [
+    {
+      "interfaceId": "bind-os-environment-credential-cli",
+      "kind": "cli",
+      "rootScenarioId": "bind-os-environment-credential",
+      "platformCapabilityId": "sda-json-cli.v1",
+      "projectionTargets": [
+        "node"
+      ]
+    }
+  ],
+  "portBindings": [
+    {
+      "portId": "bind-os-credential-port",
+      "platformCapabilityId": "sda-os-environment-credential-port.v1",
+      "configuration": {
+        "credentialAuthorities": [
+          {
+            "referenceName": "LOC_GEMINI_API_KEY",
+            "requestingCapabilityIds": [
+              "execute-governed-model-invocation",
+              "obtain-governed-model-response",
+              "author-tooling-capability-candidate",
+              "execute-projected-model-provider-attempt"
+            ],
+            "endpointAuthorityDigests": [
+              "sha256:57ab352b0978dca5e5ce33a28ccd7027c20df96da4138dbc7e8088f7c8fb0c04"
+            ],
+            "effectScopes": [
+              "governed-model-invocation"
+            ],
+            "injectionRule": {
+              "id": "gemini-x-goog-api-key.v1",
+              "headerName": "x-goog-api-key"
+            },
+            "lifetimeMilliseconds": 120000
+          },
+          {
+            "referenceName": "LOC_OPENAI_API_KEY",
+            "requestingCapabilityIds": [
+              "execute-governed-model-invocation",
+              "obtain-governed-model-response",
+              "author-tooling-capability-candidate",
+              "execute-projected-model-provider-attempt"
+            ],
+            "endpointAuthorityDigests": [
+              "sha256:b70b8bc81f93ef949d7ae6cabbf71a56b4af2440c5489c5c4037923b534f0109"
+            ],
+            "effectScopes": [
+              "governed-model-invocation"
+            ],
+            "injectionRule": {
+              "id": "openai-bearer-authorization.v1",
+              "headerName": "authorization"
+            },
+            "lifetimeMilliseconds": 120000
+          },
+          {
+            "referenceName": "SIDEFX_ABSENT_TEST_CREDENTIAL",
+            "requestingCapabilityIds": [
+              "execute-governed-model-invocation"
+            ],
+            "endpointAuthorityDigests": [
+              "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+            ],
+            "effectScopes": [
+              "governed-model-invocation"
+            ],
+            "injectionRule": {
+              "id": "absent-test-credential.v1",
+              "headerName": "x-test-credential"
+            },
+            "lifetimeMilliseconds": 120000
+          }
+        ]
+      }
+    },
+    {
+      "portId": "preserve-os-credential-evidence-port",
+      "platformCapabilityId": "sda-authority-transformation-port.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "preserve-os-credential-evidence"
+      }
+    }
+  ],
+  "projectionBindings": []
+}

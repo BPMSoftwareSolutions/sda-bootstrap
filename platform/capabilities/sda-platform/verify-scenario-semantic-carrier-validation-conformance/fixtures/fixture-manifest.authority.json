@@ -1,0 +1,96 @@
+{
+  "$schema": "fixture-manifest.authority.schema.json",
+  "fixtureType": "scenario-semantic-carrier-validation-provider-fixture-manifest.v1",
+  "lifecycle": "ADMITTED",
+  "fixtureRoot": "capabilities/sda-platform/verify-scenario-semantic-carrier-validation-conformance/fixtures",
+  "fixtureSetDigest": "sha256:ca422962fbaeea980e1c4473b9da02356c2be091263f72660df3520abe8e4e8b",
+  "fixtureSetDigestAlgorithm": "sha256 over UTF-8 path, NUL, sha256 exact artifact-file bytes digest, LF records sorted by bytewise path",
+  "artifacts": [
+    {
+      "artifactId": "hidden-executable-meaning-carrier",
+      "path": "hidden-meaning.carrier.ts",
+      "role": "EXACT_CARRIER_SOURCE",
+      "digestSubject": "EXACT_CARRIER_FILE_BYTES",
+      "sourceDigest": "sha256:cd120b931b74751de3ff25d1af1ae8a0b611a15744dc3d2a568a4153f5f2df3c"
+    },
+    {
+      "artifactId": "unresolved-semantic-identity-carrier",
+      "path": "unresolved-identity.carrier.ts",
+      "role": "EXACT_CARRIER_SOURCE",
+      "digestSubject": "EXACT_CARRIER_FILE_BYTES",
+      "sourceDigest": "sha256:ab6b9b38ceb3aa286b398608f4650093b20a47f2cd6f1a6f4b6ff4499dd10e68"
+    },
+    {
+      "artifactId": "valid-managed-validator-carrier",
+      "path": "valid-managed-validator.carrier.ts",
+      "role": "EXACT_CARRIER_SOURCE",
+      "digestSubject": "EXACT_CARRIER_FILE_BYTES",
+      "sourceDigest": "sha256:49df6fbfcb38711592e13f13180988caeb80ab3962bcba4ec27e5a0353ad73c6"
+    },
+    {
+      "artifactId": "valid-validator-carrier",
+      "path": "valid-validator.carrier.ts",
+      "role": "EXACT_CARRIER_SOURCE",
+      "digestSubject": "EXACT_CARRIER_FILE_BYTES",
+      "sourceDigest": "sha256:202a01dec3c36ed4e16c4cc186b6b61d5f14d178cbe26c213bd232819ffad7fd"
+    }
+  ],
+  "cases": [
+    {
+      "fixtureId": "valid-literal-carrier",
+      "carrierArtifactId": "valid-validator-carrier",
+      "expectedDisposition": "CONFORMANT",
+      "expectedFindingCodes": [],
+      "provesPartitions": [
+        "EXACT_SOURCE_IDENTITY",
+        "LITERAL_AST_ADMISSION",
+        "SCHEMA_ADMISSION",
+        "SEMANTIC_REFERENCE_CLOSURE",
+        "DETERMINISTIC_FINDINGS_AND_RECEIPTS"
+      ]
+    },
+    {
+      "fixtureId": "valid-managed-v3-carrier",
+      "carrierArtifactId": "valid-managed-validator-carrier",
+      "expectedDisposition": "CONFORMANT",
+      "expectedFindingCodes": [],
+      "provesPartitions": [
+        "EXACT_SOURCE_IDENTITY",
+        "LITERAL_AST_ADMISSION",
+        "MANAGED_V3_SCHEMA_AND_REFERENCE_CLOSURE",
+        "DETERMINISTIC_FINDINGS_AND_RECEIPTS"
+      ]
+    },
+    {
+      "fixtureId": "hidden-executable-meaning",
+      "carrierArtifactId": "hidden-executable-meaning-carrier",
+      "expectedDisposition": "CARRIER_NOT_CONFORMANT",
+      "expectedFindingCodes": [
+        "HIDDEN_EXECUTABLE_MEANING"
+      ],
+      "provesPartitions": [
+        "LITERAL_AST_ADMISSION",
+        "HIDDEN_EXECUTABLE_MEANING_REJECTION",
+        "DETERMINISTIC_FINDINGS_AND_RECEIPTS"
+      ]
+    },
+    {
+      "fixtureId": "unresolved-semantic-identity",
+      "carrierArtifactId": "unresolved-semantic-identity-carrier",
+      "expectedDisposition": "CARRIER_NOT_CONFORMANT",
+      "expectedFindingCodes": [
+        "UNRESOLVED_CONTRACT_REFERENCE"
+      ],
+      "provesPartitions": [
+        "SCHEMA_ADMISSION",
+        "SEMANTIC_REFERENCE_CLOSURE",
+        "DETERMINISTIC_FINDINGS_AND_RECEIPTS"
+      ]
+    }
+  ],
+  "admissionClaims": {
+    "providerConformance": "SATISFIED",
+    "runtimeProjection": "SATISFIED",
+    "receiptIssuance": "SATISFIED"
+  }
+}

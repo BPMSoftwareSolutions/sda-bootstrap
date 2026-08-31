@@ -1,0 +1,49 @@
+{
+  "authorityType": "scenario-kernel-data-authority.v1",
+  "assertions": [
+    {
+      "value": "input.contract",
+      "source": "scenario.input.contract",
+      "hardCoding": "forbidden"
+    },
+    {
+      "value": "event.executionAuthorityId",
+      "source": "scenario.event.executionAuthorityId",
+      "hardCoding": "forbidden"
+    },
+    {
+      "value": "outcome.contract",
+      "source": "scenario.outcome.contract",
+      "hardCoding": "forbidden"
+    },
+    {
+      "value": "outcome.terminal",
+      "source": "scenario.outcome.terminal",
+      "hardCoding": "forbidden"
+    },
+    {
+      "value": "disposition.completed",
+      "source": "scenario-execution.schema.json#/properties/disposition/enum",
+      "hardCoding": "permitted-kernel-constant",
+      "kernelConstantRef": "scenario-execution.schema.json#/properties/disposition/enum"
+    },
+    {
+      "value": "disposition.terminated",
+      "source": "scenario-execution.schema.json#/properties/disposition/enum",
+      "hardCoding": "permitted-kernel-constant",
+      "kernelConstantRef": "scenario-execution.schema.json#/properties/disposition/enum"
+    },
+    {
+      "value": "disposition.rejected",
+      "source": "scenario-execution.schema.json#/properties/disposition/enum",
+      "hardCoding": "permitted-kernel-constant",
+      "kernelConstantRef": "scenario-execution.schema.json#/properties/disposition/enum"
+    },
+    {
+      "value": "disposition.failed",
+      "source": "scenario-execution.schema.json#/properties/disposition/enum",
+      "hardCoding": "permitted-kernel-constant",
+      "kernelConstantRef": "scenario-execution.schema.json#/properties/disposition/enum"
+    }
+  ]
+}

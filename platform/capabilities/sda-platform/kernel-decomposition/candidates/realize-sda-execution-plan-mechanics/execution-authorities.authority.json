@@ -1,0 +1,185 @@
+{
+  "authorityType": "execution-authorities.v1",
+  "executionAuthorities": [
+    {
+      "id": "realize-sda-execution-plan-mechanics.v1",
+      "owningScenarioId": "realize-sda-execution-plan-mechanics",
+      "operations": [
+        {
+          "kind": "invoke-port",
+          "portId": "realize-sda-execution-plan-mechanics"
+        }
+      ]
+    },
+    {
+      "id": "admit-contract-value.v1",
+      "owningScenarioId": "admit-contract-value",
+      "operations": [
+        {
+          "kind": "invoke-port",
+          "portId": "admit-contract-value"
+        }
+      ]
+    },
+    {
+      "id": "execute-authority-transformation.v1",
+      "owningScenarioId": "execute-authority-transformation",
+      "operations": [
+        {
+          "kind": "invoke-port",
+          "portId": "execute-authority-transformation"
+        }
+      ]
+    },
+    {
+      "id": "evaluate-bounded-schema.v1",
+      "owningScenarioId": "evaluate-bounded-schema",
+      "operations": [
+        {
+          "kind": "invoke-port",
+          "portId": "evaluate-bounded-schema"
+        }
+      ]
+    },
+    {
+      "id": "materialize-governed-artifact.v1",
+      "owningScenarioId": "materialize-governed-artifact",
+      "operations": [
+        {
+          "kind": "invoke-port",
+          "portId": "materialize-governed-artifact"
+        }
+      ]
+    },
+    {
+      "id": "observe-governed-repository.v1",
+      "owningScenarioId": "observe-governed-repository",
+      "operations": [
+        {
+          "kind": "invoke-port",
+          "portId": "observe-governed-repository"
+        }
+      ]
+    },
+    {
+      "id": "observe-external-representation.v1",
+      "owningScenarioId": "observe-external-representation",
+      "operations": [
+        {
+          "kind": "invoke-port",
+          "portId": "observe-external-representation"
+        }
+      ]
+    },
+    {
+      "id": "bind-external-credential-reference.v1",
+      "owningScenarioId": "bind-external-credential-reference",
+      "operations": [
+        {
+          "kind": "invoke-port",
+          "portId": "bind-external-credential-reference"
+        }
+      ]
+    },
+    {
+      "id": "execute-governed-http-exchange.v1",
+      "owningScenarioId": "execute-governed-http-exchange",
+      "operations": [
+        {
+          "kind": "invoke-port",
+          "portId": "execute-governed-http-exchange"
+        }
+      ]
+    },
+    {
+      "id": "invoke-governed-model.v1",
+      "owningScenarioId": "invoke-governed-model",
+      "operations": [
+        {
+          "kind": "invoke-port",
+          "portId": "invoke-governed-model"
+        }
+      ]
+    },
+    {
+      "id": "shape-file-system-batch.v1",
+      "owningScenarioId": "shape-file-system-batch",
+      "operations": [
+        {
+          "kind": "invoke-port",
+          "portId": "shape-file-system-batch"
+        }
+      ]
+    },
+    {
+      "id": "observe-governed-target-execution.v1",
+      "owningScenarioId": "observe-governed-target-execution",
+      "operations": [
+        {
+          "kind": "invoke-port",
+          "portId": "observe-governed-target-execution"
+        }
+      ]
+    },
+    {
+      "id": "invoke-projected-capability.v1",
+      "owningScenarioId": "invoke-projected-capability",
+      "operations": [
+        {
+          "kind": "invoke-port",
+          "portId": "invoke-projected-capability"
+        }
+      ]
+    },
+    {
+      "id": "execute-governed-capability-sequence.v1",
+      "owningScenarioId": "execute-governed-capability-sequence",
+      "operations": [
+        {
+          "kind": "invoke-port",
+          "portId": "execute-governed-capability-sequence"
+        }
+      ]
+    },
+    {
+      "id": "resolve-canonical-capability-feature.v1",
+      "owningScenarioId": "resolve-canonical-capability-feature",
+      "operations": [
+        {
+          "kind": "invoke-port",
+          "portId": "resolve-canonical-capability-feature"
+        }
+      ]
+    },
+    {
+      "id": "transact-governed-tooling-binding.v1",
+      "owningScenarioId": "transact-governed-tooling-binding",
+      "operations": [
+        {
+          "kind": "invoke-port",
+          "portId": "transact-governed-tooling-binding"
+        }
+      ]
+    },
+    {
+      "id": "execute-governed-tooling-migration-operation.v1",
+      "owningScenarioId": "execute-governed-tooling-migration-operation",
+      "operations": [
+        {
+          "kind": "invoke-port",
+          "portId": "execute-governed-tooling-migration-operation"
+        }
+      ]
+    },
+    {
+      "id": "project-language-mechanic-registry.v1",
+      "owningScenarioId": "project-language-mechanic-registry",
+      "operations": [
+        {
+          "kind": "invoke-port",
+          "portId": "project-language-mechanic-registry"
+        }
+      ]
+    }
+  ]
+}

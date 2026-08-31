@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/gherkin/sda-annotated-gherkin-profile-admission-request.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contractId", "parseEvidence", "caseEvidence", "profile", "profileDigest"],
+  "properties": {
+    "contractId": {"const": "sda-annotated-gherkin-profile-admission-request.v1"},
+    "parseEvidence": {"type": "object"},
+    "caseEvidence": {"type": "object"},
+    "profile": {"type": "object", "required": ["profileType", "lifecycle", "requiredFeatureTags", "requiredScenarioTags", "admittedConstructs", "parsedButProfileHeldConstructs", "identityRules", "semanticRules", "diagnosticCodes"]},
+    "profileDigest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"}
+  }
+}

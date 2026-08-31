@@ -1,0 +1,15 @@
+{
+  "transitionId": "execute-to-evaluate-bounded-schema",
+  "from": {
+    "scenarioId": "execute-authority-transformation",
+    "outcomeId": "authority-transformation-result",
+    "contractId": "authority-transformation-result.v1"
+  },
+  "to": {
+    "scenarioId": "evaluate-bounded-schema",
+    "inputId": "bounded-schema-evaluation-request",
+    "contractId": "bounded-schema-evaluation-request.v1"
+  },
+  "semanticProgress": "monotonic",
+  "bindingAuthorityId": "project-transformation-to-schema-evaluation"
+}

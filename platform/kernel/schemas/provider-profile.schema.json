@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/enterprise/provider-profile.v1.schema.json",
+  "title": "SDA Provider Profile v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["profileType", "profileId", "providerId", "concurrencyModel", "maximumInFlightPerReplica", "partitionKey", "ordering", "resourceClass", "autoscaling", "drain", "maximumPayloadBytes", "maximumArtifactBytes"],
+  "properties": {
+    "profileType": { "const": "sda-provider-profile.v1" },
+    "profileId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "providerId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "concurrencyModel": { "type": "string", "enum": ["ASYNC_IO", "THREAD_PER_REQUEST", "PROCESS_POOL", "GOROUTINE", "GPU_BATCH", "STREAM_PARTITION"] },
+    "maximumInFlightPerReplica": { "type": "integer", "minimum": 1 },
+    "partitionKey": { "type": "string", "minLength": 1 },
+    "ordering": { "type": "string", "enum": ["NONE", "PARTITION", "GLOBAL"] },
+    "resourceClass": { "type": "string", "enum": ["CPU", "MEMORY", "GPU", "IO", "NETWORK"] },
+    "autoscaling": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["signal", "target"],
+      "properties": {
+        "signal": { "type": "string", "enum": ["QUEUE_DEPTH", "OLDEST_MESSAGE_AGE", "ACTIVE_EXECUTIONS", "PROVIDER_CONCURRENCY", "GPU_UTILIZATION", "LATENCY"] },
+        "target": { "type": "number", "exclusiveMinimum": 0 }
+      }
+    },
+    "drain": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["gracePeriodMs", "stopAcceptingBeforeShutdown"],
+      "properties": {
+        "gracePeriodMs": { "type": "integer", "minimum": 0 },
+        "stopAcceptingBeforeShutdown": { "type": "boolean" }
+      }
+    },
+    "maximumPayloadBytes": { "type": "integer", "minimum": 1 },
+    "maximumArtifactBytes": { "type": "integer", "minimum": 1 }
+  }
+}

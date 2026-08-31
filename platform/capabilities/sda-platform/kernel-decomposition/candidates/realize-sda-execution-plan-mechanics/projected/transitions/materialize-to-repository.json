@@ -1,0 +1,15 @@
+{
+  "transitionId": "materialize-to-repository",
+  "from": {
+    "scenarioId": "materialize-governed-artifact",
+    "outcomeId": "governed-artifact-reference",
+    "contractId": "governed-artifact-reference.v1"
+  },
+  "to": {
+    "scenarioId": "observe-governed-repository",
+    "inputId": "bounded-governed-repository-observation-context",
+    "contractId": "bounded-governed-repository-observation-context.v1"
+  },
+  "semanticProgress": "monotonic",
+  "bindingAuthorityId": "project-materialize-to-repository"
+}

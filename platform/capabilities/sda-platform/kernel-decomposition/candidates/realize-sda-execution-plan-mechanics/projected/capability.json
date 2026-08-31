@@ -1,0 +1,957 @@
+{
+  "capabilityType": "scenario-driven-capability.v1",
+  "capabilityId": "realize-sda-execution-plan-mechanics",
+  "userStory": {
+    "actor": "SDA execution platform",
+    "intent": "realize admitted execution-plan mechanics through a target language",
+    "outcome": "capabilities can execute without language-specific semantic re-authoring"
+  },
+  "scenarios": [
+    {
+      "scenarioId": "realize-sda-execution-plan-mechanics",
+      "input": {
+        "inputId": "sda-execution-plan-realization-request",
+        "contract": {
+          "contractId": "sda-execution-plan-realization-request.v1"
+        }
+      },
+      "event": {
+        "eventId": "realize-sda-execution-plan-mechanics",
+        "executionAuthorityId": "realize-sda-execution-plan-mechanics.v1"
+      },
+      "outcome": {
+        "outcomeId": "sda-execution-plan-realization",
+        "contract": {
+          "contractId": "sda-execution-plan-realization.v1"
+        },
+        "experience": {
+          "statement": "one authority-derived execution-plan realization is available"
+        }
+      },
+      "gherkin": {
+        "given": {
+          "semanticRef": "realize-sda-execution-plan-mechanics.given",
+          "text": "an admitted execution plan and target-language projection profile"
+        },
+        "when": {
+          "semanticRef": "realize-sda-execution-plan-mechanics.when",
+          "text": "the required execution mechanics are realized"
+        },
+        "then": {
+          "semanticRef": "realize-sda-execution-plan-mechanics.then",
+          "text": "one authority-derived execution-plan realization is available"
+        }
+      },
+      "name": "Realize the mechanics required by an execution plan"
+    },
+    {
+      "scenarioId": "admit-contract-value",
+      "input": {
+        "inputId": "contract-admission-request",
+        "contract": {
+          "contractId": "contract-admission-request.v1"
+        }
+      },
+      "event": {
+        "eventId": "admit-contract-value",
+        "executionAuthorityId": "admit-contract-value.v1"
+      },
+      "outcome": {
+        "outcomeId": "contract-admission-disposition",
+        "contract": {
+          "contractId": "contract-admission-disposition.v1"
+        },
+        "experience": {
+          "statement": "one contract admission disposition is established"
+        }
+      },
+      "gherkin": {
+        "given": {
+          "semanticRef": "admit-contract-value.given",
+          "text": "a candidate value and admitted contract authority"
+        },
+        "when": {
+          "semanticRef": "admit-contract-value.when",
+          "text": "contract admission is evaluated"
+        },
+        "then": {
+          "semanticRef": "admit-contract-value.then",
+          "text": "one contract admission disposition is established"
+        }
+      },
+      "name": "Admit a value against its declared contract"
+    },
+    {
+      "scenarioId": "execute-authority-transformation",
+      "input": {
+        "inputId": "authority-transformation-request",
+        "contract": {
+          "contractId": "authority-transformation-request.v1"
+        }
+      },
+      "event": {
+        "eventId": "execute-authority-transformation",
+        "executionAuthorityId": "execute-authority-transformation.v1"
+      },
+      "outcome": {
+        "outcomeId": "authority-transformation-result",
+        "contract": {
+          "contractId": "authority-transformation-result.v1"
+        },
+        "experience": {
+          "statement": "one transformed value satisfying the declared outcome contract is available"
+        }
+      },
+      "gherkin": {
+        "given": {
+          "semanticRef": "execute-authority-transformation.given",
+          "text": "admitted input and semantic transformation authority"
+        },
+        "when": {
+          "semanticRef": "execute-authority-transformation.when",
+          "text": "the declared transformation is executed"
+        },
+        "then": {
+          "semanticRef": "execute-authority-transformation.then",
+          "text": "one transformed value satisfying the declared outcome contract is available"
+        }
+      },
+      "name": "Execute an authority-driven transformation"
+    },
+    {
+      "scenarioId": "evaluate-bounded-schema",
+      "input": {
+        "inputId": "bounded-schema-evaluation-request",
+        "contract": {
+          "contractId": "bounded-schema-evaluation-request.v1"
+        }
+      },
+      "event": {
+        "eventId": "evaluate-bounded-schema",
+        "executionAuthorityId": "evaluate-bounded-schema.v1"
+      },
+      "outcome": {
+        "outcomeId": "bounded-schema-evaluation",
+        "contract": {
+          "contractId": "bounded-schema-evaluation.v1"
+        },
+        "experience": {
+          "statement": "one deterministic schema-match disposition is established"
+        }
+      },
+      "gherkin": {
+        "given": {
+          "semanticRef": "evaluate-bounded-schema.given",
+          "text": "a candidate value and an admitted bounded schema"
+        },
+        "when": {
+          "semanticRef": "evaluate-bounded-schema.when",
+          "text": "bounded schema evaluation is performed"
+        },
+        "then": {
+          "semanticRef": "evaluate-bounded-schema.then",
+          "text": "one deterministic schema-match disposition is established"
+        }
+      },
+      "name": "Evaluate a bounded schema"
+    },
+    {
+      "scenarioId": "materialize-governed-artifact",
+      "input": {
+        "inputId": "governed-artifact-materialization-request",
+        "contract": {
+          "contractId": "governed-artifact-materialization-request.v1"
+        }
+      },
+      "event": {
+        "eventId": "materialize-governed-artifact",
+        "executionAuthorityId": "materialize-governed-artifact.v1"
+      },
+      "outcome": {
+        "outcomeId": "governed-artifact-reference",
+        "contract": {
+          "contractId": "governed-artifact-reference.v1"
+        },
+        "experience": {
+          "statement": "one content-addressed artifact reference is available"
+        }
+      },
+      "gherkin": {
+        "given": {
+          "semanticRef": "materialize-governed-artifact.given",
+          "text": "admitted artifact content and bounded destination authority"
+        },
+        "when": {
+          "semanticRef": "materialize-governed-artifact.when",
+          "text": "the governed artifact is materialized"
+        },
+        "then": {
+          "semanticRef": "materialize-governed-artifact.then",
+          "text": "one content-addressed artifact reference is available"
+        }
+      },
+      "name": "Materialize a governed artifact"
+    },
+    {
+      "scenarioId": "observe-governed-repository",
+      "input": {
+        "inputId": "bounded-governed-repository-observation-context",
+        "contract": {
+          "contractId": "bounded-governed-repository-observation-context.v1"
+        }
+      },
+      "event": {
+        "eventId": "observe-governed-repository",
+        "executionAuthorityId": "observe-governed-repository.v1"
+      },
+      "outcome": {
+        "outcomeId": "governed-repository-observation",
+        "contract": {
+          "contractId": "governed-repository-observation.v1"
+        },
+        "experience": {
+          "statement": "one bounded attributable repository observation is available"
+        }
+      },
+      "gherkin": {
+        "given": {
+          "semanticRef": "observe-governed-repository.given",
+          "text": "an admitted repository root and declared resource identities"
+        },
+        "when": {
+          "semanticRef": "observe-governed-repository.when",
+          "text": "the governed repository is observed"
+        },
+        "then": {
+          "semanticRef": "observe-governed-repository.then",
+          "text": "one bounded attributable repository observation is available"
+        }
+      },
+      "name": "Observe a governed repository"
+    },
+    {
+      "scenarioId": "observe-external-representation",
+      "input": {
+        "inputId": "external-representation-observation-request",
+        "contract": {
+          "contractId": "external-representation-observation-request.v1"
+        }
+      },
+      "event": {
+        "eventId": "observe-external-representation",
+        "executionAuthorityId": "observe-external-representation.v1"
+      },
+      "outcome": {
+        "outcomeId": "external-representation-observation",
+        "contract": {
+          "contractId": "external-representation-observation.v1"
+        },
+        "experience": {
+          "statement": "one attributable external representation observation is available"
+        }
+      },
+      "gherkin": {
+        "given": {
+          "semanticRef": "observe-external-representation.given",
+          "text": "an admitted external reference and source authority"
+        },
+        "when": {
+          "semanticRef": "observe-external-representation.when",
+          "text": "the external representation is observed"
+        },
+        "then": {
+          "semanticRef": "observe-external-representation.then",
+          "text": "one attributable external representation observation is available"
+        }
+      },
+      "name": "Observe an external representation"
+    },
+    {
+      "scenarioId": "bind-external-credential-reference",
+      "input": {
+        "inputId": "bind-external-credential-reference-input",
+        "contract": {
+          "contractId": "bind-external-credential-reference-input.v1"
+        }
+      },
+      "event": {
+        "eventId": "bind-external-credential-reference",
+        "executionAuthorityId": "bind-external-credential-reference.v1"
+      },
+      "outcome": {
+        "outcomeId": "external-credential-binding-evidence",
+        "contract": {
+          "contractId": "external-credential-binding-evidence.v1"
+        },
+        "experience": {
+          "statement": "one opaque bounded credential binding is available"
+        }
+      },
+      "gherkin": {
+        "given": {
+          "semanticRef": "bind-external-credential-reference.given",
+          "text": "credential authority and an authorized invocation identity"
+        },
+        "when": {
+          "semanticRef": "bind-external-credential-reference.when",
+          "text": "the external credential reference is bound"
+        },
+        "then": {
+          "semanticRef": "bind-external-credential-reference.then",
+          "text": "one opaque bounded credential binding is available"
+        }
+      },
+      "name": "Bind an external credential reference"
+    },
+    {
+      "scenarioId": "execute-governed-http-exchange",
+      "input": {
+        "inputId": "governed-http-exchange-request",
+        "contract": {
+          "contractId": "governed-http-exchange-request.v1"
+        }
+      },
+      "event": {
+        "eventId": "execute-governed-http-exchange",
+        "executionAuthorityId": "execute-governed-http-exchange.v1"
+      },
+      "outcome": {
+        "outcomeId": "governed-http-exchange-evidence",
+        "contract": {
+          "contractId": "governed-http-exchange-evidence.v1"
+        },
+        "experience": {
+          "statement": "one bounded attributable HTTP exchange testimony is available"
+        }
+      },
+      "gherkin": {
+        "given": {
+          "semanticRef": "execute-governed-http-exchange.given",
+          "text": "admitted endpoint authority and an authorized credential binding"
+        },
+        "when": {
+          "semanticRef": "execute-governed-http-exchange.when",
+          "text": "the governed HTTP exchange is executed"
+        },
+        "then": {
+          "semanticRef": "execute-governed-http-exchange.then",
+          "text": "one bounded attributable HTTP exchange testimony is available"
+        }
+      },
+      "name": "Execute a governed HTTP exchange"
+    },
+    {
+      "scenarioId": "invoke-governed-model",
+      "input": {
+        "inputId": "governed-model-invocation-request",
+        "contract": {
+          "contractId": "governed-model-invocation-request.v1"
+        }
+      },
+      "event": {
+        "eventId": "invoke-governed-model",
+        "executionAuthorityId": "invoke-governed-model.v1"
+      },
+      "outcome": {
+        "outcomeId": "governed-model-response-evidence",
+        "contract": {
+          "contractId": "governed-model-response-evidence.v1"
+        },
+        "experience": {
+          "statement": "one attributable model-response testimony is available"
+        }
+      },
+      "gherkin": {
+        "given": {
+          "semanticRef": "invoke-governed-model.given",
+          "text": "an admitted model request and provider authority"
+        },
+        "when": {
+          "semanticRef": "invoke-governed-model.when",
+          "text": "the governed model is invoked"
+        },
+        "then": {
+          "semanticRef": "invoke-governed-model.then",
+          "text": "one attributable model-response testimony is available"
+        }
+      },
+      "name": "Invoke a governed model"
+    },
+    {
+      "scenarioId": "shape-file-system-batch",
+      "input": {
+        "inputId": "batch-file-system-shape-request",
+        "contract": {
+          "contractId": "batch-file-system-shape-request.v1"
+        }
+      },
+      "event": {
+        "eventId": "shape-file-system-batch",
+        "executionAuthorityId": "shape-file-system-batch.v1"
+      },
+      "outcome": {
+        "outcomeId": "batch-file-system-shape-evidence",
+        "contract": {
+          "contractId": "batch-file-system-shape-evidence.v1"
+        },
+        "experience": {
+          "statement": "one staged hash-verified shaping receipt is available"
+        }
+      },
+      "gherkin": {
+        "given": {
+          "semanticRef": "shape-file-system-batch.given",
+          "text": "an admitted batch shape and bounded source and target roots"
+        },
+        "when": {
+          "semanticRef": "shape-file-system-batch.when",
+          "text": "the batch file-system shape is executed"
+        },
+        "then": {
+          "semanticRef": "shape-file-system-batch.then",
+          "text": "one staged hash-verified shaping receipt is available"
+        }
+      },
+      "name": "Shape a batch file-system"
+    },
+    {
+      "scenarioId": "observe-governed-target-execution",
+      "input": {
+        "inputId": "bounded-projected-target-execution-context",
+        "contract": {
+          "contractId": "bounded-projected-target-execution-context.v1"
+        }
+      },
+      "event": {
+        "eventId": "observe-governed-target-execution",
+        "executionAuthorityId": "observe-governed-target-execution.v1"
+      },
+      "outcome": {
+        "outcomeId": "projected-target-execution-observation",
+        "contract": {
+          "contractId": "projected-target-execution-observation.v1"
+        },
+        "experience": {
+          "statement": "one bounded target-execution observation is available and generated artifacts are unchanged"
+        }
+      },
+      "gherkin": {
+        "given": {
+          "semanticRef": "observe-governed-target-execution.given",
+          "text": "admitted target execution authority and bounded commands"
+        },
+        "when": {
+          "semanticRef": "observe-governed-target-execution.when",
+          "text": "declared target fixtures are executed under governance"
+        },
+        "then": {
+          "semanticRef": "observe-governed-target-execution.then",
+          "text": "one bounded target-execution observation is available and generated artifacts are unchanged"
+        }
+      },
+      "name": "Observe governed target execution"
+    },
+    {
+      "scenarioId": "invoke-projected-capability",
+      "input": {
+        "inputId": "projected-capability-invocation-request",
+        "contract": {
+          "contractId": "projected-capability-invocation-request.v1"
+        }
+      },
+      "event": {
+        "eventId": "invoke-projected-capability",
+        "executionAuthorityId": "invoke-projected-capability.v1"
+      },
+      "outcome": {
+        "outcomeId": "projected-capability-invocation-result",
+        "contract": {
+          "contractId": "projected-capability-invocation-result.v1"
+        },
+        "experience": {
+          "statement": "one lineage-preserving nested capability result is available"
+        }
+      },
+      "gherkin": {
+        "given": {
+          "semanticRef": "invoke-projected-capability.given",
+          "text": "a lineage-bound projected capability request"
+        },
+        "when": {
+          "semanticRef": "invoke-projected-capability.when",
+          "text": "the projected capability is invoked"
+        },
+        "then": {
+          "semanticRef": "invoke-projected-capability.then",
+          "text": "one lineage-preserving nested capability result is available"
+        }
+      },
+      "name": "Invoke a projected capability"
+    },
+    {
+      "scenarioId": "execute-governed-capability-sequence",
+      "input": {
+        "inputId": "governed-capability-sequence-request",
+        "contract": {
+          "contractId": "governed-capability-sequence-request.v1"
+        }
+      },
+      "event": {
+        "eventId": "execute-governed-capability-sequence",
+        "executionAuthorityId": "execute-governed-capability-sequence.v1"
+      },
+      "outcome": {
+        "outcomeId": "governed-capability-sequence-result",
+        "contract": {
+          "contractId": "governed-capability-sequence-result.v1"
+        },
+        "experience": {
+          "statement": "one lineage-preserving sequence result is available"
+        }
+      },
+      "gherkin": {
+        "given": {
+          "semanticRef": "execute-governed-capability-sequence.given",
+          "text": "admitted capability transactions and continuation authority"
+        },
+        "when": {
+          "semanticRef": "execute-governed-capability-sequence.when",
+          "text": "the governed sequence is executed"
+        },
+        "then": {
+          "semanticRef": "execute-governed-capability-sequence.then",
+          "text": "one lineage-preserving sequence result is available"
+        }
+      },
+      "name": "Execute a governed capability sequence"
+    },
+    {
+      "scenarioId": "resolve-canonical-capability-feature",
+      "input": {
+        "inputId": "capability-feature-authoring-request",
+        "contract": {
+          "contractId": "capability-feature-authoring-request.v1"
+        }
+      },
+      "event": {
+        "eventId": "resolve-canonical-capability-feature",
+        "executionAuthorityId": "resolve-canonical-capability-feature.v1"
+      },
+      "outcome": {
+        "outcomeId": "canonical-capability-feature",
+        "contract": {
+          "contractId": "canonical-capability-feature.v1"
+        },
+        "experience": {
+          "statement": "one bounded canonical feature representation is available"
+        }
+      },
+      "gherkin": {
+        "given": {
+          "semanticRef": "resolve-canonical-capability-feature.given",
+          "text": "a governed capability feature reference"
+        },
+        "when": {
+          "semanticRef": "resolve-canonical-capability-feature.when",
+          "text": "the canonical capability feature is resolved"
+        },
+        "then": {
+          "semanticRef": "resolve-canonical-capability-feature.then",
+          "text": "one bounded canonical feature representation is available"
+        }
+      },
+      "name": "Resolve a canonical capability feature"
+    },
+    {
+      "scenarioId": "transact-governed-tooling-binding",
+      "input": {
+        "inputId": "governed-tooling-binding-transaction-request",
+        "contract": {
+          "contractId": "governed-tooling-binding-transaction-request.v1"
+        }
+      },
+      "event": {
+        "eventId": "transact-governed-tooling-binding",
+        "executionAuthorityId": "transact-governed-tooling-binding.v1"
+      },
+      "outcome": {
+        "outcomeId": "governed-tooling-binding-transaction-evidence",
+        "contract": {
+          "contractId": "governed-tooling-binding-transaction-evidence.v1"
+        },
+        "experience": {
+          "statement": "one retained-or-restored transaction disposition is established"
+        }
+      },
+      "gherkin": {
+        "given": {
+          "semanticRef": "transact-governed-tooling-binding.given",
+          "text": "an admitted provider-binding change request"
+        },
+        "when": {
+          "semanticRef": "transact-governed-tooling-binding.when",
+          "text": "the governed binding transaction is executed"
+        },
+        "then": {
+          "semanticRef": "transact-governed-tooling-binding.then",
+          "text": "one retained-or-restored transaction disposition is established"
+        }
+      },
+      "name": "Transact a governed tooling binding"
+    },
+    {
+      "scenarioId": "execute-governed-tooling-migration-operation",
+      "input": {
+        "inputId": "governed-tooling-migration-operation-request",
+        "contract": {
+          "contractId": "governed-tooling-migration-operation-request.v1"
+        }
+      },
+      "event": {
+        "eventId": "execute-governed-tooling-migration-operation",
+        "executionAuthorityId": "execute-governed-tooling-migration-operation.v1"
+      },
+      "outcome": {
+        "outcomeId": "governed-tooling-migration-operation-evidence",
+        "contract": {
+          "contractId": "governed-tooling-migration-operation-evidence.v1"
+        },
+        "experience": {
+          "statement": "one effect-lineage-bearing migration outcome is available"
+        }
+      },
+      "gherkin": {
+        "given": {
+          "semanticRef": "execute-governed-tooling-migration-operation.given",
+          "text": "an admitted migration provider and operation authority"
+        },
+        "when": {
+          "semanticRef": "execute-governed-tooling-migration-operation.when",
+          "text": "the governed migration operation is executed"
+        },
+        "then": {
+          "semanticRef": "execute-governed-tooling-migration-operation.then",
+          "text": "one effect-lineage-bearing migration outcome is available"
+        }
+      },
+      "name": "Execute a governed tooling migration operation"
+    },
+    {
+      "scenarioId": "project-language-mechanic-registry",
+      "input": {
+        "inputId": "language-mechanic-registry-projection-request",
+        "contract": {
+          "contractId": "language-mechanic-registry-projection-request.v1"
+        }
+      },
+      "event": {
+        "eventId": "project-language-mechanic-registry",
+        "executionAuthorityId": "project-language-mechanic-registry.v1"
+      },
+      "outcome": {
+        "outcomeId": "projected-language-mechanic-registry",
+        "contract": {
+          "contractId": "projected-language-mechanic-registry.v1"
+        },
+        "experience": {
+          "statement": "one authority-derived target-language registry is available"
+        },
+        "terminal": true
+      },
+      "gherkin": {
+        "given": {
+          "semanticRef": "project-language-mechanic-registry.given",
+          "text": "admitted mechanic authority and a target-language profile"
+        },
+        "when": {
+          "semanticRef": "project-language-mechanic-registry.when",
+          "text": "the mechanic registry is projected"
+        },
+        "then": {
+          "semanticRef": "project-language-mechanic-registry.then",
+          "text": "one authority-derived target-language registry is available"
+        }
+      },
+      "name": "Project a language mechanic registry"
+    }
+  ],
+  "transitions": [
+    {
+      "transitionId": "realize-to-admit-contract-value",
+      "from": {
+        "scenarioId": "realize-sda-execution-plan-mechanics",
+        "outcomeId": "sda-execution-plan-realization",
+        "contractId": "sda-execution-plan-realization.v1"
+      },
+      "to": {
+        "scenarioId": "admit-contract-value",
+        "inputId": "contract-admission-request",
+        "contractId": "contract-admission-request.v1"
+      },
+      "semanticProgress": "monotonic",
+      "bindingAuthorityId": "project-realization-to-admission"
+    },
+    {
+      "transitionId": "admit-to-execute-authority-transformation",
+      "from": {
+        "scenarioId": "admit-contract-value",
+        "outcomeId": "contract-admission-disposition",
+        "contractId": "contract-admission-disposition.v1"
+      },
+      "to": {
+        "scenarioId": "execute-authority-transformation",
+        "inputId": "authority-transformation-request",
+        "contractId": "authority-transformation-request.v1"
+      },
+      "semanticProgress": "monotonic",
+      "bindingAuthorityId": "project-admission-to-transformation"
+    },
+    {
+      "transitionId": "execute-to-evaluate-bounded-schema",
+      "from": {
+        "scenarioId": "execute-authority-transformation",
+        "outcomeId": "authority-transformation-result",
+        "contractId": "authority-transformation-result.v1"
+      },
+      "to": {
+        "scenarioId": "evaluate-bounded-schema",
+        "inputId": "bounded-schema-evaluation-request",
+        "contractId": "bounded-schema-evaluation-request.v1"
+      },
+      "semanticProgress": "monotonic",
+      "bindingAuthorityId": "project-transformation-to-schema-evaluation"
+    },
+    {
+      "transitionId": "evaluate-to-materialize",
+      "from": {
+        "scenarioId": "evaluate-bounded-schema",
+        "outcomeId": "bounded-schema-evaluation",
+        "contractId": "bounded-schema-evaluation.v1"
+      },
+      "to": {
+        "scenarioId": "materialize-governed-artifact",
+        "inputId": "governed-artifact-materialization-request",
+        "contractId": "governed-artifact-materialization-request.v1"
+      },
+      "semanticProgress": "monotonic",
+      "bindingAuthorityId": "project-evaluate-to-materialize"
+    },
+    {
+      "transitionId": "materialize-to-repository",
+      "from": {
+        "scenarioId": "materialize-governed-artifact",
+        "outcomeId": "governed-artifact-reference",
+        "contractId": "governed-artifact-reference.v1"
+      },
+      "to": {
+        "scenarioId": "observe-governed-repository",
+        "inputId": "bounded-governed-repository-observation-context",
+        "contractId": "bounded-governed-repository-observation-context.v1"
+      },
+      "semanticProgress": "monotonic",
+      "bindingAuthorityId": "project-materialize-to-repository"
+    },
+    {
+      "transitionId": "repository-to-external",
+      "from": {
+        "scenarioId": "observe-governed-repository",
+        "outcomeId": "governed-repository-observation",
+        "contractId": "governed-repository-observation.v1"
+      },
+      "to": {
+        "scenarioId": "observe-external-representation",
+        "inputId": "external-representation-observation-request",
+        "contractId": "external-representation-observation-request.v1"
+      },
+      "semanticProgress": "monotonic",
+      "bindingAuthorityId": "project-repository-to-external"
+    },
+    {
+      "transitionId": "external-to-credential",
+      "from": {
+        "scenarioId": "observe-external-representation",
+        "outcomeId": "external-representation-observation",
+        "contractId": "external-representation-observation.v1"
+      },
+      "to": {
+        "scenarioId": "bind-external-credential-reference",
+        "inputId": "bind-external-credential-reference-input",
+        "contractId": "bind-external-credential-reference-input.v1"
+      },
+      "semanticProgress": "monotonic",
+      "bindingAuthorityId": "project-external-to-credential"
+    },
+    {
+      "transitionId": "credential-to-http",
+      "from": {
+        "scenarioId": "bind-external-credential-reference",
+        "outcomeId": "external-credential-binding-evidence",
+        "contractId": "external-credential-binding-evidence.v1"
+      },
+      "to": {
+        "scenarioId": "execute-governed-http-exchange",
+        "inputId": "governed-http-exchange-request",
+        "contractId": "governed-http-exchange-request.v1"
+      },
+      "semanticProgress": "monotonic",
+      "bindingAuthorityId": "project-credential-to-http"
+    },
+    {
+      "transitionId": "http-to-model",
+      "from": {
+        "scenarioId": "execute-governed-http-exchange",
+        "outcomeId": "governed-http-exchange-evidence",
+        "contractId": "governed-http-exchange-evidence.v1"
+      },
+      "to": {
+        "scenarioId": "invoke-governed-model",
+        "inputId": "governed-model-invocation-request",
+        "contractId": "governed-model-invocation-request.v1"
+      },
+      "semanticProgress": "monotonic",
+      "bindingAuthorityId": "project-http-to-model"
+    },
+    {
+      "transitionId": "model-to-shape",
+      "from": {
+        "scenarioId": "invoke-governed-model",
+        "outcomeId": "governed-model-response-evidence",
+        "contractId": "governed-model-response-evidence.v1"
+      },
+      "to": {
+        "scenarioId": "shape-file-system-batch",
+        "inputId": "batch-file-system-shape-request",
+        "contractId": "batch-file-system-shape-request.v1"
+      },
+      "semanticProgress": "monotonic",
+      "bindingAuthorityId": "project-model-to-shape"
+    },
+    {
+      "transitionId": "shape-to-target-execution",
+      "from": {
+        "scenarioId": "shape-file-system-batch",
+        "outcomeId": "batch-file-system-shape-evidence",
+        "contractId": "batch-file-system-shape-evidence.v1"
+      },
+      "to": {
+        "scenarioId": "observe-governed-target-execution",
+        "inputId": "bounded-projected-target-execution-context",
+        "contractId": "bounded-projected-target-execution-context.v1"
+      },
+      "semanticProgress": "monotonic",
+      "bindingAuthorityId": "project-shape-to-target-execution"
+    },
+    {
+      "transitionId": "target-execution-to-invoke-capability",
+      "from": {
+        "scenarioId": "observe-governed-target-execution",
+        "outcomeId": "projected-target-execution-observation",
+        "contractId": "projected-target-execution-observation.v1"
+      },
+      "to": {
+        "scenarioId": "invoke-projected-capability",
+        "inputId": "projected-capability-invocation-request",
+        "contractId": "projected-capability-invocation-request.v1"
+      },
+      "semanticProgress": "monotonic",
+      "bindingAuthorityId": "project-target-execution-to-invoke-capability"
+    },
+    {
+      "transitionId": "invoke-capability-to-sequence",
+      "from": {
+        "scenarioId": "invoke-projected-capability",
+        "outcomeId": "projected-capability-invocation-result",
+        "contractId": "projected-capability-invocation-result.v1"
+      },
+      "to": {
+        "scenarioId": "execute-governed-capability-sequence",
+        "inputId": "governed-capability-sequence-request",
+        "contractId": "governed-capability-sequence-request.v1"
+      },
+      "semanticProgress": "monotonic",
+      "bindingAuthorityId": "project-invoke-capability-to-sequence"
+    },
+    {
+      "transitionId": "sequence-to-resolve-feature",
+      "from": {
+        "scenarioId": "execute-governed-capability-sequence",
+        "outcomeId": "governed-capability-sequence-result",
+        "contractId": "governed-capability-sequence-result.v1"
+      },
+      "to": {
+        "scenarioId": "resolve-canonical-capability-feature",
+        "inputId": "capability-feature-authoring-request",
+        "contractId": "capability-feature-authoring-request.v1"
+      },
+      "semanticProgress": "monotonic",
+      "bindingAuthorityId": "project-sequence-to-resolve-feature"
+    },
+    {
+      "transitionId": "resolve-feature-to-transact-binding",
+      "from": {
+        "scenarioId": "resolve-canonical-capability-feature",
+        "outcomeId": "canonical-capability-feature",
+        "contractId": "canonical-capability-feature.v1"
+      },
+      "to": {
+        "scenarioId": "transact-governed-tooling-binding",
+        "inputId": "governed-tooling-binding-transaction-request",
+        "contractId": "governed-tooling-binding-transaction-request.v1"
+      },
+      "semanticProgress": "monotonic",
+      "bindingAuthorityId": "project-resolve-feature-to-transact-binding"
+    },
+    {
+      "transitionId": "transact-binding-to-execute-migration",
+      "from": {
+        "scenarioId": "transact-governed-tooling-binding",
+        "outcomeId": "governed-tooling-binding-transaction-evidence",
+        "contractId": "governed-tooling-binding-transaction-evidence.v1"
+      },
+      "to": {
+        "scenarioId": "execute-governed-tooling-migration-operation",
+        "inputId": "governed-tooling-migration-operation-request",
+        "contractId": "governed-tooling-migration-operation-request.v1"
+      },
+      "semanticProgress": "monotonic",
+      "bindingAuthorityId": "project-transact-binding-to-execute-migration"
+    },
+    {
+      "transitionId": "execute-migration-to-project-registry",
+      "from": {
+        "scenarioId": "execute-governed-tooling-migration-operation",
+        "outcomeId": "governed-tooling-migration-operation-evidence",
+        "contractId": "governed-tooling-migration-operation-evidence.v1"
+      },
+      "to": {
+        "scenarioId": "project-language-mechanic-registry",
+        "inputId": "language-mechanic-registry-projection-request",
+        "contractId": "language-mechanic-registry-projection-request.v1"
+      },
+      "semanticProgress": "monotonic",
+      "bindingAuthorityId": "project-execute-migration-to-project-registry"
+    }
+  ],
+  "rootScenarioId": "realize-sda-execution-plan-mechanics",
+  "name": "Realize SDA execution-plan mechanics",
+  "experience": {
+    "experienceType": "promised-experience.v1",
+    "experienceId": "execution-plan-mechanics-are-realized-from-authority",
+    "actor": "SDA execution platform",
+    "promise": "The projected capability returns an authority-derived realization envelope for every declared plan mechanic, or an attributable rejection, without inventing capability meaning in the target language.",
+    "observableConditions": [
+      {
+        "conditionId": "carrier-and-language-are-admitted",
+        "statement": "only the admitted request carrier and admitted target languages may enter realization"
+      },
+      {
+        "conditionId": "mechanics-come-from-mechanic-authority",
+        "statement": "every required mechanic must be declared by the admitted semantic-value-mechanics.v1 or platform-effect-mechanics.v1 authority"
+      },
+      {
+        "conditionId": "realization-claims-nothing",
+        "statement": "the realization envelope claims no projection, promotion, or behavioral conformance"
+      }
+    ]
+  }
+}

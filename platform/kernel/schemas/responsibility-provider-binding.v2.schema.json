@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/responsibility-provider-binding.v2.schema.json",
+  "title": "Responsibility provider bindings v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["bindingType", "canonicalGraphDigest", "targetId", "bindings"],
+  "properties": {
+    "bindingType": { "const": "responsibility-provider-bindings.v2" },
+    "canonicalGraphDigest": { "$ref": "semantic-primitives.schema.json#/$defs/digest" },
+    "targetId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "bindings": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["responsibilityId", "cellId", "providerSlotId", "providerProfileId", "providerProfileDigest"],
+        "properties": {
+          "responsibilityId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "cellId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "providerSlotId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "providerProfileId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "providerProfileDigest": { "$ref": "semantic-primitives.schema.json#/$defs/digest" }
+        }
+      }
+    }
+  }
+}

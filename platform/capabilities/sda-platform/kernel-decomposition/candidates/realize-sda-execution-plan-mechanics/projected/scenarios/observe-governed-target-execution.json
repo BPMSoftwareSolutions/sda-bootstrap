@@ -1,0 +1,37 @@
+{
+  "scenarioId": "observe-governed-target-execution",
+  "input": {
+    "inputId": "bounded-projected-target-execution-context",
+    "contract": {
+      "contractId": "bounded-projected-target-execution-context.v1"
+    }
+  },
+  "event": {
+    "eventId": "observe-governed-target-execution",
+    "executionAuthorityId": "observe-governed-target-execution.v1"
+  },
+  "outcome": {
+    "outcomeId": "projected-target-execution-observation",
+    "contract": {
+      "contractId": "projected-target-execution-observation.v1"
+    },
+    "experience": {
+      "statement": "one bounded target-execution observation is available and generated artifacts are unchanged"
+    }
+  },
+  "gherkin": {
+    "given": {
+      "semanticRef": "observe-governed-target-execution.given",
+      "text": "admitted target execution authority and bounded commands"
+    },
+    "when": {
+      "semanticRef": "observe-governed-target-execution.when",
+      "text": "declared target fixtures are executed under governance"
+    },
+    "then": {
+      "semanticRef": "observe-governed-target-execution.then",
+      "text": "one bounded target-execution observation is available and generated artifacts are unchanged"
+    }
+  },
+  "name": "Observe governed target execution"
+}

@@ -1,0 +1,29 @@
+{
+  "contractId": "profile-governed-proof-binding-evaluation-input.v1",
+  "payload": {
+    "evaluationCaseId": "explicit-current-passing-binding",
+    "profileId": "generic-proof-binding-evaluation-conformance-profile.v1",
+    "snapshotDigest": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "proofObligationId": "obligation:fixture-a",
+    "subjectSemanticObjectId": "scenario:fixture-a",
+    "authorityApplicability": "REQUIRED",
+    "bindingCandidates": [
+      {
+        "fromSemanticObjectId": "fixture:fixture-a",
+        "relationshipKind": "FIXTURE_EXERCISES_SCENARIO",
+        "toSemanticObjectId": "scenario:fixture-a",
+        "basis": "EXPLICIT_AUTHORITY",
+        "lineageState": "CURRENT"
+      }
+    ],
+    "evidenceState": "CURRENT_PASSING",
+    "reproduction": {
+      "orderedInputDigest": "sha256:e245bd3d819cf7852bce2d8d2a9dc6a6a02cbf653163586965f2487b6ecf4c94",
+      "evaluationRuleIds": [
+        "evaluation-order.v1",
+        "bind-fixture-scenario.v1",
+        "bind-evidence-subject.v1"
+      ]
+    }
+  }
+}

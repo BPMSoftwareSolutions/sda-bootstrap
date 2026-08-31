@@ -1,0 +1,29 @@
+{
+  "contractId": "profile-governed-proof-binding-evaluation-input.v1",
+  "payload": {
+    "evaluationCaseId": "pinned-inputs-reproduce-deterministically",
+    "profileId": "generic-proof-binding-evaluation-conformance-profile.v1",
+    "snapshotDigest": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "proofObligationId": "obligation:reproduce",
+    "subjectSemanticObjectId": "scenario:reproduce",
+    "authorityApplicability": "REQUIRED",
+    "bindingCandidates": [
+      {
+        "fromSemanticObjectId": "fixture:reproduce",
+        "relationshipKind": "FIXTURE_EXERCISES_SCENARIO",
+        "toSemanticObjectId": "scenario:reproduce",
+        "basis": "DETERMINISTIC_RULE",
+        "lineageState": "CURRENT"
+      }
+    ],
+    "evidenceState": "CURRENT_PASSING",
+    "reproduction": {
+      "orderedInputDigest": "sha256:2e7ff5b3b074ce19346f2692a37d953ba0c57c7ac48c8ff37cc72b3d8f5faf62",
+      "evaluationRuleIds": [
+        "evaluation-order.v1",
+        "bind-fixture-scenario.v1",
+        "bind-evidence-subject.v1"
+      ]
+    }
+  }
+}

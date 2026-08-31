@@ -1,0 +1,78 @@
+{
+  "$schema": "contracts/profile-governed-json-authority-ingestor.authority.schema.json",
+  "authorityType": "profile-governed-json-authority-ingestor-authority.v1",
+  "authorityId": "profile-governed-json-authority-ingestor.v1",
+  "authorityRef": "capabilities/sda-platform/bind-profile-governed-json-authority-ingestion/profile-governed-json-authority-ingestor.authority.json",
+  "authorityVersion": "1.0.0",
+  "lifecycle": "ADMITTED",
+  "platformCapabilityId": "sda-json-authority-ingestion-port.v1",
+  "authorityDigest": "sha256:c8ae8f56a11b3dc6cc7501edab37e589de3053edeff618c4e0f22f6e4c4e4a1f",
+  "authorityDigestAlgorithm": "sha256 of canonical recursive-key-order JSON excluding authorityDigest",
+  "inputContracts": [
+    "lossless-json-parse-request.v1",
+    "declared-json-schema-authority-resolution-request.v1",
+    "admitted-json-reference-closure-request.v1",
+    "profile-governed-json-authority-ingestion-request.v1"
+  ],
+  "outputContracts": [
+    "lossless-json-parse-evidence.v1",
+    "declared-json-schema-authority-resolution-evidence.v1",
+    "admitted-json-reference-closure-evidence.v1",
+    "profile-governed-json-authority-ingestion-receipt.v1",
+    "json-authority-ingestion-provider-conformance.v1"
+  ],
+  "subordinateAuthorities": [
+    {
+      "authorityId": "lossless-json-parser.v1",
+      "authorityRef": "capabilities/sda-platform/parse-lossless-json-document/lossless-json-parser.authority.json",
+      "authorityDigest": "sha256:1b864edeb8676b8ab842d15b648c469ba8c69c7ce34c41a28d7dc0cd020a2046"
+    },
+    {
+      "authorityId": "declared-json-schema-authority-resolver.v1",
+      "authorityRef": "capabilities/sda-platform/resolve-declared-json-schema-authority/declared-json-schema-authority-resolver.authority.json",
+      "authorityDigest": "sha256:bb7dd1f4793b1c792faf218260466f27afb323ec7a5ebeba5e6f5b8c14d7ad0b"
+    },
+    {
+      "authorityId": "admitted-json-reference-closure-resolver.v1",
+      "authorityRef": "capabilities/sda-platform/resolve-admitted-json-reference-closure/admitted-json-reference-closure-resolver.authority.json",
+      "authorityDigest": "sha256:0a48118bc56213f21ae802c8c1336ab3d0cb3f756b58ee7d8335d87e95bdf2b8"
+    }
+  ],
+  "compositionRules": [
+    "all-authority-digests-recomputed-before-evaluation",
+    "exact-source-bytes-remain-operational-source-of-record",
+    "canonical-json-used-only-for-derived-identity-and-receipt-material",
+    "resource-class-retained-from-membership-authority",
+    "content-cannot-escalate-source-class",
+    "open-subordinate-evidence-holds-ingestion",
+    "resource-order-is-bytewise-resource-id",
+    "operational-receipt-does-not-claim-provider-conformance"
+  ],
+  "providerObservation": {
+    "disposition": "SATISFIED",
+    "providerSourceSet": [
+      {
+        "sourceRef": "languages/typescript/runtimes/node/json-authority-ingestion-provider.mjs",
+        "sourceDigest": "sha256:dce62cdc3cfc1b5acefbccf5bd28196639e43763a18e188598b935bab6ff7b89"
+      },
+      {
+        "sourceRef": "languages/typescript/runtimes/node/node-mechanic-registry-loader.mjs",
+        "sourceDigest": "sha256:9a29843fac88fefaeb9308c14a661904d41744f5c9e1a43ab98d7f1646d12704"
+      }
+    ],
+    "implementationVersion": "1.0.0",
+    "registryBindingRef": "kernel/semantic-authority/consumer/node-mechanic-registrations/json-authority-ingestion.registration.authority.json",
+    "registryBindingDigest": "sha256:59bcd0c3ded497e48e89c6567abf5a4f9e569cfc0fa0216b28c410b37ccdafce"
+  },
+  "runtimeDependencies": {
+    "packageLockRef": "package-lock.json",
+    "packageLockDigest": "sha256:57d058a1f9924b7a6f283f2a1704b485c4eb321a1011544fba97999126878b0f",
+    "packages": [
+      {
+        "packageName": "ajv",
+        "packageVersion": "8.20.0",
+        "integrity": "sha512-Thbli+OlOj+iMPYFBVBfJ3OmCAnaSyNn4M1vz9T6Gka5Jt9ba/HIR56joy65tY6kx/FCF5VXNB819Y7/GUrBGA=="
+      }
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "transitionId": "verify-artifact-to-origin",
+  "from": {
+    "scenarioId": "verify-artifact-materialization",
+    "outcomeId": "artifact-materialization-conformance",
+    "contractId": "artifact-materialization-conformance.v1"
+  },
+  "to": {
+    "scenarioId": "verify-projected-executable-origin",
+    "inputId": "projected-executable-origin-verification-request",
+    "contractId": "projected-executable-origin-verification-request.v1"
+  },
+  "semanticProgress": "monotonic",
+  "bindingAuthorityId": "project-artifact-to-origin"
+}

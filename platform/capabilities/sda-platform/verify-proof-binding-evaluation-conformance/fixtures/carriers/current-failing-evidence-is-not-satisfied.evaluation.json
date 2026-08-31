@@ -1,0 +1,28 @@
+{
+  "contractId": "profile-governed-proof-binding-evaluation-input.v1",
+  "payload": {
+    "evaluationCaseId": "current-failing-evidence-is-not-satisfied",
+    "profileId": "generic-proof-binding-evaluation-conformance-profile.v1",
+    "snapshotDigest": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "proofObligationId": "obligation:current-failure",
+    "subjectSemanticObjectId": "scenario:current-failure",
+    "authorityApplicability": "REQUIRED",
+    "bindingCandidates": [
+      {
+        "fromSemanticObjectId": "evidence:current-failure",
+        "relationshipKind": "EVIDENCE_PROVES_SUBJECT",
+        "toSemanticObjectId": "obligation:current-failure",
+        "basis": "EXPLICIT_AUTHORITY",
+        "lineageState": "CURRENT"
+      }
+    ],
+    "evidenceState": "CURRENT_FAILING",
+    "reproduction": {
+      "orderedInputDigest": "sha256:4edc397ec8e0c810f4e904cd7a88ce24c83e29428a3f4497d507ccec1937025c",
+      "evaluationRuleIds": [
+        "evaluation-order.v1",
+        "bind-evidence-subject.v1"
+      ]
+    }
+  }
+}

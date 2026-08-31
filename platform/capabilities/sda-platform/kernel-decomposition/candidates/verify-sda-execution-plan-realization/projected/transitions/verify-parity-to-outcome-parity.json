@@ -1,0 +1,15 @@
+{
+  "transitionId": "verify-parity-to-outcome-parity",
+  "from": {
+    "scenarioId": "verify-language-mechanic-parity",
+    "outcomeId": "language-mechanic-parity-conformance",
+    "contractId": "language-mechanic-parity-conformance.v1"
+  },
+  "to": {
+    "scenarioId": "verify-canonical-outcome-parity",
+    "inputId": "canonical-outcome-parity-verification-request",
+    "contractId": "canonical-outcome-parity-verification-request.v1"
+  },
+  "semanticProgress": "monotonic",
+  "bindingAuthorityId": "project-parity-to-outcome-parity"
+}

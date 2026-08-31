@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/tooling/publish-projected-capability-input.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["plan", "sterility"],
+  "properties": {
+    "plan": { "type": "object" },
+    "sterility": { "type": "object" },
+    "failureInjection": { "const": "before-publish" }
+  }
+}

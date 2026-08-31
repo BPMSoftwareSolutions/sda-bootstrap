@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/semantic-corpus/semantic-corpus-derivation-projection-conformance.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contractId", "lifecycle", "projectedCircuit", "authorityDigests", "fixtureManifestRef", "fixtureManifestDigest", "fixtureSetDigest", "partitions", "findings", "disposition", "receiptDigest", "receiptDigestAlgorithm"],
+  "properties": {
+    "contractId": {"const": "semantic-corpus-derivation-projection-conformance.v1"},
+    "lifecycle": {"enum": ["PROPOSED", "ADMITTED"]},
+    "projectedCircuit": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/projectedCircuit"}]},
+    "authorityDigests": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceCapability", "projectionAuthoringContext", "ontology", "profile", "ruleSet"],
+      "properties": {
+        "sourceCapability": {"$ref": "#/$defs/digestOrPending"},
+        "projectionAuthoringContext": {"$ref": "#/$defs/digestOrPending"},
+        "ontology": {"$ref": "#/$defs/digestOrPending"},
+        "profile": {"$ref": "#/$defs/digestOrPending"},
+        "ruleSet": {"$ref": "#/$defs/digestOrPending"}
+      }
+    },
+    "fixtureManifestRef": {"const": "capabilities/sda-platform/verify-semantic-corpus-derivation-conformance/fixtures/fixture-manifest.authority.json"},
+    "fixtureManifestDigest": {"$ref": "#/$defs/digestOrPending"},
+    "fixtureSetDigest": {"$ref": "#/$defs/digestOrPending"},
+    "partitions": {"type": "array", "minItems": 12, "maxItems": 12, "items": {"$ref": "#/$defs/partition"}},
+    "findings": {"type": "array", "items": {"$ref": "#/$defs/finding"}},
+    "disposition": {"enum": ["SDA_SEMANTIC_CORPUS_DERIVATION_PROJECTION_CONFORMANT", "SDA_SEMANTIC_CORPUS_DERIVATION_PROJECTION_OPEN", "SDA_SEMANTIC_CORPUS_DERIVATION_PROJECTION_REJECTED"]},
+    "receiptDigest": {"$ref": "#/$defs/digestOrPending"},
+    "receiptDigestAlgorithm": {"const": "sha256 of canonical recursive-key-order JSON excluding receiptDigest"}
+  },
+  "allOf": [
+    {
+      "if": {"type": "object", "properties": {"lifecycle": {"const": "PROPOSED"}}, "required": ["lifecycle"]},
+      "then": {"type": "object", "properties": {"disposition": {"const": "SDA_SEMANTIC_CORPUS_DERIVATION_PROJECTION_OPEN"}}}
+    },
+    {
+      "if": {"type": "object", "properties": {"lifecycle": {"const": "ADMITTED"}}, "required": ["lifecycle"]},
+      "then": {
+        "type": "object",
+        "properties": {
+          "projectedCircuit": {"$ref": "#/$defs/projectedCircuit"},
+          "authorityDigests": {"type": "object", "properties": {"sourceCapability": {"$ref": "#/$defs/digest"}, "projectionAuthoringContext": {"$ref": "#/$defs/digest"}, "ontology": {"$ref": "#/$defs/digest"}, "profile": {"$ref": "#/$defs/digest"}, "ruleSet": {"$ref": "#/$defs/digest"}}},
+          "fixtureManifestDigest": {"$ref": "#/$defs/digest"},
+          "fixtureSetDigest": {"$ref": "#/$defs/digest"},
+          "receiptDigest": {"$ref": "#/$defs/digest"},
+          "disposition": {"enum": ["SDA_SEMANTIC_CORPUS_DERIVATION_PROJECTION_CONFORMANT", "SDA_SEMANTIC_CORPUS_DERIVATION_PROJECTION_REJECTED"]}
+        }
+      }
+    },
+    {
+      "if": {"type": "object", "properties": {"disposition": {"const": "SDA_SEMANTIC_CORPUS_DERIVATION_PROJECTION_CONFORMANT"}}, "required": ["disposition"]},
+      "then": {"type": "object", "properties": {"partitions": {"type": "array", "items": {"type": "object", "properties": {"disposition": {"const": "SATISFIED"}, "evidenceDigests": {"type": "array", "minItems": 1}}}}, "findings": {"type": "array", "maxItems": 0}}}
+    }
+  ],
+  "$defs": {
+    "digest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "digestOrPending": {"oneOf": [{"$ref": "#/$defs/digest"}, {"type": "string", "pattern": "^PENDING_[A-Z0-9_]+$"}]},
+    "sourceBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ref", "digest"],
+      "properties": {"ref": {"type": "string", "minLength": 1}, "digest": {"$ref": "#/$defs/digest"}}
+    },
+    "projectedCircuit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["consumerWorkspace", "applicationBinding", "projectedCapability", "projectionManifest", "projectionConformance", "generatedTest"],
+      "properties": {
+        "consumerWorkspace": {"$ref": "#/$defs/sourceBinding"},
+        "applicationBinding": {"$ref": "#/$defs/sourceBinding"},
+        "projectedCapability": {"$ref": "#/$defs/sourceBinding"},
+        "projectionManifest": {"$ref": "#/$defs/sourceBinding"},
+        "projectionConformance": {"$ref": "#/$defs/sourceBinding"},
+        "generatedTest": {"$ref": "#/$defs/sourceBinding"}
+      }
+    },
+    "partitionId": {"enum": ["AUTHORITY_SCHEMA_BOUNDARY", "EXACT_LINEAGE_VALIDATION", "CANONICAL_OBJECT_DERIVATION", "OWNER_SCOPED_IDENTITY", "RELATIONSHIP_DERIVATION", "OPEN_REFERENCE_NON_INVENTION", "PROHIBITED_BASIS_REJECTION", "MIXED_GENERATION_REJECTION", "SOURCE_CLASS_NON_ESCALATION", "DETERMINISTIC_ORDERING", "REPRODUCTION_IDENTITY", "PROJECTED_INVOCATION_AND_RECEIPT"]},
+    "partition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["partitionId", "disposition", "evidenceDigests", "reason"],
+      "properties": {
+        "partitionId": {"$ref": "#/$defs/partitionId"},
+        "disposition": {"enum": ["SATISFIED", "NOT_SATISFIED", "NOT_OBSERVABLE"]},
+        "evidenceDigests": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/digest"}},
+        "reason": {"oneOf": [{"type": "string", "minLength": 1}, {"type": "null"}]}
+      }
+    },
+    "finding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "subjectRef", "message"],
+      "properties": {"code": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]*$"}, "subjectRef": {"type": "string", "minLength": 1}, "message": {"type": "string", "minLength": 1}}
+    }
+  }
+}

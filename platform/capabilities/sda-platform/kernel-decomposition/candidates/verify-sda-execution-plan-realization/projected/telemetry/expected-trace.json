@@ -1,0 +1,92 @@
+{
+  "traceType": "projected-expected-consumer-trace.v1",
+  "telemetryId": "consumer-scenario-execution-telemetry",
+  "capabilityId": "verify-sda-execution-plan-realization",
+  "rootScenarioId": "verify-sda-execution-plan-realization",
+  "observationType": "scenario-execution-observation.v1",
+  "lineageFields": [
+    "executionId",
+    "rootExecutionId",
+    "parentExecutionId",
+    "scenarioId"
+  ],
+  "scenarios": [
+    {
+      "scenarioId": "verify-sda-execution-plan-realization",
+      "steps": [
+        "admit-input",
+        "resolve-event-authority",
+        "execute-event-authority",
+        "admit-outcome",
+        "resolve-disposition"
+      ],
+      "expectedTransitionId": "verify-root-to-trace"
+    },
+    {
+      "scenarioId": "verify-expected-execution-trace",
+      "steps": [
+        "admit-input",
+        "resolve-event-authority",
+        "execute-event-authority",
+        "admit-outcome",
+        "resolve-disposition"
+      ],
+      "expectedTransitionId": "verify-trace-to-artifact"
+    },
+    {
+      "scenarioId": "verify-artifact-materialization",
+      "steps": [
+        "admit-input",
+        "resolve-event-authority",
+        "execute-event-authority",
+        "admit-outcome",
+        "resolve-disposition"
+      ],
+      "expectedTransitionId": "verify-artifact-to-origin"
+    },
+    {
+      "scenarioId": "verify-projected-executable-origin",
+      "steps": [
+        "admit-input",
+        "resolve-event-authority",
+        "execute-event-authority",
+        "admit-outcome",
+        "resolve-disposition"
+      ],
+      "expectedTransitionId": "verify-origin-to-mechanic-resolution"
+    },
+    {
+      "scenarioId": "verify-mechanic-resolution",
+      "steps": [
+        "admit-input",
+        "resolve-event-authority",
+        "execute-event-authority",
+        "admit-outcome",
+        "resolve-disposition"
+      ],
+      "expectedTransitionId": "verify-mechanic-resolution-to-parity"
+    },
+    {
+      "scenarioId": "verify-language-mechanic-parity",
+      "steps": [
+        "admit-input",
+        "resolve-event-authority",
+        "execute-event-authority",
+        "admit-outcome",
+        "resolve-disposition"
+      ],
+      "expectedTransitionId": "verify-parity-to-outcome-parity"
+    },
+    {
+      "scenarioId": "verify-canonical-outcome-parity",
+      "steps": [
+        "admit-input",
+        "resolve-event-authority",
+        "execute-event-authority",
+        "admit-outcome",
+        "resolve-disposition"
+      ],
+      "expectedTransitionId": null
+    }
+  ]
+}

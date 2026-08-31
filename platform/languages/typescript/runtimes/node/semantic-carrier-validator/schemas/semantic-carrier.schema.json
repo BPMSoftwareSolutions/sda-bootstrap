@@ -1,0 +1,238 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "scenario-semantic-carrier.v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "capability", "feature", "contracts", "scenarios"],
+  "properties": {
+    "schemaVersion": { "const": "scenario-semantic-carrier.v2" },
+    "capability": { "$ref": "#/$defs/capability" },
+    "feature": { "$ref": "#/$defs/namedIdentity" },
+    "contracts": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/contract" }
+    },
+    "scenarios": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/scenario" }
+    }
+  },
+  "$defs": {
+    "identity": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*(?:\\.v[0-9]+)?$"
+    },
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "namedIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name"],
+      "properties": {
+        "id": { "$ref": "#/$defs/identity" },
+        "name": { "$ref": "#/$defs/nonEmptyString" }
+      }
+    },
+    "digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "authorityRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authorityId", "digest"],
+      "properties": {
+        "authorityId": { "$ref": "#/$defs/identity" },
+        "digest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "capability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "version", "rootExperience", "terminalDispositions"],
+      "properties": {
+        "id": { "$ref": "#/$defs/identity" },
+        "name": { "$ref": "#/$defs/nonEmptyString" },
+        "version": { "$ref": "#/$defs/nonEmptyString" },
+        "rootExperience": { "$ref": "#/$defs/nonEmptyString" },
+        "terminalDispositions": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[A-Z][A-Z0-9_]*$" }
+        }
+      }
+    },
+    "contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "kind", "shape"],
+      "properties": {
+        "id": { "$ref": "#/$defs/identity" },
+        "name": { "$ref": "#/$defs/nonEmptyString" },
+        "kind": { "enum": ["data", "product", "state"] },
+        "shape": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "description"],
+          "properties": {
+            "type": { "enum": ["string", "number", "integer", "boolean", "object", "array"] },
+            "description": { "$ref": "#/$defs/nonEmptyString" }
+          }
+        }
+      }
+    },
+    "input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "contractRef", "gherkin"],
+      "properties": {
+        "id": { "$ref": "#/$defs/identity" },
+        "name": { "$ref": "#/$defs/nonEmptyString" },
+        "contractRef": { "$ref": "#/$defs/identity" },
+        "gherkin": { "$ref": "#/$defs/nonEmptyString" }
+      }
+    },
+    "operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "predecessorRefs", "mechanicRefs", "providerBoundaryRefs", "effectRefs"],
+      "properties": {
+        "id": { "$ref": "#/$defs/identity" },
+        "name": { "$ref": "#/$defs/nonEmptyString" },
+        "predecessorRefs": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/identity" } },
+        "mechanicRefs": { "type": "array", "items": { "$ref": "#/$defs/identity" } },
+        "providerBoundaryRefs": { "type": "array", "items": { "$ref": "#/$defs/identity" } },
+        "effectRefs": { "type": "array", "items": { "$ref": "#/$defs/identity" } }
+      }
+    },
+    "jsonValue": {
+      "anyOf": [
+        { "type": "null" },
+        { "type": "string" },
+        { "type": "number" },
+        { "type": "boolean" },
+        { "type": "array", "items": { "$ref": "#/$defs/jsonValue" } },
+        { "type": "object", "additionalProperties": { "$ref": "#/$defs/jsonValue" } }
+      ]
+    },
+    "mechanic": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "kind", "config"],
+      "properties": {
+        "id": { "$ref": "#/$defs/identity" },
+        "name": { "$ref": "#/$defs/nonEmptyString" },
+        "kind": { "enum": ["native", "classification", "bounded-iteration"] },
+        "config": { "type": "object", "additionalProperties": { "$ref": "#/$defs/jsonValue" } }
+      }
+    },
+    "providerBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "provider"],
+      "properties": {
+        "id": { "$ref": "#/$defs/identity" },
+        "name": { "$ref": "#/$defs/nonEmptyString" },
+        "provider": { "$ref": "#/$defs/nonEmptyString" }
+      }
+    },
+    "effect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "kind", "providerBoundaryRef", "observable"],
+      "properties": {
+        "id": { "$ref": "#/$defs/identity" },
+        "name": { "$ref": "#/$defs/nonEmptyString" },
+        "kind": { "enum": ["read", "write", "network", "process", "display"] },
+        "providerBoundaryRef": { "$ref": "#/$defs/identity" },
+        "observable": { "$ref": "#/$defs/nonEmptyString" }
+      }
+    },
+    "execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operations", "mechanics", "providerBoundaries", "effects"],
+      "properties": {
+        "operations": { "type": "array", "items": { "$ref": "#/$defs/operation" } },
+        "mechanics": { "type": "array", "items": { "$ref": "#/$defs/mechanic" } },
+        "providerBoundaries": { "type": "array", "items": { "$ref": "#/$defs/providerBoundary" } },
+        "effects": { "type": "array", "items": { "$ref": "#/$defs/effect" } }
+      }
+    },
+    "event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "responsibility", "gherkin", "execution"],
+      "properties": {
+        "id": { "$ref": "#/$defs/identity" },
+        "name": { "$ref": "#/$defs/nonEmptyString" },
+        "responsibility": { "$ref": "#/$defs/nonEmptyString" },
+        "gherkin": { "$ref": "#/$defs/nonEmptyString" },
+        "execution": { "$ref": "#/$defs/execution" }
+      }
+    },
+    "product": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "contractRef"],
+      "properties": {
+        "id": { "$ref": "#/$defs/identity" },
+        "name": { "$ref": "#/$defs/nonEmptyString" },
+        "contractRef": { "$ref": "#/$defs/identity" }
+      }
+    },
+    "outcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "experience", "product", "terminal", "terminalDisposition", "gherkin"],
+      "properties": {
+        "id": { "$ref": "#/$defs/identity" },
+        "name": { "$ref": "#/$defs/nonEmptyString" },
+        "experience": { "$ref": "#/$defs/nonEmptyString" },
+        "product": { "$ref": "#/$defs/product" },
+        "terminal": { "type": "boolean" },
+        "terminalDisposition": {
+          "type": ["string", "null"],
+          "pattern": "^[A-Z][A-Z0-9_]*$"
+        },
+        "gherkin": { "$ref": "#/$defs/nonEmptyString" }
+      }
+    },
+    "routeCondition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "selector"],
+      "properties": {
+        "kind": { "enum": ["always", "variant", "success", "failure", "cancel"] },
+        "selector": { "type": ["string", "null"] }
+      }
+    },
+    "route": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "toScenarioRef", "when"],
+      "properties": {
+        "id": { "$ref": "#/$defs/identity" },
+        "toScenarioRef": { "$ref": "#/$defs/identity" },
+        "when": { "$ref": "#/$defs/routeCondition" }
+      }
+    },
+    "scenario": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "input", "event", "outcome", "routes"],
+      "properties": {
+        "id": { "$ref": "#/$defs/identity" },
+        "name": { "$ref": "#/$defs/nonEmptyString" },
+        "input": { "$ref": "#/$defs/input" },
+        "event": { "$ref": "#/$defs/event" },
+        "outcome": { "$ref": "#/$defs/outcome" },
+        "routes": { "type": "array", "items": { "$ref": "#/$defs/route" } }
+      }
+    }
+  }
+}

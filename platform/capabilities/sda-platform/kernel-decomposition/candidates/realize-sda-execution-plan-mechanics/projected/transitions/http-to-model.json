@@ -1,0 +1,15 @@
+{
+  "transitionId": "http-to-model",
+  "from": {
+    "scenarioId": "execute-governed-http-exchange",
+    "outcomeId": "governed-http-exchange-evidence",
+    "contractId": "governed-http-exchange-evidence.v1"
+  },
+  "to": {
+    "scenarioId": "invoke-governed-model",
+    "inputId": "governed-model-invocation-request",
+    "contractId": "governed-model-invocation-request.v1"
+  },
+  "semanticProgress": "monotonic",
+  "bindingAuthorityId": "project-http-to-model"
+}

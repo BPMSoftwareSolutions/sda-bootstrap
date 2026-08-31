@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/consumer-experience-closure.v1.schema.json",
+  "title": "Observed Consumer Experience Closure",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["closureType", "capabilityId", "experienceId", "promise", "projectionTarget", "fixtures", "disposition"],
+  "properties": {
+    "closureType": { "const": "consumer-experience-closure.v1" },
+    "capabilityId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "experienceId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "promise": { "type": "string", "minLength": 1 },
+    "projectionTarget": { "type": "string", "enum": ["node", "csharp", "python", "java"] },
+    "fixtures": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["fixtureId", "conditions", "disposition"],
+        "properties": {
+          "fixtureId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "conditions": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["conditionId", "statement", "observations", "disposition"],
+              "properties": {
+                "conditionId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+                "statement": { "type": "string", "minLength": 1 },
+                "observations": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["path", "operator", "expected", "actual", "satisfied"],
+                    "properties": {
+                      "path": { "type": "string", "minLength": 1 },
+                      "operator": { "type": "string", "enum": ["equals", "contains", "not-contains"] },
+                      "expected": {},
+                      "actual": {},
+                      "satisfied": { "type": "boolean" }
+                    }
+                  }
+                },
+                "disposition": { "type": "string", "enum": ["OBSERVED", "NOT_OBSERVED"] }
+              }
+            }
+          },
+          "disposition": { "type": "string", "enum": ["EXPERIENCE_REALIZED", "EXPERIENCE_NOT_REALIZED"] }
+        }
+      }
+    },
+    "disposition": { "type": "string", "enum": ["OBSERVABLY_TRUE", "NOT_ESTABLISHED"] }
+  }
+}

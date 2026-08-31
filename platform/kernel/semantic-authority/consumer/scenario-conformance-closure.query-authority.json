@@ -1,0 +1,33 @@
+{
+  "queryType": "consumer-conformance-query-authority.v1",
+  "queryId": "scenario-conformance-closure",
+  "subjects": [
+    "feature",
+    "scenario",
+    "contract",
+    "execution-authority",
+    "transition",
+    "interface",
+    "projection",
+    "telemetry",
+    "execution",
+    "behavior",
+    "platform-capability",
+    "executable-origin"
+  ],
+  "requiredClosures": [
+    "feature-to-scenario",
+    "scenario-to-contract",
+    "scenario-to-event-authority",
+    "outcome-to-transition",
+    "transition-to-next-input",
+    "scenario-to-interface",
+    "execution-to-telemetry",
+    "scenario-to-projection",
+    "expected-to-observed-execution",
+    "root-to-terminal-behavior",
+    "required-mechanic-to-platform-capability",
+    "consumer-executable-origin"
+  ],
+  "dispositionPolicy": "all-required-closures-conform"
+}

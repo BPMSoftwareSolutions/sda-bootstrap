@@ -1,0 +1,7 @@
+{
+  "$schema": "schema:generic-json-authority.v1",
+  "documentType": "generic-json-authority.v2",
+  "id": "unsupported-version",
+  "value": "held",
+  "references": []
+}

@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/sda-platform/deterministic-semantic-vector-indexer.authority.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["authorityType", "authorityId", "authorityRef", "authorityVersion", "lifecycle", "platformCapabilityId", "authorityDigest", "authorityDigestAlgorithm", "embeddingModel", "inputContracts", "outputContracts", "subordinateAuthorities", "compositionRules", "providerObservation", "runtimeDependencies", "boundaries"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "authorityType": {"const": "deterministic-semantic-vector-indexer-authority.v1"},
+    "authorityId": {"const": "deterministic-semantic-vector-indexer.v1"},
+    "authorityRef": {"type": "string", "minLength": 1},
+    "authorityVersion": {"type": "string", "minLength": 1},
+    "lifecycle": {"enum": ["PROPOSED", "ADMITTED", "SUPERSEDED", "RETIRED", "HELD"]},
+    "platformCapabilityId": {"const": "sda-semantic-vector-index.v1"},
+    "authorityDigest": {"$ref": "#/$defs/digest"},
+    "authorityDigestAlgorithm": {"type": "string", "minLength": 1},
+    "embeddingModel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["modelId", "modelKind", "coordinateDomain", "similarityRule", "orderingRule", "externalServiceUsed", "floatingPointCoordinatesUsed"],
+      "properties": {
+        "modelId": {"const": "sidefx-trigram-reference-embedding.v1"},
+        "modelKind": {"const": "LOCAL_DETERMINISTIC_REFERENCE"},
+        "coordinateDomain": {"const": "NON_NEGATIVE_INTEGER_NGRAM_COUNTS"},
+        "similarityRule": {"type": "string", "minLength": 1},
+        "orderingRule": {"const": "overlap score descending, then catalog ordinal ascending"},
+        "externalServiceUsed": {"const": false},
+        "floatingPointCoordinatesUsed": {"const": false}
+      }
+    },
+    "inputContracts": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "outputContracts": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "subordinateAuthorities": {"type": "array", "items": {"type": "string"}},
+    "compositionRules": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "providerObservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["disposition", "providerSourceSet", "implementationVersion", "registryBindingRef", "registryBindingDigest"],
+      "properties": {
+        "disposition": {"enum": ["SATISFIED", "NOT_SATISFIED", "NOT_OBSERVABLE", "NOT_APPLICABLE"]},
+        "providerSourceSet": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sourceRef", "sourceDigest"],
+            "properties": {
+              "sourceRef": {"type": "string", "minLength": 1},
+              "sourceDigest": {"$ref": "#/$defs/digest"}
+            }
+          }
+        },
+        "implementationVersion": {"type": "string", "minLength": 1},
+        "registryBindingRef": {"type": "string", "minLength": 1},
+        "registryBindingDigest": {"$ref": "#/$defs/digest"}
+      }
+    },
+    "runtimeDependencies": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["packageLockRef", "packageLockDigest", "packages"],
+      "properties": {
+        "packageLockRef": {"type": "string", "minLength": 1},
+        "packageLockDigest": {"$ref": "#/$defs/digest"},
+        "packages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["packageName", "packageVersion", "integrity"],
+            "properties": {
+              "packageName": {"type": "string", "minLength": 1},
+              "packageVersion": {"type": "string", "minLength": 1},
+              "integrity": {"type": "string", "minLength": 1}
+            }
+          }
+        }
+      }
+    },
+    "boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["candidatesAreFacts", "mayGroundResults", "mayAddAuthority", "mayReorderConsumerResults", "mayClaimAdmission", "separateEmbeddingCapabilityAdmitted", "dispatchRegistrationAdmitted"],
+      "properties": {
+        "candidatesAreFacts": {"const": false},
+        "mayGroundResults": {"const": false},
+        "mayAddAuthority": {"const": false},
+        "mayReorderConsumerResults": {"const": false},
+        "mayClaimAdmission": {"const": false},
+        "separateEmbeddingCapabilityAdmitted": {"const": false},
+        "dispatchRegistrationAdmitted": {"const": true}
+      }
+    }
+  },
+  "$defs": {"digest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"}}
+}

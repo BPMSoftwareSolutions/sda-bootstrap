@@ -1,0 +1,142 @@
+{
+  "contractId": "proof-binding-evaluation-provider-conformance.v1",
+  "lifecycle": "ADMITTED",
+  "providerObservation": {
+    "disposition": "SATISFIED",
+    "providerSourceSet": [
+      {
+        "sourceRef": "languages/typescript/runtimes/node/proof-binding-evaluation-provider.mjs",
+        "sourceDigest": "sha256:7e4bb359fa4ecac4b76837a0ccb672b7d589f0e4720940dfca50e0b18d286eab"
+      },
+      {
+        "sourceRef": "languages/typescript/runtimes/node/node-mechanic-registry-loader.mjs",
+        "sourceDigest": "sha256:9a29843fac88fefaeb9308c14a661904d41744f5c9e1a43ab98d7f1646d12704"
+      }
+    ],
+    "implementationVersion": "1.0.0",
+    "registryBindingRef": "kernel/semantic-authority/consumer/node-mechanic-registrations/proof-binding-evaluation.registration.authority.json",
+    "registryBindingDigest": "sha256:3149812f05dec95a5a8db991b9834a263af0cfc6e4a6d42fb2aab1947fd2d4a0"
+  },
+  "authorityDigests": {
+    "provider": "sha256:0008ade2e1edb10fb04f0c7c288c0d85c13420c19998a88252d63eda585c6349",
+    "profile": "sha256:57342f94d143f26b734981bd53aff1f27a0e6637cd62ece9e1c3e9fa7296ea3a"
+  },
+  "fixtureManifestRef": "capabilities/sda-platform/verify-proof-binding-evaluation-conformance/fixtures/fixture-manifest.authority.json",
+  "fixtureManifestDigest": "sha256:14915542d1a0888e1679666ca280eb10ca5897b1beb515b0694913cc59ec6e92",
+  "fixtureSetDigest": "sha256:23948392cd0d8926f0238e65a0eaa4e0c40debcfea033b3e6a70c1bc334cc264",
+  "partitions": [
+    {
+      "partitionId": "PROFILE_BOUNDARY_AND_EVALUATION_ORDER",
+      "disposition": "SATISFIED",
+      "evidenceDigests": [
+        "sha256:14915542d1a0888e1679666ca280eb10ca5897b1beb515b0694913cc59ec6e92",
+        "sha256:57342f94d143f26b734981bd53aff1f27a0e6637cd62ece9e1c3e9fa7296ea3a"
+      ],
+      "reason": null
+    },
+    {
+      "partitionId": "EXCLUDED_OBLIGATION_NOT_APPLICABLE",
+      "disposition": "SATISFIED",
+      "evidenceDigests": [
+        "sha256:14915542d1a0888e1679666ca280eb10ca5897b1beb515b0694913cc59ec6e92",
+        "sha256:db4519b638e1c79861bf158fe25f8d6d2b6a1f4ee1a39ca10714bb86cc6ca022"
+      ],
+      "reason": null
+    },
+    {
+      "partitionId": "ABSENCE_DOES_NOT_MEAN_FAILURE",
+      "disposition": "SATISFIED",
+      "evidenceDigests": [
+        "sha256:14915542d1a0888e1679666ca280eb10ca5897b1beb515b0694913cc59ec6e92",
+        "sha256:63a744844e51b764abed6bf1cfeb831cd8a4a8751b3cd1f7f0054d126595e08b"
+      ],
+      "reason": null
+    },
+    {
+      "partitionId": "PROHIBITED_BASIS_REJECTION",
+      "disposition": "SATISFIED",
+      "evidenceDigests": [
+        "sha256:14915542d1a0888e1679666ca280eb10ca5897b1beb515b0694913cc59ec6e92",
+        "sha256:a2cdcc1d12a0f04615c92ee98853b50b6e09205aae477ac916a117a966ebc5ad"
+      ],
+      "reason": null
+    },
+    {
+      "partitionId": "STALE_OR_MIXED_LINEAGE_REJECTION",
+      "disposition": "SATISFIED",
+      "evidenceDigests": [
+        "sha256:14915542d1a0888e1679666ca280eb10ca5897b1beb515b0694913cc59ec6e92",
+        "sha256:f5de4a4b6d6481093aef7ac9c1df92d30f31748630235459f12ee5815a391480"
+      ],
+      "reason": null
+    },
+    {
+      "partitionId": "CURRENT_PASSING_SATISFIED",
+      "disposition": "SATISFIED",
+      "evidenceDigests": [
+        "sha256:14915542d1a0888e1679666ca280eb10ca5897b1beb515b0694913cc59ec6e92",
+        "sha256:c007bc0216e59c5e7c2bfe7107c346b771bd8d83c2c82577446eed7ef40c20ae"
+      ],
+      "reason": null
+    },
+    {
+      "partitionId": "CURRENT_FAILING_NOT_SATISFIED",
+      "disposition": "SATISFIED",
+      "evidenceDigests": [
+        "sha256:14915542d1a0888e1679666ca280eb10ca5897b1beb515b0694913cc59ec6e92",
+        "sha256:1aee32a28c614ee2d1f9b78fe5a8d458288494ca1dc9739de16ce9b62cd4d66d"
+      ],
+      "reason": null
+    },
+    {
+      "partitionId": "EXACTLY_ONE_DISPOSITION_PER_OBLIGATION",
+      "disposition": "SATISFIED",
+      "evidenceDigests": [
+        "sha256:14915542d1a0888e1679666ca280eb10ca5897b1beb515b0694913cc59ec6e92",
+        "sha256:1aee32a28c614ee2d1f9b78fe5a8d458288494ca1dc9739de16ce9b62cd4d66d"
+      ],
+      "reason": null
+    },
+    {
+      "partitionId": "DETERMINISTIC_REPRODUCTION",
+      "disposition": "SATISFIED",
+      "evidenceDigests": [
+        "sha256:14915542d1a0888e1679666ca280eb10ca5897b1beb515b0694913cc59ec6e92",
+        "sha256:745fd001a8a86be98c62c51ce30d3c760b0df4c062d135f7f81212378d042352",
+        "sha256:9fef282f221d027b3fee5593e9a7295b024f1e737b205718f0b8da29c7227edc"
+      ],
+      "reason": null
+    },
+    {
+      "partitionId": "CONTRACT_ADMISSION_AND_RECEIPT_DIGEST",
+      "disposition": "SATISFIED",
+      "evidenceDigests": [
+        "sha256:14915542d1a0888e1679666ca280eb10ca5897b1beb515b0694913cc59ec6e92",
+        "sha256:511ad3bba2ba7cabab021ffe6daf10b1b41fc385d0a69e29abdb71b0c0ed240b"
+      ],
+      "reason": null
+    },
+    {
+      "partitionId": "PROVIDER_AND_AUTHORITY_IDENTITIES",
+      "disposition": "SATISFIED",
+      "evidenceDigests": [
+        "sha256:14915542d1a0888e1679666ca280eb10ca5897b1beb515b0694913cc59ec6e92",
+        "sha256:511ad3bba2ba7cabab021ffe6daf10b1b41fc385d0a69e29abdb71b0c0ed240b"
+      ],
+      "reason": null
+    },
+    {
+      "partitionId": "ORDERED_EVIDENCE_FINDINGS",
+      "disposition": "SATISFIED",
+      "evidenceDigests": [
+        "sha256:14915542d1a0888e1679666ca280eb10ca5897b1beb515b0694913cc59ec6e92",
+        "sha256:63a744844e51b764abed6bf1cfeb831cd8a4a8751b3cd1f7f0054d126595e08b"
+      ],
+      "reason": null
+    }
+  ],
+  "findings": [],
+  "disposition": "SDA_PROOF_BINDING_EVALUATION_PROVIDER_CONFORMANT",
+  "receiptDigest": "sha256:22d2fd7cfacc2131626900fe80482b86cd7953ae2fcaaa447cfea7bdc02915f1",
+  "receiptDigestAlgorithm": "sha256 of canonical recursive-key-order JSON excluding receiptDigest"
+}

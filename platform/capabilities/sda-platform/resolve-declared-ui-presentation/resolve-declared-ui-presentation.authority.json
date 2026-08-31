@@ -1,0 +1,23 @@
+{
+  "$schema": "contracts/resolve-declared-ui-presentation.authority.schema.json",
+  "eventAuthorityType": "semantic-presentation-resolution-authority.v1",
+  "eventId": "resolve-declared-ui-presentation",
+  "authorityId": "resolve-declared-ui-presentation.v1",
+  "inputContractId": "declared-ui-authority.v1",
+  "outcomeContractId": "sda-ui-semantic-presentation.v1",
+  "operation": "resolve-only-justified-semantic-presentation",
+  "invariants": [
+    "the-semantic-canvas-begins-empty",
+    "every-observable-element-has-admitted-lineage",
+    "undeclared-presentation-characteristics-remain-absent",
+    "observable-experience-promises-require-lineage-bound-presentation",
+    "canonical-ordering-and-digest-are-source-order-independent",
+    "target-framework-and-physical-layout-selection-are-forbidden"
+  ],
+  "governedFindings": [
+    "UNJUSTIFIED_PRESENTATION_ELEMENT",
+    "UNJUSTIFIED_PRESENTATION_RELATIONSHIP",
+    "UNKNOWN_RELATIONSHIP_ENDPOINT",
+    "MISSING_PRESENTATION_FOR_EXPERIENCE"
+  ]
+}

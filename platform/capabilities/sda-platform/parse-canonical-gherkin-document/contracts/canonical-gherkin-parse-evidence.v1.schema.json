@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/gherkin/canonical-gherkin-parse-evidence.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contractId", "source", "grammar", "gherkinDocument", "comments", "diagnostics", "nodeIdentities", "astDigest", "disposition"],
+  "properties": {
+    "contractId": {"const": "canonical-gherkin-parse-evidence.v1"},
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceRef", "sourceBytesBase64", "sourceDigest", "mediaType", "declaredDialect"],
+      "properties": {
+        "sourceRef": {"type": "string"},
+        "sourceBytesBase64": {"type": "string"},
+        "sourceDigest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+        "mediaType": {"type": "string", "minLength": 1},
+        "declaredDialect": {"type": "string"}
+      }
+    },
+    "grammar": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["implementationId", "implementationVersion", "implementationDigest"],
+      "properties": {
+        "implementationId": {"type": "string"},
+        "implementationVersion": {"type": "string"},
+        "implementationDigest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"}
+      }
+    },
+    "gherkinDocument": {"type": ["object", "null"]},
+    "comments": {"type": "array", "items": {"type": "object"}},
+    "diagnostics": {"type": "array", "items": {"type": "object", "required": ["code", "message", "sourceRef", "sourcePointer"]}},
+    "nodeIdentities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["nodeIdentity", "nodeKind", "sourcePointer", "location"],
+        "properties": {
+          "nodeIdentity": {"type": "string", "pattern": "^gherkin-node:[a-f0-9]{64}$"},
+          "nodeKind": {"type": "string"},
+          "sourcePointer": {"type": "string"},
+          "location": {"type": "object", "required": ["line", "column"]}
+        }
+      }
+    },
+    "astDigest": {"oneOf": [{"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"}, {"type": "null"}]},
+    "disposition": {"enum": ["PARSED", "REJECTED"]}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"disposition": {"const": "PARSED"}}, "required": ["disposition"]},
+      "then": {
+        "properties": {
+          "gherkinDocument": {"type": "object"},
+          "astDigest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"}
+        }
+      }
+    },
+    {
+      "if": {"properties": {"disposition": {"const": "REJECTED"}}, "required": ["disposition"]},
+      "then": {"properties": {"diagnostics": {"minItems": 1}}}
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://scenario-driven-architecture.dev/schemas/node-mechanic-registration-authority.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "registrationAuthorityType",
+    "authorityId",
+    "platformCapabilityId",
+    "kind",
+    "providerModule",
+    "providerExport",
+    "invocation",
+    "authorityDigestAlgorithm",
+    "authorityDigest"
+  ],
+  "properties": {
+    "$schema": {"const": "../../../schemas/node-mechanic-registration-authority.v1.schema.json"},
+    "registrationAuthorityType": {"const": "node-mechanic-registration-authority.v1"},
+    "authorityId": {"type": "string", "minLength": 1},
+    "platformCapabilityId": {"type": "string", "minLength": 1},
+    "kind": {"const": "direct"},
+    "providerModule": {"type": "string", "pattern": "^[^/\\\\]+\\.mjs$"},
+    "providerExport": {"type": "string", "minLength": 1},
+    "invocation": {"enum": ["configuration", "url-context"]},
+    "authorityDigestAlgorithm": {"const": "sha256 of canonical recursive-key-order JSON excluding authorityDigest"},
+    "authorityDigest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"}
+  }
+}

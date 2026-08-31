@@ -1,0 +1,21 @@
+{
+  "capabilityId": "bind-os-environment-credential",
+  "name": "Bind one OS environment credential reference",
+  "mode": ["feature", "capability"],
+  "userStory": {
+    "actor": "governed model invocation",
+    "intent": "bind one admitted credential reference in the fixed OS resolution order without depending on process spawn state",
+    "outcome": "an opaque invocation-scoped binding and secret-free availability lineage"
+  },
+  "experience": {
+    "experienceType": "promised-experience.v1",
+    "experienceId": "bind-os-environment-credential-is-secret-free",
+    "actor": "governed model invocation",
+    "promise": "The projected capability returns one opaque binding or a typed secret-free refusal; credential bytes never cross the semantic boundary.",
+    "observableConditions": [
+      {"conditionId": "fixed-resolution-order", "statement": "process environment, then operating-system user scope, then operating-system machine scope"},
+      {"conditionId": "non-disclosure", "statement": "no credential material appears in any observable channel"}
+    ]
+  },
+  "rootScenarioId": "bind-os-environment-credential"
+}

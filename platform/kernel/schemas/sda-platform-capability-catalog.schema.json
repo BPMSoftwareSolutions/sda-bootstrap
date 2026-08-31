@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/sda-platform-capability-catalog.v1.schema.json",
+  "title": "Admitted SDA Platform Capability Catalog",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["catalogType", "capabilities"],
+  "properties": {
+    "catalogType": { "const": "sda-platform-capability-catalog.v1" },
+    "capabilities": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["capabilityId", "kind", "status", "projectionTarget", "provider", "providesMechanics", "implementationRef", "conformanceRef"],
+        "properties": {
+          "capabilityId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "kind": { "type": "string", "enum": ["consumer-runtime", "interface-delivery", "event-port", "state-projection", "contract-validator", "representation", "authority-resolver", "semantic-executor", "execution-observer"] },
+          "status": { "const": "ADMITTED" },
+          "projectionTarget": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+          "provider": { "type": "string", "minLength": 1 },
+          "providesMechanics": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" }
+          },
+          "implementationRef": { "type": "string", "minLength": 1 },
+          "conformanceRef": { "type": "string", "minLength": 1 },
+          "providerAuthorityRef": { "type": "string", "minLength": 1 },
+          "providerAuthorityDigest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+          "conformanceDigest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }
+        },
+        "dependentRequired": {
+          "providerAuthorityRef": ["providerAuthorityDigest", "conformanceDigest"],
+          "providerAuthorityDigest": ["providerAuthorityRef", "conformanceDigest"],
+          "conformanceDigest": ["providerAuthorityRef", "providerAuthorityDigest"]
+        }
+      }
+    }
+  }
+}

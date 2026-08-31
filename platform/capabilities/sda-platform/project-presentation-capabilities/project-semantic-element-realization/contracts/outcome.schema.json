@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.agentic-harness.local/semantic-element-realization-projection-evidence.v1.json",
+  "type": "object",
+  "properties": {
+    "instructionId": {
+      "type": "string"
+    },
+    "instructionKind": {
+      "const": "REALIZE_SEMANTIC_ELEMENT"
+    },
+    "sourceRef": {
+      "type": "string"
+    },
+    "capabilityId": {
+      "const": "content.semantic-element.v1"
+    },
+    "mechanicId": {
+      "type": "string"
+    },
+    "semanticKind": {
+      "type": "string",
+      "enum": [
+        "INFORMATION",
+        "ACTION",
+        "INPUT",
+        "NAVIGATION",
+        "FEEDBACK",
+        "REGION"
+      ]
+    },
+    "semanticRole": {
+      "type": "string"
+    },
+    "content": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "LITERAL",
+            "READ_MODEL_REF"
+          ]
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "stateRefs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "eventRefs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "lineage": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "instructionId",
+    "instructionKind",
+    "sourceRef",
+    "capabilityId",
+    "mechanicId",
+    "semanticKind",
+    "semanticRole",
+    "content",
+    "stateRefs",
+    "eventRefs",
+    "lineage"
+  ],
+  "additionalProperties": false
+}

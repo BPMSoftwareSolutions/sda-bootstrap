@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/gherkin/official-cucumber-gherkin-grammar.authority.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "authorityType",
+    "authorityId",
+    "authorityRef",
+    "authorityVersion",
+    "authorityDigest",
+    "platformCapabilityId",
+    "providerFamily",
+    "packages",
+    "supportedMediaTypes",
+    "identityGeneration",
+    "retention"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "contracts/official-cucumber-gherkin-grammar.authority.schema.json"
+    },
+    "authorityType": {
+      "const": "official-cucumber-gherkin-grammar-authority.v1"
+    },
+    "authorityId": {
+      "const": "official-cucumber-gherkin-js.v42"
+    },
+    "authorityRef": {
+      "const": "capabilities/sda-platform/parse-canonical-gherkin-document/official-cucumber-gherkin-grammar.authority.json"
+    },
+    "authorityVersion": {
+      "const": "42.0.1"
+    },
+    "authorityDigest": {
+      "$ref": "#/$defs/digest"
+    },
+    "platformCapabilityId": {
+      "const": "sda-canonical-gherkin-grammar.v1"
+    },
+    "providerFamily": {
+      "const": "OFFICIAL_CUCUMBER_GHERKIN"
+    },
+    "packages": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "version", "integrity"],
+        "properties": {
+          "name": {
+            "enum": ["@cucumber/gherkin", "@cucumber/messages"]
+          },
+          "version": {
+            "enum": ["42.0.1", "34.2.1"]
+          },
+          "integrity": {
+            "type": "string",
+            "pattern": "^sha512-[A-Za-z0-9+/]+={0,2}$"
+          }
+        }
+      }
+    },
+    "supportedMediaTypes": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "text/x.cucumber.gherkin+plain",
+          "text/x.cucumber.gherkin+markdown"
+        ]
+      }
+    },
+    "identityGeneration": {
+      "const": "INCREMENTING_PER_DOCUMENT"
+    },
+    "retention": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["exactSourceBytes", "astLocations", "comments", "pickles"],
+      "properties": {
+        "exactSourceBytes": { "const": true },
+        "astLocations": { "const": true },
+        "comments": { "const": true },
+        "pickles": { "const": true }
+      }
+    }
+  },
+  "$defs": {
+    "digest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/json-ingestion/admitted-json-reference-closure-request.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contractId", "sourceRef", "sourceDigest", "declaredReferences", "referenceScopeBinding", "cyclePolicy", "resolverBinding"],
+  "properties": {
+    "contractId": {"const": "admitted-json-reference-closure-request.v1"},
+    "sourceRef": {"type": "string", "minLength": 1},
+    "sourceDigest": {"$ref": "#/$defs/digest"},
+    "declaredReferences": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "referenceScopeBinding": {"$ref": "#/$defs/externalAuthorityBinding"},
+    "cyclePolicy": {"enum": ["ALLOW_AND_RECORD", "REJECT"]},
+    "resolverBinding": {"$ref": "#/$defs/resolverBinding"}
+  },
+  "$defs": {
+    "digest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "externalAuthorityBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authorityId", "authorityRef", "authorityDigest"],
+      "properties": {
+        "authorityId": {"type": "string", "minLength": 1},
+        "authorityRef": {"type": "string", "minLength": 1},
+        "authorityDigest": {"$ref": "#/$defs/digest"}
+      }
+    },
+    "resolverBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authorityId", "authorityRef", "authorityDigest"],
+      "properties": {
+        "authorityId": {"const": "admitted-json-reference-closure-resolver.v1"},
+        "authorityRef": {"const": "capabilities/sda-platform/resolve-admitted-json-reference-closure/admitted-json-reference-closure-resolver.authority.json"},
+        "authorityDigest": {"$ref": "#/$defs/digest"}
+      }
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "conformanceType": "projected-artifact-mechanical-sterility.v1",
+  "sourceOrigin": "PROJECTED",
+  "forbiddenExecutableMechanics": {
+    "branch": 0,
+    "iteration": 0,
+    "exception-handling": 0,
+    "throw": 0,
+    "object-construction": 0,
+    "serialization": 0,
+    "normalization": 0,
+    "validation": 0,
+    "fallback": 0,
+    "retry": 0,
+    "state-mutation": 0,
+    "meaning-hidden-in-text": 0
+  },
+  "violations": [],
+  "disposition": "PURE_PROJECTION_CONFORMS"
+}

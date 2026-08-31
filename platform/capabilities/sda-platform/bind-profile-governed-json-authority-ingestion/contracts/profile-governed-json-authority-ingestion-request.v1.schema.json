@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/json-ingestion/profile-governed-json-authority-ingestion-request.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contractId", "manifestBinding", "profileBinding", "canonicalizationPolicyBinding", "membershipPolicyBinding", "schemaCatalogBinding", "referenceScopeBinding", "parserBinding", "schemaResolverBinding", "referenceResolverBinding", "providerBinding", "resources"],
+  "properties": {
+    "contractId": {"const": "profile-governed-json-authority-ingestion-request.v1"},
+    "manifestBinding": {"$ref": "#/$defs/externalAuthorityBinding"},
+    "profileBinding": {"$ref": "#/$defs/externalAuthorityBinding"},
+    "canonicalizationPolicyBinding": {"$ref": "#/$defs/externalAuthorityBinding"},
+    "membershipPolicyBinding": {"$ref": "#/$defs/externalAuthorityBinding"},
+    "schemaCatalogBinding": {"$ref": "#/$defs/externalAuthorityBinding"},
+    "referenceScopeBinding": {"$ref": "#/$defs/externalAuthorityBinding"},
+    "parserBinding": {"$ref": "#/$defs/externalAuthorityBinding"},
+    "schemaResolverBinding": {"$ref": "#/$defs/externalAuthorityBinding"},
+    "referenceResolverBinding": {"$ref": "#/$defs/externalAuthorityBinding"},
+    "providerBinding": {"$ref": "#/$defs/providerBinding"},
+    "resources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/resource"}
+    }
+  },
+  "$defs": {
+    "digest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "base64": {"type": "string", "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$"},
+    "jsonPointer": {"type": "string", "pattern": "^(?:|(?:/(?:[^~/]|~0|~1)*)+)$"},
+    "sourceClass": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]*$"},
+    "externalAuthorityBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authorityId", "authorityRef", "authorityDigest"],
+      "properties": {
+        "authorityId": {"type": "string", "minLength": 1},
+        "authorityRef": {"type": "string", "minLength": 1},
+        "authorityDigest": {"$ref": "#/$defs/digest"}
+      }
+    },
+    "providerBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authorityId", "authorityRef", "authorityDigest"],
+      "properties": {
+        "authorityId": {"const": "profile-governed-json-authority-ingestor.v1"},
+        "authorityRef": {"const": "capabilities/sda-platform/bind-profile-governed-json-authority-ingestion/profile-governed-json-authority-ingestor.authority.json"},
+        "authorityDigest": {"$ref": "#/$defs/digest"}
+      }
+    },
+    "resource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["resourceId", "sourceRef", "sourceBytesBase64", "sourceDigest", "sourceByteLength", "jsonPointer", "sourceClass", "classificationRuleId", "requestedSourceClass", "schemaRef", "schemaDigest", "declaredVersion", "referenceRefs", "discoveryOrdinal"],
+      "properties": {
+        "resourceId": {"type": "string", "minLength": 1},
+        "sourceRef": {"type": "string", "minLength": 1},
+        "sourceBytesBase64": {"$ref": "#/$defs/base64"},
+        "sourceDigest": {"$ref": "#/$defs/digest"},
+        "sourceByteLength": {"type": "integer", "minimum": 1},
+        "jsonPointer": {"$ref": "#/$defs/jsonPointer"},
+        "sourceClass": {"$ref": "#/$defs/sourceClass"},
+        "classificationRuleId": {"type": "string", "minLength": 1},
+        "requestedSourceClass": {"$ref": "#/$defs/sourceClass"},
+        "schemaRef": {"type": "string", "minLength": 1},
+        "schemaDigest": {"$ref": "#/$defs/digest"},
+        "declaredVersion": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+        "referenceRefs": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "discoveryOrdinal": {"type": "integer", "minimum": 0}
+      }
+    }
+  }
+}

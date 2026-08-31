@@ -1,0 +1,38 @@
+{
+  "scenarioId": "publish-immutable-semantic-corpus-artifact",
+  "input": {
+    "inputId": "semantic-corpus-artifact-publication-request",
+    "contract": {
+      "contractId": "semantic-corpus-artifact-publication-request.v1"
+    }
+  },
+  "event": {
+    "eventId": "semantic-corpus-artifact-publication-requested",
+    "executionAuthorityId": "publish-immutable-semantic-corpus-artifact.v1"
+  },
+  "outcome": {
+    "outcomeId": "semantic-corpus-artifact-publication-evidence",
+    "contract": {
+      "contractId": "semantic-corpus-artifact-publication-evidence.v1"
+    },
+    "experience": {
+      "statement": "exact bytes are retained once or matched idempotently without overwrite, pointer movement, semantic interpretation, or mixed generation"
+    },
+    "terminal": true
+  },
+  "gherkin": {
+    "given": {
+      "semanticRef": "publish-immutable-semantic-corpus-artifact.given",
+      "text": "one canonical artifact, declared artifact kind, expected digest, and bounded repository authority"
+    },
+    "when": {
+      "semanticRef": "publish-immutable-semantic-corpus-artifact.when",
+      "text": "the artifact is published atomically at its content address"
+    },
+    "then": {
+      "semanticRef": "publish-immutable-semantic-corpus-artifact.then",
+      "text": "exact bytes are retained once or matched idempotently without overwrite, pointer movement, semantic interpretation, or mixed generation"
+    }
+  },
+  "name": "Publish one canonical immutable artifact"
+}

@@ -1,0 +1,12 @@
+{
+  "identityType": "sda-ui-presentation-protocol-identity.v1",
+  "protocolType": "sda-ui-presentation-ir.v2",
+  "schemaRef": "capabilities/sda-platform/ui-presentation-protocol/contracts/sda-ui-presentation-ir.v2.schema.json",
+  "schemaDigest": "sha256:9d4dbc6a5b355754bc96cf27ed9112b31cc93f61d41646f8aeba30ef984618b0",
+  "compatibilityPolicyRef": "capabilities/sda-platform/ui-presentation-protocol/compatibility-policy.json",
+  "compatibilityPolicyDigest": "sha256:31b2c5574da616dc469e2b865bc51726e7f15144b77d2b11fd15f41fbd826011",
+  "languageModelDefinitionRef": "capabilities/sda-platform/ui-presentation-protocol/language-model-definition.json",
+  "languageModelDefinitionDigest": "sha256:452ebb5255a1169e0f0caa58fd016e09821f2e8f074ea28251259b8d7f23932a",
+  "canonicalization": "recursive-key-order.v1",
+  "owner": "sda-platform/ui-presentation-protocol"
+}

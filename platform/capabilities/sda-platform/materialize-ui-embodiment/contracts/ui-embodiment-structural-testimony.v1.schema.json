@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/platform/ui-embodiment/ui-embodiment-structural-testimony.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["testimonyType", "planDigest", "providerId", "providerDigest", "targetKind", "constructionApi", "rootNodeRefs", "elementResults", "compositionResults", "adaptationResults", "findings", "disposition"],
+  "properties": {
+    "testimonyType": { "const": "ui-embodiment-structural-testimony.v1" },
+    "planDigest": { "$ref": "#/$defs/digest" },
+    "providerId": { "$ref": "#/$defs/id" },
+    "providerDigest": { "$ref": "#/$defs/digest" },
+    "targetKind": { "$ref": "#/$defs/id" },
+    "constructionApi": { "enum": ["React.createElement", "document.createElement"] },
+    "rootNodeRefs": { "$ref": "#/$defs/idList" },
+    "elementResults": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["semanticElementRef", "semanticKind", "nativeRole", "eventRefs", "accessibilityObligationRefs", "disposition"],
+        "properties": {
+          "semanticElementRef": { "$ref": "#/$defs/id" },
+          "semanticKind": { "enum": ["INFORMATION", "ACTION", "INPUT", "NAVIGATION", "FEEDBACK", "REGION"] },
+          "nativeRole": { "enum": ["p", "button", "input", "a", "output", "section"] },
+          "eventRefs": { "$ref": "#/$defs/idList" },
+          "accessibilityObligationRefs": { "$ref": "#/$defs/idList" },
+          "disposition": { "const": "REALIZED" }
+        }
+      }
+    },
+    "compositionResults": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["nodeRef", "nativeRole", "semanticElementRefs", "childNodeRefs", "disposition"],
+        "properties": {
+          "nodeRef": { "$ref": "#/$defs/id" },
+          "nativeRole": { "const": "div" },
+          "semanticElementRefs": { "$ref": "#/$defs/idList" },
+          "childNodeRefs": { "$ref": "#/$defs/idList" },
+          "disposition": { "const": "REALIZED" }
+        }
+      }
+    },
+    "adaptationResults": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["sourceRef", "operationKind", "nodeRefs", "disposition"],
+        "properties": {
+          "sourceRef": { "$ref": "#/$defs/id" },
+          "operationKind": { "enum": ["ORDER", "VISIBILITY", "GROUPING"] },
+          "nodeRefs": { "$ref": "#/$defs/idList" },
+          "disposition": { "const": "PRESERVED" }
+        }
+      }
+    },
+    "findings": { "type": "array", "maxItems": 0 },
+    "disposition": { "const": "STRUCTURALLY_CONFORMANT" }
+  },
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._:-]*$" },
+    "digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "idList": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/id" } }
+  }
+}

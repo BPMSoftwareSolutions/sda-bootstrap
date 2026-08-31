@@ -1,0 +1,112 @@
+{
+  "$schema": "../contracts/consumer-execution-embodiment-plan.v2.schema.json",
+  "executionEmbodimentPlanType": "consumer-execution-embodiment-plan.v2",
+  "target": "node",
+  "capabilityId": "execute-composed-scenario-authority-example",
+  "source": {
+    "queryType": "projected-consumer-conformance-query.v1",
+    "queryId": "execute-composed-scenario-authority-example.node",
+    "queryDigest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+    "capabilityAuthorityDigest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+    "mechanicResolutionDigest": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+  },
+  "rootNodeId": "root-scenario",
+  "nodes": [
+    {
+      "nodeId": "root-scenario",
+      "scenario": {
+        "scenarioId": "root-scenario",
+        "input": {
+          "inputId": "root-context",
+          "contract": { "contractId": "root-context.v1" }
+        },
+        "event": {
+          "eventId": "execute-root",
+          "executionAuthorityId": "execute-root.v1"
+        },
+        "outcome": {
+          "outcomeId": "child-result",
+          "contract": { "contractId": "child-result.v1" },
+          "terminal": true
+        }
+      },
+      "operations": [
+        {
+          "operationId": "root.operation.1",
+          "kind": "invoke-scenario",
+          "scenarioNodeId": "child-scenario"
+        }
+      ],
+      "transition": null
+    },
+    {
+      "nodeId": "child-scenario",
+      "scenario": {
+        "scenarioId": "child-scenario",
+        "input": {
+          "inputId": "root-context",
+          "contract": { "contractId": "root-context.v1" }
+        },
+        "event": {
+          "eventId": "obtain-child-result",
+          "executionAuthorityId": "obtain-child-result.v1"
+        },
+        "outcome": {
+          "outcomeId": "child-result",
+          "contract": { "contractId": "child-result.v1" },
+          "terminal": true
+        }
+      },
+      "operations": [
+        {
+          "operationId": "child.operation.1",
+          "kind": "invoke-port",
+          "mechanicBindingId": "child-event-port"
+        }
+      ],
+      "transition": null
+    }
+  ],
+  "mechanicBindings": [
+    {
+      "bindingId": "child-event-port",
+      "mechanicType": "event-port",
+      "providerCapabilityId": "sda-declarative-value-port.v1",
+      "provider": "ScenarioKernel.NodePlatform.Execution.DeclarativeValuePort",
+      "implementationRef": "catalog:sda-declarative-value-port.v1",
+      "configuration": {}
+    }
+  ],
+  "compositionPolicy": {
+    "carrierMode": "previous-admitted-outcome",
+    "contractAdmissionMode": "each-scenario-boundary",
+    "lineageMode": "retain-root-and-parent-execution",
+    "failureMode": "stop-at-first-non-success",
+    "cycleMode": "reject-recursive-invocation"
+  },
+  "conformance": {
+    "queryId": "execute-composed-scenario-authority-example.node",
+    "platformMechanics": {},
+    "executableOrigin": { "required": "PROJECTED_ONLY" },
+    "closures": [
+      {
+        "closureId": "static-composition-closure",
+        "evaluation": "compiled",
+        "disposition": "PASS",
+        "findings": []
+      },
+      {
+        "closureId": "runtime-composition-trace",
+        "evaluation": "runtime-evidence",
+        "evaluatorId": "expected-execution-trace.v1",
+        "configuration": {
+          "expectedScenarioSequence": ["root-scenario", "child-scenario"]
+        }
+      }
+    ]
+  },
+  "requiredProviderCapabilityIds": [
+    "sda-node-consumer-runtime.v1",
+    "sda-declarative-value-port.v1"
+  ]
+}

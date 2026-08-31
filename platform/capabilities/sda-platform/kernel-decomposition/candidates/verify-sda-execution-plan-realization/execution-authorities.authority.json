@@ -1,0 +1,54 @@
+{
+  "authorityType": "execution-authorities.v1",
+  "executionAuthorities": [
+    {
+      "id": "verify-sda-execution-plan-realization.v1",
+      "owningScenarioId": "verify-sda-execution-plan-realization",
+      "operations": [
+        {"kind": "invoke-port", "portId": "verify-sda-execution-plan-realization"}
+      ]
+    },
+    {
+      "id": "verify-expected-execution-trace.v1",
+      "owningScenarioId": "verify-expected-execution-trace",
+      "operations": [
+        {"kind": "invoke-port", "portId": "verify-expected-execution-trace"}
+      ]
+    },
+    {
+      "id": "verify-artifact-materialization.v1",
+      "owningScenarioId": "verify-artifact-materialization",
+      "operations": [
+        {"kind": "invoke-port", "portId": "verify-artifact-materialization"}
+      ]
+    },
+    {
+      "id": "verify-projected-executable-origin.v1",
+      "owningScenarioId": "verify-projected-executable-origin",
+      "operations": [
+        {"kind": "invoke-port", "portId": "verify-projected-executable-origin"}
+      ]
+    },
+    {
+      "id": "verify-mechanic-resolution.v1",
+      "owningScenarioId": "verify-mechanic-resolution",
+      "operations": [
+        {"kind": "invoke-port", "portId": "verify-mechanic-resolution"}
+      ]
+    },
+    {
+      "id": "verify-language-mechanic-parity.v1",
+      "owningScenarioId": "verify-language-mechanic-parity",
+      "operations": [
+        {"kind": "invoke-port", "portId": "verify-language-mechanic-parity"}
+      ]
+    },
+    {
+      "id": "verify-canonical-outcome-parity.v1",
+      "owningScenarioId": "verify-canonical-outcome-parity",
+      "operations": [
+        {"kind": "invoke-port", "portId": "verify-canonical-outcome-parity"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/consumer-projection-authorities.v1.schema.json",
+  "title": "Consumer Projection Authorities",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["authorityType", "projectionAuthorities"],
+  "properties": {
+    "authorityType": { "const": "projection-authorities.v1" },
+    "projectionAuthorities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "inputContract", "outputContract", "kind"],
+        "properties": {
+          "id": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "inputContract": { "$ref": "semantic-primitives.schema.json#/$defs/contractReference" },
+          "outputContract": { "$ref": "semantic-primitives.schema.json#/$defs/contractReference" },
+          "kind": { "type": "string", "enum": ["binding", "projection"] }
+        }
+      }
+    }
+  }
+}

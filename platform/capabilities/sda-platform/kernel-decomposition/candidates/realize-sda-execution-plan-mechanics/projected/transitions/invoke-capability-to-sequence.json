@@ -1,0 +1,15 @@
+{
+  "transitionId": "invoke-capability-to-sequence",
+  "from": {
+    "scenarioId": "invoke-projected-capability",
+    "outcomeId": "projected-capability-invocation-result",
+    "contractId": "projected-capability-invocation-result.v1"
+  },
+  "to": {
+    "scenarioId": "execute-governed-capability-sequence",
+    "inputId": "governed-capability-sequence-request",
+    "contractId": "governed-capability-sequence-request.v1"
+  },
+  "semanticProgress": "monotonic",
+  "bindingAuthorityId": "project-invoke-capability-to-sequence"
+}

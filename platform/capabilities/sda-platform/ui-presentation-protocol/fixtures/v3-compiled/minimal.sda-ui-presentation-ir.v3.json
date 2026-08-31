@@ -1,0 +1,68 @@
+{
+  "presentationIrType": "sda-ui-presentation-ir.v3",
+  "protocolIdentity": {
+    "semanticPresentationType": "sda-ui-semantic-presentation.v1",
+    "semanticPresentationDigest": "sha256:dbc0c271502daf1d8284ea42b7fd9e9259f65024bbac2ef638a1976c3b19adc0",
+    "compilerAuthorityId": "compile-semantic-presentation.v1",
+    "compilerAuthorityDigest": "sha256:f3b82ee8d5136d70006f68c4b619828995b9fcb915a02995fd0d869d66a22333"
+  },
+  "presentationProfileRefs": [],
+  "rootNodeIds": ["node.root"],
+  "nodes": [
+    {
+      "nodeId": "node.root",
+      "configuration": {
+        "kind": "FLOW",
+        "axis": "BLOCK",
+        "direction": "FORWARD",
+        "wrap": "NO_WRAP"
+      },
+      "childNodeIds": [],
+      "semanticElementRefs": ["action.resolve", "feedback.resolution-status", "information.result"],
+      "semanticRelationshipRefs": ["relationship.action-before-feedback"],
+      "accessibilityObligationRefs": ["accessibility.resolve-operable", "accessibility.result-name", "accessibility.status-live"],
+      "compilerRuleRefs": ["rule.default-root-flow.v1", "rule.follows-order.v1"],
+      "order": 0,
+      "visibility": { "mode": "ALWAYS" }
+    }
+  ],
+  "eventBindings": [
+    {
+      "bindingId": "binding.action.resolve.0",
+      "semanticElementRef": "action.resolve",
+      "semanticEventRef": "event.resolve",
+      "trigger": "ACTIVATE"
+    }
+  ],
+  "adaptationRules": [
+    {
+      "ruleId": "rule.adaptation.compact-wide",
+      "semanticAdaptationRef": "adaptation.compact-wide",
+      "contextRef": "context.available-space",
+      "operations": [
+        { "kind": "GROUPING", "nodeRefs": ["node.root"] },
+        { "kind": "ORDER", "nodeRefs": ["node.root"] }
+      ],
+      "invariantRefs": ["experience.observable-result"]
+    }
+  ],
+  "accessibilityObligations": [
+    {
+      "obligationRef": "accessibility.resolve-operable",
+      "kind": "OPERABLE_ACTION",
+      "semanticElementRef": "action.resolve"
+    },
+    {
+      "obligationRef": "accessibility.result-name",
+      "kind": "NAME",
+      "semanticElementRef": "information.result"
+    },
+    {
+      "obligationRef": "accessibility.status-live",
+      "kind": "LIVE_FEEDBACK",
+      "semanticElementRef": "feedback.resolution-status"
+    }
+  ],
+  "tokenReferences": [],
+  "canonicalDigest": "sha256:252aeaae2d7879dd54bed41266340c026f266c73ca59b45a4453594e4e587205"
+}

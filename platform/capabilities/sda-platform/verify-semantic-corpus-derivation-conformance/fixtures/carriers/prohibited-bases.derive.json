@@ -1,0 +1,21 @@
+{
+  "fixtureType": "semantic-corpus-derivation-carrier.v1",
+  "fixtureId": "prohibited-bases",
+  "scenarioId": "reject-unadmitted-semantic-basis",
+  "variants": [
+    {
+      "variantId": "all-prohibited-bases",
+      "declaredResourceOrder": [],
+      "sourceRecords": [],
+      "mutations": [
+        {"target": "ruleSet.objectRules[0].basisKind", "value": "DIRECTORY_PROXIMITY", "expectedDisposition": "REJECTED", "expectedFindingCode": "SEMANTIC_CORPUS_PROHIBITED_DERIVATION_BASIS"},
+        {"target": "ruleSet.objectRules[0].basisKind", "value": "MATCHING_PROSE", "expectedDisposition": "REJECTED", "expectedFindingCode": "SEMANTIC_CORPUS_PROHIBITED_DERIVATION_BASIS"},
+        {"target": "ruleSet.objectRules[0].basisKind", "value": "LEXICAL_SIMILARITY", "expectedDisposition": "REJECTED", "expectedFindingCode": "SEMANTIC_CORPUS_PROHIBITED_DERIVATION_BASIS"},
+        {"target": "ruleSet.objectRules[0].basisKind", "value": "EMBEDDING_SIMILARITY", "expectedDisposition": "REJECTED", "expectedFindingCode": "SEMANTIC_CORPUS_PROHIBITED_DERIVATION_BASIS"},
+        {"target": "ruleSet.objectRules[0].basisKind", "value": "MODEL_TESTIMONY", "expectedDisposition": "REJECTED", "expectedFindingCode": "SEMANTIC_CORPUS_PROHIBITED_DERIVATION_BASIS"}
+      ]
+    }
+  ],
+  "expected": {"disposition": "VARIANT_SPECIFIC", "findingCodes": ["SEMANTIC_CORPUS_PROHIBITED_DERIVATION_BASIS"], "objectIds": [], "relationshipIds": []},
+  "provesPartitions": ["AUTHORITY_SCHEMA_BOUNDARY", "PROHIBITED_BASIS_REJECTION"]
+}

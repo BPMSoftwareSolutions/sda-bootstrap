@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/capability.v2.schema.json",
+  "title": "Scenario-Driven Capability v2",
+  "description": "A governed composition of scenarios whose responsibilities transform admitted information into observable outcomes and promised experiences.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["capabilityType", "capabilityId", "purpose", "consumer", "interfaces", "scenarios"],
+  "properties": {
+    "capabilityType": { "const": "scenario-driven-capability.v2" },
+    "capabilityId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "name": { "type": "string", "minLength": 1 },
+    "purpose": { "type": "string", "minLength": 1 },
+    "consumer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["actor"],
+      "properties": {
+        "actor": { "type": "string", "minLength": 1 }
+      }
+    },
+    "interfaces": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "interface-binding.schema.json" }
+    },
+    "scenarios": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "scenario.v2.schema.json" }
+    },
+    "compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceVersion", "derivation"],
+      "properties": {
+        "sourceVersion": { "const": "v1" },
+        "derivation": { "const": "legacy-derived" }
+      }
+    }
+  }
+}

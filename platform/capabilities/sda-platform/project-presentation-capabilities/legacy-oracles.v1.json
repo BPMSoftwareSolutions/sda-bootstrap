@@ -1,0 +1,14 @@
+{
+  "manifestType": "presentation-mechanic-legacy-oracles.v1",
+  "disposition": "FROZEN_PENDING_PROJECTED_EQUIVALENCE",
+  "supersedingDecisionRef": "docs/decisions/0010-project-presentation-mechanics-as-capabilities.md",
+  "oracles": [
+    { "path": "languages/csharp/src/ScenarioKernel.Avalonia/V3PlanEmbodiment.cs", "sha256": "78dc72ede042d80375dcdb252857b676c02d09ab78c81c065b44f2c2f8ae551c" },
+    { "path": "languages/csharp/src/ScenarioKernel.UiEmbodiment/ScenarioKernel.UiEmbodiment.csproj", "sha256": "3472fccce5613343d3b55f6c2bbc48cbfd3de01f9cf32fd8607b8ac3a7e26395" },
+    { "path": "languages/csharp/src/ScenarioKernel.UiEmbodiment/UiEmbodimentPlan.cs", "sha256": "f06453af3885df8e092bdc287f592eaaa4abf53ff71d138b71b433a01c6b8d7e" },
+    { "path": "languages/csharp/src/ScenarioKernel.Wpf/V3PlanEmbodiment.cs", "sha256": "a5a40b6a0d7d186fef175e90ed98d16adc9e209e3f5358732a8b26fd8b6b3c56" },
+    { "path": "languages/typescript/presentation/browser-dom/runtime/v3-plan-embodiment.mjs", "sha256": "bd07ac2745b22623601c00022b13b8966169ecc8d80e1220a083eef9af003fe7" },
+    { "path": "languages/typescript/presentation/react/runtime/v3-plan-embodiment.mjs", "sha256": "0bf3f8ca5a8ec8e4bbbe54d7507c33663af06e4775b3ac2bf5077454db7bfb94" },
+    { "path": "languages/typescript/runtimes/browser/runtime/ui-embodiment-plan-v1.mjs", "sha256": "412326b594141a71dd0972985adcba6eab0231fffd0d10c4da0898de1315b451" }
+  ]
+}

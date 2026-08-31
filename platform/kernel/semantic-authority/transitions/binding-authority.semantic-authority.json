@@ -1,0 +1,21 @@
+{
+  "semanticAuthorityId": "transition.binding-authority.v1",
+  "title": "Binding Authority Requirement",
+  "kernelSpecification": "scenario-kernel.v1",
+  "appliesTo": {
+    "schema": "scenario-transition.schema.json",
+    "property": "bindingAuthorityId"
+  },
+  "law": "required-unless-direct-match",
+  "rule": {
+    "condition": "from.contractId and to.contractId resolve to the identical contract",
+    "whenTrue": "bindingAuthorityId MAY be absent — the transition is a direct pass-through",
+    "whenFalse": "bindingAuthorityId MUST be present and MUST resolve to an admitted binding authority"
+  },
+  "rationale": "A transition either hands an outcome's data straight to the next input under the same contract, or it projects/transforms that data into a different contract. The first case needs no transformation logic and no authority to vouch for one. The second case introduces logic that must be admitted and addressable, or the transition silently hides a transformation with no accountable owner.",
+  "enforcement": {
+    "structural": "Not expressible in portable JSON Schema across the C#/Node/Python/Java validator set — it requires comparing from.contractId and to.contractId for identity, and standard JSON Schema (draft 2020-12) has no cross-property equality keyword. scenario-transition.schema.json therefore leaves bindingAuthorityId structurally optional.",
+    "semantic": "Must be checked by a kernel conformance validator that resolves from.contractId and to.contractId before admitting a capability contract, and rejects any transition where the two differ and bindingAuthorityId is absent."
+  },
+  "status": "draft"
+}

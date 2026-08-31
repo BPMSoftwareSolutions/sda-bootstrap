@@ -1,0 +1,74 @@
+{
+  "$schema": "contracts/deterministic-semantic-vector-indexer.authority.schema.json",
+  "authorityType": "deterministic-semantic-vector-indexer-authority.v1",
+  "authorityId": "deterministic-semantic-vector-indexer.v1",
+  "authorityRef": "capabilities/sda-platform/bind-deterministic-semantic-vector-index/deterministic-semantic-vector-indexer.authority.json",
+  "authorityVersion": "1.0.0",
+  "lifecycle": "ADMITTED",
+  "platformCapabilityId": "sda-semantic-vector-index.v1",
+  "authorityDigestAlgorithm": "sha256 of canonical recursive-key-order JSON excluding authorityDigest",
+  "embeddingModel": {
+    "modelId": "sidefx-trigram-reference-embedding.v1",
+    "modelKind": "LOCAL_DETERMINISTIC_REFERENCE",
+    "coordinateDomain": "NON_NEGATIVE_INTEGER_NGRAM_COUNTS",
+    "similarityRule": "summed minimum count of shared n-gram coordinates, evaluated in integer arithmetic only",
+    "orderingRule": "overlap score descending, then catalog ordinal ascending",
+    "externalServiceUsed": false,
+    "floatingPointCoordinatesUsed": false
+  },
+  "inputContracts": [
+    "semantic-vector-index-input.v1"
+  ],
+  "outputContracts": [
+    "semantic-vector-index-record.v1"
+  ],
+  "subordinateAuthorities": [],
+  "compositionRules": [
+    "all-authority-digests-recomputed-before-evaluation",
+    "embedding-model-identity-must-match-the-admitted-reference-model",
+    "coordinates-are-non-negative-integers-and-never-floating-point",
+    "similarity-is-integer-overlap-without-division-or-square-root",
+    "provider-owns-ordering-and-returns-ranked-testimony",
+    "consumers-receive-ordered-candidates-and-never-re-rank",
+    "index-query-vector-and-record-digests-are-canonically-derived",
+    "candidates-propose-and-never-ground",
+    "record-does-not-claim-provider-conformance"
+  ],
+  "providerObservation": {
+    "disposition": "SATISFIED",
+    "providerSourceSet": [
+      {
+        "sourceRef": "languages/typescript/runtimes/node/semantic-vector-index-provider.mjs",
+        "sourceDigest": "sha256:753cb10ae8b4dadaaca56c0c0a15bce0d8a69b9b9fb35ed630a53efc30f32261"
+      },
+      {
+        "sourceRef": "languages/typescript/runtimes/node/node-mechanic-registry-loader.mjs",
+        "sourceDigest": "sha256:9a29843fac88fefaeb9308c14a661904d41744f5c9e1a43ab98d7f1646d12704"
+      }
+    ],
+    "implementationVersion": "1.0.0",
+    "registryBindingRef": "kernel/semantic-authority/consumer/node-mechanic-registrations/semantic-vector-index.registration.authority.json",
+    "registryBindingDigest": "sha256:2818484ebe55088b7924549fbc4ad2c2e070916efe0238f85254cf8fab80faba"
+  },
+  "runtimeDependencies": {
+    "packageLockRef": "package-lock.json",
+    "packageLockDigest": "sha256:57d058a1f9924b7a6f283f2a1704b485c4eb321a1011544fba97999126878b0f",
+    "packages": [
+      {
+        "packageName": "ajv",
+        "packageVersion": "8.20.0",
+        "integrity": "sha512-Thbli+OlOj+iMPYFBVBfJ3OmCAnaSyNn4M1vz9T6Gka5Jt9ba/HIR56joy65tY6kx/FCF5VXNB819Y7/GUrBGA=="
+      }
+    ]
+  },
+  "boundaries": {
+    "candidatesAreFacts": false,
+    "mayGroundResults": false,
+    "mayAddAuthority": false,
+    "mayReorderConsumerResults": false,
+    "mayClaimAdmission": false,
+    "separateEmbeddingCapabilityAdmitted": false,
+    "dispatchRegistrationAdmitted": true
+  },
+  "authorityDigest": "sha256:af37a8c8a8678ced4c859ed8caa02b3feede2122e287839407ece25aed1a008b"
+}

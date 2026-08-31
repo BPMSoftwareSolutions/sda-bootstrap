@@ -1,0 +1,33 @@
+{
+  "interfaceAuthorityType": "consumer-interface-authority.v1",
+  "contractValidatorCapabilityId": "sda-schema-contract-admission.v1",
+  "contractCatalog": "contracts/contract-catalog.json",
+  "requiredPlatformObligations": [
+    "dynamic-semantic-execution",
+    "domain-contract-admission"
+  ],
+  "interfaces": [
+    {
+      "interfaceId": "semantic-element-realization-cli",
+      "kind": "cli",
+      "rootScenarioId": "project-semantic-element-realization",
+      "platformCapabilityId": "sda-json-cli.v1",
+      "projectionTargets": [
+        "node",
+        "csharp",
+        "python"
+      ]
+    }
+  ],
+  "portBindings": [
+    {
+      "portId": "project-semantic-element-realization",
+      "platformCapabilityId": "sda-authority-transformation-port.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "project-semantic-element-realization.v1"
+      }
+    }
+  ],
+  "projectionBindings": []
+}

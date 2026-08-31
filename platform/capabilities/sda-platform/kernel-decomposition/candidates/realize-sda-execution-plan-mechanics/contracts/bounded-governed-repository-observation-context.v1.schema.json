@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.sda.local/bounded-governed-repository-observation-context.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contractId",
+    "carrierType",
+    "priorDisposition",
+    "priorFindings",
+    "payload",
+    "mechanicPayloads"
+  ],
+  "properties": {
+    "contractId": {
+      "const": "bounded-governed-repository-observation-context.v1"
+    },
+    "carrierType": {
+      "const": "bounded-governed-repository-observation-context.v1"
+    },
+    "priorDisposition": {
+      "type": "string",
+      "minLength": 1
+    },
+    "priorFindings": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "payload": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "mechanicPayloads": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  }
+}

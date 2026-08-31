@@ -1,0 +1,77 @@
+{
+  "$schema": "contracts/execute-composed-scenario-authority.capability.schema.json",
+  "capabilityType": "sda-platform-capability-candidate.v1",
+  "capabilityId": "execute-composed-scenario-authority",
+  "featureRef": "features/execute-composed-scenario-authority.feature",
+  "contracts": {
+    "inputContractId": "composed-scenario-execution-context.v1",
+    "inputContractRef": "contracts/composed-scenario-execution-context.v1.schema.json",
+    "outcomeContractId": "composed-scenario-execution-testimony.v1",
+    "outcomeContractRef": "contracts/composed-scenario-execution-testimony.v1.schema.json"
+  },
+  "eventAuthority": {
+    "eventId": "execute-declared-scenario-composition",
+    "authorityId": "execute-declared-scenario-composition.v1",
+    "authorityRef": "execute-declared-scenario-composition.authority.json"
+  },
+  "protocol": {
+    "protocolId": "consumer-execution-embodiment-plan.v2",
+    "contractRef": "contracts/consumer-execution-embodiment-plan.v2.schema.json",
+    "supersedes": "consumer-execution-embodiment-plan.v1"
+  },
+  "mechanics": [
+    "scenario-invocation",
+    "intermediate-contract-admission",
+    "parent-carrier-preservation",
+    "nested-execution-lineage",
+    "first-non-success-termination",
+    "recursive-invocation-rejection"
+  ],
+  "projectionTargets": ["node", "csharp", "python"],
+  "acceptanceAuthority": {
+    "fixturesRef": "fixtures/execute-composed-scenario-authority.fixtures.json",
+    "testSignal": "deterministic-fixture-conformance",
+    "acceptanceAuthority": "deterministic-conveyor",
+    "requiredTargetDisposition": "ADMITTED"
+  },
+  "authoringTestimony": {
+    "requestRef": "../../../../agentic-harness/live/execute-composed-scenario-authority.model-request.authority.json",
+    "responseRef": "../../../../agentic-harness/artifacts/live/execute-composed-scenario-authority-001/model-response.json",
+    "requestFileHash": "sha256:03a15b2ec3821db3002d92c1ebac400fd34d16399f1fcd0d78539109430b9fb1",
+    "responseFileHash": "sha256:6c310cfdbdf3792a47b0760b3acb2903a8c744d72d122c1450723327257071cb",
+    "candidateHash": "sha256:1b9033c1bdc5acbd49594f386accafa78a4c6721463ad17a29bdae2e150dc86b",
+    "providerKind": "gemini",
+    "resolvedModel": "gemini-flash-latest",
+    "attemptCount": 1,
+    "candidateWording": {
+      "name": "execute-composed-scenario-authority",
+      "actor": "projected SDA consumer",
+      "intent": "Execute ordered invoke-scenario operations as independent kernel scenarios while preserving carrier monotonically and admitting intermediate contracts.",
+      "outcome": "Execution stops at the exact first governed rejection or failure, returning root-preserving nested execution lineage.",
+      "promise": "Guarantees deterministic ordered execution, strict intermediate contract admission, monotonic carrier preservation, and complete lineage tracking."
+    },
+    "authorityLimit": "CANDIDATE_TESTIMONY_ONLY"
+  },
+  "targetDispositions": [
+    {
+      "target": "node",
+      "disposition": "HELD",
+      "finding": "PROJECTED_COMPOSED_SCENARIO_EMBODIMENT_NOT_AVAILABLE"
+    },
+    {
+      "target": "csharp",
+      "disposition": "HELD",
+      "finding": "PROJECTED_COMPOSED_SCENARIO_EMBODIMENT_NOT_AVAILABLE"
+    },
+    {
+      "target": "python",
+      "disposition": "HELD",
+      "finding": "PROJECTED_COMPOSED_SCENARIO_EMBODIMENT_NOT_AVAILABLE"
+    }
+  ],
+  "executableOrigin": {
+    "required": "PROJECTED_ONLY",
+    "handwrittenExecutableCode": false
+  },
+  "promotionDisposition": "HELD_PENDING_PROJECTED_TARGET_EMBODIMENTS"
+}

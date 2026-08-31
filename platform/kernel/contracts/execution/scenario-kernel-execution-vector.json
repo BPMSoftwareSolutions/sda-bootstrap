@@ -1,0 +1,47 @@
+{
+  "vectorType": "scenario-kernel-execution-vector.v1",
+  "kernelSpecification": {
+    "specificationId": "scenario-kernel.v1",
+    "version": "1.0.0"
+  },
+  "steps": [
+    {
+      "stepId": "admit-input",
+      "kind": "admission",
+      "onFailureDisposition": "rejected",
+      "description": "Caller-supplied data is admitted only if it satisfies the scenario's declared input contract.",
+      "consumes": ["scenario.input"],
+      "produces": "admitted-input"
+    },
+    {
+      "stepId": "resolve-event-authority",
+      "kind": "unprotected",
+      "description": "The scenario's declared event resolves to a concrete execution authority responsible for carrying it out.",
+      "consumes": ["scenario.event"],
+      "produces": "execution-authority"
+    },
+    {
+      "stepId": "execute-event-authority",
+      "kind": "execution",
+      "onFailureDisposition": "failed",
+      "description": "The resolved execution authority runs against the admitted input and produces a candidate outcome.",
+      "consumes": ["execution-authority", "admitted-input"],
+      "produces": "candidate-outcome"
+    },
+    {
+      "stepId": "admit-outcome",
+      "kind": "admission",
+      "onFailureDisposition": "rejected",
+      "description": "The candidate outcome is admitted only if it satisfies the scenario's declared outcome contract.",
+      "consumes": ["scenario.outcome", "candidate-outcome"],
+      "produces": "admitted-outcome"
+    },
+    {
+      "stepId": "resolve-disposition",
+      "kind": "unprotected",
+      "description": "The admitted outcome, together with any governed transition out of this scenario, resolves to one of the kernel's disposition values (completed, terminated, rejected, failed).",
+      "consumes": ["admitted-outcome", "scenario-transition"],
+      "produces": "disposition"
+    }
+  ]
+}

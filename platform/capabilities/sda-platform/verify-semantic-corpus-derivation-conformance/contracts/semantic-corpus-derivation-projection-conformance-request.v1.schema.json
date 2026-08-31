@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/semantic-corpus/semantic-corpus-derivation-projection-conformance-request.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contractId", "projectionAuthoringContextBinding", "ontologyBinding", "profileBinding", "ruleSetBinding", "fixtureManifestBinding", "requestedPartitions"],
+  "properties": {
+    "contractId": {"const": "semantic-corpus-derivation-projection-conformance-request.v1"},
+    "projectionAuthoringContextBinding": {
+      "allOf": [
+        {"$ref": "#/$defs/sourceBinding"},
+        {"type": "object", "properties": {"ref": {"const": "capabilities/sda-platform/semantic-corpus-derivation/projection-authoring-context.v1.json"}}}
+      ]
+    },
+    "ontologyBinding": {
+      "allOf": [
+        {"$ref": "#/$defs/sourceBinding"},
+        {"type": "object", "properties": {"ref": {"const": "capabilities/sda-platform/verify-semantic-corpus-derivation-conformance/fixtures/generic-semantic-corpus-ontology.v1.json"}}}
+      ]
+    },
+    "profileBinding": {
+      "allOf": [
+        {"$ref": "#/$defs/sourceBinding"},
+        {"type": "object", "properties": {"ref": {"const": "capabilities/sda-platform/verify-semantic-corpus-derivation-conformance/fixtures/generic-semantic-corpus-derivation-profile.v1.json"}}}
+      ]
+    },
+    "ruleSetBinding": {
+      "allOf": [
+        {"$ref": "#/$defs/sourceBinding"},
+        {"type": "object", "properties": {"ref": {"const": "capabilities/sda-platform/verify-semantic-corpus-derivation-conformance/fixtures/generic-semantic-corpus-derivation-rule-set.v1.json"}}}
+      ]
+    },
+    "fixtureManifestBinding": {
+      "allOf": [
+        {"$ref": "#/$defs/sourceBinding"},
+        {"type": "object", "properties": {"ref": {"const": "capabilities/sda-platform/verify-semantic-corpus-derivation-conformance/fixtures/fixture-manifest.authority.json"}}}
+      ]
+    },
+    "requestedPartitions": {"type": "array", "minItems": 12, "maxItems": 12, "uniqueItems": true, "items": {"$ref": "#/$defs/partitionId"}}
+  },
+  "$defs": {
+    "digest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "sourceBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ref", "digest"],
+      "properties": {"ref": {"type": "string", "minLength": 1}, "digest": {"$ref": "#/$defs/digest"}}
+    },
+    "partitionId": {"enum": ["AUTHORITY_SCHEMA_BOUNDARY", "EXACT_LINEAGE_VALIDATION", "CANONICAL_OBJECT_DERIVATION", "OWNER_SCOPED_IDENTITY", "RELATIONSHIP_DERIVATION", "OPEN_REFERENCE_NON_INVENTION", "PROHIBITED_BASIS_REJECTION", "MIXED_GENERATION_REJECTION", "SOURCE_CLASS_NON_ESCALATION", "DETERMINISTIC_ORDERING", "REPRODUCTION_IDENTITY", "PROJECTED_INVOCATION_AND_RECEIPT"]}
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/platform/consumer-execution/execute-composed-scenario-authority.fixtures.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["fixtureType", "protocolContractRef", "fixtures"],
+  "properties": {
+    "$schema": { "type": "string", "minLength": 1 },
+    "fixtureType": { "const": "composed-scenario-execution-fixtures.v1" },
+    "protocolContractRef": { "type": "string", "minLength": 1 },
+    "fixtures": {
+      "type": "array",
+      "minItems": 8,
+      "items": { "$ref": "#/$defs/fixture" }
+    }
+  },
+  "$defs": {
+    "semanticId": { "type": "string", "minLength": 1 },
+    "fault": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["kind", "scenarioId"],
+      "properties": {
+        "kind": {
+          "enum": [
+            "unknown-scenario",
+            "recursive-invocation",
+            "intermediate-contract-mismatch",
+            "unadmitted-binding-authority",
+            "input-rejected",
+            "event-failed",
+            "outcome-rejected"
+          ]
+        },
+        "scenarioId": { "$ref": "#/$defs/semanticId" }
+      }
+    },
+    "fixture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fixtureId", "input", "expected"],
+      "properties": {
+        "fixtureId": { "$ref": "#/$defs/semanticId" },
+        "input": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["rootScenarioId", "declaredScenarioOrder", "availableScenarioIds", "fault"],
+          "properties": {
+            "rootScenarioId": { "const": "author-tooling-capability-candidate" },
+            "declaredScenarioOrder": {
+              "type": "array",
+              "minItems": 1,
+              "items": { "$ref": "#/$defs/semanticId" }
+            },
+            "availableScenarioIds": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": { "$ref": "#/$defs/semanticId" }
+            },
+            "fault": { "$ref": "#/$defs/fault" }
+          }
+        },
+        "expected": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["disposition", "executedScenarioIds", "stoppedAt", "finalCarrierOwner", "laterScenarioExecution", "lineageMode"],
+          "properties": {
+            "disposition": {
+              "enum": [
+                "TERMINATED",
+                "UNKNOWN_SCENARIO_REJECTED",
+                "RECURSIVE_INVOCATION_REJECTED",
+                "INTERMEDIATE_CONTRACT_REJECTED",
+                "BINDING_AUTHORITY_REJECTED",
+                "INPUT_REJECTED",
+                "EVENT_FAILED",
+                "OUTCOME_REJECTED"
+              ]
+            },
+            "executedScenarioIds": {
+              "type": "array",
+              "items": { "$ref": "#/$defs/semanticId" }
+            },
+            "stoppedAt": { "type": ["string", "null"], "minLength": 1 },
+            "finalCarrierOwner": { "type": ["string", "null"], "minLength": 1 },
+            "laterScenarioExecution": { "const": "FORBIDDEN" },
+            "lineageMode": { "const": "retain-root-and-parent-execution" }
+          }
+        }
+      }
+    }
+  }
+}

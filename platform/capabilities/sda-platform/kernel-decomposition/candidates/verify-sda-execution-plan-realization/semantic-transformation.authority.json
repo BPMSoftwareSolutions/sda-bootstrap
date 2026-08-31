@@ -1,0 +1,1025 @@
+{
+  "authorityType": "semantic-transformation-authority.v1",
+  "transformations": [
+    {
+      "id": "verify-sda-execution-plan-realization.v1",
+      "expression": {
+        "op": "let",
+        "bindings": {
+          "carrierAdmitted": {
+            "op": "equals",
+            "left": {"op": "path", "from": "input", "path": "carrierType"},
+            "right": {"op": "literal", "value": "execution-plan-realization-verification-request.v1"}
+          },
+          "capabilityMatches": {
+            "op": "equals",
+            "left": {"op": "path", "from": "input", "path": "expected.capabilityId"},
+            "right": {"op": "path", "from": "input", "path": "observed.capabilityId"}
+          },
+          "dispositionMatches": {
+            "op": "equals",
+            "left": {"op": "path", "from": "input", "path": "expected.disposition"},
+            "right": {"op": "path", "from": "input", "path": "observed.disposition"}
+          },
+          "requiredCovered": {
+            "op": "every",
+            "from": {"op": "path", "from": "input", "path": "expected.mechanicSet"},
+            "as": "mechanicId",
+            "where": {
+              "op": "includes",
+              "in": {"op": "path", "from": "input", "path": "observed.mechanicSet"},
+              "value": {"op": "path", "from": "mechanicId", "path": ""}
+            }
+          },
+          "realizedWithin": {
+            "op": "every",
+            "from": {"op": "path", "from": "input", "path": "observed.mechanicSet"},
+            "as": "mechanicId",
+            "where": {
+              "op": "includes",
+              "in": {"op": "path", "from": "input", "path": "expected.mechanicSet"},
+              "value": {"op": "path", "from": "mechanicId", "path": ""}
+            }
+          },
+          "mechanicParity": {
+            "op": "every",
+            "from": {"op": "array", "items": [
+              {"op": "path", "from": "requiredCovered", "path": ""},
+              {"op": "path", "from": "realizedWithin", "path": ""}
+            ]},
+            "as": "valid",
+            "where": {"op": "path", "from": "valid", "path": ""}
+          },
+          "conformant": {
+            "op": "every",
+            "from": {"op": "array", "items": [
+              {"op": "path", "from": "carrierAdmitted", "path": ""},
+              {"op": "path", "from": "capabilityMatches", "path": ""},
+              {"op": "path", "from": "dispositionMatches", "path": ""},
+              {"op": "path", "from": "mechanicParity", "path": ""}
+            ]},
+            "as": "valid",
+            "where": {"op": "path", "from": "valid", "path": ""}
+          },
+          "divergenceCode": {
+            "op": "if",
+            "when": {"op": "path", "from": "capabilityMatches", "path": ""},
+            "then": {
+              "op": "if",
+              "when": {"op": "path", "from": "dispositionMatches", "path": ""},
+              "then": {"op": "literal", "value": "MECHANIC_SET_DIVERGENCE"},
+              "else": {"op": "literal", "value": "DISPOSITION_DIVERGENCE"}
+            },
+            "else": {"op": "literal", "value": "CAPABILITY_ID_DIVERGENCE"}
+          },
+          "divergenceFinding": {
+            "op": "object",
+            "fields": {
+              "code": {"op": "path", "from": "divergenceCode", "path": ""},
+              "severity": {"op": "literal", "value": "FATAL"},
+              "message": {"op": "literal", "value": "The observed realization does not match the canonical execution expectations."},
+              "subjectRef": {"op": "path", "from": "input", "path": "observed.capabilityId"}
+            }
+          },
+          "conformanceBody": {
+            "op": "object",
+            "fields": {
+              "contractId": {"op": "literal", "value": "execution-plan-realization-conformance.v1"},
+              "capabilityId": {"op": "path", "from": "input", "path": "observed.capabilityId"},
+              "disposition": {"op": "literal", "value": "CONFORMANT"},
+              "findings": {"op": "array", "items": []},
+              "verificationContext": {"op": "path", "from": "input", "path": "verificationContext"},
+              "authorityClaims": {"op": "literal", "value": {
+                "projection": "NOT_CLAIMED",
+                "promotion": "NOT_CLAIMED",
+                "behavioralConformance": "NOT_CLAIMED"
+              }},
+              "lineage": {
+                "op": "array",
+                "items": [
+                  {"op": "path", "from": "input", "path": "expected.capabilityId"},
+                  {"op": "path", "from": "input", "path": "observed.capabilityId"}
+                ]
+              }
+            }
+          },
+          "divergenceBody": {
+            "op": "object",
+            "fields": {
+              "contractId": {"op": "literal", "value": "execution-plan-realization-conformance.v1"},
+              "capabilityId": {"op": "path", "from": "input", "path": "observed.capabilityId"},
+              "disposition": {"op": "literal", "value": "NON_CONFORMANT"},
+              "findings": {"op": "array", "items": [{"op": "path", "from": "divergenceFinding", "path": ""}]},
+              "verificationContext": {"op": "path", "from": "input", "path": "verificationContext"},
+              "authorityClaims": {"op": "literal", "value": {
+                "projection": "NOT_CLAIMED",
+                "promotion": "NOT_CLAIMED",
+                "behavioralConformance": "NOT_CLAIMED"
+              }},
+              "lineage": {
+                "op": "array",
+                "items": [
+                  {"op": "path", "from": "input", "path": "expected.capabilityId"},
+                  {"op": "path", "from": "input", "path": "observed.capabilityId"}
+                ]
+              }
+            }
+          }
+        },
+        "value": {
+          "op": "if",
+          "when": {"op": "path", "from": "conformant", "path": ""},
+          "then": {"op": "path", "from": "conformanceBody", "path": ""},
+          "else": {"op": "path", "from": "divergenceBody", "path": ""}
+        }
+      }
+    },
+    {
+      "id": "verify-expected-execution-trace.v1",
+      "expression": {
+        "op": "let",
+        "bindings": {
+          "precondition": {
+            "op": "equals",
+            "left": {"op": "path", "from": "input", "path": "priorDisposition"},
+            "right": {"op": "literal", "value": "CONFORMANT"}
+          },
+          "expectedSteps": {"op": "path", "from": "input", "path": "expected.trace.steps"},
+          "observedSteps": {"op": "path", "from": "input", "path": "observed.trace.steps"},
+          "cover": {
+            "op": "every",
+            "from": {"op": "path", "from": "expectedSteps", "path": ""},
+            "as": "expectedStep",
+            "where": {
+              "op": "includes",
+              "in": {"op": "path", "from": "observedSteps", "path": ""},
+              "value": {"op": "path", "from": "expectedStep", "path": ""}
+            }
+          },
+          "contained": {
+            "op": "every",
+            "from": {"op": "path", "from": "observedSteps", "path": ""},
+            "as": "observedStep",
+            "where": {
+              "op": "includes",
+              "in": {"op": "path", "from": "expectedSteps", "path": ""},
+              "value": {"op": "path", "from": "observedStep", "path": ""}
+            }
+          },
+          "lengthMatch": {
+            "op": "equals",
+            "left": {"op": "length", "value": {"op": "path", "from": "expectedSteps", "path": ""}},
+            "right": {"op": "length", "value": {"op": "path", "from": "observedSteps", "path": ""}}
+          },
+          "traceParity": {
+            "op": "every",
+            "from": {"op": "array", "items": [
+              {"op": "path", "from": "cover", "path": ""},
+              {"op": "path", "from": "contained", "path": ""},
+              {"op": "path", "from": "lengthMatch", "path": ""}
+            ]},
+            "as": "valid",
+            "where": {"op": "path", "from": "valid", "path": ""}
+          },
+          "conformant": {
+            "op": "every",
+            "from": {"op": "array", "items": [
+              {"op": "path", "from": "precondition", "path": ""},
+              {"op": "path", "from": "traceParity", "path": ""}
+            ]},
+            "as": "valid",
+            "where": {"op": "path", "from": "valid", "path": ""}
+          },
+          "conformanceBody": {
+            "op": "object",
+            "fields": {
+              "contractId": {"op": "literal", "value": "execution-trace-conformance.v1"},
+              "disposition": {"op": "literal", "value": "CONFORMANT"},
+              "verifiedSteps": {"op": "path", "from": "input", "path": "observed.trace.steps"},
+              "findings": {"op": "array", "items": []},
+              "authorityClaims": {"op": "literal", "value": {
+                "projection": "NOT_CLAIMED",
+                "promotion": "NOT_CLAIMED",
+                "behavioralConformance": "NOT_CLAIMED"
+              }},
+              "lineage": {
+                "op": "array",
+                "items": [
+                  {"op": "literal", "value": "verify-expected-execution-trace"},
+                  {"op": "path", "from": "input", "path": "priorDisposition"}
+                ]
+              },
+              "verificationContext": {
+                "op": "merge",
+                "values": [
+                  {"op": "object", "fields": {
+                    "expected": {"op": "path", "from": "input", "path": "expected"},
+                    "observed": {"op": "path", "from": "input", "path": "observed"}
+                  }},
+                  {"op": "object", "fields": {
+                    "verifiedSteps": {"op": "path", "from": "input", "path": "observed.trace.steps"}
+                  }}
+                ]
+              }
+            }
+          },
+          "divergenceFinding": {
+            "op": "object",
+            "fields": {
+              "code": {
+                "op": "if",
+                "when": {"op": "path", "from": "precondition", "path": ""},
+                "then": {"op": "literal", "value": "EXECUTION_TRACE_DIVERGENCE"},
+                "else": {"op": "literal", "value": "PRECONDITION_UNSATISFIED"}
+              },
+              "severity": {"op": "literal", "value": "FATAL"},
+              "message": {"op": "literal", "value": "The observed execution trace does not match the expected canonical execution trace."},
+              "subjectRef": {"op": "path", "from": "input", "path": "observed.capabilityId"}
+            }
+          },
+          "divergenceBody": {
+            "op": "object",
+            "fields": {
+              "contractId": {"op": "literal", "value": "execution-trace-conformance.v1"},
+              "disposition": {"op": "literal", "value": "NON_CONFORMANT"},
+              "verifiedSteps": {"op": "array", "items": []},
+              "findings": {"op": "array", "items": [{"op": "path", "from": "divergenceFinding", "path": ""}]},
+              "authorityClaims": {"op": "literal", "value": {
+                "projection": "NOT_CLAIMED",
+                "promotion": "NOT_CLAIMED",
+                "behavioralConformance": "NOT_CLAIMED"
+              }},
+              "lineage": {
+                "op": "array",
+                "items": [
+                  {"op": "literal", "value": "verify-expected-execution-trace"},
+                  {"op": "path", "from": "input", "path": "priorDisposition"}
+                ]
+              },
+              "verificationContext": {
+                "op": "merge",
+                "values": [
+                  {"op": "object", "fields": {
+                    "expected": {"op": "path", "from": "input", "path": "expected"},
+                    "observed": {"op": "path", "from": "input", "path": "observed"}
+                  }},
+                  {"op": "object", "fields": {
+                    "verifiedSteps": {"op": "array", "items": []}
+                  }}
+                ]
+              }
+            }
+          }
+        },
+        "value": {
+          "op": "if",
+          "when": {"op": "path", "from": "conformant", "path": ""},
+          "then": {"op": "path", "from": "conformanceBody", "path": ""},
+          "else": {"op": "path", "from": "divergenceBody", "path": ""}
+        }
+      }
+    },
+    {
+      "id": "verify-artifact-materialization.v1",
+      "expression": {
+        "op": "let",
+        "bindings": {
+          "precondition": {
+            "op": "equals",
+            "left": {"op": "path", "from": "input", "path": "priorDisposition"},
+            "right": {"op": "literal", "value": "CONFORMANT"}
+          },
+          "expectedRefsCovered": {
+            "op": "every",
+            "from": {"op": "path", "from": "input", "path": "expected.artifactRefs"},
+            "as": "ref",
+            "where": {
+              "op": "some",
+              "from": {"op": "path", "from": "input", "path": "observed.artifactRefs"},
+              "as": "observedArtifact",
+              "where": {
+                "op": "equals",
+                "left": {"op": "path", "from": "observedArtifact", "path": "path"},
+                "right": {"op": "path", "from": "ref", "path": "path"}
+              }
+            }
+          },
+          "observedRefsContained": {
+            "op": "every",
+            "from": {"op": "path", "from": "input", "path": "observed.artifactRefs"},
+            "as": "observedArtifact",
+            "where": {
+              "op": "some",
+              "from": {"op": "path", "from": "input", "path": "expected.artifactRefs"},
+              "as": "ref",
+              "where": {
+                "op": "equals",
+                "left": {"op": "path", "from": "ref", "path": "path"},
+                "right": {"op": "path", "from": "observedArtifact", "path": "path"}
+              }
+            }
+          },
+          "artifactParity": {
+            "op": "every",
+            "from": {"op": "array", "items": [
+              {"op": "path", "from": "expectedRefsCovered", "path": ""},
+              {"op": "path", "from": "observedRefsContained", "path": ""}
+            ]},
+            "as": "valid",
+            "where": {"op": "path", "from": "valid", "path": ""}
+          },
+          "conformant": {
+            "op": "every",
+            "from": {"op": "array", "items": [
+              {"op": "path", "from": "precondition", "path": ""},
+              {"op": "path", "from": "artifactParity", "path": ""}
+            ]},
+            "as": "valid",
+            "where": {"op": "path", "from": "valid", "path": ""}
+          },
+          "conformanceBody": {
+            "op": "object",
+            "fields": {
+              "contractId": {"op": "literal", "value": "artifact-materialization-conformance.v1"},
+              "disposition": {"op": "literal", "value": "CONFORMANT"},
+              "verifiedArtifactCount": {"op": "length", "value": {"op": "path", "from": "input", "path": "expected.artifactRefs"}},
+              "findings": {"op": "array", "items": []},
+              "authorityClaims": {"op": "literal", "value": {
+                "projection": "NOT_CLAIMED",
+                "promotion": "NOT_CLAIMED",
+                "behavioralConformance": "NOT_CLAIMED"
+              }},
+              "lineage": {
+                "op": "array",
+                "items": [
+                  {"op": "literal", "value": "verify-artifact-materialization"},
+                  {"op": "path", "from": "input", "path": "priorDisposition"}
+                ]
+              },
+              "verificationContext": {
+                "op": "merge",
+                "values": [
+                  {"op": "path", "from": "input", "path": "verificationContext"},
+                  {"op": "object", "fields": {
+                    "verifiedArtifactCount": {"op": "length", "value": {"op": "path", "from": "input", "path": "expected.artifactRefs"}}
+                  }}
+                ]
+              }
+            }
+          },
+          "divergenceFinding": {
+            "op": "object",
+            "fields": {
+              "code": {
+                "op": "if",
+                "when": {"op": "path", "from": "precondition", "path": ""},
+                "then": {"op": "literal", "value": "ARTIFACT_MATERIALIZATION_DIVERGENCE"},
+                "else": {"op": "literal", "value": "PRECONDITION_UNSATISFIED"}
+              },
+              "severity": {"op": "literal", "value": "FATAL"},
+              "message": {"op": "literal", "value": "The observed artifact materialization does not match the required artifact references."},
+              "subjectRef": {"op": "path", "from": "input", "path": "observed.capabilityId"}
+            }
+          },
+          "divergenceBody": {
+            "op": "object",
+            "fields": {
+              "contractId": {"op": "literal", "value": "artifact-materialization-conformance.v1"},
+              "disposition": {"op": "literal", "value": "NON_CONFORMANT"},
+              "verifiedArtifactCount": {"op": "literal", "value": 0},
+              "findings": {"op": "array", "items": [{"op": "path", "from": "divergenceFinding", "path": ""}]},
+              "authorityClaims": {"op": "literal", "value": {
+                "projection": "NOT_CLAIMED",
+                "promotion": "NOT_CLAIMED",
+                "behavioralConformance": "NOT_CLAIMED"
+              }},
+              "lineage": {
+                "op": "array",
+                "items": [
+                  {"op": "literal", "value": "verify-artifact-materialization"},
+                  {"op": "path", "from": "input", "path": "priorDisposition"}
+                ]
+              },
+              "verificationContext": {
+                "op": "merge",
+                "values": [
+                  {"op": "path", "from": "input", "path": "verificationContext"},
+                  {"op": "object", "fields": {
+                    "verifiedArtifactCount": {"op": "literal", "value": 0}
+                  }}
+                ]
+              }
+            }
+          }
+        },
+        "value": {
+          "op": "if",
+          "when": {"op": "path", "from": "conformant", "path": ""},
+          "then": {"op": "path", "from": "conformanceBody", "path": ""},
+          "else": {"op": "path", "from": "divergenceBody", "path": ""}
+        }
+      }
+    },
+    {
+      "id": "verify-projected-executable-origin.v1",
+      "expression": {
+        "op": "let",
+        "bindings": {
+          "precondition": {
+            "op": "equals",
+            "left": {"op": "path", "from": "input", "path": "priorDisposition"},
+            "right": {"op": "literal", "value": "CONFORMANT"}
+          },
+          "originParity": {
+            "op": "equals",
+            "left": {"op": "path", "from": "input", "path": "expected.originDisposition"},
+            "right": {"op": "path", "from": "input", "path": "observed.originDisposition"}
+          },
+          "conformant": {
+            "op": "every",
+            "from": {"op": "array", "items": [
+              {"op": "path", "from": "precondition", "path": ""},
+              {"op": "path", "from": "originParity", "path": ""}
+            ]},
+            "as": "valid",
+            "where": {"op": "path", "from": "valid", "path": ""}
+          },
+          "conformanceBody": {
+            "op": "object",
+            "fields": {
+              "contractId": {"op": "literal", "value": "projected-executable-origin-conformance.v1"},
+              "disposition": {"op": "literal", "value": "CONFORMANT"},
+              "verifiedOriginDisposition": {"op": "path", "from": "input", "path": "observed.originDisposition"},
+              "findings": {"op": "array", "items": []},
+              "authorityClaims": {"op": "literal", "value": {
+                "projection": "NOT_CLAIMED",
+                "promotion": "NOT_CLAIMED",
+                "behavioralConformance": "NOT_CLAIMED"
+              }},
+              "lineage": {
+                "op": "array",
+                "items": [
+                  {"op": "literal", "value": "verify-projected-executable-origin"},
+                  {"op": "path", "from": "input", "path": "priorDisposition"}
+                ]
+              },
+              "verificationContext": {
+                "op": "merge",
+                "values": [
+                  {"op": "path", "from": "input", "path": "verificationContext"},
+                  {"op": "object", "fields": {
+                    "verifiedOriginDisposition": {"op": "path", "from": "input", "path": "observed.originDisposition"}
+                  }}
+                ]
+              }
+            }
+          },
+          "divergenceFinding": {
+            "op": "object",
+            "fields": {
+              "code": {
+                "op": "if",
+                "when": {"op": "path", "from": "precondition", "path": ""},
+                "then": {"op": "literal", "value": "PROJECTED_ORIGIN_DIVERGENCE"},
+                "else": {"op": "literal", "value": "PRECONDITION_UNSATISFIED"}
+              },
+              "severity": {"op": "literal", "value": "FATAL"},
+              "message": {"op": "literal", "value": "The observed executable origin does not match the required projection policy."},
+              "subjectRef": {"op": "path", "from": "input", "path": "observed.capabilityId"}
+            }
+          },
+          "divergenceBody": {
+            "op": "object",
+            "fields": {
+              "contractId": {"op": "literal", "value": "projected-executable-origin-conformance.v1"},
+              "disposition": {"op": "literal", "value": "NON_CONFORMANT"},
+              "verifiedOriginDisposition": {"op": "literal", "value": ""},
+              "findings": {"op": "array", "items": [{"op": "path", "from": "divergenceFinding", "path": ""}]},
+              "authorityClaims": {"op": "literal", "value": {
+                "projection": "NOT_CLAIMED",
+                "promotion": "NOT_CLAIMED",
+                "behavioralConformance": "NOT_CLAIMED"
+              }},
+              "lineage": {
+                "op": "array",
+                "items": [
+                  {"op": "literal", "value": "verify-projected-executable-origin"},
+                  {"op": "path", "from": "input", "path": "priorDisposition"}
+                ]
+              },
+              "verificationContext": {
+                "op": "merge",
+                "values": [
+                  {"op": "path", "from": "input", "path": "verificationContext"},
+                  {"op": "object", "fields": {
+                    "verifiedOriginDisposition": {"op": "literal", "value": ""}
+                  }}
+                ]
+              }
+            }
+          }
+        },
+        "value": {
+          "op": "if",
+          "when": {"op": "path", "from": "conformant", "path": ""},
+          "then": {"op": "path", "from": "conformanceBody", "path": ""},
+          "else": {"op": "path", "from": "divergenceBody", "path": ""}
+        }
+      }
+    },
+    {
+      "id": "verify-mechanic-resolution.v1",
+      "expression": {
+        "op": "let",
+        "bindings": {
+          "precondition": {
+            "op": "equals",
+            "left": {"op": "path", "from": "input", "path": "priorDisposition"},
+            "right": {"op": "literal", "value": "CONFORMANT"}
+          },
+          "requiredResolutionsCovered": {
+            "op": "every",
+            "from": {"op": "path", "from": "input", "path": "expected.resolutions"},
+            "as": "resolutionId",
+            "where": {
+              "op": "includes",
+              "in": {"op": "path", "from": "input", "path": "observed.resolutions"},
+              "value": {"op": "path", "from": "resolutionId", "path": ""}
+            }
+          },
+          "observedResolutionsContained": {
+            "op": "every",
+            "from": {"op": "path", "from": "input", "path": "observed.resolutions"},
+            "as": "resolutionId",
+            "where": {
+              "op": "includes",
+              "in": {"op": "path", "from": "input", "path": "expected.resolutions"},
+              "value": {"op": "path", "from": "resolutionId", "path": ""}
+            }
+          },
+          "resolutionParity": {
+            "op": "every",
+            "from": {"op": "array", "items": [
+              {"op": "path", "from": "requiredResolutionsCovered", "path": ""},
+              {"op": "path", "from": "observedResolutionsContained", "path": ""}
+            ]},
+            "as": "valid",
+            "where": {"op": "path", "from": "valid", "path": ""}
+          },
+          "conformant": {
+            "op": "every",
+            "from": {"op": "array", "items": [
+              {"op": "path", "from": "precondition", "path": ""},
+              {"op": "path", "from": "resolutionParity", "path": ""}
+            ]},
+            "as": "valid",
+            "where": {"op": "path", "from": "valid", "path": ""}
+          },
+          "conformanceBody": {
+            "op": "object",
+            "fields": {
+              "contractId": {"op": "literal", "value": "mechanic-resolution-conformance.v1"},
+              "disposition": {"op": "literal", "value": "CONFORMANT"},
+              "verifiedResolutions": {"op": "path", "from": "input", "path": "observed.resolutions"},
+              "findings": {"op": "array", "items": []},
+              "authorityClaims": {"op": "literal", "value": {
+                "projection": "NOT_CLAIMED",
+                "promotion": "NOT_CLAIMED",
+                "behavioralConformance": "NOT_CLAIMED"
+              }},
+              "lineage": {
+                "op": "array",
+                "items": [
+                  {"op": "literal", "value": "verify-mechanic-resolution"},
+                  {"op": "path", "from": "input", "path": "priorDisposition"}
+                ]
+              },
+              "verificationContext": {
+                "op": "merge",
+                "values": [
+                  {"op": "path", "from": "input", "path": "verificationContext"},
+                  {"op": "object", "fields": {
+                    "verifiedResolutions": {"op": "path", "from": "input", "path": "observed.resolutions"}
+                  }}
+                ]
+              }
+            }
+          },
+          "divergenceFinding": {
+            "op": "object",
+            "fields": {
+              "code": {
+                "op": "if",
+                "when": {"op": "path", "from": "precondition", "path": ""},
+                "then": {"op": "literal", "value": "MECHANIC_RESOLUTION_DIVERGENCE"},
+                "else": {"op": "literal", "value": "PRECONDITION_UNSATISFIED"}
+              },
+              "severity": {"op": "literal", "value": "FATAL"},
+              "message": {"op": "literal", "value": "The observed mechanic resolution does not match the required execution mechanics."},
+              "subjectRef": {"op": "path", "from": "input", "path": "observed.capabilityId"}
+            }
+          },
+          "divergenceBody": {
+            "op": "object",
+            "fields": {
+              "contractId": {"op": "literal", "value": "mechanic-resolution-conformance.v1"},
+              "disposition": {"op": "literal", "value": "NON_CONFORMANT"},
+              "verifiedResolutions": {"op": "array", "items": []},
+              "findings": {"op": "array", "items": [{"op": "path", "from": "divergenceFinding", "path": ""}]},
+              "authorityClaims": {"op": "literal", "value": {
+                "projection": "NOT_CLAIMED",
+                "promotion": "NOT_CLAIMED",
+                "behavioralConformance": "NOT_CLAIMED"
+              }},
+              "lineage": {
+                "op": "array",
+                "items": [
+                  {"op": "literal", "value": "verify-mechanic-resolution"},
+                  {"op": "path", "from": "input", "path": "priorDisposition"}
+                ]
+              },
+              "verificationContext": {
+                "op": "merge",
+                "values": [
+                  {"op": "path", "from": "input", "path": "verificationContext"},
+                  {"op": "object", "fields": {
+                    "verifiedResolutions": {"op": "array", "items": []}
+                  }}
+                ]
+              }
+            }
+          }
+        },
+        "value": {
+          "op": "if",
+          "when": {"op": "path", "from": "conformant", "path": ""},
+          "then": {"op": "path", "from": "conformanceBody", "path": ""},
+          "else": {"op": "path", "from": "divergenceBody", "path": ""}
+        }
+      }
+    },
+    {
+      "id": "verify-language-mechanic-parity.v1",
+      "expression": {
+        "op": "let",
+        "bindings": {
+          "precondition": {
+            "op": "equals",
+            "left": {"op": "path", "from": "input", "path": "priorDisposition"},
+            "right": {"op": "literal", "value": "CONFORMANT"}
+          },
+          "requiredSet": {"op": "path", "from": "input", "path": "expected.requiredMechanics"},
+          "perLanguage": {
+            "op": "every",
+            "from": {"op": "path", "from": "input", "path": "expected.languages"},
+            "as": "language",
+            "where": {
+              "op": "every",
+              "from": {"op": "array", "items": [
+                {
+                  "op": "every",
+                  "from": {"op": "path", "from": "requiredSet", "path": ""},
+                  "as": "requiredMechanic",
+                  "where": {
+                    "op": "includes",
+                    "in": {"op": "path", "from": "language", "path": "mechanicSet"},
+                    "value": {"op": "path", "from": "requiredMechanic", "path": ""}
+                  }
+                },
+                {
+                  "op": "every",
+                  "from": {"op": "path", "from": "language", "path": "mechanicSet"},
+                  "as": "languageMechanic",
+                  "where": {
+                    "op": "includes",
+                    "in": {"op": "path", "from": "requiredSet", "path": ""},
+                    "value": {"op": "path", "from": "languageMechanic", "path": ""}
+                  }
+                }
+              ]},
+              "as": "valid",
+              "where": {"op": "path", "from": "valid", "path": ""}
+            }
+          },
+          "conformant": {
+            "op": "every",
+            "from": {"op": "array", "items": [
+              {"op": "path", "from": "precondition", "path": ""},
+              {"op": "path", "from": "perLanguage", "path": ""}
+            ]},
+            "as": "valid",
+            "where": {"op": "path", "from": "valid", "path": ""}
+          },
+          "conformanceBody": {
+            "op": "object",
+            "fields": {
+              "contractId": {"op": "literal", "value": "language-mechanic-parity-conformance.v1"},
+              "disposition": {"op": "literal", "value": "CONFORMANT"},
+              "verifiedLanguages": {"op": "path", "from": "input", "path": "expected.languages"},
+              "findings": {"op": "array", "items": []},
+              "authorityClaims": {"op": "literal", "value": {
+                "projection": "NOT_CLAIMED",
+                "promotion": "NOT_CLAIMED",
+                "behavioralConformance": "NOT_CLAIMED"
+              }},
+              "lineage": {
+                "op": "array",
+                "items": [
+                  {"op": "literal", "value": "verify-language-mechanic-parity"},
+                  {"op": "path", "from": "input", "path": "priorDisposition"}
+                ]
+              },
+              "verificationContext": {
+                "op": "merge",
+                "values": [
+                  {"op": "path", "from": "input", "path": "verificationContext"},
+                  {"op": "object", "fields": {
+                    "verifiedLanguages": {"op": "path", "from": "input", "path": "expected.languages"}
+                  }}
+                ]
+              }
+            }
+          },
+          "divergenceFinding": {
+            "op": "object",
+            "fields": {
+              "code": {
+                "op": "if",
+                "when": {"op": "path", "from": "precondition", "path": ""},
+                "then": {"op": "literal", "value": "LANGUAGE_MECHANIC_PARITY_FAILURE"},
+                "else": {"op": "literal", "value": "PRECONDITION_UNSATISFIED"}
+              },
+              "severity": {"op": "literal", "value": "FATAL"},
+              "message": {"op": "literal", "value": "The observed language mechanic sets do not match the canonical mechanic authority."},
+              "subjectRef": {"op": "path", "from": "input", "path": "observed.capabilityId"}
+            }
+          },
+          "divergenceBody": {
+            "op": "object",
+            "fields": {
+              "contractId": {"op": "literal", "value": "language-mechanic-parity-conformance.v1"},
+              "disposition": {"op": "literal", "value": "NON_CONFORMANT"},
+              "verifiedLanguages": {"op": "array", "items": []},
+              "findings": {"op": "array", "items": [{"op": "path", "from": "divergenceFinding", "path": ""}]},
+              "authorityClaims": {"op": "literal", "value": {
+                "projection": "NOT_CLAIMED",
+                "promotion": "NOT_CLAIMED",
+                "behavioralConformance": "NOT_CLAIMED"
+              }},
+              "lineage": {
+                "op": "array",
+                "items": [
+                  {"op": "literal", "value": "verify-language-mechanic-parity"},
+                  {"op": "path", "from": "input", "path": "priorDisposition"}
+                ]
+              },
+              "verificationContext": {
+                "op": "merge",
+                "values": [
+                  {"op": "path", "from": "input", "path": "verificationContext"},
+                  {"op": "object", "fields": {
+                    "verifiedLanguages": {"op": "array", "items": []}
+                  }}
+                ]
+              }
+            }
+          }
+        },
+        "value": {
+          "op": "if",
+          "when": {"op": "path", "from": "conformant", "path": ""},
+          "then": {"op": "path", "from": "conformanceBody", "path": ""},
+          "else": {"op": "path", "from": "divergenceBody", "path": ""}
+        }
+      }
+    },
+    {
+      "id": "verify-canonical-outcome-parity.v1",
+      "expression": {
+        "op": "let",
+        "bindings": {
+          "precondition": {
+            "op": "equals",
+            "left": {"op": "path", "from": "input", "path": "priorDisposition"},
+            "right": {"op": "literal", "value": "CONFORMANT"}
+          },
+          "baselineTarget": {
+            "op": "find",
+            "from": {"op": "path", "from": "input", "path": "expected.targetOutcomes"},
+            "as": "targetOutcome",
+            "where": {
+              "op": "equals",
+              "left": {"op": "path", "from": "targetOutcome", "path": "target"},
+              "right": {"op": "literal", "value": "node"}
+            }
+          },
+          "baselineDigest": {"op": "path", "from": "baselineTarget", "path": "outcomeDigest"},
+          "parity": {
+            "op": "every",
+            "from": {"op": "path", "from": "input", "path": "expected.targetOutcomes"},
+            "as": "targetOutcome",
+            "where": {
+              "op": "equals",
+              "left": {"op": "path", "from": "targetOutcome", "path": "outcomeDigest"},
+              "right": {"op": "path", "from": "baselineDigest", "path": ""}
+            }
+          },
+          "conformant": {
+            "op": "every",
+            "from": {"op": "array", "items": [
+              {"op": "path", "from": "precondition", "path": ""},
+              {"op": "path", "from": "parity", "path": ""}
+            ]},
+            "as": "valid",
+            "where": {"op": "path", "from": "valid", "path": ""}
+          },
+          "verifiedOutcomeDigests": {
+            "op": "map",
+            "from": {"op": "path", "from": "input", "path": "expected.targetOutcomes"},
+            "as": "targetOutcome",
+            "value": {"op": "path", "from": "targetOutcome", "path": "outcomeDigest"}
+          },
+          "conformanceBody": {
+            "op": "object",
+            "fields": {
+              "contractId": {"op": "literal", "value": "canonical-outcome-parity-conformance.v1"},
+              "disposition": {"op": "literal", "value": "CONFORMANT"},
+              "verifiedOutcomeDigests": {"op": "path", "from": "verifiedOutcomeDigests", "path": ""},
+              "verifiedSteps": {"op": "path", "from": "input", "path": "verificationContext.verifiedSteps"},
+              "verifiedArtifactCount": {"op": "path", "from": "input", "path": "verificationContext.verifiedArtifactCount"},
+              "verifiedOriginDisposition": {"op": "path", "from": "input", "path": "verificationContext.verifiedOriginDisposition"},
+              "verifiedResolutions": {"op": "path", "from": "input", "path": "verificationContext.verifiedResolutions"},
+              "verifiedLanguages": {"op": "path", "from": "input", "path": "verificationContext.verifiedLanguages"},
+              "findings": {"op": "array", "items": []},
+              "authorityClaims": {"op": "literal", "value": {
+                "projection": "NOT_CLAIMED",
+                "promotion": "NOT_CLAIMED",
+                "behavioralConformance": "NOT_CLAIMED"
+              }},
+              "lineage": {
+                "op": "array",
+                "items": [
+                  {"op": "literal", "value": "verify-canonical-outcome-parity"},
+                  {"op": "path", "from": "input", "path": "priorDisposition"}
+                ]
+              },
+              "verificationContext": {
+                "op": "merge",
+                "values": [
+                  {"op": "path", "from": "input", "path": "verificationContext"},
+                  {"op": "object", "fields": {
+                    "verifiedOutcomeDigests": {"op": "path", "from": "verifiedOutcomeDigests", "path": ""}
+                  }}
+                ]
+              }
+            }
+          },
+          "divergenceFinding": {
+            "op": "object",
+            "fields": {
+              "code": {
+                "op": "if",
+                "when": {"op": "path", "from": "precondition", "path": ""},
+                "then": {"op": "literal", "value": "CANONICAL_OUTCOME_PARITY_DIVERGENCE"},
+                "else": {"op": "literal", "value": "PRECONDITION_UNSATISFIED"}
+              },
+              "severity": {"op": "literal", "value": "FATAL"},
+              "message": {"op": "literal", "value": "The observed cross-target outcomes do not match the canonical outcome parity."},
+              "subjectRef": {"op": "path", "from": "input", "path": "observed.capabilityId"}
+            }
+          },
+          "divergenceBody": {
+            "op": "object",
+            "fields": {
+              "contractId": {"op": "literal", "value": "canonical-outcome-parity-conformance.v1"},
+              "disposition": {"op": "literal", "value": "NON_CONFORMANT"},
+              "verifiedOutcomeDigests": {"op": "array", "items": []},
+              "verifiedSteps": {"op": "path", "from": "input", "path": "verificationContext.verifiedSteps"},
+              "verifiedArtifactCount": {"op": "path", "from": "input", "path": "verificationContext.verifiedArtifactCount"},
+              "verifiedOriginDisposition": {"op": "path", "from": "input", "path": "verificationContext.verifiedOriginDisposition"},
+              "verifiedResolutions": {"op": "path", "from": "input", "path": "verificationContext.verifiedResolutions"},
+              "verifiedLanguages": {"op": "path", "from": "input", "path": "verificationContext.verifiedLanguages"},
+              "findings": {"op": "array", "items": [{"op": "path", "from": "divergenceFinding", "path": ""}]},
+              "authorityClaims": {"op": "literal", "value": {
+                "projection": "NOT_CLAIMED",
+                "promotion": "NOT_CLAIMED",
+                "behavioralConformance": "NOT_CLAIMED"
+              }},
+              "lineage": {
+                "op": "array",
+                "items": [
+                  {"op": "literal", "value": "verify-canonical-outcome-parity"},
+                  {"op": "path", "from": "input", "path": "priorDisposition"}
+                ]
+              },
+              "verificationContext": {
+                "op": "merge",
+                "values": [
+                  {"op": "path", "from": "input", "path": "verificationContext"},
+                  {"op": "object", "fields": {
+                    "verifiedOutcomeDigests": {"op": "array", "items": []}
+                  }}
+                ]
+              }
+            }
+          }
+        },
+        "value": {
+          "op": "if",
+          "when": {"op": "path", "from": "conformant", "path": ""},
+          "then": {"op": "path", "from": "conformanceBody", "path": ""},
+          "else": {"op": "path", "from": "divergenceBody", "path": ""}
+        }
+      }
+    },
+    {
+      "id": "project-verification-to-trace.v1",
+      "expression": {
+        "op": "object",
+        "fields": {
+          "contractId": {"op": "literal", "value": "expected-and-observed-execution.v1"},
+          "carrierType": {"op": "literal", "value": "expected-and-observed-execution.v1"},
+          "priorDisposition": {"op": "path", "from": "input", "path": "disposition"},
+          "priorFindings": {"op": "path", "from": "input", "path": "findings"},
+          "expected": {"op": "path", "from": "input", "path": "verificationContext.expected"},
+          "observed": {"op": "path", "from": "input", "path": "verificationContext.observed"}
+        }
+      }
+    },
+    {
+      "id": "project-trace-to-artifact.v1",
+      "expression": {
+        "op": "object",
+        "fields": {
+          "contractId": {"op": "literal", "value": "artifact-materialization-verification-request.v1"},
+          "carrierType": {"op": "literal", "value": "artifact-materialization-verification-request.v1"},
+          "priorDisposition": {"op": "path", "from": "input", "path": "disposition"},
+          "priorFindings": {"op": "path", "from": "input", "path": "findings"},
+          "expected": {"op": "path", "from": "input", "path": "verificationContext.expected"},
+          "observed": {"op": "path", "from": "input", "path": "verificationContext.observed"},
+          "verificationContext": {"op": "path", "from": "input", "path": "verificationContext"}
+        }
+      }
+    },
+    {
+      "id": "project-artifact-to-origin.v1",
+      "expression": {
+        "op": "object",
+        "fields": {
+          "contractId": {"op": "literal", "value": "projected-executable-origin-verification-request.v1"},
+          "carrierType": {"op": "literal", "value": "projected-executable-origin-verification-request.v1"},
+          "priorDisposition": {"op": "path", "from": "input", "path": "disposition"},
+          "priorFindings": {"op": "path", "from": "input", "path": "findings"},
+          "expected": {"op": "path", "from": "input", "path": "verificationContext.expected"},
+          "observed": {"op": "path", "from": "input", "path": "verificationContext.observed"},
+          "verificationContext": {"op": "path", "from": "input", "path": "verificationContext"}
+        }
+      }
+    },
+    {
+      "id": "project-origin-to-mechanic-resolution.v1",
+      "expression": {
+        "op": "object",
+        "fields": {
+          "contractId": {"op": "literal", "value": "mechanic-resolution-verification-request.v1"},
+          "carrierType": {"op": "literal", "value": "mechanic-resolution-verification-request.v1"},
+          "priorDisposition": {"op": "path", "from": "input", "path": "disposition"},
+          "priorFindings": {"op": "path", "from": "input", "path": "findings"},
+          "expected": {"op": "path", "from": "input", "path": "verificationContext.expected"},
+          "observed": {"op": "path", "from": "input", "path": "verificationContext.observed"},
+          "verificationContext": {"op": "path", "from": "input", "path": "verificationContext"}
+        }
+      }
+    },
+    {
+      "id": "project-mechanic-resolution-to-parity.v1",
+      "expression": {
+        "op": "object",
+        "fields": {
+          "contractId": {"op": "literal", "value": "language-mechanic-parity-verification-request.v1"},
+          "carrierType": {"op": "literal", "value": "language-mechanic-parity-verification-request.v1"},
+          "priorDisposition": {"op": "path", "from": "input", "path": "disposition"},
+          "priorFindings": {"op": "path", "from": "input", "path": "findings"},
+          "expected": {"op": "path", "from": "input", "path": "verificationContext.expected"},
+          "observed": {"op": "path", "from": "input", "path": "verificationContext.observed"},
+          "verificationContext": {"op": "path", "from": "input", "path": "verificationContext"}
+        }
+      }
+    },
+    {
+      "id": "project-parity-to-outcome-parity.v1",
+      "expression": {
+        "op": "object",
+        "fields": {
+          "contractId": {"op": "literal", "value": "canonical-outcome-parity-verification-request.v1"},
+          "carrierType": {"op": "literal", "value": "canonical-outcome-parity-verification-request.v1"},
+          "priorDisposition": {"op": "path", "from": "input", "path": "disposition"},
+          "priorFindings": {"op": "path", "from": "input", "path": "findings"},
+          "expected": {"op": "path", "from": "input", "path": "verificationContext.expected"},
+          "observed": {"op": "path", "from": "input", "path": "verificationContext.observed"},
+          "verificationContext": {"op": "path", "from": "input", "path": "verificationContext"}
+        }
+      }
+    }
+  ]
+}

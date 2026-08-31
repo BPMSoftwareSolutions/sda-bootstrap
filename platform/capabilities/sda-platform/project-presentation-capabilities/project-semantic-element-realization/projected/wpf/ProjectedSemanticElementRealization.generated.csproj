@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\..\languages\csharp\src\ScenarioKernel.UiEmbodiment\ScenarioKernel.UiEmbodiment.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="proof\**\*.cs" />
+  </ItemGroup>
+</Project>

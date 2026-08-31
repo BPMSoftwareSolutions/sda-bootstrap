@@ -1,0 +1,38 @@
+{
+  "scenarioId": "reject-open-semantic-corpus-pointer-update",
+  "input": {
+    "inputId": "semantic-corpus-current-pointer-update-request",
+    "contract": {
+      "contractId": "semantic-corpus-current-pointer-update-request.v1"
+    }
+  },
+  "event": {
+    "eventId": "open-semantic-corpus-pointer-update-requested",
+    "executionAuthorityId": "reject-open-semantic-corpus-pointer-update.v1"
+  },
+  "outcome": {
+    "outcomeId": "rejected-semantic-corpus-current-pointer-update-evidence",
+    "contract": {
+      "contractId": "semantic-corpus-current-pointer-update-evidence.v1"
+    },
+    "experience": {
+      "statement": "the current pointer is unchanged and every missing, stale, or rejected subject is returned as an attributable finding"
+    },
+    "terminal": true
+  },
+  "gherkin": {
+    "given": {
+      "semanticRef": "reject-open-semantic-corpus-pointer-update.given",
+      "text": "the candidate snapshot is missing, corrupted, open, rejected, or bound to a stale closure receipt"
+    },
+    "when": {
+      "semanticRef": "reject-open-semantic-corpus-pointer-update.when",
+      "text": "pointer advancement is requested"
+    },
+    "then": {
+      "semanticRef": "reject-open-semantic-corpus-pointer-update.then",
+      "text": "the current pointer is unchanged and every missing, stale, or rejected subject is returned as an attributable finding"
+    }
+  },
+  "name": "Reject a pointer update without current corpus closure"
+}

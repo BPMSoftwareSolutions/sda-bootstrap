@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/scenario-kernel-execution-vector-projection-conformance.v1.schema.json",
+  "title": "Scenario Kernel Execution-Vector Projection Conformance",
+  "description": "Recorded evidence that a language's strict-TypeScript execution projection provider, driven by canonical execution authority and target execution mechanics, compiles and reproduces admitted behavior over the shared fixture corpus.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "executionVectorProjectionConformanceType",
+    "language",
+    "observedAt",
+    "disposition",
+    "toolchainValidation",
+    "behavioralValidation",
+    "conforming"
+  ],
+  "properties": {
+    "executionVectorProjectionConformanceType": {
+      "const": "scenario-kernel-execution-vector-projection-conformance.v1"
+    },
+    "language": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$"
+    },
+    "observedAt": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?Z$"
+    },
+    "disposition": {
+      "type": "string",
+      "enum": ["SATISFIED", "NOT_SATISFIED", "NOT_OBSERVABLE"]
+    },
+    "toolchainValidation": { "$ref": "#/$defs/commandResult" },
+    "behavioralValidation": {
+      "allOf": [
+        { "$ref": "#/$defs/commandResult" },
+        {
+          "type": "object",
+          "properties": {
+            "totalFixtures": { "type": "integer", "minimum": 0 }
+          }
+        }
+      ]
+    },
+    "conforming": {
+      "type": "boolean",
+      "description": "True iff both toolchainValidation.conforming and behavioralValidation.conforming are true. The single verdict downstream consumers read."
+    }
+  },
+  "$defs": {
+    "commandResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["command", "ran", "conforming"],
+      "properties": {
+        "command": { "type": "string", "minLength": 1 },
+        "ran": { "type": "boolean" },
+        "exitCode": { "type": ["integer", "null"] },
+        "conforming": { "type": "boolean" },
+        "totalFixtures": { "type": "integer", "minimum": 0 },
+        "reason": { "type": "string" },
+        "stderr": { "type": "string" }
+      }
+    }
+  }
+}

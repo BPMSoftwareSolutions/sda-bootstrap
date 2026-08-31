@@ -1,0 +1,227 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/platform/ui-presentation/sda-ui-presentation-ir.v3.schema.json",
+  "title": "Normalized UI presentation IR v3",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["presentationIrType", "protocolIdentity", "presentationProfileRefs", "rootNodeIds", "nodes", "eventBindings", "adaptationRules", "accessibilityObligations", "tokenReferences", "canonicalDigest"],
+  "properties": {
+    "presentationIrType": { "const": "sda-ui-presentation-ir.v3" },
+    "protocolIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["semanticPresentationType", "semanticPresentationDigest", "compilerAuthorityId", "compilerAuthorityDigest"],
+      "properties": {
+        "semanticPresentationType": { "const": "sda-ui-semantic-presentation.v1" },
+        "semanticPresentationDigest": { "$ref": "#/$defs/digest" },
+        "compilerAuthorityId": { "$ref": "#/$defs/id" },
+        "compilerAuthorityDigest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "presentationProfileRefs": { "$ref": "#/$defs/idList" },
+    "rootNodeIds": { "$ref": "#/$defs/idList" },
+    "nodes": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/node" }
+    },
+    "eventBindings": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/eventBinding" }
+    },
+    "adaptationRules": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/adaptationRule" }
+    },
+    "accessibilityObligations": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/accessibilityObligation" }
+    },
+    "tokenReferences": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/tokenReference" }
+    },
+    "canonicalDigest": { "$ref": "#/$defs/digest" }
+  },
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._:-]*$" },
+    "digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "idList": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/id" }
+    },
+    "visibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode"],
+      "properties": {
+        "mode": { "enum": ["ALWAYS", "STATE", "ADAPTATION"] },
+        "referenceId": { "$ref": "#/$defs/id" }
+      }
+    },
+    "node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["nodeId", "configuration", "childNodeIds", "semanticElementRefs", "semanticRelationshipRefs", "accessibilityObligationRefs", "compilerRuleRefs", "order", "visibility"],
+      "properties": {
+        "nodeId": { "$ref": "#/$defs/id" },
+        "configuration": {
+          "oneOf": [
+            { "$ref": "#/$defs/flowConfiguration" },
+            { "$ref": "#/$defs/stackConfiguration" },
+            { "$ref": "#/$defs/gridConfiguration" },
+            { "$ref": "#/$defs/splitConfiguration" },
+            { "$ref": "#/$defs/scrollConfiguration" },
+            { "$ref": "#/$defs/overlayConfiguration" }
+          ]
+        },
+        "childNodeIds": { "$ref": "#/$defs/idList" },
+        "semanticElementRefs": { "$ref": "#/$defs/idList" },
+        "semanticRelationshipRefs": { "$ref": "#/$defs/idList" },
+        "accessibilityObligationRefs": { "$ref": "#/$defs/idList" },
+        "compilerRuleRefs": { "$ref": "#/$defs/idList" },
+        "order": { "type": "integer", "minimum": 0 },
+        "visibility": { "$ref": "#/$defs/visibility" }
+      }
+    },
+    "axis": { "enum": ["BLOCK", "INLINE"] },
+    "flowConfiguration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "axis", "direction", "wrap"],
+      "properties": {
+        "kind": { "const": "FLOW" },
+        "axis": { "$ref": "#/$defs/axis" },
+        "direction": { "enum": ["FORWARD", "REVERSE"] },
+        "wrap": { "enum": ["NO_WRAP", "WRAP"] },
+        "gapTokenRef": { "$ref": "#/$defs/id" }
+      }
+    },
+    "stackConfiguration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "axis", "alignment"],
+      "properties": {
+        "kind": { "const": "STACK" },
+        "axis": { "$ref": "#/$defs/axis" },
+        "alignment": { "enum": ["START", "CENTER", "END", "STRETCH"] },
+        "gapTokenRef": { "$ref": "#/$defs/id" }
+      }
+    },
+    "track": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind"],
+      "properties": {
+        "kind": { "enum": ["CONTENT", "FRACTION", "TOKEN"] },
+        "value": { "type": "number", "exclusiveMinimum": 0 },
+        "tokenRef": { "$ref": "#/$defs/id" }
+      }
+    },
+    "gridPlacement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["childNodeId", "row", "column", "rowSpan", "columnSpan"],
+      "properties": {
+        "childNodeId": { "$ref": "#/$defs/id" },
+        "row": { "type": "integer", "minimum": 0 },
+        "column": { "type": "integer", "minimum": 0 },
+        "rowSpan": { "type": "integer", "minimum": 1 },
+        "columnSpan": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "gridConfiguration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "rows", "columns", "placements"],
+      "properties": {
+        "kind": { "const": "GRID" },
+        "rows": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/track" } },
+        "columns": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/track" } },
+        "placements": { "type": "array", "items": { "$ref": "#/$defs/gridPlacement" } },
+        "gapTokenRef": { "$ref": "#/$defs/id" }
+      }
+    },
+    "splitConfiguration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "axis", "segmentWeights"],
+      "properties": {
+        "kind": { "const": "SPLIT" },
+        "axis": { "$ref": "#/$defs/axis" },
+        "segmentWeights": { "type": "array", "minItems": 2, "items": { "type": "number", "exclusiveMinimum": 0 } }
+      }
+    },
+    "scrollConfiguration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "axes"],
+      "properties": {
+        "kind": { "const": "SCROLL" },
+        "axes": { "type": "array", "minItems": 1, "maxItems": 2, "uniqueItems": true, "items": { "$ref": "#/$defs/axis" } }
+      }
+    },
+    "overlayConfiguration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "alignment"],
+      "properties": {
+        "kind": { "const": "OVERLAY" },
+        "alignment": { "enum": ["START", "CENTER", "END", "STRETCH"] }
+      }
+    },
+    "eventBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["bindingId", "semanticElementRef", "semanticEventRef", "trigger"],
+      "properties": {
+        "bindingId": { "$ref": "#/$defs/id" },
+        "semanticElementRef": { "$ref": "#/$defs/id" },
+        "semanticEventRef": { "$ref": "#/$defs/id" },
+        "trigger": { "enum": ["ACTIVATE", "COMMIT", "CHANGE", "NAVIGATE", "DISMISS"] },
+        "statePatchRef": { "$ref": "#/$defs/id" }
+      }
+    },
+    "adaptationOperation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "nodeRefs"],
+      "properties": {
+        "kind": { "enum": ["ORDER", "VISIBILITY", "GROUPING"] },
+        "nodeRefs": { "$ref": "#/$defs/idList" }
+      }
+    },
+    "adaptationRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ruleId", "semanticAdaptationRef", "contextRef", "operations", "invariantRefs"],
+      "properties": {
+        "ruleId": { "$ref": "#/$defs/id" },
+        "semanticAdaptationRef": { "$ref": "#/$defs/id" },
+        "contextRef": { "$ref": "#/$defs/id" },
+        "operations": { "type": "array", "items": { "$ref": "#/$defs/adaptationOperation" } },
+        "invariantRefs": { "$ref": "#/$defs/idList" }
+      }
+    },
+    "accessibilityObligation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["obligationRef", "semanticElementRef", "kind"],
+      "properties": {
+        "obligationRef": { "$ref": "#/$defs/id" },
+        "semanticElementRef": { "$ref": "#/$defs/id" },
+        "kind": { "enum": ["NAME", "DESCRIPTION", "FOCUS_ORDER", "LIVE_FEEDBACK", "OPERABLE_ACTION", "RELATIONSHIP"] }
+      }
+    },
+    "tokenReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tokenRef", "semanticPurpose", "profileRef"],
+      "properties": {
+        "tokenRef": { "$ref": "#/$defs/id" },
+        "semanticPurpose": { "enum": ["SPACING", "COLOR", "TYPOGRAPHY", "SHAPE", "ELEVATION", "MOTION", "DENSITY"] },
+        "profileRef": { "$ref": "#/$defs/id" }
+      }
+    }
+  }
+}

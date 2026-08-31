@@ -1,0 +1,358 @@
+{
+  "authorityType": "semantic-transformation-authority.v1",
+  "transformations": [
+    {
+      "id": "publish-immutable-semantic-corpus-artifact.v1",
+      "expression": {
+        "op": "let",
+        "bindings": {
+          "authorityBound": {
+            "op": "equals",
+            "left": {"op": "path", "from": "input", "path": "repositoryAuthorityDigest"},
+            "right": {"op": "literal", "value": "sha256:4f1eae11041c8ce43b0c7b0aa7d3ecb48bf12073cf727b8b9ba3950c2da1269e"}
+          },
+          "kindAdmitted": {
+            "op": "includes",
+            "in": {"op": "literal", "value": ["SOURCE_MANIFEST", "CORPUS_SNAPSHOT", "OBJECT_CATALOG", "RELATIONSHIP_GRAPH", "IDENTITY_INDEX", "LEXICAL_INDEX", "QUERY_RECEIPT", "AUTHORING_RECEIPT", "CLOSURE_RECEIPT", "PUBLICATION_RECEIPT"]},
+            "value": {"op": "path", "from": "input", "path": "artifactKind"}
+          },
+          "decoded": {"op": "base64-decode-utf8", "value": {"op": "path", "from": "input", "path": "artifactBytesBase64"}},
+          "recomputedDigest": {
+            "op": "format",
+            "template": "sha256:{digest}",
+            "values": {"digest": {"op": "sha256", "value": {"op": "path", "from": "decoded", "path": ""}}}
+          },
+          "digestMatches": {
+            "op": "equals",
+            "left": {"op": "path", "from": "recomputedDigest", "path": ""},
+            "right": {"op": "path", "from": "input", "path": "expectedDigest"}
+          },
+          "canonicalizationBound": {
+            "op": "equals",
+            "left": {"op": "path", "from": "input", "path": "canonicalizationAuthorityId"},
+            "right": {"op": "literal", "value": "canonical-recursive-key-order-json.v1"}
+          },
+          "admitted": {
+            "op": "every",
+            "from": {"op": "array", "items": [
+              {"op": "path", "from": "authorityBound", "path": ""},
+              {"op": "path", "from": "kindAdmitted", "path": ""},
+              {"op": "path", "from": "digestMatches", "path": ""},
+              {"op": "path", "from": "canonicalizationBound", "path": ""}
+            ]},
+            "as": "check",
+            "where": {"op": "path", "from": "check", "path": ""}
+          },
+          "findingCodes": {
+            "op": "if",
+            "when": {"op": "equals", "left": {"op": "path", "from": "authorityBound", "path": ""}, "right": {"op": "literal", "value": false}},
+            "then": {"op": "literal", "value": ["REPOSITORY_AUTHORITY_NOT_AUTHORIZED"]},
+            "else": {
+              "op": "if",
+              "when": {"op": "equals", "left": {"op": "path", "from": "digestMatches", "path": ""}, "right": {"op": "literal", "value": false}},
+              "then": {"op": "literal", "value": ["ARTIFACT_DIGEST_MISMATCH"]},
+              "else": {
+                "op": "if",
+                "when": {"op": "equals", "left": {"op": "path", "from": "kindAdmitted", "path": ""}, "right": {"op": "literal", "value": false}},
+                "then": {"op": "literal", "value": ["ARTIFACT_KIND_NOT_ADMITTED"]},
+                "else": {
+                  "op": "if",
+                  "when": {"op": "equals", "left": {"op": "path", "from": "canonicalizationBound", "path": ""}, "right": {"op": "literal", "value": false}},
+                  "then": {"op": "literal", "value": ["CANONICALIZATION_AUTHORITY_UNBOUND"]},
+                  "else": {
+                    "op": "if",
+                    "when": {"op": "path", "from": "admitted", "path": ""},
+                    "then": {"op": "literal", "value": ["CANONICAL_ARTIFACT_ADDRESS_PLANNING_UNAVAILABLE"]},
+                    "else": {"op": "literal", "value": ["CONTRACT_ID_NOT_ADMITTED"]}
+                  }
+                }
+              }
+            }
+          }
+        },
+        "value": {
+          "op": "object",
+          "fields": {
+            "contractId": {"op": "literal", "value": "semantic-corpus-artifact-publication-evidence.v1"},
+            "disposition": {"op": "literal", "value": "REJECTED"},
+            "artifactKind": {"op": "path", "from": "input", "path": "artifactKind"},
+            "expectedDigest": {"op": "path", "from": "input", "path": "expectedDigest"},
+            "recomputedDigest": {"op": "path", "from": "recomputedDigest", "path": ""},
+            "findingCodes": {"op": "path", "from": "findingCodes", "path": ""},
+            "authorityClaims": {"op": "object", "fields": {"publication": {"op": "literal", "value": "NOT_CLAIMED"}}}
+          }
+        }
+      }
+    },
+    {
+      "id": "reject-semantic-corpus-artifact-publication-conflict.v1",
+      "expression": {
+        "op": "let",
+        "bindings": {
+          "authorityBound": {
+            "op": "equals",
+            "left": {"op": "path", "from": "input", "path": "repositoryAuthorityDigest"},
+            "right": {"op": "literal", "value": "sha256:4f1eae11041c8ce43b0c7b0aa7d3ecb48bf12073cf727b8b9ba3950c2da1269e"}
+          },
+          "decoded": {"op": "base64-decode-utf8", "value": {"op": "path", "from": "input", "path": "artifactBytesBase64"}},
+          "recomputedDigest": {
+            "op": "format",
+            "template": "sha256:{digest}",
+            "values": {"digest": {"op": "sha256", "value": {"op": "path", "from": "decoded", "path": ""}}}
+          },
+          "digestMatches": {
+            "op": "equals",
+            "left": {"op": "path", "from": "recomputedDigest", "path": ""},
+            "right": {"op": "path", "from": "input", "path": "expectedDigest"}
+          },
+          "findingCodes": {
+            "op": "if",
+            "when": {"op": "equals", "left": {"op": "path", "from": "authorityBound", "path": ""}, "right": {"op": "literal", "value": false}},
+            "then": {"op": "literal", "value": ["REPOSITORY_AUTHORITY_NOT_AUTHORIZED"]},
+            "else": {
+              "op": "if",
+              "when": {"op": "equals", "left": {"op": "path", "from": "digestMatches", "path": ""}, "right": {"op": "literal", "value": false}},
+              "then": {"op": "literal", "value": ["ARTIFACT_DIGEST_MISMATCH"]},
+              "else": {"op": "literal", "value": ["CANONICAL_ARTIFACT_ADDRESS_PLANNING_UNAVAILABLE"]}
+            }
+          }
+        },
+        "value": {
+          "op": "object",
+          "fields": {
+            "contractId": {"op": "literal", "value": "semantic-corpus-artifact-publication-evidence.v1"},
+            "disposition": {"op": "literal", "value": "REJECTED"},
+            "artifactKind": {"op": "path", "from": "input", "path": "artifactKind"},
+            "expectedDigest": {"op": "path", "from": "input", "path": "expectedDigest"},
+            "recomputedDigest": {"op": "path", "from": "recomputedDigest", "path": ""},
+            "findingCodes": {"op": "path", "from": "findingCodes", "path": ""},
+            "authorityClaims": {"op": "object", "fields": {"publication": {"op": "literal", "value": "NOT_CLAIMED"}}}
+          }
+        }
+      }
+    },
+    {
+      "id": "read-immutable-semantic-corpus-artifact.v1",
+      "expression": {
+        "op": "let",
+        "bindings": {
+          "authorityBound": {
+            "op": "equals",
+            "left": {"op": "path", "from": "input", "path": "repositoryAuthorityDigest"},
+            "right": {"op": "literal", "value": "sha256:4f1eae11041c8ce43b0c7b0aa7d3ecb48bf12073cf727b8b9ba3950c2da1269e"}
+          },
+          "digestWellFormed": {
+            "op": "equals",
+            "left": {"op": "path", "from": "input", "path": "artifactDigest"},
+            "right": {"op": "format", "template": "sha256:{hex}", "values": {"hex": {"op": "sha256", "value": {"op": "path", "from": "input", "path": "artifactDigest"}}}}
+          },
+          "findingCodes": {
+            "op": "if",
+            "when": {"op": "equals", "left": {"op": "path", "from": "authorityBound", "path": ""}, "right": {"op": "literal", "value": false}},
+            "then": {"op": "literal", "value": ["REPOSITORY_AUTHORITY_NOT_AUTHORIZED"]},
+            "else": {"op": "literal", "value": ["CANONICAL_ARTIFACT_ADDRESS_PLANNING_UNAVAILABLE"]}
+          },
+          "disposition": {
+            "op": "if",
+            "when": {"op": "equals", "left": {"op": "path", "from": "authorityBound", "path": ""}, "right": {"op": "literal", "value": false}},
+            "then": {"op": "literal", "value": "UNAUTHORIZED"},
+            "else": {"op": "literal", "value": "MISSING"}
+          }
+        },
+        "value": {
+          "op": "object",
+          "fields": {
+            "contractId": {"op": "literal", "value": "semantic-corpus-artifact-read-evidence.v1"},
+            "disposition": {"op": "path", "from": "disposition", "path": ""},
+            "artifactDigest": {"op": "path", "from": "input", "path": "artifactDigest"},
+            "artifactKind": {"op": "path", "from": "input", "path": "artifactKind"},
+            "findingCodes": {"op": "path", "from": "findingCodes", "path": ""},
+            "authorityClaims": {"op": "object", "fields": {"read": {"op": "literal", "value": "NOT_CLAIMED"}}}
+          }
+        }
+      }
+    },
+    {
+      "id": "retain-referenced-semantic-corpus-snapshot.v1",
+      "expression": {
+        "op": "let",
+        "bindings": {
+          "authorityBound": {
+            "op": "equals",
+            "left": {"op": "path", "from": "input", "path": "repositoryAuthorityDigest"},
+            "right": {"op": "literal", "value": "sha256:4f1eae11041c8ce43b0c7b0aa7d3ecb48bf12073cf727b8b9ba3950c2da1269e"}
+          },
+          "lineageDeclared": {
+            "op": "greater-than",
+            "left": {"op": "length", "value": {"op": "path", "from": "input", "path": "retentionEvidence"}},
+            "right": {"op": "literal", "value": 0}
+          },
+          "findingCodes": {
+            "op": "if",
+            "when": {"op": "equals", "left": {"op": "path", "from": "authorityBound", "path": ""}, "right": {"op": "literal", "value": false}},
+            "then": {"op": "literal", "value": ["REPOSITORY_AUTHORITY_NOT_AUTHORIZED"]},
+            "else": {
+              "op": "if",
+              "when": {"op": "equals", "left": {"op": "path", "from": "lineageDeclared", "path": ""}, "right": {"op": "literal", "value": false}},
+              "then": {"op": "literal", "value": ["RETAINED_LINEAGE_NOT_DECLARED"]},
+              "else": {"op": "literal", "value": ["CANONICAL_ARTIFACT_ADDRESS_PLANNING_UNAVAILABLE"]}
+            }
+          },
+          "disposition": {
+            "op": "if",
+            "when": {"op": "equals", "left": {"op": "path", "from": "authorityBound", "path": ""}, "right": {"op": "literal", "value": false}},
+            "then": {"op": "literal", "value": "UNAUTHORIZED"},
+            "else": {"op": "literal", "value": "MISSING"}
+          }
+        },
+        "value": {
+          "op": "object",
+          "fields": {
+            "contractId": {"op": "literal", "value": "semantic-corpus-artifact-read-evidence.v1"},
+            "disposition": {"op": "path", "from": "disposition", "path": ""},
+            "artifactDigest": {"op": "path", "from": "input", "path": "artifactDigest"},
+            "artifactKind": {"op": "path", "from": "input", "path": "artifactKind"},
+            "findingCodes": {"op": "path", "from": "findingCodes", "path": ""},
+            "authorityClaims": {"op": "object", "fields": {"read": {"op": "literal", "value": "NOT_CLAIMED"}}}
+          }
+        }
+      }
+    },
+    {
+      "id": "update-current-semantic-corpus-pointer.v1",
+      "expression": {
+        "op": "let",
+        "bindings": {
+          "authorityBound": {
+            "op": "equals",
+            "left": {"op": "path", "from": "input", "path": "repositoryAuthorityDigest"},
+            "right": {"op": "literal", "value": "sha256:4f1eae11041c8ce43b0c7b0aa7d3ecb48bf12073cf727b8b9ba3950c2da1269e"}
+          },
+          "pointerAdmitted": {
+            "op": "includes",
+            "in": {"op": "literal", "value": ["CurrentSemanticCorpus"]},
+            "value": {"op": "path", "from": "input", "path": "pointerId"}
+          },
+          "closureContractBound": {
+            "op": "equals",
+            "left": {"op": "path", "from": "input", "path": "closureReceiptContractId"},
+            "right": {"op": "literal", "value": "semantic-corpus-closure-receipt.v1"}
+          },
+          "expectedGenerationBound": {
+            "op": "equals",
+            "left": {"op": "path", "from": "input", "path": "expectedGeneration"},
+            "right": {"op": "literal", "value": 0}
+          },
+          "candidateKindAdmitted": {
+            "op": "equals",
+            "left": {"op": "path", "from": "input", "path": "candidateArtifactKind"},
+            "right": {"op": "literal", "value": "CORPUS_SNAPSHOT"}
+          },
+          "findingCodes": {
+            "op": "if",
+            "when": {"op": "equals", "left": {"op": "path", "from": "authorityBound", "path": ""}, "right": {"op": "literal", "value": false}},
+            "then": {"op": "literal", "value": ["REPOSITORY_AUTHORITY_NOT_AUTHORIZED"]},
+            "else": {
+              "op": "if",
+              "when": {"op": "equals", "left": {"op": "path", "from": "pointerAdmitted", "path": ""}, "right": {"op": "literal", "value": false}},
+              "then": {"op": "literal", "value": ["POINTER_ID_NOT_ADMITTED"]},
+              "else": {
+                "op": "if",
+                "when": {"op": "equals", "left": {"op": "path", "from": "closureContractBound", "path": ""}, "right": {"op": "literal", "value": false}},
+                "then": {"op": "literal", "value": ["CLOSURE_RECEIPT_CONTRACT_UNBOUND"]},
+                "else": {"op": "literal", "value": ["ATOMIC_POINTER_CAS_PORT_UNAVAILABLE"]}
+              }
+            }
+          }
+        },
+        "value": {
+          "op": "object",
+          "fields": {
+            "contractId": {"op": "literal", "value": "semantic-corpus-current-pointer-update-evidence.v1"},
+            "disposition": {"op": "literal", "value": "REJECTED"},
+            "pointerId": {"op": "path", "from": "input", "path": "pointerId"},
+            "candidateSnapshotDigest": {"op": "path", "from": "input", "path": "candidateSnapshotDigest"},
+            "findingCodes": {"op": "path", "from": "findingCodes", "path": ""},
+            "authorityClaims": {"op": "object", "fields": {"pointerUpdate": {"op": "literal", "value": "NOT_CLAIMED"}}}
+          }
+        }
+      }
+    },
+    {
+      "id": "reject-open-semantic-corpus-pointer-update.v1",
+      "expression": {
+        "op": "let",
+        "bindings": {
+          "authorityBound": {
+            "op": "equals",
+            "left": {"op": "path", "from": "input", "path": "repositoryAuthorityDigest"},
+            "right": {"op": "literal", "value": "sha256:4f1eae11041c8ce43b0c7b0aa7d3ecb48bf12073cf727b8b9ba3950c2da1269e"}
+          },
+          "closureContractBound": {
+            "op": "equals",
+            "left": {"op": "path", "from": "input", "path": "closureReceiptContractId"},
+            "right": {"op": "literal", "value": "semantic-corpus-closure-receipt.v1"}
+          },
+          "findingCodes": {
+            "op": "if",
+            "when": {"op": "equals", "left": {"op": "path", "from": "authorityBound", "path": ""}, "right": {"op": "literal", "value": false}},
+            "then": {"op": "literal", "value": ["REPOSITORY_AUTHORITY_NOT_AUTHORIZED"]},
+            "else": {
+              "op": "if",
+              "when": {"op": "equals", "left": {"op": "path", "from": "closureContractBound", "path": ""}, "right": {"op": "literal", "value": false}},
+              "then": {"op": "literal", "value": ["CLOSURE_RECEIPT_CONTRACT_UNBOUND"]},
+              "else": {"op": "literal", "value": ["CLOSURE_RECEIPT_DOCUMENT_NOT_OBSERVABLE"]}
+            }
+          }
+        },
+        "value": {
+          "op": "object",
+          "fields": {
+            "contractId": {"op": "literal", "value": "semantic-corpus-current-pointer-update-evidence.v1"},
+            "disposition": {"op": "literal", "value": "REJECTED"},
+            "pointerId": {"op": "path", "from": "input", "path": "pointerId"},
+            "findingCodes": {"op": "path", "from": "findingCodes", "path": ""},
+            "authorityClaims": {"op": "object", "fields": {"pointerUpdate": {"op": "literal", "value": "NOT_CLAIMED"}}}
+          }
+        }
+      }
+    },
+    {
+      "id": "reproduce-semantic-corpus-artifact-address.v1",
+      "expression": {
+        "op": "let",
+        "bindings": {
+          "decoded": {"op": "base64-decode-utf8", "value": {"op": "path", "from": "input", "path": "artifactBytesBase64"}},
+          "recomputedDigest": {
+            "op": "format",
+            "template": "sha256:{digest}",
+            "values": {"digest": {"op": "sha256", "value": {"op": "path", "from": "decoded", "path": ""}}}
+          },
+          "digestReproduces": {
+            "op": "equals",
+            "left": {"op": "path", "from": "recomputedDigest", "path": ""},
+            "right": {"op": "path", "from": "input", "path": "expectedDigest"}
+          },
+          "findingCodes": {
+            "op": "if",
+            "when": {"op": "path", "from": "digestReproduces", "path": ""},
+            "then": {"op": "literal", "value": ["CANONICAL_ARTIFACT_ADDRESS_PLANNING_UNAVAILABLE"]},
+            "else": {"op": "literal", "value": ["ARTIFACT_DIGEST_MISMATCH"]}
+          }
+        },
+        "value": {
+          "op": "object",
+          "fields": {
+            "contractId": {"op": "literal", "value": "semantic-corpus-artifact-publication-evidence.v1"},
+            "disposition": {"op": "literal", "value": "REJECTED"},
+            "artifactKind": {"op": "path", "from": "input", "path": "artifactKind"},
+            "expectedDigest": {"op": "path", "from": "input", "path": "expectedDigest"},
+            "recomputedDigest": {"op": "path", "from": "recomputedDigest", "path": ""},
+            "findingCodes": {"op": "path", "from": "findingCodes", "path": ""},
+            "authorityClaims": {"op": "object", "fields": {"publication": {"op": "literal", "value": "NOT_CLAIMED"}}}
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/semantic-carrier/scenario-semantic-carrier-extraction-provider-conformance.v1.schema.json",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "receiptType",
+    "platformCapabilityId",
+    "disposition",
+    "authorityDigests",
+    "fixtureManifestDigest",
+    "partitions",
+    "findings",
+    "receiptDigest"
+  ],
+  "properties": {
+    "receiptType": {
+      "const": "scenario-semantic-carrier-extraction-provider-conformance.v1"
+    },
+    "platformCapabilityId": {
+      "const": "sda-scenario-semantic-carrier-extraction-port.v1"
+    },
+    "disposition": {
+      "const": "SDA_SCENARIO_SEMANTIC_CARRIER_EXTRACTION_PROVIDER_CONFORMANT"
+    },
+    "receiptDigest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    }
+  }
+}

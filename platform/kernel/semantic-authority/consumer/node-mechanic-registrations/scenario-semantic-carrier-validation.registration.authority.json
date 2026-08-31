@@ -1,0 +1,12 @@
+{
+  "$schema": "../../../schemas/node-mechanic-registration-authority.v1.schema.json",
+  "registrationAuthorityType": "node-mechanic-registration-authority.v1",
+  "authorityId": "node-scenario-semantic-carrier-validation-registration.v1",
+  "platformCapabilityId": "sda-scenario-semantic-carrier-validation-port.v1",
+  "kind": "direct",
+  "providerModule": "semantic-carrier-validator/index.mjs",
+  "providerExport": "invokeScenarioSemanticCarrierValidation",
+  "invocation": "url-context",
+  "authorityDigestAlgorithm": "sha256 of canonical recursive-key-order JSON excluding authorityDigest",
+  "authorityDigest": "sha256:1314b6aa2cc96819534c2c4775c909bd145064db622ac88ef1bf898c87c1b7ba"
+}

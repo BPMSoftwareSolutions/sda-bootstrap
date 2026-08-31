@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/scenario-event.v2.schema.json",
+  "title": "Scenario Event v2",
+  "description": "A semantic event naming one bounded responsibility and its execution authority, independently of the provider that embodies it.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["eventId", "responsibility", "executionAuthorityId"],
+  "properties": {
+    "eventId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "responsibility": { "$ref": "scenario-responsibility.v2.schema.json" },
+    "executionAuthorityId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "executionAuthorityVersion": { "$ref": "semantic-primitives.schema.json#/$defs/semanticVersion" },
+    "executionAuthorityDigest": { "$ref": "semantic-primitives.schema.json#/$defs/digest" }
+  }
+}

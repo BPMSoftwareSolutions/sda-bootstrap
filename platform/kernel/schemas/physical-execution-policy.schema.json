@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/enterprise/physical-execution-policy.v1.schema.json",
+  "title": "Physical Execution Policy v1",
+  "description": "Operational retry, deadline, circuit, and compensation authority outside capability meaning.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["policyType", "policyId", "maximumAttempts", "initialDelayMs", "maximumDelayMs", "backoff", "jitter", "retryableFailureCodes", "attemptDeadlineMs", "totalDeadlineMs"],
+  "properties": {
+    "policyType": { "const": "physical-execution-policy.v1" },
+    "policyId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "maximumAttempts": { "type": "integer", "minimum": 1, "maximum": 100 },
+    "initialDelayMs": { "type": "integer", "minimum": 0 },
+    "maximumDelayMs": { "type": "integer", "minimum": 0 },
+    "backoff": { "type": "string", "enum": ["CONSTANT", "LINEAR", "EXPONENTIAL"] },
+    "jitter": { "type": "string", "enum": ["NONE", "FULL", "EQUAL"] },
+    "retryableFailureCodes": { "type": "array", "uniqueItems": true, "items": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" } },
+    "attemptDeadlineMs": { "type": "integer", "minimum": 1 },
+    "totalDeadlineMs": { "type": "integer", "minimum": 1 },
+    "circuitBreakerPolicyRef": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "compensationScenarioId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "manualInterventionAfterExhaustion": { "type": "boolean", "default": true }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "definitionType": "sda-ui-presentation-language-model-definition.v1",
+  "protocolType": "sda-ui-presentation-ir.v2",
+  "rootType": "SdaUiPresentationIrV2",
+  "rootFields": [
+    { "name": "presentationIrType", "semanticType": "protocol-discriminator" },
+    { "name": "protocol", "semanticType": "protocol-identity" },
+    { "name": "source", "semanticType": "source-lineage" },
+    { "name": "application", "semanticType": "normalized-ui-application" },
+    { "name": "requiredFeatureIds", "semanticType": "ordered-semantic-id-set" }
+  ],
+  "languages": [
+    { "language": "typescript", "representation": "readonly-interface" },
+    { "language": "csharp", "representation": "sealed-record" },
+    { "language": "java", "representation": "record" },
+    { "language": "swift", "representation": "codable-struct" },
+    { "language": "kotlin", "representation": "serializable-data-class" }
+  ]
+}

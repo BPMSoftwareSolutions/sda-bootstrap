@@ -1,0 +1,280 @@
+{
+  "authorityType": "semantic-transformation-authority.v1",
+  "transformations": [
+    {
+      "id": "decide-tooling-migration.v1",
+      "expression": {
+        "op": "if",
+        "when": {
+          "op": "equals",
+          "left": { "op": "path", "from": "input", "path": "decisionType" },
+          "right": { "op": "literal", "value": "CLASSIFY_INVENTORY" }
+        },
+        "then": {
+          "op": "let",
+          "bindings": {
+            "classifiedEntries": {
+              "op": "map",
+              "from": { "op": "path", "from": "input", "path": "candidates" },
+              "as": "candidate",
+              "value": {
+                "op": "object",
+                "fields": {
+                  "capabilityId": { "op": "path", "from": "candidate", "path": "capabilityId" },
+                  "groupId": { "op": "path", "from": "candidate", "path": "groupId" },
+                  "responsibilityId": { "op": "path", "from": "candidate", "path": "responsibilityId" },
+                  "providerId": { "op": "path", "from": "candidate", "path": "providerId" },
+                  "protocol": { "op": "path", "from": "candidate", "path": "protocol" },
+                  "featureRef": { "op": "path", "from": "candidate", "path": "featureRef" },
+                  "workspaceRef": { "op": "path", "from": "candidate", "path": "workspaceRef" },
+                  "state": {
+                    "op": "if",
+                    "when": {
+                      "op": "equals",
+                      "left": { "op": "path", "from": "candidate", "path": "protocol" },
+                      "right": { "op": "literal", "value": "projected-consumer-runtime-v2" }
+                    },
+                    "then": { "op": "literal", "value": "PROMOTED" },
+                    "else": {
+                      "op": "if",
+                      "when": {
+                        "op": "equals",
+                        "left": { "op": "path", "from": "candidate", "path": "featureExists" },
+                        "right": { "op": "literal", "value": false }
+                      },
+                      "then": { "op": "literal", "value": "FEATURE_REQUIRED" },
+                      "else": {
+                        "op": "if",
+                        "when": {
+                          "op": "equals",
+                          "left": { "op": "path", "from": "candidate", "path": "workspaceExists" },
+                          "right": { "op": "literal", "value": false }
+                        },
+                        "then": { "op": "literal", "value": "WORKSPACE_REQUIRED" },
+                        "else": { "op": "literal", "value": "CANDIDATE_READY" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "value": {
+            "op": "object",
+            "fields": {
+              "decisionType": { "op": "literal", "value": "CLASSIFY_INVENTORY" },
+              "inventory": {
+                "op": "object",
+                "fields": {
+                  "inventoryType": { "op": "literal", "value": "tooling-projection-migration-inventory.v1" },
+                  "entries": { "op": "path", "from": "classifiedEntries", "path": "" },
+                  "summary": {
+                    "op": "object",
+                    "fields": {
+                      "FEATURE_REQUIRED": {
+                        "op": "length",
+                        "value": {
+                          "op": "filter",
+                          "from": { "op": "path", "from": "classifiedEntries", "path": "" },
+                          "as": "entry",
+                          "where": {
+                            "op": "equals",
+                            "left": { "op": "path", "from": "entry", "path": "state" },
+                            "right": { "op": "literal", "value": "FEATURE_REQUIRED" }
+                          }
+                        }
+                      },
+                      "WORKSPACE_REQUIRED": {
+                        "op": "length",
+                        "value": {
+                          "op": "filter",
+                          "from": { "op": "path", "from": "classifiedEntries", "path": "" },
+                          "as": "entry",
+                          "where": {
+                            "op": "equals",
+                            "left": { "op": "path", "from": "entry", "path": "state" },
+                            "right": { "op": "literal", "value": "WORKSPACE_REQUIRED" }
+                          }
+                        }
+                      },
+                      "CANDIDATE_READY": {
+                        "op": "length",
+                        "value": {
+                          "op": "filter",
+                          "from": { "op": "path", "from": "classifiedEntries", "path": "" },
+                          "as": "entry",
+                          "where": {
+                            "op": "equals",
+                            "left": { "op": "path", "from": "entry", "path": "state" },
+                            "right": { "op": "literal", "value": "CANDIDATE_READY" }
+                          }
+                        }
+                      },
+                      "PROMOTED": {
+                        "op": "length",
+                        "value": {
+                          "op": "filter",
+                          "from": { "op": "path", "from": "classifiedEntries", "path": "" },
+                          "as": "entry",
+                          "where": {
+                            "op": "equals",
+                            "left": { "op": "path", "from": "entry", "path": "state" },
+                            "right": { "op": "literal", "value": "PROMOTED" }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "else": {
+          "op": "if",
+          "when": {
+            "op": "equals",
+            "left": { "op": "path", "from": "input", "path": "decisionType" },
+            "right": { "op": "literal", "value": "PLAN_BINDING_REPLACEMENT" }
+          },
+          "then": {
+            "op": "object",
+            "fields": {
+              "decisionType": { "op": "literal", "value": "PLAN_BINDING_REPLACEMENT" },
+              "replacementDocument": {
+                "op": "object",
+                "fields": {
+                  "bindingType": { "op": "path", "from": "input", "path": "bindingDocument.bindingType" },
+                  "bindings": {
+                    "op": "map",
+                    "from": { "op": "path", "from": "input", "path": "bindingDocument.bindings" },
+                    "as": "binding",
+                    "value": {
+                      "op": "if",
+                      "when": {
+                        "op": "equals",
+                        "left": { "op": "path", "from": "binding", "path": "responsibilityId" },
+                        "right": { "op": "path", "from": "input", "path": "capability.responsibilityId" }
+                      },
+                      "then": {
+                        "op": "merge",
+                        "values": [
+                          { "op": "path", "from": "binding", "path": "" },
+                          {
+                            "op": "object",
+                            "fields": {
+                              "providerId": { "op": "path", "from": "input", "path": "capability.replacement.providerId" },
+                              "implementationRef": { "op": "path", "from": "input", "path": "capability.replacement.implementationRef" },
+                              "protocol": { "op": "path", "from": "input", "path": "capability.replacement.protocol" }
+                            }
+                          }
+                        ]
+                      },
+                      "else": { "op": "path", "from": "binding", "path": "" }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "else": {
+            "op": "if",
+            "when": {
+              "op": "equals",
+              "left": { "op": "path", "from": "input", "path": "decisionType" },
+              "right": { "op": "literal", "value": "EVALUATE_GATE" }
+            },
+            "then": {
+              "op": "if",
+              "when": {
+                "op": "equals",
+                "left": { "op": "path", "from": "input", "path": "gateExitCode" },
+                "right": { "op": "literal", "value": 0 }
+              },
+              "then": {
+                "op": "object",
+                "fields": {
+                  "decisionType": { "op": "literal", "value": "EVALUATE_GATE" },
+                  "promotionDisposition": { "op": "literal", "value": "PROMOTED" },
+                  "bindingAction": { "op": "literal", "value": "KEEP_REPLACEMENT" }
+                }
+              },
+              "else": {
+                "op": "object",
+                "fields": {
+                  "decisionType": { "op": "literal", "value": "EVALUATE_GATE" },
+                  "promotionDisposition": { "op": "literal", "value": "ROLLED_BACK" },
+                  "bindingAction": { "op": "literal", "value": "RESTORE_ORIGINAL" }
+                }
+              }
+            },
+            "else": {
+              "op": "if",
+              "when": {
+                "op": "equals",
+                "left": { "op": "path", "from": "input", "path": "decisionType" },
+                "right": { "op": "literal", "value": "DETERMINE_EVIDENCE_DISPOSITION" }
+              },
+              "then": {
+                "op": "object",
+                "fields": {
+                  "decisionType": { "op": "literal", "value": "DETERMINE_EVIDENCE_DISPOSITION" },
+                  "evidenceDisposition": {
+                    "op": "if",
+                    "when": {
+                      "op": "equals",
+                      "left": { "op": "path", "from": "input", "path": "verificationPassed" },
+                      "right": { "op": "literal", "value": false }
+                    },
+                    "then": { "op": "literal", "value": "REJECTED" },
+                    "else": {
+                      "op": "if",
+                      "when": {
+                        "op": "equals",
+                        "left": { "op": "path", "from": "input", "path": "promote" },
+                        "right": { "op": "literal", "value": false }
+                      },
+                      "then": { "op": "literal", "value": "VERIFIED" },
+                      "else": {
+                        "op": "if",
+                        "when": {
+                          "op": "equals",
+                          "left": { "op": "path", "from": "input", "path": "gateExitCode" },
+                          "right": { "op": "literal", "value": 0 }
+                        },
+                        "then": { "op": "literal", "value": "PROMOTED" },
+                        "else": { "op": "literal", "value": "REJECTED" }
+                      }
+                    }
+                  }
+                }
+              },
+              "else": {
+                "op": "object",
+                "fields": {
+                  "decisionType": { "op": "literal", "value": "FINALIZE_RUN" },
+                  "runDisposition": {
+                    "op": "if",
+                    "when": {
+                      "op": "some",
+                      "from": { "op": "path", "from": "input", "path": "runResults" },
+                      "as": "result",
+                      "where": {
+                        "op": "equals",
+                        "left": { "op": "path", "from": "result", "path": "disposition" },
+                        "right": { "op": "literal", "value": "REJECTED" }
+                      }
+                    },
+                    "then": { "op": "literal", "value": "COMPLETED_WITH_REJECTIONS" },
+                    "else": { "op": "literal", "value": "COMPLETED" }
+                  },
+                  "continueIndependentCandidates": { "op": "literal", "value": true }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

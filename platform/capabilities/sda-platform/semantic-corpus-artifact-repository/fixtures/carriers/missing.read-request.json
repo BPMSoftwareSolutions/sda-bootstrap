@@ -1,0 +1,11 @@
+{
+  "contractId": "semantic-corpus-artifact-read-request.v1",
+  "repositoryAuthorityRef": "repository-authority.v1.json",
+  "repositoryAuthorityDigest": "sha256:4f1eae11041c8ce43b0c7b0aa7d3ecb48bf12073cf727b8b9ba3950c2da1269e",
+  "artifactKind": "CORPUS_SNAPSHOT",
+  "artifactDigest": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+  "canonicalizationAuthorityId": "canonical-recursive-key-order-json.v1",
+  "canonicalizationAuthorityDigest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+  "readPurpose": "DIRECT",
+  "retentionEvidence": []
+}

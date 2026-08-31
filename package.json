@@ -7,8 +7,13 @@
     "sda-bootstrap": "./src/capsule-manager.mjs"
   },
   "files": [
-    "src/capsule-manager.mjs"
+    "src/capsule-manager.mjs",
+    "platform/"
   ],
+  "sdaPlatform": {
+    "repository": "https://github.com/BPMSoftwareSolutions/scenario-driven-architecture.git",
+    "commit": "6fcb8b34f0b85c70a8984940cc21a20cfdb507dd"
+  },
   "scripts": {
     "test": "node --test tests/capsule-manager.test.mjs",
     "test:integration": "node --test tests/installed-package.integration.test.mjs"
@@ -19,5 +24,13 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/BPMSoftwareSolutions/sda-bootstrap.git"
+  },
+  "dependencies": {
+    "@cucumber/gherkin": "42.0.1",
+    "@cucumber/messages": "34.2.1",
+    "ajv": "8.20.0",
+    "mammoth": "1.12.1",
+    "pdf-parse": "1.1.1",
+    "typescript": "5.9.3"
   }
 }

@@ -1,0 +1,7 @@
+{
+  "bindingType": "projected-consumer-application-binding.v1",
+  "capability": "capability.json",
+  "query": "query/conformance-query.csharp.json",
+  "fixtures": "fixtures/fixtures.json",
+  "mechanicalSterility": "projection-conformance.json"
+}

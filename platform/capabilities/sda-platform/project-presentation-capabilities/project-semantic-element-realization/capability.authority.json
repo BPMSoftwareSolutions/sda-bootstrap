@@ -1,0 +1,31 @@
+{
+  "capabilityId": "project-semantic-element-realization",
+  "name": "Project semantic element realization",
+  "mode": "capability",
+  "userStory": {
+    "actor": "SDA presentation maintainer",
+    "intent": "project one admitted semantic-element realization without language or native-control decisions",
+    "outcome": "the exact semantic element, mechanic binding, and lineage facts remain available in every projected target"
+  },
+  "experience": {
+    "experienceType": "promised-experience.v1",
+    "experienceId": "semantic-element-realization-is-portable",
+    "actor": "SDA presentation maintainer",
+    "promise": "Node, Python, and C# receive the same declared semantic-element realization facts",
+    "observableConditions": [
+      {
+        "conditionId": "semantic-element-fields-are-preserved",
+        "statement": "instruction, semantic, content, mechanic, and source facts are preserved exactly"
+      },
+      {
+        "conditionId": "reference-cardinality-is-preserved",
+        "statement": "state, event, and lineage arrays retain order and cardinality"
+      },
+      {
+        "conditionId": "native-decisions-are-absent",
+        "statement": "the projection introduces no framework, control, callback, role, or locator decision"
+      }
+    ]
+  },
+  "rootScenarioId": "project-semantic-element-realization"
+}

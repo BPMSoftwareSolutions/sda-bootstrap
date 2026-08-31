@@ -1,0 +1,15 @@
+{
+  "transitionId": "transact-binding-to-execute-migration",
+  "from": {
+    "scenarioId": "transact-governed-tooling-binding",
+    "outcomeId": "governed-tooling-binding-transaction-evidence",
+    "contractId": "governed-tooling-binding-transaction-evidence.v1"
+  },
+  "to": {
+    "scenarioId": "execute-governed-tooling-migration-operation",
+    "inputId": "governed-tooling-migration-operation-request",
+    "contractId": "governed-tooling-migration-operation-request.v1"
+  },
+  "semanticProgress": "monotonic",
+  "bindingAuthorityId": "project-transact-binding-to-execute-migration"
+}

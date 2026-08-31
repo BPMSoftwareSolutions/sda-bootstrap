@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/sda-language-mechanic-profile-resolution.v1.schema.json",
+  "title": "SDA Language Mechanic Profile Resolution",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["resolutionType", "profileId", "languages"],
+  "properties": {
+    "resolutionType": { "const": "sda-language-mechanic-profile-resolution.v1" },
+    "profileId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "languages": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["language", "bindingStatus", "kernelAdmission", "consumerProofDigest", "required", "resolved", "missing", "resolutions", "disposition"],
+        "properties": {
+          "language": { "type": "string", "enum": ["csharp", "node", "python", "java", "go"] },
+          "bindingStatus": { "type": "string", "enum": ["DECLARED", "IMPLEMENTING"] },
+          "kernelAdmission": { "type": "string", "enum": ["ADMITTED", "NOT_ADMITTED", "NOT_APPLICABLE"] },
+          "consumerProofDigest": {
+            "type": ["string", "null"],
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          },
+          "required": { "type": "integer", "minimum": 0 },
+          "resolved": { "type": "integer", "minimum": 0 },
+          "missing": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" }
+          },
+          "resolutions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["mechanicId", "status", "providers"],
+              "properties": {
+                "mechanicId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+                "status": { "type": "string", "enum": ["AVAILABLE", "MISSING"] },
+                "providers": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } }
+              }
+            }
+          },
+          "disposition": { "type": "string", "enum": ["COMPLETE", "INCOMPLETE", "NOT_OBSERVABLE", "NOT_APPLICABLE"] }
+        }
+      }
+    }
+  }
+}

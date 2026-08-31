@@ -1,0 +1,37 @@
+{
+  "scenarioId": "shape-file-system-batch",
+  "input": {
+    "inputId": "batch-file-system-shape-request",
+    "contract": {
+      "contractId": "batch-file-system-shape-request.v1"
+    }
+  },
+  "event": {
+    "eventId": "shape-file-system-batch",
+    "executionAuthorityId": "shape-file-system-batch.v1"
+  },
+  "outcome": {
+    "outcomeId": "batch-file-system-shape-evidence",
+    "contract": {
+      "contractId": "batch-file-system-shape-evidence.v1"
+    },
+    "experience": {
+      "statement": "one staged hash-verified shaping receipt is available"
+    }
+  },
+  "gherkin": {
+    "given": {
+      "semanticRef": "shape-file-system-batch.given",
+      "text": "an admitted batch shape and bounded source and target roots"
+    },
+    "when": {
+      "semanticRef": "shape-file-system-batch.when",
+      "text": "the batch file-system shape is executed"
+    },
+    "then": {
+      "semanticRef": "shape-file-system-batch.then",
+      "text": "one staged hash-verified shaping receipt is available"
+    }
+  },
+  "name": "Shape a batch file-system"
+}

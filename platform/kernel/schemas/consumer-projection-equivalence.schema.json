@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/consumer-projection-equivalence.v1.schema.json",
+  "title": "Consumer Projection Equivalence Proof",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["equivalenceType", "workspaceId", "capabilityId", "canonicalTarget", "targets", "fixtures", "disposition"],
+  "properties": {
+    "equivalenceType": { "const": "consumer-projection-equivalence.v1" },
+    "workspaceId": { "type": "string", "minLength": 1 },
+    "capabilityId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "canonicalTarget": { "type": "string", "enum": ["node", "csharp", "python", "java"] },
+    "targets": {
+      "type": "array",
+      "minItems": 2,
+      "uniqueItems": true,
+      "items": { "type": "string", "enum": ["node", "csharp", "python", "java"] }
+    },
+    "fixtures": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["fixtureId", "canonicalOutcomeSha256", "targets", "disposition"],
+        "properties": {
+          "fixtureId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "canonicalOutcomeSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+          "targets": {
+            "type": "array",
+            "minItems": 2,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["projectionTarget", "outcomeSha256", "scenarioSequence", "runtimeDisposition", "mechanicResolution", "executableOrigin", "outcomeEquivalent", "lineageEquivalent"],
+              "properties": {
+                "projectionTarget": { "type": "string", "enum": ["node", "csharp", "python", "java"] },
+                "outcomeSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+                "scenarioSequence": { "type": "array", "items": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" } },
+                "runtimeDisposition": { "type": "string", "minLength": 1 },
+                "mechanicResolution": { "type": "string", "enum": ["RESOLVED", "MISSING"] },
+                "executableOrigin": { "type": "string", "enum": ["PROJECTED_ONLY", "REJECTED"] },
+                "outcomeEquivalent": { "type": "boolean" },
+                "lineageEquivalent": { "type": "boolean" }
+              }
+            }
+          },
+          "disposition": { "type": "string", "enum": ["EQUIVALENT", "DIVERGENT"] }
+        }
+      }
+    },
+    "disposition": { "type": "string", "enum": ["BEHAVIORALLY_EQUIVALENT", "DIVERGENT"] }
+  }
+}

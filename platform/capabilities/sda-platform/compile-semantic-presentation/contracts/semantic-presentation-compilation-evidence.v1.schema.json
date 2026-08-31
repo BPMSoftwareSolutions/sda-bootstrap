@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/platform/ui-presentation/semantic-presentation-compilation-evidence.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["evidenceType", "semanticPresentationDigest", "compilerAuthorityId", "compilerAuthorityDigest", "presentationIrDigest", "findings", "disposition"],
+  "properties": {
+    "evidenceType": { "const": "semantic-presentation-compilation-evidence.v1" },
+    "semanticPresentationDigest": { "$ref": "#/$defs/digest" },
+    "compilerAuthorityId": { "$ref": "#/$defs/id" },
+    "compilerAuthorityDigest": { "$ref": "#/$defs/digest" },
+    "presentationIrDigest": {
+      "oneOf": [
+        { "$ref": "#/$defs/digest" },
+        { "type": "null" }
+      ]
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["code", "subjectRef"],
+        "properties": {
+          "code": {
+            "enum": [
+              "SEMANTIC_PRESENTATION_DIGEST_MISMATCH",
+              "COMPILER_AUTHORITY_DIGEST_MISMATCH",
+              "DUPLICATE_SEMANTIC_ELEMENT",
+              "DUPLICATE_SEMANTIC_RELATIONSHIP",
+              "DUPLICATE_ADAPTATION_INTENT",
+              "UNKNOWN_RELATIONSHIP_ENDPOINT",
+              "UNRESOLVABLE_COMPOSITION_RELATIONSHIP",
+              "CYCLIC_PRESENTATION_ORDER",
+              "MISSING_SEMANTIC_EVENT_BINDING",
+              "UNSUPPORTED_ADAPTATION_INTENT",
+              "UNKNOWN_ADAPTATION_INVARIANT",
+              "UNSUPPORTED_ACCESSIBILITY_OBLIGATION",
+              "DUPLICATE_PRESENTATION_PROFILE_REF"
+            ]
+          },
+          "subjectRef": { "$ref": "#/$defs/id" }
+        }
+      }
+    },
+    "disposition": { "enum": ["COMPILED", "REJECTED"] }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "disposition": { "const": "COMPILED" } }, "required": ["disposition"] },
+      "then": {
+        "properties": {
+          "presentationIrDigest": { "$ref": "#/$defs/digest" },
+          "findings": { "maxItems": 0 }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "disposition": { "const": "REJECTED" } }, "required": ["disposition"] },
+      "then": {
+        "properties": {
+          "presentationIrDigest": { "type": "null" },
+          "findings": { "minItems": 1 }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._:-]*$" },
+    "digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }
+  }
+}

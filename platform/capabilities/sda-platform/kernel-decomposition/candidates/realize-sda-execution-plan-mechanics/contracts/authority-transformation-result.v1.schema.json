@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.sda.local/authority-transformation-result.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contractId", "disposition", "transformationId", "result", "findings", "authorityClaims", "lineage"],
+  "properties": {
+    "contractId": {"const": "authority-transformation-result.v1"},
+    "disposition": {"enum": ["EXECUTED", "REJECTED"]},
+    "transformationId": {"type": "string"},
+    "result": {"type": "object"},
+    "findings": {"type": "array", "items": {"type": "object"}},
+    "authorityClaims": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["projection", "promotion", "behavioralConformance"],
+      "properties": {
+        "projection": {"const": "NOT_CLAIMED"},
+        "promotion": {"const": "NOT_CLAIMED"},
+        "behavioralConformance": {"const": "NOT_CLAIMED"}
+      }
+    },
+    "lineage": {"type": "array", "items": {"type": "string"}}
+  }
+}

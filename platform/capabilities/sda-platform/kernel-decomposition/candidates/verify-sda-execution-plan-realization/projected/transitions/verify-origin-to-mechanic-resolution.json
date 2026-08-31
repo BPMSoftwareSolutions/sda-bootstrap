@@ -1,0 +1,15 @@
+{
+  "transitionId": "verify-origin-to-mechanic-resolution",
+  "from": {
+    "scenarioId": "verify-projected-executable-origin",
+    "outcomeId": "projected-executable-origin-conformance",
+    "contractId": "projected-executable-origin-conformance.v1"
+  },
+  "to": {
+    "scenarioId": "verify-mechanic-resolution",
+    "inputId": "mechanic-resolution-verification-request",
+    "contractId": "mechanic-resolution-verification-request.v1"
+  },
+  "semanticProgress": "monotonic",
+  "bindingAuthorityId": "project-origin-to-mechanic-resolution"
+}

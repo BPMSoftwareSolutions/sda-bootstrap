@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/consumer-ui-vector.v1.schema.json",
+  "title": "Consumer UI Vector Corpus",
+  "description": "Framework-neutral user interactions bound to one immutable UI authority identity.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["vectorCorpusType", "corpusId", "authorityIdentity", "vectors"],
+  "properties": {
+    "vectorCorpusType": { "const": "consumer-ui-vector-corpus.v1" },
+    "corpusId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "authorityIdentity": { "$ref": "#/$defs/authorityIdentity" },
+    "vectors": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/vector" }
+    }
+  },
+  "$defs": {
+    "semanticId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "authorityIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authorityRef", "authorityDigest"],
+      "properties": {
+        "authorityRef": { "type": "string", "minLength": 1 },
+        "authorityDigest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }
+      }
+    },
+    "vector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["vectorId", "purpose", "expectedDisposition", "steps"],
+      "properties": {
+        "vectorId": { "$ref": "#/$defs/semanticId" },
+        "purpose": { "type": "string", "minLength": 1 },
+        "expectedDisposition": {
+          "type": "string",
+          "enum": ["COMPLETED", "BLOCKED_BY_VALIDATION", "UNAVAILABLE", "FAILED_TO_REALIZE"]
+        },
+        "steps": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/step" }
+        }
+      }
+    },
+    "step": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["stepId", "action", "target", "value"],
+          "properties": {
+            "stepId": { "$ref": "#/$defs/semanticId" },
+            "action": { "const": "set-state" },
+            "target": { "$ref": "#/$defs/semanticId" },
+            "value": true
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["stepId", "action", "target"],
+          "properties": {
+            "stepId": { "$ref": "#/$defs/semanticId" },
+            "action": { "const": "invoke-action" },
+            "target": { "$ref": "#/$defs/semanticId" }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["stepId", "action", "target", "dimension"],
+          "properties": {
+            "stepId": { "$ref": "#/$defs/semanticId" },
+            "action": { "const": "observe" },
+            "target": { "$ref": "#/$defs/semanticId" },
+            "dimension": { "$ref": "#/$defs/dimension" }
+          }
+        }
+      ]
+    },
+    "dimension": {
+      "type": "string",
+      "enum": ["information", "availability", "validation", "state", "feedback", "navigation", "accessibility"]
+    }
+  }
+}

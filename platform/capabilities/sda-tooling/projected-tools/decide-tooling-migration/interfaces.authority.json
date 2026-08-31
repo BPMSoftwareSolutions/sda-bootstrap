@@ -1,0 +1,28 @@
+{
+  "interfaceAuthorityType": "consumer-interface-authority.v1",
+  "contractValidatorCapabilityId": "sda-schema-contract-admission.v1",
+  "contractCatalog": "contracts/contract-catalog.json",
+  "requiredPlatformObligations": [
+    "dynamic-semantic-execution",
+    "domain-contract-admission"
+  ],
+  "interfaces": [
+    {
+      "interfaceId": "tooling-migration-decision-cli",
+      "kind": "cli",
+      "rootScenarioId": "decide-tooling-migration",
+      "platformCapabilityId": "sda-json-cli.v1"
+    }
+  ],
+  "portBindings": [
+    {
+      "portId": "decide-tooling-migration",
+      "platformCapabilityId": "sda-authority-transformation-port.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "decide-tooling-migration.v1"
+      }
+    }
+  ],
+  "projectionBindings": []
+}

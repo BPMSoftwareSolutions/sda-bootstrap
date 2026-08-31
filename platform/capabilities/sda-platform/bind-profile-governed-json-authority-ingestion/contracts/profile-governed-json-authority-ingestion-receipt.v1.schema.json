@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/json-ingestion/profile-governed-json-authority-ingestion-receipt.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contractId", "authorityDigests", "resources", "findings", "disposition", "receiptDigest"],
+  "properties": {
+    "contractId": {"const": "profile-governed-json-authority-ingestion-receipt.v1"},
+    "authorityDigests": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["manifest", "profile", "canonicalizationPolicy", "membershipPolicy", "schemaCatalog", "referenceScope", "parser", "schemaResolver", "referenceResolver", "provider"],
+      "properties": {
+        "manifest": {"$ref": "#/$defs/digest"},
+        "profile": {"$ref": "#/$defs/digest"},
+        "canonicalizationPolicy": {"$ref": "#/$defs/digest"},
+        "membershipPolicy": {"$ref": "#/$defs/digest"},
+        "schemaCatalog": {"$ref": "#/$defs/digest"},
+        "referenceScope": {"$ref": "#/$defs/digest"},
+        "parser": {"$ref": "#/$defs/digest"},
+        "schemaResolver": {"$ref": "#/$defs/digest"},
+        "referenceResolver": {"$ref": "#/$defs/digest"},
+        "provider": {"$ref": "#/$defs/digest"}
+      }
+    },
+    "resources": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/resource"}},
+    "findings": {"type": "array", "items": {"$ref": "#/$defs/finding"}},
+    "disposition": {"enum": ["INGESTION_ADMITTED", "INGESTION_OPEN", "INGESTION_REJECTED"]},
+    "receiptDigest": {"$ref": "#/$defs/digest"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"disposition": {"const": "INGESTION_ADMITTED"}}, "required": ["disposition"]},
+      "then": {
+        "properties": {
+          "resources": {"items": {"properties": {"disposition": {"const": "ADMITTED"}}, "required": ["disposition"]}},
+          "findings": {"maxItems": 0}
+        }
+      }
+    },
+    {
+      "if": {"properties": {"disposition": {"const": "INGESTION_OPEN"}}, "required": ["disposition"]},
+      "then": {"properties": {"resources": {"contains": {"properties": {"disposition": {"const": "OPEN"}}, "required": ["disposition"]}}, "findings": {"minItems": 1}}}
+    },
+    {
+      "if": {"properties": {"disposition": {"const": "INGESTION_REJECTED"}}, "required": ["disposition"]},
+      "then": {"properties": {"resources": {"contains": {"properties": {"disposition": {"const": "REJECTED"}}, "required": ["disposition"]}}, "findings": {"minItems": 1}}}
+    }
+  ],
+  "$defs": {
+    "digest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "base64": {"type": "string", "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$"},
+    "jsonPointer": {"type": "string", "pattern": "^(?:|(?:/(?:[^~/]|~0|~1)*)+)$"},
+    "resource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["resourceId", "sourceRef", "sourceBytesBase64", "sourceDigest", "sourceByteLength", "jsonPointer", "sourceClass", "declaredVersion", "schemaRef", "schemaDigest", "parseDisposition", "schemaDisposition", "versionDisposition", "referenceDisposition", "canonicalJsonDigest", "disposition"],
+      "properties": {
+        "resourceId": {"type": "string", "minLength": 1},
+        "sourceRef": {"type": "string", "minLength": 1},
+        "sourceBytesBase64": {"$ref": "#/$defs/base64"},
+        "sourceDigest": {"$ref": "#/$defs/digest"},
+        "sourceByteLength": {"type": "integer", "minimum": 1},
+        "jsonPointer": {"$ref": "#/$defs/jsonPointer"},
+        "sourceClass": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]*$"},
+        "declaredVersion": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+        "schemaRef": {"type": "string", "minLength": 1},
+        "schemaDigest": {"$ref": "#/$defs/digest"},
+        "parseDisposition": {"enum": ["PARSED", "REJECTED"]},
+        "schemaDisposition": {"enum": ["ADMITTED", "NOT_OBSERVABLE", "REJECTED"]},
+        "versionDisposition": {"enum": ["SUPPORTED", "NOT_OBSERVABLE", "UNSUPPORTED"]},
+        "referenceDisposition": {"enum": ["CLOSED", "OPEN", "REJECTED"]},
+        "canonicalJsonDigest": {"oneOf": [{"$ref": "#/$defs/digest"}, {"type": "null"}]},
+        "disposition": {"enum": ["ADMITTED", "OPEN", "REJECTED"]}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"disposition": {"const": "ADMITTED"}}, "required": ["disposition"]},
+          "then": {"properties": {"parseDisposition": {"const": "PARSED"}, "schemaDisposition": {"const": "ADMITTED"}, "versionDisposition": {"const": "SUPPORTED"}, "referenceDisposition": {"const": "CLOSED"}, "canonicalJsonDigest": {"$ref": "#/$defs/digest"}}}
+        },
+        {
+          "if": {"properties": {"parseDisposition": {"const": "REJECTED"}}, "required": ["parseDisposition"]},
+          "then": {"properties": {"schemaDisposition": {"const": "NOT_OBSERVABLE"}, "versionDisposition": {"const": "NOT_OBSERVABLE"}, "referenceDisposition": {"const": "OPEN"}, "canonicalJsonDigest": {"type": "null"}, "disposition": {"const": "REJECTED"}}}
+        }
+      ]
+    },
+    "finding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "resourceId", "sourceRef", "jsonPointer", "message"],
+      "properties": {
+        "code": {"type": "string", "minLength": 1},
+        "resourceId": {"type": "string", "minLength": 1},
+        "sourceRef": {"type": "string", "minLength": 1},
+        "jsonPointer": {"$ref": "#/$defs/jsonPointer"},
+        "message": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

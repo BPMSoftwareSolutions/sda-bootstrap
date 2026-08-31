@@ -1,0 +1,33 @@
+{
+  "manifestType": "native-presentation-projection-manifest.v1",
+  "capabilityId": "project-semantic-element-realization",
+  "targetProfile": "wpf",
+  "authorityHash": "sha256:d007250720102b4781d331bae55d01f01d0d6dc200fad5e6b136b50ab96852af",
+  "files": [
+    {
+      "path": "ProjectedSemanticElementRealization.generated.cs",
+      "sha256": "bed8f2246933fd319f81b57cbca5f4bfd6167567f766d14d1928bff3a0c94412",
+      "executableOrigin": "PROJECTED"
+    },
+    {
+      "path": "ProjectedSemanticElementRealization.generated.csproj",
+      "sha256": "008c7eaae1f81f3baa888b0471108c90c386ebe8513ce69842bde01213c5be18",
+      "executableOrigin": "PROJECTED"
+    },
+    {
+      "path": "proof/fixtures/all-semantic-kinds.ui-embodiment-plan.v1.json",
+      "sha256": "de08ea3b02626f65b0df981b8ac85d59e4c8825d1bbee59006187b6031c58719",
+      "executableOrigin": "PROJECTED"
+    },
+    {
+      "path": "proof/NativeEquivalenceProof.generated.csproj",
+      "sha256": "068bc4ad4ea861ac58303fb963b790ad5b00cb1050f81a62c6ff6cd9e3135023",
+      "executableOrigin": "PROJECTED"
+    },
+    {
+      "path": "proof/Program.generated.cs",
+      "sha256": "55350212e11178b295508abb1e7d2c2cde09e0f81fe500c1a62849a089e0c7f6",
+      "executableOrigin": "PROJECTED"
+    }
+  ]
+}

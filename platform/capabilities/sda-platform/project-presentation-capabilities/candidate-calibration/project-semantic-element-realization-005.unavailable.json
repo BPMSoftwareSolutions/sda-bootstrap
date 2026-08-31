@@ -1,0 +1,16 @@
+{
+  "evidenceType": "presentation-capability-provider-execution.v1",
+  "capabilityId": "project-semantic-element-realization",
+  "requestRef": "../agentic-harness/live/project-semantic-element-realization-005/model-request.json",
+  "responseRef": "../agentic-harness/artifacts/live/project-semantic-element-realization-005/model-response.json",
+  "providerAuthorityId": "primary-cognitive-provider",
+  "resolvedModel": "gemini-flash-latest",
+  "attemptCount": 1,
+  "requestHash": "sha256:0896ba125454eb2772c9e63b13d568f21c4767e856c65f11d41d8b95f55ff71d",
+  "providerDisposition": "PROVIDER_UNAVAILABLE",
+  "candidateProduced": false,
+  "admissionAttempted": false,
+  "projectionAttempted": false,
+  "promotionAttempted": false,
+  "disposition": "RETAINED_EXECUTION_TESTIMONY"
+}

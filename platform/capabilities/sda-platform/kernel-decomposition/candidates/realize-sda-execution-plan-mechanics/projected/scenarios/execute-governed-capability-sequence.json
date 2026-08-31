@@ -1,0 +1,37 @@
+{
+  "scenarioId": "execute-governed-capability-sequence",
+  "input": {
+    "inputId": "governed-capability-sequence-request",
+    "contract": {
+      "contractId": "governed-capability-sequence-request.v1"
+    }
+  },
+  "event": {
+    "eventId": "execute-governed-capability-sequence",
+    "executionAuthorityId": "execute-governed-capability-sequence.v1"
+  },
+  "outcome": {
+    "outcomeId": "governed-capability-sequence-result",
+    "contract": {
+      "contractId": "governed-capability-sequence-result.v1"
+    },
+    "experience": {
+      "statement": "one lineage-preserving sequence result is available"
+    }
+  },
+  "gherkin": {
+    "given": {
+      "semanticRef": "execute-governed-capability-sequence.given",
+      "text": "admitted capability transactions and continuation authority"
+    },
+    "when": {
+      "semanticRef": "execute-governed-capability-sequence.when",
+      "text": "the governed sequence is executed"
+    },
+    "then": {
+      "semanticRef": "execute-governed-capability-sequence.then",
+      "text": "one lineage-preserving sequence result is available"
+    }
+  },
+  "name": "Execute a governed capability sequence"
+}

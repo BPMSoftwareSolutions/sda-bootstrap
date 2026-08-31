@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.sda.local/canonical-outcome-parity-conformance.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contractId", "disposition", "verifiedOutcomeDigests", "findings", "authorityClaims", "lineage", "verificationContext"],
+  "properties": {
+    "contractId": {"const": "canonical-outcome-parity-conformance.v1"},
+    "disposition": {"enum": ["CONFORMANT", "NON_CONFORMANT"]},
+    "verifiedOutcomeDigests": {"type": "array", "items": {"type": "string"}},
+    "verifiedSteps": {"type": "array", "items": {"type": "string"}},
+    "verifiedArtifactCount": {"type": "integer"},
+    "verifiedOriginDisposition": {"type": "string"},
+    "verifiedResolutions": {"type": "array", "items": {"type": "string"}},
+    "verifiedLanguages": {"type": "array", "items": {"type": "object"}},
+    "findings": {"type": "array", "items": {"type": "object"}},
+    "verificationContext": {"type": "object", "additionalProperties": true},
+    "authorityClaims": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["projection", "promotion", "behavioralConformance"],
+      "properties": {
+        "projection": {"const": "NOT_CLAIMED"},
+        "promotion": {"const": "NOT_CLAIMED"},
+        "behavioralConformance": {"const": "NOT_CLAIMED"}
+      }
+    },
+    "lineage": {"type": "array", "items": {"type": "string"}}
+  }
+}

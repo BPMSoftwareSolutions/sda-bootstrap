@@ -1,0 +1,20 @@
+{
+  "policyType": "generic-json-canonicalization-policy.v1",
+  "lifecycle": "PROPOSED",
+  "sourceDigest": {
+    "algorithm": "SHA-256",
+    "subject": "exact source bytes",
+    "lineEndingNormalization": false,
+    "unicodeNormalization": false
+  },
+  "canonicalJson": {
+    "use": "DERIVED_IDENTITY_AND_RECEIPT_MATERIAL_ONLY",
+    "objectMemberOrder": "DECODED_UNICODE_SCALAR_SEQUENCE_ASCENDING",
+    "arrayOrder": "PRESERVED",
+    "numberInput": "LOSSLESS_LEXEME",
+    "duplicateMembers": "REJECTED"
+  },
+  "admissionClaims": {
+    "providerConformance": "NOT_OBSERVABLE"
+  }
+}

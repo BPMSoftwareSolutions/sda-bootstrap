@@ -1,0 +1,7 @@
+{
+  "bindingType": "projected-consumer-application-binding.v2",
+  "executionPlan": "execution-plans/consumer-execution-plan.node.json",
+  "executionPlanDigest": "sha256:ad5b009cdb0a7a3807cbb405c77eb693a95cfa5ba02c8cc00eb250201cf5653b",
+  "fixtures": "fixtures/fixtures.json",
+  "mechanicalSterility": "projection-conformance.json"
+}

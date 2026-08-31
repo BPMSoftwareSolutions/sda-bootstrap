@@ -1,0 +1,28 @@
+{
+  "contractId": "profile-governed-proof-binding-evaluation-input.v1",
+  "payload": {
+    "evaluationCaseId": "prohibited-matching-prose-basis",
+    "profileId": "generic-proof-binding-evaluation-conformance-profile.v1",
+    "snapshotDigest": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "proofObligationId": "obligation:matching-prose",
+    "subjectSemanticObjectId": "scenario:matching-prose",
+    "authorityApplicability": "REQUIRED",
+    "bindingCandidates": [
+      {
+        "fromSemanticObjectId": "fixture:prose",
+        "relationshipKind": "FIXTURE_EXERCISES_SCENARIO",
+        "toSemanticObjectId": "scenario:matching-prose",
+        "basis": "MATCHING_PROSE",
+        "lineageState": "CURRENT"
+      }
+    ],
+    "evidenceState": "CURRENT_PASSING",
+    "reproduction": {
+      "orderedInputDigest": "sha256:fcf71e91f4397fc16f8e6c8f2b07678c99cdc75b13a7905e2040189c216a9854",
+      "evaluationRuleIds": [
+        "evaluation-order.v1",
+        "bind-fixture-scenario.v1"
+      ]
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "transitionId": "repository-to-external",
+  "from": {
+    "scenarioId": "observe-governed-repository",
+    "outcomeId": "governed-repository-observation",
+    "contractId": "governed-repository-observation.v1"
+  },
+  "to": {
+    "scenarioId": "observe-external-representation",
+    "inputId": "external-representation-observation-request",
+    "contractId": "external-representation-observation-request.v1"
+  },
+  "semanticProgress": "monotonic",
+  "bindingAuthorityId": "project-repository-to-external"
+}

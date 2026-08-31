@@ -1,0 +1,7 @@
+{
+  "$schema": "schema:generic-json-authority.v1",
+  "documentType": "generic-json-authority.v1",
+  "id": "projection-source-class",
+  "value": "content cannot escalate projection evidence",
+  "references": []
+}

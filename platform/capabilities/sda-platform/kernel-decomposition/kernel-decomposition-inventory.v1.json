@@ -1,0 +1,419 @@
+{
+  "inventoryType": "sda-kernel-decomposition-inventory.v1",
+  "authorityId": "sda-kernel-decomposition-inventory.v1",
+  "authorityVersion": "1.1.0",
+  "lifecycle": "PROPOSED",
+  "subjectRef": "languages/typescript/runtimes/node/node-native-mechanic-providers.mjs",
+  "subjectDigest": "sha256:5d901ccce632f9bcd9f23bef9c7923410aff1ab9cbc7e9c311823e66bf4d64fd",
+  "subjectObservation": {
+    "lines": 1071,
+    "exportedResponsibilities": 19,
+    "registeredEventPorts": 22,
+    "nodeBuiltinsImported": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:module",
+      "node:url",
+      "node:child_process"
+    ]
+  },
+  "governingPrinciple": "The kernel may execute capabilities. It may not contain the capabilities it executes.",
+  "decompositionLaw": "The subject decomposes into exactly two classes. Bounded SDA responsibilities become canonical capabilities with feature, contracts, semantic execution authority, fixtures, and projected embodiments. Reusable execution mechanics become canonical mechanic authority consumed by execution plans and lowered by each language projector. Nothing in the subject remains Node-owned semantic meaning; helper operations live beneath scenario execution authority, never as capabilities.",
+  "authoringOrder": "Canonical write-ups precede code. The feature/gherkin write-ups for both capability designs and the mechanic authority write-ups are authored and digest-pinned first; the frozen implementation remains the behavioral oracle for fixtures. No further native body extraction or registry work proceeds until the write-ups are admitted.",
+  "mechanicAuthorityRefs": [
+    {
+      "mechanicFamilyId": "semantic-value-mechanics.v1",
+      "authorityRef": "kernel/semantic-authority/consumer/semantic-value-mechanics.authority.v1.json",
+      "authorityDigest": "sha256:55f298ecdca5a65422d6fb5e4d60e403916a5cbe66939457108c3241792f4d06",
+      "note": "33 pure semantic operations (path, bind-path, literal, object, array, object-values, merge, map, flat-map, filter, find, some, every, includes, intersects, equals, length, greater-than, if, let, unique, join, format, escape-html, base64-decode-utf8, json-stringify, parse-json, try-parse-json, canonicalize, sha256, canonical-json-byte-validation, retained-lineage-authorization, canonical-artifact-byte-planning)."
+    },
+    {
+      "mechanicFamilyId": "platform-effect-mechanics.v1",
+      "authorityRef": "kernel/semantic-authority/consumer/platform-effect-mechanics.authority.v1.json",
+      "authorityDigest": "sha256:3b39afa785c925525086acddb65166fad1e52001ddcd6d66bc65448e5efe0bac",
+      "note": "17 physical effect mechanics (read-file-bytes, write-file-bytes, write-file-atomically, rename-file, create-directory, list-directory, file-exists, file-stat, file-lstat, realpath, read-environment-credential, perform-http-exchange, execute-bounded-process, read-clock, generate-random-identity, exclusive-create-or-exact-match, atomic-current-pointer-compare-and-swap)."
+    }
+  ],
+  "planes": {
+    "KERNEL": "Language-neutral execution law only: admit input, resolve event authority, execute event authority, admit outcome, resolve disposition, propagate lineage, emit testimony.",
+    "PROJECTED_PLATFORM_CAPABILITY": "Bounded platform meaning expressed as ordinary SDA capability, projected like any other.",
+    "PRIMITIVE_MECHANIC_AUTHORITY": "Physical mechanics declared canonically (read-file-bytes, compute-sha256, read-clock, generate-random-identity). Their meaning is fixed by authority; their per-language lowering belongs to the language projector. No language runtime may become their semantic home.",
+    "NATIVE_FLOOR_WITH_CANONICAL_CORPUS": "Mechanic whose body stays native only while the projector cannot yet lower it; its meaning is fixed by a canonical cross-target conformance corpus.",
+    "PROJECTED_ARTIFACT": "Generated from admitted authority rather than hand-edited.",
+    "IRREDUCIBLE_NATIVE": "The language projector only: the sole floor that knows how each canonical primitive mechanic lowers into a target language (crypto.createHash for Node, SHA256 for C#, hashlib for Python, MessageDigest for Java, sha256 for Go)."
+  },
+  "capabilityDesigns": [
+    {
+      "capabilityId": "realize-sda-execution-plan-mechanics",
+      "featureRef": "capabilities/sda-platform/kernel-decomposition/candidates/realize-sda-execution-plan-mechanics.feature",
+      "featureDigest": "sha256:8ad5c48671cae072b5e1c1cc9a0ea8cc8b342977f004b5f6859f19a79494728c",
+      "candidateWorkspaceRef": "capabilities/sda-platform/kernel-decomposition/candidates/realize-sda-execution-plan-mechanics/",
+      "lifecycle": "CANDIDATE",
+      "plane": "PROJECTED_PLATFORM_CAPABILITY",
+      "authoringLineage": [
+        "scenario:admit-canonical-capability-feature",
+        "scenario:resolve-capability-authoring-profile",
+        "scenario:obtain-capability-ontology-testimony",
+        "scenario:assemble-projectable-source-bundle"
+      ],
+      "responsibility": "Realize the mechanics declared by an admitted SDA execution plan in a target language without allowing the target language to invent capability meaning.",
+      "scenarioFamilies": [
+        {
+          "family": "semantic-mechanics",
+          "scenarios": [
+            {
+              "scenarioId": "admit-contract-value",
+              "sourceResponsibilities": [
+                "createSchemaAdmission",
+                "matchesSchema"
+              ],
+              "note": "Contract selection and admission decision are projected; the validation engine remains an admitted native engine (AJV) as the irreducible validation provider."
+            },
+            {
+              "scenarioId": "execute-authority-transformation",
+              "sourceResponsibilities": [
+                "evaluateExpression"
+              ],
+              "plane": "NATIVE_FLOOR_WITH_CANONICAL_CORPUS",
+              "note": "The evaluator body cannot be projected without circularity because it is what evaluates projected transformation authority. Its semantics move into a canonical per-operation conformance corpus that every target must satisfy.",
+              "operations": [
+                "literal",
+                "path",
+                "object",
+                "array",
+                "object-values",
+                "merge",
+                "map",
+                "flat-map",
+                "filter",
+                "find",
+                "some",
+                "every",
+                "includes",
+                "intersects",
+                "equals",
+                "length",
+                "greater-than",
+                "if",
+                "unique",
+                "join",
+                "format",
+                "escape-html",
+                "sha256",
+                "base64-decode-utf8",
+                "json-stringify",
+                "parse-json",
+                "try-parse-json",
+                "let"
+              ]
+            },
+            {
+              "scenarioId": "evaluate-bounded-schema",
+              "sourceResponsibilities": [
+                "matchesSchema"
+              ]
+            }
+          ]
+        },
+        {
+          "family": "governed-effects",
+          "scenarios": [
+            {
+              "scenarioId": "materialize-governed-artifact",
+              "sourceResponsibilities": [
+                "storeArtifact",
+                "resolveTestArtifactRoot"
+              ]
+            },
+            {
+              "scenarioId": "observe-governed-repository",
+              "sourceResponsibilities": [
+                "observeGovernedRepository"
+              ]
+            },
+            {
+              "scenarioId": "observe-external-representation",
+              "sourceResponsibilities": [
+                "observeExternalRepresentation"
+              ]
+            },
+            {
+              "scenarioId": "bind-external-credential-reference",
+              "sourceResponsibilities": [
+                "bindExternalCredentialReference",
+                "createGovernedEffectContext",
+                "credentialBindingEvidence",
+                "unwrapEffectPayload"
+              ]
+            },
+            {
+              "scenarioId": "execute-governed-http-exchange",
+              "sourceResponsibilities": [
+                "observeGovernedHttpExchange",
+                "httpExchangeEvidence",
+                "consumeCredentialBinding",
+                "transportDispositionFor"
+              ]
+            },
+            {
+              "scenarioId": "invoke-governed-model",
+              "sourceResponsibilities": [
+                "invokeGenericLlmConnector",
+                "obtainGenericModelResponse",
+                "loadGenericConnector",
+                "normalizeProviderAuthorities"
+              ]
+            },
+            {
+              "scenarioId": "shape-file-system-batch",
+              "sourceResponsibilities": [
+                "invokeBatchFsShaper",
+                "loadFsShaper"
+              ]
+            },
+            {
+              "scenarioId": "observe-governed-target-execution",
+              "sourceResponsibilities": [
+                "observeGovernedTargetExecution",
+                "runsBoundedCommand",
+                "digestDirectory",
+                "isBoundedCommandValue",
+                "targetExecutionFinding"
+              ]
+            }
+          ]
+        },
+        {
+          "family": "composition",
+          "scenarios": [
+            {
+              "scenarioId": "invoke-projected-capability",
+              "sourceResponsibilities": [
+                "sda-projected-capability-invocation-port.v1",
+                "sda-projected-capability-invocation-port.v2",
+                "nestedExecutionTestimony",
+                "bindValueAt"
+              ]
+            },
+            {
+              "scenarioId": "execute-governed-capability-sequence",
+              "sourceResponsibilities": [
+                "invokeGovernedSerialExecution"
+              ]
+            }
+          ]
+        },
+        {
+          "family": "sda-tooling",
+          "scenarios": [
+            {
+              "scenarioId": "resolve-canonical-capability-feature",
+              "sourceResponsibilities": [
+                "parseCanonicalCapabilityFeature",
+                "resolveCanonicalCapabilityFeature",
+                "collectCanonicalFeatureDeclarations",
+                "requireCanonicalFeatureTag",
+                "addCanonicalFeatureTag",
+                "isWithinGovernedRoot"
+              ],
+              "note": "Superseded later by the admitted lossless Gherkin compiler; this exists so the line scanner can be retired against equivalent fixtures."
+            },
+            {
+              "scenarioId": "transact-governed-tooling-binding",
+              "sourceResponsibilities": [
+                "transactGovernedToolingBinding"
+              ]
+            },
+            {
+              "scenarioId": "execute-governed-tooling-migration-operation",
+              "sourceResponsibilities": [
+                "invokeGovernedToolingMigrationOperation"
+              ]
+            }
+          ]
+        },
+        {
+          "family": "projection",
+          "scenarios": [
+            {
+              "scenarioId": "project-language-mechanic-registry",
+              "sourceResponsibilities": [
+                "createNodeMechanicRegistry"
+              ],
+              "plane": "PROJECTED_ARTIFACT",
+              "note": "Must be paired with repinning: each provider authority pins only its own module, never the shared registry artifact. Admitting a mechanic becomes catalog admission, not a source edit."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "verify-sda-execution-plan-realization",
+      "featureRef": "capabilities/sda-platform/kernel-decomposition/candidates/verify-sda-execution-plan-realization.feature",
+      "featureDigest": "sha256:ee5d5d900c4b7191c1462b1f25f5992f102ed41b68dbbc258af6f905c79bbb5c",
+      "candidateWorkspaceRef": "capabilities/sda-platform/kernel-decomposition/candidates/verify-sda-execution-plan-realization/",
+      "lifecycle": "CANDIDATE",
+      "plane": "PROJECTED_PLATFORM_CAPABILITY",
+      "authoringLineage": [
+        "scenario:admit-canonical-capability-feature",
+        "scenario:resolve-capability-authoring-profile",
+        "scenario:obtain-capability-ontology-testimony",
+        "scenario:assemble-projectable-source-bundle"
+      ],
+      "responsibility": "Determine whether an observed execution-plan realization actually conformed to authority. Provider and verifier remain separate responsibilities.",
+      "scenarioFamilies": [
+        {
+          "family": "conformance-verification",
+          "scenarios": [
+            {
+              "scenarioId": "verify-expected-execution-trace",
+              "sourceResponsibilities": [
+                "expected-execution-trace.v1"
+              ]
+            },
+            {
+              "scenarioId": "verify-artifact-materialization",
+              "sourceResponsibilities": [
+                "artifact-binding-observation.v1"
+              ]
+            },
+            {
+              "scenarioId": "verify-projected-executable-origin",
+              "sourceResponsibilities": [
+                "projected-origin-observation.v1"
+              ]
+            },
+            {
+              "scenarioId": "verify-mechanic-resolution",
+              "sourceResponsibilities": [],
+              "note": "Declared conformance law: every required execution mechanic must resolve to an admitted platform capability for the projection target; the platform-mechanic-resolution closure must be RESOLVED with every resolution AVAILABLE."
+            },
+            {
+              "scenarioId": "verify-language-mechanic-parity",
+              "sourceResponsibilities": [],
+              "note": "Declared conformance law: canonical required mechanics minus each admitted target's projected mechanics must be empty; mechanics embodied in only one target without an explicit target-specific declaration are LANGUAGE_MECHANIC_PARITY_FAILURE; a missing target projection is CROSS_APPLY_INCOMPLETE. This scenario prevents the subject from happening again."
+            },
+            {
+              "scenarioId": "verify-canonical-outcome-parity",
+              "sourceResponsibilities": [],
+              "note": "Declared conformance law: the same canonical fixtures must produce equivalent canonical outcomes and equivalent testimony across every admitted target."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "supersededAtomizedCandidates": "The seventeen per-mechanic candidate features under candidates/superseded-atomized-candidates/ were folded into the two capability designs above: each former candidate became a scenario (or a scenario family) beneath realize-sda-execution-plan-mechanics or verify-sda-execution-plan-realization, and its helper operations became execution mechanics beneath scenario execution authority.",
+  "primitiveMechanicAuthorities": [
+    {
+      "mechanicId": "semantic-value-path-access.v1",
+      "sourceResponsibility": "valueAt",
+      "note": "Canonical dotted-path access; each target lowers it to native member/index access."
+    },
+    {
+      "mechanicId": "semantic-value-binding.v1",
+      "sourceResponsibility": "bindValueAt",
+      "note": "Canonical dotted-path binding with prototype-pollution rejection; lowered per target."
+    },
+    {
+      "mechanicId": "canonical-value-ordering.v1",
+      "sourceResponsibility": "canonicalizeValue",
+      "note": "Recursive sorted-key canonicalization; lowered per target."
+    },
+    {
+      "mechanicId": "canonical-sha256-digest.v1",
+      "sourceResponsibility": "canonicalDigest",
+      "note": "SHA-256 over canonical JSON encoding; Node crypto, C# SHA256, Python hashlib, Java MessageDigest, Go sha256."
+    },
+    {
+      "mechanicId": "governed-effect-context.v1",
+      "sourceResponsibility": "createGovernedEffectContext",
+      "note": "Effect-context plumbing primitive carrying admitted bounds (credential store, clock, random identity, fetch) to lowered providers."
+    },
+    {
+      "mechanicId": "effect-clock-read.v1",
+      "sourceResponsibility": "effectNow",
+      "note": "Clock reading inside governed effect context; lowered per target."
+    }
+  ],
+  "irreducibleFloor": [
+    {
+      "responsibility": "language-projector",
+      "reason": "The sole irreducible floor. Owns primitive mechanic lowering per target; everything above it is declared authority."
+    }
+  ],
+  "sequencing": [
+    "Repin every provider authority to its own provider module before extracting anything, because until that lands each extraction that touches the shared registry invalidates every prior provider admission.",
+    "Admit the two capability designs, then extract their scenarios in family order, each against the frozen implementation's own fixtures.",
+    "Project the language mechanic registry only after repinning, so generation does not reproduce the coupling in generated form.",
+    "Retire each native body only after the projected replacement satisfies the frozen implementation's own fixtures.",
+    "Author the transformation-operation conformance corpus so the native evaluator floor is pinned by canonical per-operation fixtures across targets."
+  ],
+  "acceptanceConditions": [
+    "Every extraction leaves wave-0-readiness.v1.json byte-identical.",
+    "Every extraction leaves every issued wave conformance receipt byte-identical.",
+    "The frozen current implementation and the projected replacement produce equivalent canonical outcomes and equivalent testimony against the same fixtures.",
+    "Lineage is preserved across the replacement and mechanical sterility passes.",
+    "Universal mechanic parity holds: for every declared universal mechanic, the embodied-mechanic set of each admitted target equals the Node set; a target missing a universal mechanic is CROSS_APPLY_INCOMPLETE, and a mechanic embodied in only one target without an explicit target-specific declaration is LANGUAGE_MECHANIC_PARITY_FAILURE.",
+    "Provider and verifier remain separate capabilities: no scenario in realize-sda-execution-plan-mechanics may evaluate conformance, and no scenario in verify-sda-execution-plan-realization may produce effects.",
+    "Completion is declared on kernel meaning reaching zero, not on the file becoming smaller."
+  ],
+  "migrationProgress": [
+    {
+      "step": "retire-node-native-mechanic-providers",
+      "disposition": "OBSERVED",
+      "summary": "The subject file is deleted. Every responsibility was embodied as projected capability authority: realize-sda-execution-plan-mechanics (18 scenarios, 17 transitions) and verify-sda-execution-plan-realization (7 scenarios, 6 transitions), each projected to node, csharp, and python. The registry is now declared data (node-mechanic-registry.authority.v1.json) read by a runtime loader (node-mechanic-registry-loader.mjs) that imports the 16 admitted provider modules; adding a mechanic is authority admission, not a source edit. The repin wave completed: 10 catalog implementationRefs point at per-provider modules; three provider authorities, three conformance receipts, and the catalog provider/conformance digests re-pinned to the loader.",
+      "evidence": "Runtime gate 67/67 (61 port conformance + 6 capability tests); tools tests 44/44 (proof-binding, json-authority-ingestion, semantic-vector-index); agentic-harness resolve-governed-task 9/9 on the loader-backed runtime.",
+      "openFinding": "Checked-in conformance-query files in both repositories still embed pre-repin implementationRefs; the corpus re-projection wave (regenerate queries from the repinned catalog across the SDA and agentic-harness workspaces) and the cross-language toolchain gate (csharp/python/java/go execution proof) remain."
+    },
+    {
+      "step": "compose-semantic-mechanics-family",
+      "disposition": "OBSERVED",
+      "summary": "The semantic-mechanics family (admit-contract-value, execute-authority-transformation, evaluate-bounded-schema) was composed into the realize capability as a monotonic scenario chain: root -> admit -> execute -> evaluate (terminal), with three contract-differing transitions projected through sda-authority-state-projection.v1 bindings. Each step pins digest-bound authority (realization contract schema digest and root transformation expression digest), carries the candidate forward, and propagates rejection monotonically with attributable findings. Projection authorities now declare inputContract/outputContract pairs.",
+      "evidence": "project.js exited 0 with 4 scenarios and 3 transitions across node,csharp,python; projected node conformance 3/3 including chain rejection propagation (TRANSFORMATION_PRECONDITION_UNSATISFIED); full node runtime suite 67/67 (61 frozen port tests + 6 capability tests).",
+      "openFinding": "Remaining realize families (governed-effects, composition, sda-tooling, projection) and all six verify scenarios follow the same composition pattern and remain to be curated. csharp/python toolchain execution proof belongs to the SDA repository gate."
+    },
+    {
+      "step": "curate-and-project-root-scenarios",
+      "disposition": "OBSERVED",
+      "summary": "Both candidate workspaces were curated into projectable capabilities and projected across node, csharp, and python. Curation: corrected workspace references, authored input/outcome contracts with schema digests, declared the root scenario execution authority and transformation-port binding, wrote the root semantic transformation (realize binds every required mechanic to the admitted semantic-value-mechanics.v1 and platform-effect-mechanics.v1 authorities and rejects undeclared mechanics; verify establishes CONFORMANT or attributable NON_CONFORMANT divergence), and authored two fixtures per capability. The workspace capability.feature carries the root scenario only; the full multi-scenario write-ups remain digest-pinned in candidates/ as the design record, to be added scenario-family by scenario-family.",
+      "evidence": "project.js exited 0 for both capabilities on targets node,csharp,python; projected node conformance 6/6; projection-conformance disposition PURE_PROJECTION_CONFORMS with zero forbidden mechanics; fixture assertions include realization bindings to the two mechanic authority digests.",
+      "openFinding": "csharp and python projections are materialized but their toolchain execution proof belongs to the SDA repository gate (prove-projected-execution-behavior). Java and Go remain unproven by the consumer projector and are not silently waived."
+    },
+    {
+      "step": "harness-author-candidate-workspaces",
+      "disposition": "OBSERVED",
+      "summary": "Both capability feature write-ups were run through the agentic-harness author-capability-candidate-from-feature-reference CLI. Each returned a projectable-capability-candidate.v1 with a 12-file candidate workspace (capability.feature, capability.authority.json, consumer-workspace.authority.json, semantic-graph, execution-authorities, semantic-transformation, projection-authorities, interfaces, fixtures, contracts). Authoring profile corrected to the admitted pure-sda-authority-candidate.v1 per the canonical-capability-feature.v1 contract.",
+      "evidence": "CLI disposition terminated for both; authoring lineage scenario:admit-canonical-capability-feature -> resolve-capability-authoring-profile -> obtain-capability-ontology-testimony -> assemble-projectable-source-bundle.",
+      "openFinding": "Candidate scaffolds are intentionally untrusted: empty contract catalog, open schemas, empty execution/transformation/fixture authorities, empty port bindings, node-only projection target. Every semantic body must be authored through the governed curation pipeline before any admission or projection gate."
+    },
+    {
+      "step": "canonical-write-ups-first",
+      "disposition": "OBSERVED",
+      "summary": "Sequencing corrected: canonical write-ups precede code. The two capability feature write-ups and the two mechanic authority write-ups now exist and are digest-pinned; no further native body extraction or registry work proceeds until the write-ups are admitted.",
+      "evidence": "kernel/semantic-authority/consumer/semantic-value-mechanics.authority.v1.json and platform-effect-mechanics.authority.v1.json digest-pinned above; both capability features parse through parseCanonicalCapabilityFeature."
+    },
+    {
+      "step": "repin-primitives-and-first-provider",
+      "disposition": "OBSERVED",
+      "summary": "Extracted valueAt, canonicalizeValue, canonicalDigest, createGovernedEffectContext, effectNow into native-mechanic-primitives.mjs and observeGovernedRepository plus its private helpers into governed-repository-observation-provider.mjs. The shared registry file now imports and re-exports both, preserving its public surface exactly.",
+      "evidence": "Full node runtime conformance suite 61/61 before and after the split.",
+      "openFinding": "tools/tests/conformance/proof-binding-evaluation.test.js PROVIDER_AND_AUTHORITY_IDENTITIES fails on a stale registryBindingDigest pin (pinned aa67f5..., observed 5d901c... post-split, f8cf76a3... at HEAD): direct evidence of the shared-registry pinning cascade. Resolution belongs to the repin wave, not to ad-hoc pin edits."
+    },
+    {
+      "step": "consolidate-two-capability-design",
+      "disposition": "OBSERVED",
+      "summary": "Replaced the seventeen atomized per-mechanic candidates with two cohesive capability designs: realize-sda-execution-plan-mechanics (18 scenarios across semantic-mechanics, governed-effects, composition, sda-tooling, projection families) and verify-sda-execution-plan-realization (7 scenarios including verify-mechanic-resolution, verify-language-mechanic-parity, verify-canonical-outcome-parity). Former candidates archived under candidates/superseded-atomized-candidates/. Helper operations recorded beneath scenario execution authority.",
+      "evidence": "Both capability features parse as canonical candidates through parseCanonicalCapabilityFeature (identities verified); feature digests pinned above."
+    }
+  ],
+  "admissionClaims": {
+    "candidateAuthoring": "PROPOSED",
+    "capabilityAdmission": "NOT_CLAIMED",
+    "providerRetirement": "NOT_CLAIMED",
+    "kernelDecompositionComplete": "NOT_CLAIMED"
+  },
+  "inventoryDigestAlgorithm": "sha256 of canonical recursive-key-order JSON excluding inventoryDigest",
+  "inventoryDigest": "sha256:fd713a1c2dfbef508984092b29db7252ad556c6167d14397fe38cab6b9a08bed"
+}

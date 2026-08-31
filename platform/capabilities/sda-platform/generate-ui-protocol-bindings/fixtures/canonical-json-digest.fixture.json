@@ -1,0 +1,4 @@
+{
+  "canonicalJson": "{\"a\":[3,2,1],\"nested\":{\"a\":true,\"z\":\"proof\"}}",
+  "digest": "sha256:adde6f4243759dbb0bb234293ffe984927dc2ed91c46ad556fdc1edfd953f320"
+}

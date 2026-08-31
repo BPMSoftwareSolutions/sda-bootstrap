@@ -1,0 +1,18 @@
+{
+  "profileType": "generic-json-ingestion-conformance-profile.v1",
+  "lifecycle": "PROPOSED",
+  "requirements": {
+    "exactSourceBytesRetained": true,
+    "sourceDigestRecomputed": true,
+    "jsonPointerRetained": true,
+    "duplicateDecodedKeysRejected": true,
+    "declaredSchemaAuthorityRequired": true,
+    "unsupportedVersionHeld": true,
+    "danglingReferenceHeld": true,
+    "sourceClassEscalationRejected": true
+  },
+  "admissionClaims": {
+    "providerConformance": "NOT_OBSERVABLE",
+    "receiptIssuance": "NOT_OBSERVABLE"
+  }
+}

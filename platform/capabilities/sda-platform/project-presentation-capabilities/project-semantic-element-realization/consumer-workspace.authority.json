@@ -1,0 +1,33 @@
+{
+  "workspaceType": "consumer-workspace-authority.v1",
+  "consumerId": "project-semantic-element-realization",
+  "kernel": {
+    "specificationId": "scenario-kernel.v1",
+    "version": "1.0.0",
+    "executionVector": "../../../../kernel/contracts/execution/scenario-kernel-execution-vector.json"
+  },
+  "governance": {
+    "authority": "../../../../governance/projected-tool-capability.policy.v1.json",
+    "conformancePolicy": "all-closures-must-conform"
+  },
+  "conformanceQuery": "../../../../kernel/semantic-authority/consumer/scenario-conformance-closure.query-authority.json",
+  "telemetryAuthority": "../../../../kernel/semantic-authority/consumer/scenario-execution.telemetry-authority.json",
+  "platformCapabilityCatalog": "../../../../kernel/semantic-authority/consumer/sda-platform-capabilities.semantic-authority.json",
+  "projectionTargets": [
+    "node",
+    "csharp",
+    "python"
+  ],
+  "capabilities": [
+    {
+      "featureId": "project-semantic-element-realization.feature",
+      "feature": "../features/project-semantic-element-realization.feature",
+      "capability": "capability.authority.json",
+      "semanticGraph": "semantic-graph.authority.json",
+      "executionAuthorities": "execution-authorities.authority.json",
+      "projectionAuthorities": "projection-authorities.authority.json",
+      "interfaces": "interfaces.authority.json",
+      "fixtures": "fixtures.authority.json"
+    }
+  ]
+}

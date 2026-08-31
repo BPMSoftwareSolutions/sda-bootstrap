@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.sda.local/authority-transformation-request.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contractId", "carrierType", "inputValue", "transformationId", "transformationDigest", "admissionDisposition"],
+  "properties": {
+    "contractId": {"const": "authority-transformation-request.v1"},
+    "carrierType": {"const": "authority-transformation-request.v1"},
+    "inputValue": {"type": "object"},
+    "transformationId": {"type": "string", "minLength": 1},
+    "transformationDigest": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "admissionDisposition": {"type": "string", "minLength": 1}
+  }
+}

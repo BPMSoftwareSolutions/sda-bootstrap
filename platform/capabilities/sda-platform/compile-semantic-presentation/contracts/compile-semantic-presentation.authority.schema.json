@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/platform/ui-presentation/compile-semantic-presentation.authority.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["authorityType", "authorityId", "authorityDigest", "inputContractType", "outputContractType", "defaultComposition", "supportedRelationshipKinds", "supportedAccessibilityObligationKinds", "presentationProfileHandling", "eventTriggers", "adaptationOperations", "rules"],
+  "properties": {
+    "$schema": { "type": "string", "minLength": 1 },
+    "authorityType": { "const": "semantic-presentation-compiler-authority.v1" },
+    "authorityId": { "const": "compile-semantic-presentation.v1" },
+    "authorityDigest": { "$ref": "#/$defs/digest" },
+    "inputContractType": { "const": "sda-ui-semantic-presentation.v1" },
+    "outputContractType": { "const": "sda-ui-presentation-ir.v3" },
+    "defaultComposition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "axis", "direction", "wrap"],
+      "properties": {
+        "kind": { "const": "FLOW" },
+        "axis": { "const": "BLOCK" },
+        "direction": { "const": "FORWARD" },
+        "wrap": { "const": "NO_WRAP" }
+      }
+    },
+    "supportedRelationshipKinds": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "enum": ["FOLLOWS"] }
+    },
+    "supportedAccessibilityObligationKinds": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "uniqueItems": true,
+      "items": { "enum": ["NAME", "DESCRIPTION", "FOCUS_ORDER", "LIVE_FEEDBACK", "OPERABLE_ACTION", "RELATIONSHIP"] }
+    },
+    "presentationProfileHandling": { "const": "REFERENCE_ONLY" },
+    "eventTriggers": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ACTION", "INPUT", "NAVIGATION"],
+      "properties": {
+        "ACTION": { "const": "ACTIVATE" },
+        "INPUT": { "const": "COMMIT" },
+        "NAVIGATION": { "const": "NAVIGATE" }
+      }
+    },
+    "adaptationOperations": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ORDER", "VISIBILITY", "GROUPING"],
+      "properties": {
+        "ORDER": { "const": "ORDER" },
+        "VISIBILITY": { "const": "VISIBILITY" },
+        "GROUPING": { "const": "GROUPING" }
+      }
+    },
+    "rules": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "uniqueItems": true,
+      "prefixItems": [
+        { "const": "rule.empty-remains-empty.v1" },
+        { "const": "rule.default-root-flow.v1" },
+        { "const": "rule.follows-order.v1" },
+        { "const": "rule.semantic-event-trigger.v1" },
+        { "const": "rule.explicit-adaptation-only.v1" },
+        { "const": "rule.profile-indirection-only.v1" }
+      ],
+      "items": false
+    }
+  },
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._:-]*$" },
+    "digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }
+  }
+}

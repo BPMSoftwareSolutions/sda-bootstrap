@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/consumer-ui-projection-profile.v1.schema.json",
+  "title": "Consumer UI Data-Driven Projection Profile",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["profileType", "target", "documentCopies", "templates"],
+  "properties": {
+    "profileType": { "const": "consumer-ui-projection-profile.v1" },
+    "target": { "$ref": "consumer-ui-parity-evidence.schema.json#/$defs/target" },
+    "documentCopies": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["document", "path"],
+        "properties": {
+          "document": { "type": "string", "enum": ["authority", "identity", "vectors", "coverage", "objectModel"] },
+          "path": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "templates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["templateRef", "path"],
+        "properties": {
+          "templateRef": { "type": "string", "minLength": 1 },
+          "path": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "policyType": "generic-json-membership-policy.v1",
+  "lifecycle": "PROPOSED",
+  "classificationPrecedence": [
+    "EXCLUDED",
+    "CANONICAL_AUTHORITY",
+    "ADMITTED_EVIDENCE",
+    "PROJECTION_EVIDENCE",
+    "MODEL_TESTIMONY"
+  ],
+  "rules": [
+    {
+      "ruleId": "fixture-canonical-authority.v1",
+      "sourceClass": "CANONICAL_AUTHORITY",
+      "basis": "explicit fixture manifest declaration"
+    },
+    {
+      "ruleId": "fixture-admitted-evidence.v1",
+      "sourceClass": "ADMITTED_EVIDENCE",
+      "basis": "explicit fixture manifest declaration"
+    },
+    {
+      "ruleId": "fixture-projection-evidence.v1",
+      "sourceClass": "PROJECTION_EVIDENCE",
+      "basis": "explicit fixture manifest declaration"
+    },
+    {
+      "ruleId": "fixture-model-testimony.v1",
+      "sourceClass": "MODEL_TESTIMONY",
+      "basis": "explicit fixture manifest declaration"
+    }
+  ],
+  "contentMayChangeSourceClass": false,
+  "admissionClaims": {
+    "providerConformance": "NOT_OBSERVABLE"
+  }
+}

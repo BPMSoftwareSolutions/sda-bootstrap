@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/json-ingestion/declared-json-schema-authority-resolution-evidence.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contractId", "parseEvidenceDigest", "resolverAuthorityDigest", "schemaRef", "schemaDigest", "schemaDialect", "documentVersion", "resolvedSchemaClosure", "schemaDisposition", "versionDisposition", "diagnostics", "evidenceDigest"],
+  "properties": {
+    "contractId": {"const": "declared-json-schema-authority-resolution-evidence.v1"},
+    "parseEvidenceDigest": {"$ref": "#/$defs/digest"},
+    "resolverAuthorityDigest": {"$ref": "#/$defs/digest"},
+    "schemaRef": {"type": "string", "minLength": 1},
+    "schemaDigest": {"$ref": "#/$defs/digest"},
+    "schemaDialect": {"const": "https://json-schema.org/draft/2020-12/schema"},
+    "documentVersion": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "resolvedSchemaClosure": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/resolvedSchema"}},
+    "schemaDisposition": {"enum": ["ADMITTED", "NOT_OBSERVABLE", "REJECTED"]},
+    "versionDisposition": {"enum": ["SUPPORTED", "NOT_OBSERVABLE", "UNSUPPORTED"]},
+    "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/diagnostic"}},
+    "evidenceDigest": {"$ref": "#/$defs/digest"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"schemaDisposition": {"const": "ADMITTED"}, "versionDisposition": {"const": "SUPPORTED"}}, "required": ["schemaDisposition", "versionDisposition"]},
+      "then": {"properties": {"resolvedSchemaClosure": {"minItems": 1}, "diagnostics": {"maxItems": 0}}}
+    },
+    {
+      "if": {"properties": {"schemaDisposition": {"enum": ["NOT_OBSERVABLE", "REJECTED"]}}, "required": ["schemaDisposition"]},
+      "then": {"properties": {"diagnostics": {"minItems": 1}}}
+    },
+    {
+      "if": {"properties": {"versionDisposition": {"const": "UNSUPPORTED"}}, "required": ["versionDisposition"]},
+      "then": {"properties": {"diagnostics": {"contains": {"properties": {"code": {"const": "JSON_VERSION_UNSUPPORTED"}}, "required": ["code"]}}}}
+    }
+  ],
+  "$defs": {
+    "digest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "jsonPointer": {"type": "string", "pattern": "^(?:|(?:/(?:[^~/]|~0|~1)*)+)$"},
+    "resolvedSchema": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaRef", "schemaDigest"],
+      "properties": {
+        "schemaRef": {"type": "string", "minLength": 1},
+        "schemaDigest": {"$ref": "#/$defs/digest"}
+      }
+    },
+    "diagnostic": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "message", "instancePointer", "schemaPointer"],
+      "properties": {
+        "code": {"enum": ["JSON_SCHEMA_MISSING", "JSON_SCHEMA_DIGEST_MISMATCH", "JSON_SCHEMA_DIALECT_UNSUPPORTED", "JSON_SCHEMA_REFERENCE_DANGLING", "JSON_SCHEMA_REJECTED", "JSON_VERSION_UNSUPPORTED"]},
+        "message": {"type": "string", "minLength": 1},
+        "instancePointer": {"$ref": "#/$defs/jsonPointer"},
+        "schemaPointer": {"$ref": "#/$defs/jsonPointer"}
+      }
+    }
+  }
+}

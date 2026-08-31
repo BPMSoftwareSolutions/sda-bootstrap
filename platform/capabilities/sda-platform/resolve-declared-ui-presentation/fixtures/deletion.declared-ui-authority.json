@@ -1,0 +1,42 @@
+{
+  "authorityType": "declared-ui-authority.v1",
+  "authorityId": "fixture.deletion-ui",
+  "authorityDigest": "sha256:f423fcbb9799c172ae808b2f32a298b92be04e3181652e8b57a9f5b1a742d78e",
+  "promisedExperiences": [
+    {
+      "experienceRef": "experience.observable-result",
+      "presentationRequirement": "OBSERVABLE_OR_OPERABLE"
+    }
+  ],
+  "elements": [
+    {
+      "elementId": "information.result",
+      "semanticKind": "INFORMATION",
+      "semanticRole": "PRIMARY",
+      "content": { "readModelRef": "read-model.result" },
+      "informationRefs": ["information.result"],
+      "interactionRefs": [],
+      "feedbackRefs": [],
+      "stateRefs": ["state.result"],
+      "eventRefs": [],
+      "accessibilityObligations": [
+        { "obligationRef": "accessibility.result-name", "kind": "NAME" }
+      ],
+      "lineage": [
+        {
+          "originType": "PROMISED_EXPERIENCE",
+          "originRef": "experience.observable-result",
+          "authorityDigest": "sha256:4444444444444444444444444444444444444444444444444444444444444444"
+        },
+        {
+          "originType": "INFORMATION",
+          "originRef": "information.result",
+          "authorityDigest": "sha256:4444444444444444444444444444444444444444444444444444444444444444"
+        }
+      ]
+    }
+  ],
+  "relationships": [],
+  "adaptationIntents": [],
+  "presentationProfileRefs": []
+}

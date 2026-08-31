@@ -1,0 +1,43 @@
+{
+  "profileType": "semantic-corpus-derivation-profile.v1",
+  "authorityId": "generic-semantic-corpus-derivation-profile.v1",
+  "authorityVersion": "1.0.0",
+  "lifecycle": "ADMITTED",
+  "ontologyId": "generic-semantic-corpus-ontology.v1",
+  "ruleSetId": "generic-semantic-corpus-derivation-rule-set.v1",
+  "requiredReceiptKinds": ["GHERKIN_COMPILATION", "JSON_AUTHORITY_INGESTION"],
+  "permittedSourceClasses": ["CANONICAL_AUTHORITY", "ADMITTED_EVIDENCE", "PROJECTION_EVIDENCE"],
+  "prohibitedBasisKinds": ["DIRECTORY_PROXIMITY", "MATCHING_PROSE", "LEXICAL_SIMILARITY", "EMBEDDING_SIMILARITY", "MODEL_TESTIMONY"],
+  "recordOrder": {
+    "objectFields": ["kind", "semanticObjectId", "sourceRef", "sourcePointer", "derivationRuleId"],
+    "relationshipFields": ["kind", "fromSemanticObjectId", "toSemanticObjectId", "relationshipId", "derivationRuleId"],
+    "findingFields": ["code", "subjectRef", "sourceRef", "sourcePointer", "derivationRuleId"],
+    "comparator": "UTF8_BYTEWISE_ASCENDING",
+    "discoveryOrderInfluencesOrder": false
+  },
+  "diagnosticPrecedence": [
+    "SEMANTIC_CORPUS_AUTHORITY_DIGEST_MISMATCH",
+    "SEMANTIC_CORPUS_MIXED_GENERATION",
+    "SEMANTIC_CORPUS_RECEIPT_DIGEST_MISMATCH",
+    "SEMANTIC_CORPUS_SOURCE_DIGEST_MISMATCH",
+    "SEMANTIC_CORPUS_REPRESENTATION_DIGEST_MISMATCH",
+    "SEMANTIC_CORPUS_SOURCE_CLASS_NOT_PERMITTED",
+    "SEMANTIC_CORPUS_PROHIBITED_DERIVATION_BASIS",
+    "SEMANTIC_CORPUS_OBJECT_ID_COLLISION",
+    "SEMANTIC_CORPUS_RELATIONSHIP_ID_COLLISION",
+    "SEMANTIC_CORPUS_REFERENCE_OPEN",
+    "SEMANTIC_CORPUS_INGESTION_RECEIPT_OPEN",
+    "SEMANTIC_CORPUS_REPRODUCTION_PIN_MISMATCH"
+  ],
+  "evaluationRuleIds": [
+    "top-level-semantic-object-identity.v1",
+    "owner-scoped-semantic-object-identity.v1",
+    "gherkin-capability-object.v1",
+    "gherkin-scenario-object.v1",
+    "json-schema-object.v1",
+    "gherkin-capability-scenario-relationship.v1",
+    "json-contract-schema-relationship.v1"
+  ],
+  "reproductionRequired": true,
+  "outputContractId": "semantic-corpus-derivation-evidence.v1"
+}

@@ -1,0 +1,12 @@
+{
+  "authorityType": "execution-authorities.v1",
+  "executionAuthorities": [
+    {
+      "id": "tooling-migration-decision.v1",
+      "owningScenarioId": "decide-tooling-migration",
+      "operations": [
+        { "kind": "invoke-port", "portId": "decide-tooling-migration" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "kernelSpecification": "scenario-kernel.v1",
+  "executionVector": "scenario-kernel-execution-vector.v1",
+  "objects": [
+    "capability",
+    "scenario",
+    "scenario-input",
+    "scenario-event",
+    "scenario-outcome",
+    "scenario-transition",
+    "scenario-execution",
+    "language-binding"
+  ],
+  "executionLaws": {
+    "scenarioComposition": "input+event+outcome",
+    "outcomeMeaning": "experience-realized-through-observable-state",
+    "transitionProgress": ["narrowing", "termination"],
+    "bindingAuthority": "required-unless-direct-match"
+  }
+}

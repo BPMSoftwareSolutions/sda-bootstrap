@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/gherkin/canonical-gherkin-compiler.authority.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "authorityType",
+    "authorityId",
+    "authorityRef",
+    "authorityVersion",
+    "authorityDigest",
+    "providerSourceRef",
+    "providerSourceDigest",
+    "grammarCapabilityId",
+    "profileId",
+    "inputContracts",
+    "outputContracts",
+    "rules"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "contracts/canonical-gherkin-compiler.authority.schema.json"
+    },
+    "authorityType": {
+      "const": "canonical-gherkin-compiler-authority.v1"
+    },
+    "authorityId": {
+      "const": "canonical-gherkin-compiler.v1"
+    },
+    "authorityRef": {
+      "const": "capabilities/sda-platform/bind-canonical-feature-compilation/canonical-gherkin-compiler.authority.json"
+    },
+    "authorityVersion": {
+      "const": "1.0.0"
+    },
+    "authorityDigest": {
+      "$ref": "#/$defs/digest"
+    },
+    "providerSourceRef": {
+      "const": "tools/src/gherkin/application/canonical-gherkin-compiler.ts"
+    },
+    "providerSourceDigest": {
+      "$ref": "#/$defs/digest"
+    },
+    "grammarCapabilityId": {
+      "const": "sda-canonical-gherkin-grammar.v1"
+    },
+    "profileId": {
+      "const": "sda-annotated-gherkin-profile.v1"
+    },
+    "inputContracts": {
+      "type": "array",
+      "minItems": 4,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "outputContracts": {
+      "type": "array",
+      "minItems": 5,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "rules": {
+      "type": "array",
+      "minItems": 7,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    }
+  },
+  "$defs": {
+    "digest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    }
+  }
+}

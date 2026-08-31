@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.sda.local/sda-execution-plan-realization.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contractId", "capabilityId", "planId", "targetLanguage", "requiredMechanics", "mechanicFamilies", "disposition", "findings", "authorityClaims", "lineage"],
+  "properties": {
+    "contractId": {"const": "sda-execution-plan-realization.v1"},
+    "capabilityId": {"const": "realize-sda-execution-plan-mechanics"},
+    "planId": {"type": "string"},
+    "targetLanguage": {"type": "string"},
+    "requiredMechanics": {"type": "array", "items": {"type": "string"}},
+    "mechanicFamilies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["mechanicFamilyId", "authorityRef", "authorityDigest"],
+        "properties": {
+          "mechanicFamilyId": {"type": "string"},
+          "authorityRef": {"type": "string"},
+          "authorityDigest": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+        }
+      }
+    },
+    "disposition": {"enum": ["REALIZED", "REJECTED_REQUEST"]},
+    "findings": {"type": "array", "items": {"type": "object"}},
+    "mechanicPayloads": {"type": "object", "additionalProperties": true},
+    "authorityClaims": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["projection", "promotion", "behavioralConformance"],
+      "properties": {
+        "projection": {"const": "NOT_CLAIMED"},
+        "promotion": {"const": "NOT_CLAIMED"},
+        "behavioralConformance": {"const": "NOT_CLAIMED"}
+      }
+    },
+    "lineage": {"type": "array", "items": {"type": "string"}}
+  }
+}

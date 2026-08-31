@@ -1,0 +1,289 @@
+{
+  "resolutionType": "consumer-platform-mechanic-resolution.v1",
+  "projectionTarget": "csharp",
+  "requirements": [
+    {
+      "mechanicId": "contract-document-reading",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+    },
+    {
+      "mechanicId": "canonicalization",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+    },
+    {
+      "mechanicId": "schema-admission",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+    },
+    {
+      "mechanicId": "authority-resolution",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+    },
+    {
+      "mechanicId": "semantic-execution",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+    },
+    {
+      "mechanicId": "telemetry-observation",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+    },
+    {
+      "mechanicId": "scenario-invocation",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+    },
+    {
+      "mechanicId": "transition-binding-projection",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+    },
+    {
+      "mechanicId": "interface-delivery",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+    },
+    {
+      "mechanicId": "runtime-projection",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+    },
+    {
+      "mechanicId": "artifact-result-delivery",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+    },
+    {
+      "mechanicId": "authority-driven-transformation",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+    },
+    {
+      "mechanicId": "durable-artifact-materialization",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+    },
+    {
+      "mechanicId": "contract-validation",
+      "capabilityKind": "contract-validator",
+      "requiredBy": "scenario-contract-admission",
+      "requestedCapabilityId": "sda-schema-contract-admission.v1"
+    },
+    {
+      "mechanicId": "cli-delivery",
+      "capabilityKind": "interface-delivery",
+      "requiredBy": "interface:tooling-migration-decision-cli",
+      "requestedCapabilityId": "sda-json-cli.v1"
+    },
+    {
+      "mechanicId": "json-reading",
+      "capabilityKind": "interface-delivery",
+      "requiredBy": "interface:tooling-migration-decision-cli",
+      "requestedCapabilityId": "sda-json-cli.v1"
+    },
+    {
+      "mechanicId": "json-serialization",
+      "capabilityKind": "interface-delivery",
+      "requiredBy": "interface:tooling-migration-decision-cli",
+      "requestedCapabilityId": "sda-json-cli.v1"
+    },
+    {
+      "mechanicId": "event-port-invocation",
+      "capabilityKind": "event-port",
+      "requiredBy": "port:decide-tooling-migration",
+      "requestedCapabilityId": "sda-authority-transformation-port.v1"
+    }
+  ],
+  "resolutions": [
+    {
+      "mechanicId": "contract-document-reading",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-csharp-admitted-consumer-platform.v1",
+      "provider": "ScenarioKernel.Adapters.Consumer.AdmittedConsumerPlatform",
+      "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Consumer/AdmittedConsumerPlatform.cs",
+      "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+    },
+    {
+      "mechanicId": "canonicalization",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-csharp-admitted-consumer-platform.v1",
+      "provider": "ScenarioKernel.Adapters.Consumer.AdmittedConsumerPlatform",
+      "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Consumer/AdmittedConsumerPlatform.cs",
+      "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+    },
+    {
+      "mechanicId": "schema-admission",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-csharp-admitted-consumer-platform.v1",
+      "provider": "ScenarioKernel.Adapters.Consumer.AdmittedConsumerPlatform",
+      "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Consumer/AdmittedConsumerPlatform.cs",
+      "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+    },
+    {
+      "mechanicId": "authority-resolution",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-csharp-admitted-consumer-platform.v1",
+      "provider": "ScenarioKernel.Adapters.Consumer.AdmittedConsumerPlatform",
+      "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Consumer/AdmittedConsumerPlatform.cs",
+      "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+    },
+    {
+      "mechanicId": "semantic-execution",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-csharp-admitted-consumer-platform.v1",
+      "provider": "ScenarioKernel.Adapters.Consumer.AdmittedConsumerPlatform",
+      "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Consumer/AdmittedConsumerPlatform.cs",
+      "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+    },
+    {
+      "mechanicId": "telemetry-observation",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-csharp-admitted-consumer-platform.v1",
+      "provider": "ScenarioKernel.Adapters.Consumer.AdmittedConsumerPlatform",
+      "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Consumer/AdmittedConsumerPlatform.cs",
+      "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+    },
+    {
+      "mechanicId": "scenario-invocation",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-csharp-admitted-consumer-platform.v1",
+      "provider": "ScenarioKernel.Adapters.Consumer.AdmittedConsumerPlatform",
+      "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Consumer/AdmittedConsumerPlatform.cs",
+      "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+    },
+    {
+      "mechanicId": "transition-binding-projection",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-csharp-admitted-consumer-platform.v1",
+      "provider": "ScenarioKernel.Adapters.Consumer.AdmittedConsumerPlatform",
+      "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Consumer/AdmittedConsumerPlatform.cs",
+      "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+    },
+    {
+      "mechanicId": "interface-delivery",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-csharp-admitted-consumer-platform.v1",
+      "provider": "ScenarioKernel.Adapters.Consumer.AdmittedConsumerPlatform",
+      "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Consumer/AdmittedConsumerPlatform.cs",
+      "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+    },
+    {
+      "mechanicId": "runtime-projection",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-csharp-admitted-consumer-platform.v1",
+      "provider": "ScenarioKernel.Adapters.Consumer.AdmittedConsumerPlatform",
+      "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Consumer/AdmittedConsumerPlatform.cs",
+      "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+    },
+    {
+      "mechanicId": "artifact-result-delivery",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-csharp-admitted-consumer-platform.v1",
+      "provider": "ScenarioKernel.Adapters.Consumer.AdmittedConsumerPlatform",
+      "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Consumer/AdmittedConsumerPlatform.cs",
+      "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+    },
+    {
+      "mechanicId": "authority-driven-transformation",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-csharp-admitted-consumer-platform.v1",
+      "provider": "ScenarioKernel.Adapters.Consumer.AdmittedConsumerPlatform",
+      "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Consumer/AdmittedConsumerPlatform.cs",
+      "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+    },
+    {
+      "mechanicId": "durable-artifact-materialization",
+      "capabilityKind": "consumer-runtime",
+      "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-csharp-admitted-consumer-platform.v1",
+      "provider": "ScenarioKernel.Adapters.Consumer.AdmittedConsumerPlatform",
+      "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Consumer/AdmittedConsumerPlatform.cs",
+      "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+    },
+    {
+      "mechanicId": "contract-validation",
+      "capabilityKind": "contract-validator",
+      "requiredBy": "scenario-contract-admission",
+      "requestedCapabilityId": "sda-schema-contract-admission.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-schema-contract-admission.v1",
+      "provider": "ScenarioKernel.Adapters.Schema.JsonSchemaContractValidator",
+      "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Schema/JsonSchemaContractValidator.cs",
+      "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+    },
+    {
+      "mechanicId": "cli-delivery",
+      "capabilityKind": "interface-delivery",
+      "requiredBy": "interface:tooling-migration-decision-cli",
+      "requestedCapabilityId": "sda-json-cli.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-json-cli.v1",
+      "provider": "ScenarioKernel.Adapters.Consumer.AdmittedConsumerPlatform",
+      "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Consumer/AdmittedConsumerPlatform.cs",
+      "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+    },
+    {
+      "mechanicId": "json-reading",
+      "capabilityKind": "interface-delivery",
+      "requiredBy": "interface:tooling-migration-decision-cli",
+      "requestedCapabilityId": "sda-json-cli.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-json-cli.v1",
+      "provider": "ScenarioKernel.Adapters.Consumer.AdmittedConsumerPlatform",
+      "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Consumer/AdmittedConsumerPlatform.cs",
+      "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+    },
+    {
+      "mechanicId": "json-serialization",
+      "capabilityKind": "interface-delivery",
+      "requiredBy": "interface:tooling-migration-decision-cli",
+      "requestedCapabilityId": "sda-json-cli.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-json-cli.v1",
+      "provider": "ScenarioKernel.Adapters.Consumer.AdmittedConsumerPlatform",
+      "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Consumer/AdmittedConsumerPlatform.cs",
+      "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+    },
+    {
+      "mechanicId": "event-port-invocation",
+      "capabilityKind": "event-port",
+      "requiredBy": "port:decide-tooling-migration",
+      "requestedCapabilityId": "sda-authority-transformation-port.v1",
+      "status": "AVAILABLE",
+      "capabilityId": "sda-authority-transformation-port.v1",
+      "provider": "ScenarioKernel.Adapters.Consumer.SemanticTransformationEngine",
+      "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Consumer/SemanticTransformationEngine.cs",
+      "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+    }
+  ],
+  "disposition": "RESOLVED"
+}

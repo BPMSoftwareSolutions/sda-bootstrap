@@ -1,0 +1,27 @@
+{
+  "evidenceType": "presentation-capability-projection-evidence.v1",
+  "capabilityId": "project-semantic-element-realization",
+  "featureHash": "sha256:eee918271c217637fd9a5af815c2fa7436a74812fff2a00b78d8813fad705aea",
+  "projectionManifestHash": "sha256:6c090ca078fc9695885bbe41ddaaa62f9f3be67fa0f0b4679359f5df43500e90",
+  "projectionTargets": ["node", "python", "csharp"],
+  "executableOrigin": "PROJECTED_ONLY",
+  "runtimeHashes": {
+    "node": "sha256:c9343f53e50bdc30721ef1fae20fcbfbb8c1977c2030958387f8421e06fd2f85",
+    "python": "sha256:fa923fa52e33db166fe7293894dc7e3bfe3002fa405943661b3c68e452d9a4ea",
+    "csharp": "sha256:f90f5c3813eee6ac4d18e0303e54196cd36c6ea5fa72e9d8701a50ff91f7db88"
+  },
+  "targetFixtureResults": { "node": "7_PASS", "python": "6_PASS", "csharp": "6_PASS" },
+  "equivalenceSubject": ["disposition", "outcome"],
+  "fixtureOutcomeHashes": {
+    "fixture-1-information-literal": "sha256:7a468b9a6cc5e0c351e29ee0166491da47a5522286c35663fa9b8574ec07c0c5",
+    "fixture-2-action-readmodel": "sha256:ecb81e87e0379cfc6d262791c130344027519130c58db9dec33060497629646a",
+    "fixture-3-input-literal": "sha256:9654445d2c96218e15da4e8c3d1d10ef32040d6be0c5003b0585906e4673444f",
+    "fixture-4-navigation-readmodel": "sha256:0c717277f1d4627e40020e1241ea1749edc1cd4b4fc2fb5c2b9662ca5f1c0063",
+    "fixture-5-feedback-literal": "sha256:1f4815cab5194cac4decd8c73dcd23eb73de08263fad2ff10b461b07814f2181",
+    "fixture-6-region-readmodel": "sha256:45526b8c4f4582a6303a02ead956328c7d033c4f5e3a2b2f7a04190c6a87b2c2"
+  },
+  "crossTargetDisposition": "EQUIVALENT",
+  "legacyOracleDisposition": "PENDING_NATIVE_REALIZATION_EQUIVALENCE",
+  "promotionDisposition": "NOT_PROMOTED",
+  "disposition": "PROJECTED_AND_CROSS_TARGET_VERIFIED"
+}

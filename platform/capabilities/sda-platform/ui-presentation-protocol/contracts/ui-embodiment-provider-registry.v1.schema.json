@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/platform/ui-presentation/ui-embodiment-provider-registry.v1.schema.json",
+  "title": "UI embodiment provider registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["registryType", "protocolType", "protocolSchemaDigest", "providers"],
+  "properties": {
+    "registryType": { "const": "ui-embodiment-provider-registry.v1" },
+    "protocolType": { "const": "sda-ui-presentation-ir.v2" },
+    "protocolSchemaDigest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "providers": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["providerId", "providerKind", "embodimentTarget", "capabilityId", "implementationRef", "configuration"],
+        "properties": {
+          "providerId": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._:-]*$" },
+          "providerKind": { "const": "browser-module-shell.v1" },
+          "embodimentTarget": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+          "capabilityId": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._:-]*$" },
+          "implementationRef": { "type": "string", "minLength": 1 },
+          "configuration": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["outputRoot", "documentBaseHref", "rootElementId", "runtimeModuleUrl", "scripts"],
+            "properties": {
+              "outputRoot": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+              "documentBaseHref": { "type": "string", "pattern": "^/[a-z][a-z0-9-]*/$" },
+              "rootElementId": { "type": "string", "minLength": 1 },
+              "runtimeModuleUrl": { "type": "string", "pattern": "^/__sda/" },
+              "scripts": { "type": "array", "items": { "type": "string", "pattern": "^/__sda/" }, "uniqueItems": true }
+            }
+          }
+        }
+      }
+    }
+  }
+}

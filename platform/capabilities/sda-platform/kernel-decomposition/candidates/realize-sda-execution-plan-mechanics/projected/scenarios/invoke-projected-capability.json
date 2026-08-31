@@ -1,0 +1,37 @@
+{
+  "scenarioId": "invoke-projected-capability",
+  "input": {
+    "inputId": "projected-capability-invocation-request",
+    "contract": {
+      "contractId": "projected-capability-invocation-request.v1"
+    }
+  },
+  "event": {
+    "eventId": "invoke-projected-capability",
+    "executionAuthorityId": "invoke-projected-capability.v1"
+  },
+  "outcome": {
+    "outcomeId": "projected-capability-invocation-result",
+    "contract": {
+      "contractId": "projected-capability-invocation-result.v1"
+    },
+    "experience": {
+      "statement": "one lineage-preserving nested capability result is available"
+    }
+  },
+  "gherkin": {
+    "given": {
+      "semanticRef": "invoke-projected-capability.given",
+      "text": "a lineage-bound projected capability request"
+    },
+    "when": {
+      "semanticRef": "invoke-projected-capability.when",
+      "text": "the projected capability is invoked"
+    },
+    "then": {
+      "semanticRef": "invoke-projected-capability.then",
+      "text": "one lineage-preserving nested capability result is available"
+    }
+  },
+  "name": "Invoke a projected capability"
+}

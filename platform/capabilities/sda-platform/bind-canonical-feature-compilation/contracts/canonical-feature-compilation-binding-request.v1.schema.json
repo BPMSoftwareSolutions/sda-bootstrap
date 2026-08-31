@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/gherkin/canonical-feature-compilation-binding-request.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contractId", "parseEvidence", "caseEvidence", "profileEvidence", "compilerAuthorityRef", "compilerAuthorityDigest"],
+  "properties": {
+    "contractId": {"const": "canonical-feature-compilation-binding-request.v1"},
+    "parseEvidence": {"type": "object"},
+    "caseEvidence": {"type": "object"},
+    "profileEvidence": {"type": "object"},
+    "compilerAuthorityRef": {"type": "string", "minLength": 1},
+    "compilerAuthorityDigest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"}
+  }
+}

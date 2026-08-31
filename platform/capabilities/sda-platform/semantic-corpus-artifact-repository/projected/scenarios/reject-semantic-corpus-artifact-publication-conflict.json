@@ -1,0 +1,38 @@
+{
+  "scenarioId": "reject-semantic-corpus-artifact-publication-conflict",
+  "input": {
+    "inputId": "semantic-corpus-artifact-publication-request",
+    "contract": {
+      "contractId": "semantic-corpus-artifact-publication-request.v1"
+    }
+  },
+  "event": {
+    "eventId": "conflicting-semantic-corpus-artifact-publication-requested",
+    "executionAuthorityId": "reject-semantic-corpus-artifact-publication-conflict.v1"
+  },
+  "outcome": {
+    "outcomeId": "rejected-semantic-corpus-artifact-publication-evidence",
+    "contract": {
+      "contractId": "semantic-corpus-artifact-publication-evidence.v1"
+    },
+    "experience": {
+      "statement": "publication is rejected without overwrite, partial artifact, pointer movement, or reinterpretation of either digest"
+    },
+    "terminal": true
+  },
+  "gherkin": {
+    "given": {
+      "semanticRef": "reject-semantic-corpus-artifact-publication-conflict.given",
+      "text": "supplied bytes do not match the expected digest or an occupied content address contains different bytes"
+    },
+    "when": {
+      "semanticRef": "reject-semantic-corpus-artifact-publication-conflict.when",
+      "text": "publication admission is evaluated"
+    },
+    "then": {
+      "semanticRef": "reject-semantic-corpus-artifact-publication-conflict.then",
+      "text": "publication is rejected without overwrite, partial artifact, pointer movement, or reinterpretation of either digest"
+    }
+  },
+  "name": "Reject digest mismatch or occupied-address byte conflict"
+}

@@ -1,0 +1,135 @@
+{
+  "conformanceType": "semantic-vector-index-provider-conformance.v1",
+  "lifecycle": "ADMITTED",
+  "platformCapabilityId": "sda-semantic-vector-index.v1",
+  "providerAuthorityRef": "capabilities/sda-platform/bind-deterministic-semantic-vector-index/deterministic-semantic-vector-indexer.authority.json",
+  "providerAuthorityDigest": "sha256:af37a8c8a8678ced4c859ed8caa02b3feede2122e287839407ece25aed1a008b",
+  "providerAuthoritySourceDigest": "sha256:cd8b7489186d703bfbcec4cf9a3de1d4e736d40c37376682395084038baf02d9",
+  "providerSourceSet": [
+    {
+      "sourceRef": "languages/typescript/runtimes/node/semantic-vector-index-provider.mjs",
+      "sourceDigest": "sha256:753cb10ae8b4dadaaca56c0c0a15bce0d8a69b9b9fb35ed630a53efc30f32261"
+    },
+    {
+      "sourceRef": "languages/typescript/runtimes/node/node-mechanic-registry-loader.mjs",
+      "sourceDigest": "sha256:9a29843fac88fefaeb9308c14a661904d41744f5c9e1a43ab98d7f1646d12704"
+    }
+  ],
+  "contracts": [
+    {
+      "contractId": "semantic-vector-index-input.v1",
+      "sourceRef": "capabilities/sda-platform/bind-deterministic-semantic-vector-index/contracts/semantic-vector-index-input.v1.schema.json",
+      "sourceDigest": "sha256:ca235d9723e7e13acae3621a3cc25f21a89bd18c46180fd34385281f9cfc9a5b"
+    },
+    {
+      "contractId": "semantic-vector-index-record.v1",
+      "sourceRef": "capabilities/sda-platform/bind-deterministic-semantic-vector-index/contracts/semantic-vector-index-record.v1.schema.json",
+      "sourceDigest": "sha256:6cfd3bce2179b948905525b8ba08097e100b9e9240fa9697de1593cc34be1998"
+    },
+    {
+      "contractId": "deterministic-semantic-vector-indexer.authority.v1",
+      "sourceRef": "capabilities/sda-platform/bind-deterministic-semantic-vector-index/contracts/deterministic-semantic-vector-indexer.authority.schema.json",
+      "sourceDigest": "sha256:aa5797a38a9061300f25fbbb50cc0ea8a4400efebb818eac93f6dfc171ccbdcb"
+    },
+    {
+      "contractId": "semantic-vector-index-provider-conformance.v1",
+      "sourceRef": "capabilities/sda-platform/verify-semantic-vector-index-conformance/contracts/semantic-vector-index-provider-conformance.v1.schema.json",
+      "sourceDigest": "sha256:2e643e75afe1b6ba172b13ba4075466838405b114817dd85748456c0e2a6ba9c"
+    }
+  ],
+  "conformanceSuiteRef": "tools/tests/conformance/semantic-vector-index.test.js",
+  "conformanceSuiteDigest": "sha256:34b5e3373458680fe2e129c106920a1d05ea854e6f43926e7ec3380b684bf427",
+  "partitions": [
+    {
+      "partitionId": "AUTHORITY_DIGEST_RECOMPUTES",
+      "disposition": "SATISFIED",
+      "assertion": "The provider authority reproduces its own canonical digest and satisfies its admitted schema."
+    },
+    {
+      "partitionId": "PROVIDER_SOURCES_PINNED",
+      "disposition": "SATISFIED",
+      "assertion": "Every declared provider source and the registry binding reproduce their pinned digests."
+    },
+    {
+      "partitionId": "INTEGER_COORDINATES_ONLY",
+      "disposition": "SATISFIED",
+      "assertion": "Every embedding coordinate and every overlap score is a non-negative integer; no floating point value enters a record."
+    },
+    {
+      "partitionId": "DETERMINISTIC_REPRODUCTION",
+      "disposition": "SATISFIED",
+      "assertion": "Identical pinned inputs reproduce identical index, query vector, and record digests and identical candidates."
+    },
+    {
+      "partitionId": "DISCOVERY_ORDER_INDEPENDENCE",
+      "disposition": "SATISFIED",
+      "assertion": "Reordered corpus discovery produces identical recall and identical scores."
+    },
+    {
+      "partitionId": "PROVIDER_OWNED_ORDERING",
+      "disposition": "SATISFIED",
+      "assertion": "Candidates arrive in the single declared order so no consumer needs a comparator of its own."
+    },
+    {
+      "partitionId": "SIMILARITY_IS_SYMMETRIC_INTEGER_OVERLAP",
+      "disposition": "SATISFIED",
+      "assertion": "Overlap similarity is symmetric and evaluated in integer arithmetic without division or square root."
+    },
+    {
+      "partitionId": "NOVEL_WORDING_RECALL",
+      "disposition": "SATISFIED",
+      "assertion": "Spacing, reordering, and typo wording invisible to exact substring containment is recalled by the vector channel."
+    },
+    {
+      "partitionId": "UNRELATED_SUBJECT_NOT_RECALLED",
+      "disposition": "SATISFIED",
+      "assertion": "A subject sharing no meaningful coordinates stays below the declared minimum overlap."
+    },
+    {
+      "partitionId": "UNADMITTED_MODEL_REFUSED",
+      "disposition": "SATISFIED",
+      "assertion": "An embedding model other than the admitted reference model is refused before evaluation."
+    },
+    {
+      "partitionId": "MISMATCHED_AUTHORITY_REFUSED",
+      "disposition": "SATISFIED",
+      "assertion": "A mismatched provider authority digest is refused before evaluation."
+    },
+    {
+      "partitionId": "MALFORMED_REQUEST_REFUSED",
+      "disposition": "SATISFIED",
+      "assertion": "A request that violates the admitted input contract is refused by schema admission."
+    },
+    {
+      "partitionId": "CANDIDATES_CLAIM_NO_AUTHORITY",
+      "disposition": "SATISFIED",
+      "assertion": "The record carries no grounding, authority, admission, or conformance claim of its own."
+    }
+  ],
+  "boundaries": {
+    "candidatesAreFacts": false,
+    "mayGroundResults": false,
+    "mayAddAuthority": false,
+    "mayReorderConsumerResults": false,
+    "externalServiceUsed": false,
+    "floatingPointCoordinatesUsed": false
+  },
+  "retainedForLaterAdmission": [
+    {
+      "code": "SDA_SEMANTIC_EMBEDDING_V1",
+      "reason": "This reference provider embeds internally with a pinned local model. A separately swappable sda-semantic-embedding.v1 capability is required before an external or learned embedding model may be used, and is not admitted here."
+    },
+    {
+      "code": "LEARNED_SEMANTIC_SIMILARITY",
+      "reason": "Character n-gram overlap recalls novel surface wording. It does not recall synonymy or paraphrase, which would require a learned model and its own governance."
+    },
+    {
+      "code": "CROSS_TARGET_VECTOR_PARITY",
+      "reason": "Only the Node reference provider is admitted. Python and C# vector parity remains open and must compare pinned inputs and ordered testimony rather than coordinates."
+    }
+  ],
+  "findings": [],
+  "disposition": "SDA_SEMANTIC_VECTOR_INDEX_PROVIDER_CONFORMANT",
+  "receiptDigestAlgorithm": "sha256 of canonical recursive-key-order JSON excluding receiptDigest",
+  "receiptDigest": "sha256:f9cdf606577b9daad47a8aa3d258bddb412c378af9d29a3fbc28fd21e729e87f"
+}

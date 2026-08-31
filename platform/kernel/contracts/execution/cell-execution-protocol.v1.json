@@ -1,0 +1,13 @@
+{
+  "protocolType": "cell-execution-protocol.v1",
+  "protocolId": "cell-execution-protocol.v1",
+  "steps": [
+    { "stepId": "admit-cell-input", "sequence": 0, "consumes": "cell input token", "produces": "admitted input or rejection outcome" },
+    { "stepId": "resolve-cell-execution-authority", "sequence": 1, "consumes": "admitted input and authority identity", "produces": "bound execution authority or resolution failure outcome" },
+    { "stepId": "execute-or-descend", "sequence": 2, "consumes": "bound authority and admitted input", "produces": "candidate outcome or execution failure outcome" },
+    { "stepId": "admit-cell-outcome", "sequence": 3, "consumes": "candidate outcome", "produces": "admitted typed outcome variant or rejection outcome" },
+    { "stepId": "resolve-declared-outgoing-route", "sequence": 4, "consumes": "admitted outcome variant and graph authority", "produces": "declared edge tokens or terminal completion" }
+  ],
+  "routingAuthority": "outcome-variant-and-declared-edge-only",
+  "undeclaredControlFlowDisposition": "reject"
+}

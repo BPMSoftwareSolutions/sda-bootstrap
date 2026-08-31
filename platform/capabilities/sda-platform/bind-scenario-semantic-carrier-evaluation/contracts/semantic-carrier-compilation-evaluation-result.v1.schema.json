@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/semantic-carrier/semantic-carrier-compilation-evaluation-result.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contractId",
+    "graphDigest",
+    "subjectKind",
+    "subjectCapabilityId",
+    "evaluatorCapabilityId",
+    "evaluatorManufacturedEvidenceCount",
+    "evidenceInputDigest",
+    "disposition",
+    "findings",
+    "receiptDigest"
+  ],
+  "properties": {
+    "contractId": {
+      "const": "semantic-carrier-compilation-evaluation-result.v1"
+    },
+    "graphDigest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "subjectKind": {
+      "enum": [
+        "ORDINARY_CAPABILITY",
+        "EVALUATOR_REPLACEMENT"
+      ]
+    },
+    "subjectCapabilityId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "evaluatorCapabilityId": {
+      "const": "evaluate-semantic-carrier-compilation-evidence"
+    },
+    "evaluatorManufacturedEvidenceCount": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "evidenceInputDigest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "disposition": {
+      "enum": [
+        "REVIEW_READY_NON_EVALUATOR_SUBJECT",
+        "EVALUATION_HELD",
+        "EVALUATOR_REPLACEMENT_REQUIRES_INDEPENDENT_ADJUDICATION"
+      ]
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "stage",
+          "path",
+          "code",
+          "message"
+        ],
+        "properties": {
+          "stage": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "code": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9_]*$"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "receiptDigest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    }
+  }
+}

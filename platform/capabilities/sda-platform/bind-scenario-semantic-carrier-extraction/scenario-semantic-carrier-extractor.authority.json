@@ -1,0 +1,53 @@
+{
+  "$schema": "contracts/scenario-semantic-carrier-extractor.authority.schema.json",
+  "authorityType": "scenario-semantic-carrier-extractor-provider-authority.v1",
+  "authorityId": "scenario-semantic-carrier-extractor-provider.v1",
+  "authorityRef": "capabilities/sda-platform/bind-scenario-semantic-carrier-extraction/scenario-semantic-carrier-extractor.authority.json",
+  "authorityVersion": "1.0.0",
+  "platformCapabilityId": "sda-scenario-semantic-carrier-extraction-port.v1",
+  "lifecycle": "ADMITTED",
+  "authorityDigestAlgorithm": "sha256 of canonical recursive-key-order JSON excluding authorityDigest",
+  "inputContracts": [
+    "semantic-carrier-extraction-request.v1"
+  ],
+  "outputContracts": [
+    "semantic-carrier-extraction-result.v1",
+    "scenario-semantic-carrier-extraction-provider-conformance.v1"
+  ],
+  "subordinateAuthorities": [],
+  "responsibility": "Verify one exact conformant v2 or v3 validator receipt against unchanged carrier bytes, map only declared identities and relationships into one deterministically ordered canonical graph, preserve complete v3 management authority, digest the graph, and establish carrier blackout.",
+  "prohibitedResponsibilities": [
+    "carrier validation",
+    "carrier repair",
+    "semantic authority projection",
+    "canonical blueprint projection",
+    "Gherkin projection",
+    "proof manufacture",
+    "review-ready adjudication",
+    "publication"
+  ],
+  "compositionRules": [
+    "exact-v2-or-v3-validator-pass-receipt-required",
+    "same-carrier-byte-and-source-lineage-required",
+    "declared-identities-and-relationships-only",
+    "v3-management-authority-preserved-without-inference",
+    "code-point-stable-ordering",
+    "canonical-json-graph-digest",
+    "carrier-bytes-absent-from-output",
+    "ordered-attributable-held-findings",
+    "extractor-does-not-project-or-evaluate"
+  ],
+  "providerObservation": {
+    "disposition": "SATISFIED",
+    "providerSourceSet": [
+      {
+        "sourceRef": "languages/typescript/runtimes/node/semantic-carrier-extractor-provider.mjs",
+        "sourceDigest": "sha256:e936c097f3e5412f6cf4521ca4a841eff847de3fa63d0e71b266815d04a23983"
+      }
+    ],
+    "implementationVersion": "1.1.0",
+    "registryBindingRef": "kernel/semantic-authority/consumer/node-mechanic-registrations/scenario-semantic-carrier-extraction.registration.authority.json",
+    "registryBindingDigest": "sha256:6994bc9bfe799073d53eef94c41fe0630c1e39292b674f3f34fbf86f49246eeb"
+  },
+  "authorityDigest": "sha256:aaa5ba504de4efc04ed802c729c66c74e9a1770edf2589a24701ecd11ba20a18"
+}

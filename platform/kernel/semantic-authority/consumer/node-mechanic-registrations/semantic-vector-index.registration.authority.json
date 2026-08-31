@@ -1,0 +1,12 @@
+{
+  "$schema": "../../../schemas/node-mechanic-registration-authority.v1.schema.json",
+  "registrationAuthorityType": "node-mechanic-registration-authority.v1",
+  "authorityId": "node-semantic-vector-index-registration.v1",
+  "platformCapabilityId": "sda-semantic-vector-index.v1",
+  "kind": "direct",
+  "providerModule": "semantic-vector-index-provider.mjs",
+  "providerExport": "invokeSemanticVectorIndex",
+  "invocation": "configuration",
+  "authorityDigestAlgorithm": "sha256 of canonical recursive-key-order JSON excluding authorityDigest",
+  "authorityDigest": "sha256:1e5ad60e0ebb67cbf2e2a2d73a465f3a237bc3283a72ad12dbd573a79a4bab17"
+}

@@ -1,0 +1,16 @@
+{
+  "vectorType": "ui-capability-vector.v1",
+  "sourcePresentationIrType": "sda-ui-presentation-ir.v3",
+  "sourcePresentationIrDigest": "sha256:252aeaae2d7879dd54bed41266340c026f266c73ca59b45a4453594e4e587205",
+  "requirements": [
+    { "capabilityId": "accessibility.live-feedback.v1", "category": "ACCESSIBILITY", "sourceRefs": ["accessibility.status-live"], "evidenceRequirements": ["ACCESSIBILITY", "OBSERVATION"] },
+    { "capabilityId": "accessibility.name.v1", "category": "ACCESSIBILITY", "sourceRefs": ["accessibility.result-name"], "evidenceRequirements": ["ACCESSIBILITY", "OBSERVATION"] },
+    { "capabilityId": "accessibility.operable-action.v1", "category": "ACCESSIBILITY", "sourceRefs": ["accessibility.resolve-operable"], "evidenceRequirements": ["ACCESSIBILITY", "OBSERVATION"] },
+    { "capabilityId": "adaptation.grouping.v1", "category": "ADAPTATION", "sourceRefs": ["rule.adaptation.compact-wide"], "evidenceRequirements": ["ADAPTATION", "OBSERVATION"] },
+    { "capabilityId": "adaptation.order.v1", "category": "ADAPTATION", "sourceRefs": ["rule.adaptation.compact-wide"], "evidenceRequirements": ["ADAPTATION", "OBSERVATION"] },
+    { "capabilityId": "composition.flow.v1", "category": "COMPOSITION", "sourceRefs": ["node.root"], "evidenceRequirements": ["OBSERVATION"] },
+    { "capabilityId": "content.semantic-element.v1", "category": "CONTENT", "sourceRefs": ["action.resolve", "feedback.resolution-status", "information.result"], "evidenceRequirements": ["OBSERVATION"] },
+    { "capabilityId": "interaction.activate.v1", "category": "INTERACTION", "sourceRefs": ["binding.action.resolve.0"], "evidenceRequirements": ["OBSERVATION"] }
+  ],
+  "canonicalDigest": "sha256:96ccfedae2000305091b1c37130816cb917c1a1d4b03d9b5b3d50cb5b2113489"
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/tooling/consumer-projection-plan-evidence.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["evidenceType", "plan", "scenarios", "transitions", "capability", "query", "queries", "mechanicResolution", "mechanicResolutions", "expectedTelemetry"],
+  "properties": {
+    "evidenceType": { "const": "consumer-projection-plan-evidence.v1" },
+    "plan": { "type": "object" },
+    "scenarios": { "type": "array" },
+    "transitions": { "type": "array" },
+    "capability": { "type": "object" },
+    "query": { "type": "object" },
+    "queries": { "type": "object" },
+    "mechanicResolution": { "type": "object" },
+    "mechanicResolutions": { "type": "object" },
+    "expectedTelemetry": { "type": "object" }
+  }
+}

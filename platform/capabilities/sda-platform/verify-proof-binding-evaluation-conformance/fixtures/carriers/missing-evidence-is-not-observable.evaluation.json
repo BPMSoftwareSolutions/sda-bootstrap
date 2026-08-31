@@ -1,0 +1,20 @@
+{
+  "contractId": "profile-governed-proof-binding-evaluation-input.v1",
+  "payload": {
+    "evaluationCaseId": "missing-evidence-is-not-observable",
+    "profileId": "generic-proof-binding-evaluation-conformance-profile.v1",
+    "snapshotDigest": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "proofObligationId": "obligation:missing-evidence",
+    "subjectSemanticObjectId": "scenario:missing-evidence",
+    "authorityApplicability": "REQUIRED",
+    "bindingCandidates": [],
+    "evidenceState": "ABSENT",
+    "reproduction": {
+      "orderedInputDigest": "sha256:0e2f8e61b6ad829192ad00ca97548df61248f18d7fc489fb3c60af0333c58c0c",
+      "evaluationRuleIds": [
+        "evaluation-order.v1",
+        "bind-evidence-subject.v1"
+      ]
+    }
+  }
+}

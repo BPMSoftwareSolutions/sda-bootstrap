@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/consumer-conformance-query-authority.v1.schema.json",
+  "title": "Consumer Conformance Query Authority",
+  "description": "Canonical authority from which consumer-facing conformance query implementations are projected.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["queryType", "queryId", "subjects", "requiredClosures", "dispositionPolicy"],
+  "properties": {
+    "queryType": { "const": "consumer-conformance-query-authority.v1" },
+    "queryId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "subjects": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": ["feature", "scenario", "contract", "execution-authority", "transition", "interface", "projection", "telemetry", "execution", "behavior", "platform-capability", "executable-origin"]
+      }
+    },
+    "requiredClosures": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": [
+          "feature-to-scenario",
+          "scenario-to-contract",
+          "scenario-to-event-authority",
+          "outcome-to-transition",
+          "transition-to-next-input",
+          "scenario-to-interface",
+          "execution-to-telemetry",
+          "scenario-to-projection",
+          "expected-to-observed-execution",
+          "root-to-terminal-behavior",
+          "required-mechanic-to-platform-capability",
+          "dynamic-semantic-execution",
+          "domain-contract-admission",
+          "artifact-materialization",
+          "consumer-executable-origin"
+        ]
+      }
+    },
+    "dispositionPolicy": { "const": "all-required-closures-conform" }
+  }
+}

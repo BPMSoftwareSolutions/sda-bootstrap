@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/consumer-projection-equivalence-authority.v1.schema.json",
+  "title": "Consumer Projection Equivalence Authority",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["authorityType", "authorityId", "canonicalization", "comparisonStrategy", "requirements"],
+  "properties": {
+    "authorityType": { "const": "consumer-projection-equivalence-authority.v1" },
+    "authorityId": { "const": "consumer-projection-equivalence.v1" },
+    "canonicalization": { "const": "recursive-key-sorted-json.v1" },
+    "comparisonStrategy": { "const": "canonical-target-hub-and-spoke.v1" },
+    "requirements": {
+      "type": "array",
+      "minItems": 5,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": [
+          "successful-execution",
+          "canonical-outcome-equivalence",
+          "scenario-lineage-identity",
+          "projected-only-executable-origin",
+          "resolved-platform-mechanics"
+        ]
+      }
+    }
+  }
+}

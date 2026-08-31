@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/platform/consumer-execution/execute-declared-scenario-composition.authority.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["eventAuthorityType", "eventId", "authorityId", "inputContractId", "outcomeContractId", "operation", "invariants", "governedStops"],
+  "properties": {
+    "$schema": { "type": "string", "minLength": 1 },
+    "eventAuthorityType": { "const": "declarative-scenario-composition-authority.v1" },
+    "eventId": { "const": "execute-declared-scenario-composition" },
+    "authorityId": { "const": "execute-declared-scenario-composition.v1" },
+    "inputContractId": { "const": "composed-scenario-execution-context.v1" },
+    "outcomeContractId": { "const": "composed-scenario-execution-testimony.v1" },
+    "operation": { "const": "execute-ordered-invoke-scenario-operations" },
+    "invariants": {
+      "type": "array",
+      "minItems": 5,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "each-child-is-an-independent-kernel-scenario",
+          "each-intermediate-input-and-outcome-is-contract-admitted",
+          "previous-admitted-outcome-is-the-next-carrier",
+          "root-and-parent-execution-lineage-is-preserved",
+          "execution-stops-at-the-first-non-success",
+          "no-later-scenario-executes-after-a-governed-stop",
+          "composition-does-not-claim-acceptance"
+        ]
+      }
+    },
+    "governedStops": {
+      "type": "array",
+      "minItems": 7,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "UNKNOWN_SCENARIO_REJECTED",
+          "RECURSIVE_INVOCATION_REJECTED",
+          "INTERMEDIATE_CONTRACT_REJECTED",
+          "BINDING_AUTHORITY_REJECTED",
+          "INPUT_REJECTED",
+          "EVENT_FAILED",
+          "OUTCOME_REJECTED"
+        ]
+      }
+    }
+  }
+}

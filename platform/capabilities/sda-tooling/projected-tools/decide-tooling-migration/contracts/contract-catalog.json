@@ -1,0 +1,4 @@
+{
+  "tooling-migration-decision-input.v1": "../../../tooling-migration-conveyor/contracts/tooling-migration-decision-input.v1.schema.json",
+  "tooling-migration-decision.v1": "../../../tooling-migration-conveyor/contracts/tooling-migration-decision.v1.schema.json"
+}

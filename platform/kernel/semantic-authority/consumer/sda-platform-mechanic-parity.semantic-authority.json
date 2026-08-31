@@ -1,0 +1,20 @@
+{
+  "parityType": "sda-platform-mechanic-parity.v1",
+  "profileId": "sda-consumer-mandatory-mechanics.v1",
+  "appliesToBindingStatuses": ["IMPLEMENTING"],
+  "requiredMechanics": [
+    "contract-document-reading",
+    "canonicalization",
+    "schema-admission",
+    "authority-resolution",
+    "semantic-execution",
+    "telemetry-observation",
+    "scenario-invocation",
+    "transition-binding-projection",
+    "interface-delivery",
+    "runtime-projection",
+    "artifact-result-delivery"
+    ,"authority-driven-transformation"
+    ,"durable-artifact-materialization"
+  ]
+}

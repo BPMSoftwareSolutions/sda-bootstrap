@@ -1,0 +1,37 @@
+{
+  "scenarioId": "verify-artifact-materialization",
+  "input": {
+    "inputId": "artifact-materialization-verification-request",
+    "contract": {
+      "contractId": "artifact-materialization-verification-request.v1"
+    }
+  },
+  "event": {
+    "eventId": "verify-artifact-materialization",
+    "executionAuthorityId": "verify-artifact-materialization.v1"
+  },
+  "outcome": {
+    "outcomeId": "artifact-materialization-conformance",
+    "contract": {
+      "contractId": "artifact-materialization-conformance.v1"
+    },
+    "experience": {
+      "statement": "one artifact-materialization conformance disposition is established"
+    }
+  },
+  "gherkin": {
+    "given": {
+      "semanticRef": "verify-artifact-materialization.given",
+      "text": "observed execution and required artifact references"
+    },
+    "when": {
+      "semanticRef": "verify-artifact-materialization.when",
+      "text": "artifact materialization is verified"
+    },
+    "then": {
+      "semanticRef": "verify-artifact-materialization.then",
+      "text": "one artifact-materialization conformance disposition is established"
+    }
+  },
+  "name": "Verify artifact materialization"
+}

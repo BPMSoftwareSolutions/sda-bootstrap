@@ -1,0 +1,31 @@
+{
+  "$schema": "contracts/admitted-json-reference-closure-resolver.authority.schema.json",
+  "authorityType": "admitted-json-reference-closure-resolver-authority.v1",
+  "authorityId": "admitted-json-reference-closure-resolver.v1",
+  "authorityRef": "capabilities/sda-platform/resolve-admitted-json-reference-closure/admitted-json-reference-closure-resolver.authority.json",
+  "authorityVersion": "1.0.0",
+  "lifecycle": "ADMITTED",
+  "platformCapabilityId": "sda-admitted-json-reference-closure-resolver.v1",
+  "authorityDigest": "sha256:0a48118bc56213f21ae802c8c1336ab3d0cb3f756b58ee7d8335d87e95bdf2b8",
+  "authorityDigestAlgorithm": "sha256 of canonical recursive-key-order JSON excluding authorityDigest",
+  "namespaceRules": {
+    "contentReferencesSeparateFromSchemaReferences": true,
+    "ambientNetworkResolution": false,
+    "ambientFilesystemResolution": false,
+    "aliasInference": false
+  },
+  "closureRules": [
+    "reference-scope-digest-must-be-current",
+    "each-reference-resolves-to-exactly-one-subject",
+    "resolved-subject-digest-must-match-scope",
+    "dangling-references-hold-closure",
+    "cycles-follow-declared-policy-and-remain-bounded",
+    "resolved-reference-order-is-bytewise-reference-id"
+  ],
+  "providerObservation": {
+    "disposition": "SATISFIED",
+    "providerSourceRef": "languages/typescript/runtimes/node/json-authority-ingestion-provider.mjs",
+    "providerSourceDigest": "sha256:dce62cdc3cfc1b5acefbccf5bd28196639e43763a18e188598b935bab6ff7b89",
+    "implementationVersion": "1.0.0"
+  }
+}

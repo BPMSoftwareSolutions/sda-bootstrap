@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/proof-binding/proof-binding-evaluation-provider-conformance-request.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contractId", "providerAuthorityBinding", "profileBinding", "fixtureManifestBinding", "requestedPartitions"],
+  "properties": {
+    "contractId": {"const": "proof-binding-evaluation-provider-conformance-request.v1"},
+    "providerAuthorityBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authorityId", "authorityRef", "authorityDigest"],
+      "properties": {
+        "authorityId": {"const": "profile-governed-proof-binding-evaluator.v1"},
+        "authorityRef": {"const": "capabilities/sda-platform/bind-profile-governed-proof-binding-evaluation/profile-governed-proof-binding-evaluator.authority.json"},
+        "authorityDigest": {"$ref": "#/$defs/digest"}
+      }
+    },
+    "profileBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["profileRef", "profileDigest"],
+      "properties": {
+        "profileRef": {"const": "capabilities/sda-platform/verify-proof-binding-evaluation-conformance/fixtures/generic-proof-binding-profile.v1.json"},
+        "profileDigest": {"$ref": "#/$defs/digest"}
+      }
+    },
+    "fixtureManifestBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["manifestRef", "manifestDigest", "fixtureSetDigest"],
+      "properties": {
+        "manifestRef": {"const": "capabilities/sda-platform/verify-proof-binding-evaluation-conformance/fixtures/fixture-manifest.authority.json"},
+        "manifestDigest": {"$ref": "#/$defs/digest"},
+        "fixtureSetDigest": {"$ref": "#/$defs/digest"}
+      }
+    },
+    "requestedPartitions": {
+      "type": "array",
+      "minItems": 12,
+      "maxItems": 12,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/partitionId"}
+    }
+  },
+  "$defs": {
+    "digest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "partitionId": {
+      "enum": [
+        "PROFILE_BOUNDARY_AND_EVALUATION_ORDER",
+        "EXCLUDED_OBLIGATION_NOT_APPLICABLE",
+        "ABSENCE_DOES_NOT_MEAN_FAILURE",
+        "PROHIBITED_BASIS_REJECTION",
+        "STALE_OR_MIXED_LINEAGE_REJECTION",
+        "CURRENT_PASSING_SATISFIED",
+        "CURRENT_FAILING_NOT_SATISFIED",
+        "EXACTLY_ONE_DISPOSITION_PER_OBLIGATION",
+        "DETERMINISTIC_REPRODUCTION",
+        "CONTRACT_ADMISSION_AND_RECEIPT_DIGEST",
+        "PROVIDER_AND_AUTHORITY_IDENTITIES",
+        "ORDERED_EVIDENCE_FINDINGS"
+      ]
+    }
+  }
+}

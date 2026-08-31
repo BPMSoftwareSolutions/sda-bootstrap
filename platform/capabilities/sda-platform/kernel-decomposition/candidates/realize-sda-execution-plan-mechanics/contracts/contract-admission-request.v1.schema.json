@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.sda.local/contract-admission-request.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contractId", "carrierType", "candidateValue", "contractIdToAdmit", "contractDigest", "admittedBy", "realizationDisposition"],
+  "properties": {
+    "contractId": {"const": "contract-admission-request.v1"},
+    "carrierType": {"const": "contract-admission-request.v1"},
+    "candidateValue": {"type": "object"},
+    "contractIdToAdmit": {"type": "string", "minLength": 1},
+    "contractDigest": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "admittedBy": {"type": "string", "minLength": 1},
+    "realizationDisposition": {"type": "string", "minLength": 1}
+  }
+}

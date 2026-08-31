@@ -1,0 +1,32 @@
+{
+  "$schema": "contracts/declared-json-schema-authority-resolver.authority.schema.json",
+  "authorityType": "declared-json-schema-authority-resolver-authority.v1",
+  "authorityId": "declared-json-schema-authority-resolver.v1",
+  "authorityRef": "capabilities/sda-platform/resolve-declared-json-schema-authority/declared-json-schema-authority-resolver.authority.json",
+  "authorityVersion": "1.0.0",
+  "lifecycle": "ADMITTED",
+  "platformCapabilityId": "sda-declared-json-schema-authority-resolver.v1",
+  "authorityDigest": "sha256:bb7dd1f4793b1c792faf218260466f27afb323ec7a5ebeba5e6f5b8c14d7ad0b",
+  "authorityDigestAlgorithm": "sha256 of canonical recursive-key-order JSON excluding authorityDigest",
+  "dialect": {
+    "schemaDialect": "https://json-schema.org/draft/2020-12/schema",
+    "formatAssertion": "DISABLED_UNLESS_EXPLICITLY_ADMITTED",
+    "ambientRemoteResolution": false,
+    "exactSchemaBytesRequired": true
+  },
+  "resolutionRules": [
+    "declared-schema-ref-and-digest-must-match-catalog",
+    "schema-catalog-digest-must-be-current",
+    "schema-dialect-must-be-admitted",
+    "document-version-must-be-supported",
+    "transitive-schema-reference-closure-must-be-admitted",
+    "schema-instance-diagnostics-use-stable-pointers",
+    "missing-schema-never-falls-back"
+  ],
+  "providerObservation": {
+    "disposition": "SATISFIED",
+    "providerSourceRef": "languages/typescript/runtimes/node/json-authority-ingestion-provider.mjs",
+    "providerSourceDigest": "sha256:dce62cdc3cfc1b5acefbccf5bd28196639e43763a18e188598b935bab6ff7b89",
+    "implementationVersion": "1.0.0"
+  }
+}

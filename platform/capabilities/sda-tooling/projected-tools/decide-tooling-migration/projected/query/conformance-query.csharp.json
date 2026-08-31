@@ -1,0 +1,2245 @@
+{
+  "queryType": "projected-consumer-conformance-query.v1",
+  "queryId": "scenario-conformance-closure",
+  "capabilityId": "decide-tooling-migration",
+  "subjects": [
+    "feature",
+    "scenario",
+    "contract",
+    "execution-authority",
+    "transition",
+    "interface",
+    "projection",
+    "telemetry",
+    "execution",
+    "behavior",
+    "platform-capability",
+    "executable-origin"
+  ],
+  "requiredClosures": [
+    "feature-to-scenario",
+    "scenario-to-contract",
+    "scenario-to-event-authority",
+    "outcome-to-transition",
+    "transition-to-next-input",
+    "scenario-to-interface",
+    "execution-to-telemetry",
+    "scenario-to-projection",
+    "expected-to-observed-execution",
+    "root-to-terminal-behavior",
+    "required-mechanic-to-platform-capability",
+    "consumer-executable-origin",
+    "dynamic-semantic-execution",
+    "domain-contract-admission"
+  ],
+  "dispositionPolicy": "all-required-closures-conform",
+  "authorityGraph": {
+    "rootScenarioId": "decide-tooling-migration",
+    "scenarios": [
+      {
+        "scenarioId": "decide-tooling-migration",
+        "input": {
+          "inputId": "tooling-migration-facts",
+          "contract": {
+            "contractId": "tooling-migration-decision-input.v1"
+          }
+        },
+        "event": {
+          "eventId": "tooling-migration-decision-requested",
+          "executionAuthorityId": "tooling-migration-decision.v1"
+        },
+        "outcome": {
+          "outcomeId": "tooling-migration-decision-known",
+          "contract": {
+            "contractId": "tooling-migration-decision.v1"
+          },
+          "experience": {
+            "statement": "the deterministic inventory, replacement, promotion, evidence, or run decision is returned"
+          },
+          "terminal": true
+        },
+        "gherkin": {
+          "given": {
+            "semanticRef": "decide-tooling-migration.given",
+            "text": "tooling inventory, binding, gate, and run facts have been observed"
+          },
+          "when": {
+            "semanticRef": "decide-tooling-migration.when",
+            "text": "a tooling migration decision is requested"
+          },
+          "then": {
+            "semanticRef": "decide-tooling-migration.then",
+            "text": "the deterministic inventory, replacement, promotion, evidence, or run decision is returned"
+          }
+        },
+        "name": "Decide the next tooling migration outcome from admitted facts"
+      }
+    ],
+    "transitions": [],
+    "executionAuthorities": [
+      {
+        "id": "tooling-migration-decision.v1",
+        "owningScenarioId": "decide-tooling-migration",
+        "operations": [
+          {
+            "kind": "invoke-port",
+            "portId": "decide-tooling-migration"
+          }
+        ]
+      }
+    ],
+    "projectionAuthorities": [],
+    "interfaceAuthority": {
+      "interfaceAuthorityType": "consumer-interface-authority.v1",
+      "contractValidatorCapabilityId": "sda-schema-contract-admission.v1",
+      "contractCatalog": "contracts/contract-catalog.json",
+      "requiredPlatformObligations": [
+        "dynamic-semantic-execution",
+        "domain-contract-admission"
+      ],
+      "interfaces": [
+        {
+          "interfaceId": "tooling-migration-decision-cli",
+          "kind": "cli",
+          "rootScenarioId": "decide-tooling-migration",
+          "platformCapabilityId": "sda-json-cli.v1"
+        }
+      ],
+      "portBindings": [
+        {
+          "portId": "decide-tooling-migration",
+          "platformCapabilityId": "sda-authority-transformation-port.v1",
+          "configuration": {
+            "expression": {
+              "op": "if",
+              "when": {
+                "op": "equals",
+                "left": {
+                  "op": "path",
+                  "from": "input",
+                  "path": "decisionType"
+                },
+                "right": {
+                  "op": "literal",
+                  "value": "CLASSIFY_INVENTORY"
+                }
+              },
+              "then": {
+                "op": "let",
+                "bindings": {
+                  "classifiedEntries": {
+                    "op": "map",
+                    "from": {
+                      "op": "path",
+                      "from": "input",
+                      "path": "candidates"
+                    },
+                    "as": "candidate",
+                    "value": {
+                      "op": "object",
+                      "fields": {
+                        "capabilityId": {
+                          "op": "path",
+                          "from": "candidate",
+                          "path": "capabilityId"
+                        },
+                        "groupId": {
+                          "op": "path",
+                          "from": "candidate",
+                          "path": "groupId"
+                        },
+                        "responsibilityId": {
+                          "op": "path",
+                          "from": "candidate",
+                          "path": "responsibilityId"
+                        },
+                        "providerId": {
+                          "op": "path",
+                          "from": "candidate",
+                          "path": "providerId"
+                        },
+                        "protocol": {
+                          "op": "path",
+                          "from": "candidate",
+                          "path": "protocol"
+                        },
+                        "featureRef": {
+                          "op": "path",
+                          "from": "candidate",
+                          "path": "featureRef"
+                        },
+                        "workspaceRef": {
+                          "op": "path",
+                          "from": "candidate",
+                          "path": "workspaceRef"
+                        },
+                        "state": {
+                          "op": "if",
+                          "when": {
+                            "op": "equals",
+                            "left": {
+                              "op": "path",
+                              "from": "candidate",
+                              "path": "protocol"
+                            },
+                            "right": {
+                              "op": "literal",
+                              "value": "projected-consumer-runtime-v2"
+                            }
+                          },
+                          "then": {
+                            "op": "literal",
+                            "value": "PROMOTED"
+                          },
+                          "else": {
+                            "op": "if",
+                            "when": {
+                              "op": "equals",
+                              "left": {
+                                "op": "path",
+                                "from": "candidate",
+                                "path": "featureExists"
+                              },
+                              "right": {
+                                "op": "literal",
+                                "value": false
+                              }
+                            },
+                            "then": {
+                              "op": "literal",
+                              "value": "FEATURE_REQUIRED"
+                            },
+                            "else": {
+                              "op": "if",
+                              "when": {
+                                "op": "equals",
+                                "left": {
+                                  "op": "path",
+                                  "from": "candidate",
+                                  "path": "workspaceExists"
+                                },
+                                "right": {
+                                  "op": "literal",
+                                  "value": false
+                                }
+                              },
+                              "then": {
+                                "op": "literal",
+                                "value": "WORKSPACE_REQUIRED"
+                              },
+                              "else": {
+                                "op": "literal",
+                                "value": "CANDIDATE_READY"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "value": {
+                  "op": "object",
+                  "fields": {
+                    "decisionType": {
+                      "op": "literal",
+                      "value": "CLASSIFY_INVENTORY"
+                    },
+                    "inventory": {
+                      "op": "object",
+                      "fields": {
+                        "inventoryType": {
+                          "op": "literal",
+                          "value": "tooling-projection-migration-inventory.v1"
+                        },
+                        "entries": {
+                          "op": "path",
+                          "from": "classifiedEntries",
+                          "path": ""
+                        },
+                        "summary": {
+                          "op": "object",
+                          "fields": {
+                            "FEATURE_REQUIRED": {
+                              "op": "length",
+                              "value": {
+                                "op": "filter",
+                                "from": {
+                                  "op": "path",
+                                  "from": "classifiedEntries",
+                                  "path": ""
+                                },
+                                "as": "entry",
+                                "where": {
+                                  "op": "equals",
+                                  "left": {
+                                    "op": "path",
+                                    "from": "entry",
+                                    "path": "state"
+                                  },
+                                  "right": {
+                                    "op": "literal",
+                                    "value": "FEATURE_REQUIRED"
+                                  }
+                                }
+                              }
+                            },
+                            "WORKSPACE_REQUIRED": {
+                              "op": "length",
+                              "value": {
+                                "op": "filter",
+                                "from": {
+                                  "op": "path",
+                                  "from": "classifiedEntries",
+                                  "path": ""
+                                },
+                                "as": "entry",
+                                "where": {
+                                  "op": "equals",
+                                  "left": {
+                                    "op": "path",
+                                    "from": "entry",
+                                    "path": "state"
+                                  },
+                                  "right": {
+                                    "op": "literal",
+                                    "value": "WORKSPACE_REQUIRED"
+                                  }
+                                }
+                              }
+                            },
+                            "CANDIDATE_READY": {
+                              "op": "length",
+                              "value": {
+                                "op": "filter",
+                                "from": {
+                                  "op": "path",
+                                  "from": "classifiedEntries",
+                                  "path": ""
+                                },
+                                "as": "entry",
+                                "where": {
+                                  "op": "equals",
+                                  "left": {
+                                    "op": "path",
+                                    "from": "entry",
+                                    "path": "state"
+                                  },
+                                  "right": {
+                                    "op": "literal",
+                                    "value": "CANDIDATE_READY"
+                                  }
+                                }
+                              }
+                            },
+                            "PROMOTED": {
+                              "op": "length",
+                              "value": {
+                                "op": "filter",
+                                "from": {
+                                  "op": "path",
+                                  "from": "classifiedEntries",
+                                  "path": ""
+                                },
+                                "as": "entry",
+                                "where": {
+                                  "op": "equals",
+                                  "left": {
+                                    "op": "path",
+                                    "from": "entry",
+                                    "path": "state"
+                                  },
+                                  "right": {
+                                    "op": "literal",
+                                    "value": "PROMOTED"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "else": {
+                "op": "if",
+                "when": {
+                  "op": "equals",
+                  "left": {
+                    "op": "path",
+                    "from": "input",
+                    "path": "decisionType"
+                  },
+                  "right": {
+                    "op": "literal",
+                    "value": "PLAN_BINDING_REPLACEMENT"
+                  }
+                },
+                "then": {
+                  "op": "object",
+                  "fields": {
+                    "decisionType": {
+                      "op": "literal",
+                      "value": "PLAN_BINDING_REPLACEMENT"
+                    },
+                    "replacementDocument": {
+                      "op": "object",
+                      "fields": {
+                        "bindingType": {
+                          "op": "path",
+                          "from": "input",
+                          "path": "bindingDocument.bindingType"
+                        },
+                        "bindings": {
+                          "op": "map",
+                          "from": {
+                            "op": "path",
+                            "from": "input",
+                            "path": "bindingDocument.bindings"
+                          },
+                          "as": "binding",
+                          "value": {
+                            "op": "if",
+                            "when": {
+                              "op": "equals",
+                              "left": {
+                                "op": "path",
+                                "from": "binding",
+                                "path": "responsibilityId"
+                              },
+                              "right": {
+                                "op": "path",
+                                "from": "input",
+                                "path": "capability.responsibilityId"
+                              }
+                            },
+                            "then": {
+                              "op": "merge",
+                              "values": [
+                                {
+                                  "op": "path",
+                                  "from": "binding",
+                                  "path": ""
+                                },
+                                {
+                                  "op": "object",
+                                  "fields": {
+                                    "providerId": {
+                                      "op": "path",
+                                      "from": "input",
+                                      "path": "capability.replacement.providerId"
+                                    },
+                                    "implementationRef": {
+                                      "op": "path",
+                                      "from": "input",
+                                      "path": "capability.replacement.implementationRef"
+                                    },
+                                    "protocol": {
+                                      "op": "path",
+                                      "from": "input",
+                                      "path": "capability.replacement.protocol"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "else": {
+                              "op": "path",
+                              "from": "binding",
+                              "path": ""
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "else": {
+                  "op": "if",
+                  "when": {
+                    "op": "equals",
+                    "left": {
+                      "op": "path",
+                      "from": "input",
+                      "path": "decisionType"
+                    },
+                    "right": {
+                      "op": "literal",
+                      "value": "EVALUATE_GATE"
+                    }
+                  },
+                  "then": {
+                    "op": "if",
+                    "when": {
+                      "op": "equals",
+                      "left": {
+                        "op": "path",
+                        "from": "input",
+                        "path": "gateExitCode"
+                      },
+                      "right": {
+                        "op": "literal",
+                        "value": 0
+                      }
+                    },
+                    "then": {
+                      "op": "object",
+                      "fields": {
+                        "decisionType": {
+                          "op": "literal",
+                          "value": "EVALUATE_GATE"
+                        },
+                        "promotionDisposition": {
+                          "op": "literal",
+                          "value": "PROMOTED"
+                        },
+                        "bindingAction": {
+                          "op": "literal",
+                          "value": "KEEP_REPLACEMENT"
+                        }
+                      }
+                    },
+                    "else": {
+                      "op": "object",
+                      "fields": {
+                        "decisionType": {
+                          "op": "literal",
+                          "value": "EVALUATE_GATE"
+                        },
+                        "promotionDisposition": {
+                          "op": "literal",
+                          "value": "ROLLED_BACK"
+                        },
+                        "bindingAction": {
+                          "op": "literal",
+                          "value": "RESTORE_ORIGINAL"
+                        }
+                      }
+                    }
+                  },
+                  "else": {
+                    "op": "if",
+                    "when": {
+                      "op": "equals",
+                      "left": {
+                        "op": "path",
+                        "from": "input",
+                        "path": "decisionType"
+                      },
+                      "right": {
+                        "op": "literal",
+                        "value": "DETERMINE_EVIDENCE_DISPOSITION"
+                      }
+                    },
+                    "then": {
+                      "op": "object",
+                      "fields": {
+                        "decisionType": {
+                          "op": "literal",
+                          "value": "DETERMINE_EVIDENCE_DISPOSITION"
+                        },
+                        "evidenceDisposition": {
+                          "op": "if",
+                          "when": {
+                            "op": "equals",
+                            "left": {
+                              "op": "path",
+                              "from": "input",
+                              "path": "verificationPassed"
+                            },
+                            "right": {
+                              "op": "literal",
+                              "value": false
+                            }
+                          },
+                          "then": {
+                            "op": "literal",
+                            "value": "REJECTED"
+                          },
+                          "else": {
+                            "op": "if",
+                            "when": {
+                              "op": "equals",
+                              "left": {
+                                "op": "path",
+                                "from": "input",
+                                "path": "promote"
+                              },
+                              "right": {
+                                "op": "literal",
+                                "value": false
+                              }
+                            },
+                            "then": {
+                              "op": "literal",
+                              "value": "VERIFIED"
+                            },
+                            "else": {
+                              "op": "if",
+                              "when": {
+                                "op": "equals",
+                                "left": {
+                                  "op": "path",
+                                  "from": "input",
+                                  "path": "gateExitCode"
+                                },
+                                "right": {
+                                  "op": "literal",
+                                  "value": 0
+                                }
+                              },
+                              "then": {
+                                "op": "literal",
+                                "value": "PROMOTED"
+                              },
+                              "else": {
+                                "op": "literal",
+                                "value": "REJECTED"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "else": {
+                      "op": "object",
+                      "fields": {
+                        "decisionType": {
+                          "op": "literal",
+                          "value": "FINALIZE_RUN"
+                        },
+                        "runDisposition": {
+                          "op": "if",
+                          "when": {
+                            "op": "some",
+                            "from": {
+                              "op": "path",
+                              "from": "input",
+                              "path": "runResults"
+                            },
+                            "as": "result",
+                            "where": {
+                              "op": "equals",
+                              "left": {
+                                "op": "path",
+                                "from": "result",
+                                "path": "disposition"
+                              },
+                              "right": {
+                                "op": "literal",
+                                "value": "REJECTED"
+                              }
+                            }
+                          },
+                          "then": {
+                            "op": "literal",
+                            "value": "COMPLETED_WITH_REJECTIONS"
+                          },
+                          "else": {
+                            "op": "literal",
+                            "value": "COMPLETED"
+                          }
+                        },
+                        "continueIndependentCandidates": {
+                          "op": "literal",
+                          "value": true
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "projectionBindings": []
+    },
+    "contractAuthorities": {
+      "authorityType": "consumer-contract-authorities.v1",
+      "contracts": {
+        "tooling-migration-decision-input.v1": {
+          "schemaRef": "../../../tooling-migration-conveyor/contracts/tooling-migration-decision-input.v1.schema.json",
+          "schemaId": "https://schemas.scenario-driven.dev/tooling/tooling-migration-decision-input.v1.schema.json",
+          "schemaDigest": "92b6fe1c58d76177807f863269560ae43e51b390a7e61902d65155aaeba8c6da",
+          "schema": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "$id": "https://schemas.scenario-driven.dev/tooling/tooling-migration-decision-input.v1.schema.json",
+            "title": "Tooling Migration Decision Input",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "decisionType",
+              "candidates",
+              "bindingDocument",
+              "capability",
+              "gateExitCode",
+              "promote",
+              "verificationPassed",
+              "runResults"
+            ],
+            "properties": {
+              "decisionType": {
+                "enum": [
+                  "CLASSIFY_INVENTORY",
+                  "PLAN_BINDING_REPLACEMENT",
+                  "EVALUATE_GATE",
+                  "DETERMINE_EVIDENCE_DISPOSITION",
+                  "FINALIZE_RUN"
+                ]
+              },
+              "candidates": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "capabilityId",
+                    "groupId",
+                    "responsibilityId",
+                    "providerId",
+                    "protocol",
+                    "featureRef",
+                    "workspaceRef",
+                    "featureExists",
+                    "workspaceExists"
+                  ],
+                  "properties": {
+                    "capabilityId": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "groupId": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "responsibilityId": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "providerId": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "protocol": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "featureRef": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "workspaceRef": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "featureExists": {
+                      "type": "boolean"
+                    },
+                    "workspaceExists": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              },
+              "bindingDocument": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "bindingType",
+                  "bindings"
+                ],
+                "properties": {
+                  "bindingType": {
+                    "const": "responsibility-provider-bindings.v1"
+                  },
+                  "bindings": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "responsibilityId",
+                        "providerId",
+                        "implementationRef",
+                        "requires"
+                      ],
+                      "properties": {
+                        "responsibilityId": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "providerId": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "implementationRef": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "requires": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "protocol": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "capability": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "responsibilityId",
+                  "replacement"
+                ],
+                "properties": {
+                  "responsibilityId": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "replacement": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "providerId",
+                      "implementationRef",
+                      "protocol"
+                    ],
+                    "properties": {
+                      "providerId": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "implementationRef": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "protocol": {
+                        "const": "projected-consumer-runtime-v2"
+                      }
+                    }
+                  }
+                }
+              },
+              "gateExitCode": {
+                "type": "integer"
+              },
+              "promote": {
+                "type": "boolean"
+              },
+              "verificationPassed": {
+                "type": "boolean"
+              },
+              "runResults": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "capabilityId",
+                    "disposition"
+                  ],
+                  "properties": {
+                    "capabilityId": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "disposition": {
+                      "enum": [
+                        "PROMOTED",
+                        "REJECTED"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tooling-migration-decision.v1": {
+          "schemaRef": "../../../tooling-migration-conveyor/contracts/tooling-migration-decision.v1.schema.json",
+          "schemaId": "https://schemas.scenario-driven.dev/tooling/tooling-migration-decision.v1.schema.json",
+          "schemaDigest": "a27dcf91457f0b480a02c6bd82aa8b7c88175eec018d336d7f8c5d1e6ac1536c",
+          "schema": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "$id": "https://schemas.scenario-driven.dev/tooling/tooling-migration-decision.v1.schema.json",
+            "title": "Tooling Migration Decision",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "decisionType"
+            ],
+            "properties": {
+              "decisionType": {
+                "enum": [
+                  "CLASSIFY_INVENTORY",
+                  "PLAN_BINDING_REPLACEMENT",
+                  "EVALUATE_GATE",
+                  "DETERMINE_EVIDENCE_DISPOSITION",
+                  "FINALIZE_RUN"
+                ]
+              },
+              "inventory": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "inventoryType",
+                  "entries",
+                  "summary"
+                ],
+                "properties": {
+                  "inventoryType": {
+                    "const": "tooling-projection-migration-inventory.v1"
+                  },
+                  "entries": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "capabilityId",
+                        "groupId",
+                        "responsibilityId",
+                        "providerId",
+                        "protocol",
+                        "featureRef",
+                        "workspaceRef",
+                        "state"
+                      ],
+                      "properties": {
+                        "capabilityId": {
+                          "type": "string"
+                        },
+                        "groupId": {
+                          "type": "string"
+                        },
+                        "responsibilityId": {
+                          "type": "string"
+                        },
+                        "providerId": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "protocol": {
+                          "type": "string"
+                        },
+                        "featureRef": {
+                          "type": "string"
+                        },
+                        "workspaceRef": {
+                          "type": "string"
+                        },
+                        "state": {
+                          "enum": [
+                            "FEATURE_REQUIRED",
+                            "WORKSPACE_REQUIRED",
+                            "CANDIDATE_READY",
+                            "PROMOTED"
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  "summary": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "FEATURE_REQUIRED",
+                      "WORKSPACE_REQUIRED",
+                      "CANDIDATE_READY",
+                      "PROMOTED"
+                    ],
+                    "properties": {
+                      "FEATURE_REQUIRED": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "WORKSPACE_REQUIRED": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "CANDIDATE_READY": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "PROMOTED": {
+                        "type": "integer",
+                        "minimum": 0
+                      }
+                    }
+                  }
+                }
+              },
+              "replacementDocument": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "bindingType",
+                  "bindings"
+                ],
+                "properties": {
+                  "bindingType": {
+                    "const": "responsibility-provider-bindings.v1"
+                  },
+                  "bindings": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "responsibilityId",
+                        "providerId",
+                        "implementationRef",
+                        "requires"
+                      ],
+                      "properties": {
+                        "responsibilityId": {
+                          "type": "string"
+                        },
+                        "providerId": {
+                          "type": "string"
+                        },
+                        "implementationRef": {
+                          "type": "string"
+                        },
+                        "requires": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "protocol": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "promotionDisposition": {
+                "enum": [
+                  "PROMOTED",
+                  "ROLLED_BACK"
+                ]
+              },
+              "bindingAction": {
+                "enum": [
+                  "KEEP_REPLACEMENT",
+                  "RESTORE_ORIGINAL"
+                ]
+              },
+              "evidenceDisposition": {
+                "enum": [
+                  "VERIFIED",
+                  "PROMOTED",
+                  "REJECTED"
+                ]
+              },
+              "runDisposition": {
+                "enum": [
+                  "COMPLETED",
+                  "COMPLETED_WITH_REJECTIONS"
+                ]
+              },
+              "continueIndependentCandidates": {
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      }
+    },
+    "admittedPlatformCapabilities": [
+      {
+        "capabilityId": "sda-node-consumer-runtime.v1",
+        "kind": "consumer-runtime",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform",
+        "providesMechanics": [
+          "scenario-orchestration",
+          "contract-document-reading",
+          "canonicalization",
+          "schema-admission",
+          "authority-resolution",
+          "semantic-execution",
+          "telemetry-observation",
+          "scenario-invocation",
+          "transition-binding-projection",
+          "interface-delivery",
+          "runtime-projection",
+          "artifact-result-delivery",
+          "authority-driven-transformation",
+          "durable-artifact-materialization"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "capabilityId": "sda-json-cli.v1",
+        "kind": "interface-delivery",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Interface.JsonCli",
+        "providesMechanics": [
+          "cli-delivery",
+          "json-reading",
+          "json-serialization"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "capabilityId": "sda-declarative-value-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Execution.DeclarativeValuePort",
+        "providesMechanics": [
+          "event-port-invocation"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "capabilityId": "sda-declarative-state-projection.v1",
+        "kind": "state-projection",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Projection.DeclarativeStateProjection",
+        "providesMechanics": [
+          "state-projection"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "capabilityId": "sda-fixture-contract-validator.v1",
+        "kind": "contract-validator",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Schema.FixtureContractValidator",
+        "providesMechanics": [
+          "contract-validation"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "capabilityId": "sda-schema-contract-admission.v1",
+        "kind": "contract-validator",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Schema.JsonSchemaContractAdmission",
+        "providesMechanics": [
+          "contract-validation",
+          "schema-admission"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "capabilityId": "sda-authority-transformation-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Execution.AuthorityTransformation",
+        "providesMechanics": [
+          "event-port-invocation",
+          "authority-driven-transformation"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "capabilityId": "sda-authority-state-projection.v1",
+        "kind": "state-projection",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Projection.AuthorityTransformation",
+        "providesMechanics": [
+          "state-projection",
+          "transition-binding-projection"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "capabilityId": "sda-filesystem-artifact-store.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Delivery.AtomicFilesystemArtifactStore",
+        "providesMechanics": [
+          "event-port-invocation",
+          "durable-artifact-materialization"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "capabilityId": "sda-external-observation-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Observation.HttpExternalObservationProvider",
+        "providesMechanics": [
+          "event-port-invocation",
+          "external-representation-observation"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/external-observation-port.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-external-credential-reference-binding-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Effects.ExternalCredentialReferenceBinding",
+        "providesMechanics": [
+          "event-port-invocation",
+          "external-credential-reference-binding",
+          "one-use-opaque-credential-handle",
+          "secret-non-disclosure"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/node-native-mechanic-providers.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/governed-http-effect-ports.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-governed-http-exchange-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Effects.GovernedHttpExchange",
+        "providesMechanics": [
+          "event-port-invocation",
+          "single-governed-http-exchange",
+          "bounded-response-observation",
+          "credential-injection-without-disclosure"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/node-native-mechanic-providers.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/governed-http-effect-ports.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-governed-repository-observation-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Observation.GovernedRepository",
+        "providesMechanics": [
+          "event-port-invocation",
+          "governed-repository-observation"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/node-native-mechanic-providers.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/governed-repository-observation-port.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-generic-llm-connector-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Cognition.GenericLlmConnector",
+        "providesMechanics": [
+          "event-port-invocation",
+          "governed-model-invocation",
+          "external-credential-reference",
+          "model-execution-lineage"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/node-native-mechanic-providers.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/generic-llm-connector-port.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-governed-tooling-binding-transaction-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Effects.GovernedToolingBindingTransaction",
+        "providesMechanics": [
+          "event-port-invocation",
+          "governed-binding-transaction",
+          "exact-byte-rollback",
+          "gate-execution-lineage"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/node-native-mechanic-providers.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/governed-tooling-binding-transaction-port.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-governed-tooling-migration-operation-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Effects.GovernedToolingMigrationOperation",
+        "providesMechanics": [
+          "event-port-invocation",
+          "governed-tooling-migration-operation",
+          "effect-lineage"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/node-native-mechanic-providers.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/governed-tooling-migration-operation-port.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-batch-filesystem-shaper-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Delivery.TransactionalBatchFilesystemShaper",
+        "providesMechanics": [
+          "event-port-invocation",
+          "closed-batch-file-system-shaping",
+          "staged-hash-verified-commit",
+          "rollback-evidence"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/node-native-mechanic-providers.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/batch-filesystem-shaper-port.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-governed-target-execution-observation-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Observation.GovernedTargetExecution",
+        "providesMechanics": [
+          "event-port-invocation",
+          "governed-target-execution-observation"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/node-native-mechanic-providers.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/governed-target-execution-observation-port.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-canonical-capability-feature-resolution-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Observation.CanonicalCapabilityFeatureResolution",
+        "providesMechanics": [
+          "event-port-invocation",
+          "governed-feature-reference-resolution",
+          "canonical-feature-byte-observation",
+          "canonical-root-identity-resolution"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/node-native-mechanic-providers.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/canonical-capability-feature-resolution-port.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-projected-capability-invocation-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Execution.ProjectedCapabilityInvocation",
+        "providesMechanics": [
+          "event-port-invocation",
+          "projected-capability-invocation"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/projected-capability-invocation-port.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-projected-capability-invocation-port.v2",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Execution.ProjectedCapabilityInvocationAndBinding",
+        "providesMechanics": [
+          "event-port-invocation",
+          "projected-capability-invocation",
+          "parent-carrier-preservation",
+          "nested-execution-lineage",
+          "pinned-capability-binding"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/projected-capability-invocation-port.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-governed-serial-execution-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Execution.GovernedSerialExecution",
+        "providesMechanics": [
+          "event-port-invocation",
+          "bounded-ordered-transaction-execution",
+          "projected-capability-invocation",
+          "nested-execution-lineage",
+          "continuation-authority-consultation"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/node-native-mechanic-providers.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/governed-serial-execution-port.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-json-query-cli.v1",
+        "kind": "interface-delivery",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Interface.JsonQueryCli",
+        "providesMechanics": [
+          "query-cli-delivery",
+          "declared-query-evaluation",
+          "json-reading",
+          "json-serialization"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/query-cli.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/query-cli.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-fixture-contract-validator.v1",
+        "kind": "contract-validator",
+        "status": "ADMITTED",
+        "projectionTarget": "csharp",
+        "provider": "ScenarioKernel.Adapters.Consumer.AdmittedConsumerPlatform",
+        "providesMechanics": [
+          "contract-validation"
+        ],
+        "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Consumer/AdmittedConsumerPlatform.cs",
+        "conformanceRef": "tools/tests/consumer-projection/csharp-consumer-projection.test.js"
+      },
+      {
+        "capabilityId": "sda-declarative-value-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "csharp",
+        "provider": "ScenarioKernel.Adapters.Consumer.AdmittedConsumerPlatform",
+        "providesMechanics": [
+          "event-port-invocation"
+        ],
+        "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Consumer/AdmittedConsumerPlatform.cs",
+        "conformanceRef": "tools/tests/consumer-projection/csharp-consumer-projection.test.js"
+      },
+      {
+        "capabilityId": "sda-declarative-state-projection.v1",
+        "kind": "state-projection",
+        "status": "ADMITTED",
+        "projectionTarget": "csharp",
+        "provider": "ScenarioKernel.Adapters.Consumer.AdmittedConsumerPlatform",
+        "providesMechanics": [
+          "state-projection"
+        ],
+        "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Consumer/AdmittedConsumerPlatform.cs",
+        "conformanceRef": "tools/tests/consumer-projection/csharp-consumer-projection.test.js"
+      },
+      {
+        "capabilityId": "sda-csharp-admitted-consumer-platform.v1",
+        "kind": "consumer-runtime",
+        "status": "ADMITTED",
+        "projectionTarget": "csharp",
+        "provider": "ScenarioKernel.Adapters.Consumer.AdmittedConsumerPlatform",
+        "providesMechanics": [
+          "scenario-orchestration",
+          "contract-document-reading",
+          "canonicalization",
+          "schema-admission",
+          "authority-resolution",
+          "semantic-execution",
+          "telemetry-observation",
+          "scenario-invocation",
+          "transition-binding-projection",
+          "interface-delivery",
+          "runtime-projection",
+          "artifact-result-delivery",
+          "authority-driven-transformation",
+          "durable-artifact-materialization"
+        ],
+        "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Consumer/AdmittedConsumerPlatform.cs",
+        "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+      },
+      {
+        "capabilityId": "sda-json-cli.v1",
+        "kind": "interface-delivery",
+        "status": "ADMITTED",
+        "projectionTarget": "csharp",
+        "provider": "ScenarioKernel.Adapters.Consumer.AdmittedConsumerPlatform",
+        "providesMechanics": [
+          "cli-delivery",
+          "json-reading",
+          "json-serialization"
+        ],
+        "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Consumer/AdmittedConsumerPlatform.cs",
+        "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+      },
+      {
+        "capabilityId": "sda-csharp-sdk.v1",
+        "kind": "interface-delivery",
+        "status": "ADMITTED",
+        "projectionTarget": "csharp",
+        "provider": "ScenarioKernel.Adapters.Consumer.AdmittedConsumerPlatform",
+        "providesMechanics": [
+          "sdk-delivery",
+          "declared-query-evaluation",
+          "json-reading",
+          "json-serialization"
+        ],
+        "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Consumer/AdmittedConsumerPlatform.cs",
+        "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+      },
+      {
+        "capabilityId": "sda-wpf-ui.v1",
+        "kind": "interface-delivery",
+        "status": "ADMITTED",
+        "projectionTarget": "csharp",
+        "provider": "ScenarioKernel.Wpf.AuthorityBackedViewModel",
+        "providesMechanics": [
+          "ui-delivery",
+          "wpf-application-hosting",
+          "declarative-view-materialization",
+          "observable-view-state",
+          "authority-binding-projection",
+          "generic-command-dispatch",
+          "experience-authority-projection",
+          "interaction-authority-projection",
+          "semantic-layout-projection",
+          "accessibility-intent-projection",
+          "validation-semantic-enforcement",
+          "fixture-input-delivery",
+          "scenario-command-dispatch",
+          "query-command-dispatch",
+          "cancellation-command-dispatch"
+        ],
+        "implementationRef": "languages/csharp/src/ScenarioKernel.UiAuthority/AuthorityBackedViewModel.cs",
+        "conformanceRef": "tools/tests/consumer-projection/wpf-consumer-projection.test.js"
+      },
+      {
+        "capabilityId": "sda-schema-contract-admission.v1",
+        "kind": "contract-validator",
+        "status": "ADMITTED",
+        "projectionTarget": "csharp",
+        "provider": "ScenarioKernel.Adapters.Schema.JsonSchemaContractValidator",
+        "providesMechanics": [
+          "contract-validation",
+          "schema-admission"
+        ],
+        "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Schema/JsonSchemaContractValidator.cs",
+        "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+      },
+      {
+        "capabilityId": "sda-authority-transformation-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "csharp",
+        "provider": "ScenarioKernel.Adapters.Consumer.SemanticTransformationEngine",
+        "providesMechanics": [
+          "event-port-invocation",
+          "authority-driven-transformation"
+        ],
+        "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Consumer/SemanticTransformationEngine.cs",
+        "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+      },
+      {
+        "capabilityId": "sda-authority-state-projection.v1",
+        "kind": "state-projection",
+        "status": "ADMITTED",
+        "projectionTarget": "csharp",
+        "provider": "ScenarioKernel.Adapters.Consumer.SemanticTransformationEngine",
+        "providesMechanics": [
+          "state-projection",
+          "transition-binding-projection"
+        ],
+        "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Consumer/SemanticTransformationEngine.cs",
+        "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+      },
+      {
+        "capabilityId": "sda-filesystem-artifact-store.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "csharp",
+        "provider": "ScenarioKernel.Adapters.Consumer.AtomicFilesystemArtifactStore",
+        "providesMechanics": [
+          "event-port-invocation",
+          "durable-artifact-materialization"
+        ],
+        "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Consumer/AtomicFilesystemArtifactStore.cs",
+        "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+      },
+      {
+        "capabilityId": "sda-csharp-json-representation.v1",
+        "kind": "representation",
+        "status": "ADMITTED",
+        "projectionTarget": "csharp",
+        "provider": "ScenarioKernel.Adapters.Json",
+        "providesMechanics": [
+          "json-reading",
+          "json-writing",
+          "json-canonicalization",
+          "contract-document-reading",
+          "canonicalization",
+          "artifact-result-delivery"
+        ],
+        "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Json/JsonScenarioDocumentReader.cs",
+        "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+      },
+      {
+        "capabilityId": "sda-csharp-json-schema-contract-validator.v1",
+        "kind": "contract-validator",
+        "status": "ADMITTED",
+        "projectionTarget": "csharp",
+        "provider": "ScenarioKernel.Adapters.Schema",
+        "providesMechanics": [
+          "contract-validation",
+          "json-schema-validation",
+          "schema-admission"
+        ],
+        "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Schema/JsonSchemaContractValidator.cs",
+        "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+      },
+      {
+        "capabilityId": "sda-csharp-in-memory-authority-resolver.v1",
+        "kind": "authority-resolver",
+        "status": "ADMITTED",
+        "projectionTarget": "csharp",
+        "provider": "ScenarioKernel.Adapters.InMemory",
+        "providesMechanics": [
+          "authority-resolution"
+        ],
+        "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/InMemory/InMemoryExecutionAuthorityResolver.cs",
+        "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+      },
+      {
+        "capabilityId": "sda-csharp-in-memory-semantic-executor.v1",
+        "kind": "semantic-executor",
+        "status": "ADMITTED",
+        "projectionTarget": "csharp",
+        "provider": "ScenarioKernel.Adapters.InMemory",
+        "providesMechanics": [
+          "semantic-execution"
+        ],
+        "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/InMemory/InMemorySemanticExecutor.cs",
+        "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+      },
+      {
+        "capabilityId": "sda-csharp-in-memory-execution-observer.v1",
+        "kind": "execution-observer",
+        "status": "ADMITTED",
+        "projectionTarget": "csharp",
+        "provider": "ScenarioKernel.Adapters.Telemetry",
+        "providesMechanics": [
+          "telemetry-observation"
+        ],
+        "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Telemetry/InMemoryExecutionObserver.cs",
+        "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+      },
+      {
+        "capabilityId": "sda-csharp-consumer-runtime.v1",
+        "kind": "consumer-runtime",
+        "status": "ADMITTED",
+        "projectionTarget": "csharp",
+        "provider": "ScenarioKernel",
+        "providesMechanics": [
+          "scenario-orchestration",
+          "scenario-invocation"
+        ],
+        "implementationRef": "languages/csharp/src/ScenarioKernel/ScenarioKernel.cs",
+        "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/ExecutionVectorFixtureTests.cs"
+      },
+      {
+        "capabilityId": "sda-csharp-declarative-consumer-mechanics.v1",
+        "kind": "consumer-runtime",
+        "status": "ADMITTED",
+        "projectionTarget": "csharp",
+        "provider": "ScenarioKernel.Adapters.Consumer.DeclarativeConsumerMechanics",
+        "providesMechanics": [
+          "transition-binding-projection",
+          "interface-delivery",
+          "runtime-projection",
+          "artifact-result-delivery"
+        ],
+        "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Consumer/DeclarativeConsumerMechanics.cs",
+        "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+      },
+      {
+        "capabilityId": "sda-csharp-semantic-transformation.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "csharp",
+        "provider": "ScenarioKernel.Adapters.Consumer.SemanticTransformationEngine",
+        "providesMechanics": [
+          "authority-driven-transformation"
+        ],
+        "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Consumer/SemanticTransformationEngine.cs",
+        "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+      },
+      {
+        "capabilityId": "sda-csharp-filesystem-artifact-store.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "csharp",
+        "provider": "ScenarioKernel.Adapters.Consumer.AtomicFilesystemArtifactStore",
+        "providesMechanics": [
+          "durable-artifact-materialization"
+        ],
+        "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Consumer/AtomicFilesystemArtifactStore.cs",
+        "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+      },
+      {
+        "capabilityId": "sda-python-admitted-consumer-platform.v1",
+        "kind": "consumer-runtime",
+        "status": "ADMITTED",
+        "projectionTarget": "python",
+        "provider": "scenario_kernel.platform.consumer",
+        "providesMechanics": [
+          "scenario-orchestration",
+          "contract-document-reading",
+          "canonicalization",
+          "schema-admission",
+          "authority-resolution",
+          "semantic-execution",
+          "telemetry-observation",
+          "scenario-invocation",
+          "transition-binding-projection",
+          "interface-delivery",
+          "runtime-projection",
+          "artifact-result-delivery",
+          "authority-driven-transformation",
+          "durable-artifact-materialization"
+        ],
+        "implementationRef": "languages/python/src/scenario_kernel/platform/consumer.py",
+        "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+      },
+      {
+        "capabilityId": "sda-json-cli.v1",
+        "kind": "interface-delivery",
+        "status": "ADMITTED",
+        "projectionTarget": "python",
+        "provider": "scenario_kernel.platform.consumer",
+        "providesMechanics": [
+          "cli-delivery",
+          "json-reading",
+          "json-serialization"
+        ],
+        "implementationRef": "languages/python/src/scenario_kernel/platform/consumer.py",
+        "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+      },
+      {
+        "capabilityId": "sda-fixture-contract-validator.v1",
+        "kind": "contract-validator",
+        "status": "ADMITTED",
+        "projectionTarget": "python",
+        "provider": "scenario_kernel.adapters.PredicateContractValidator",
+        "providesMechanics": [
+          "contract-validation"
+        ],
+        "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+        "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+      },
+      {
+        "capabilityId": "sda-schema-contract-admission.v1",
+        "kind": "contract-validator",
+        "status": "ADMITTED",
+        "projectionTarget": "python",
+        "provider": "scenario_kernel.adapters.JsonSchemaContractValidator",
+        "providesMechanics": [
+          "contract-validation",
+          "schema-admission"
+        ],
+        "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+        "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+      },
+      {
+        "capabilityId": "sda-declarative-value-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "python",
+        "provider": "scenario_kernel.platform.consumer",
+        "providesMechanics": [
+          "event-port-invocation"
+        ],
+        "implementationRef": "languages/python/src/scenario_kernel/platform/consumer.py",
+        "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+      },
+      {
+        "capabilityId": "sda-authority-transformation-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "python",
+        "provider": "scenario_kernel.adapters.SemanticTransformationEngine",
+        "providesMechanics": [
+          "event-port-invocation",
+          "authority-driven-transformation"
+        ],
+        "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+        "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+      },
+      {
+        "capabilityId": "sda-declarative-state-projection.v1",
+        "kind": "state-projection",
+        "status": "ADMITTED",
+        "projectionTarget": "python",
+        "provider": "scenario_kernel.platform.consumer",
+        "providesMechanics": [
+          "state-projection"
+        ],
+        "implementationRef": "languages/python/src/scenario_kernel/platform/consumer.py",
+        "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+      },
+      {
+        "capabilityId": "sda-authority-state-projection.v1",
+        "kind": "state-projection",
+        "status": "ADMITTED",
+        "projectionTarget": "python",
+        "provider": "scenario_kernel.adapters.SemanticTransformationEngine",
+        "providesMechanics": [
+          "state-projection",
+          "transition-binding-projection"
+        ],
+        "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+        "conformanceRef": "tools/tests/consumer-projection/python-consumer-projection.test.js"
+      },
+      {
+        "capabilityId": "sda-python-consumer-runtime.v1",
+        "kind": "consumer-runtime",
+        "status": "ADMITTED",
+        "projectionTarget": "python",
+        "provider": "scenario_kernel.kernel.ScenarioKernel",
+        "providesMechanics": [
+          "scenario-orchestration",
+          "scenario-invocation"
+        ],
+        "implementationRef": "languages/python/src/scenario_kernel/kernel/scenario_kernel.py",
+        "conformanceRef": "languages/python/tests/conformance/test_execution_vector.py"
+      },
+      {
+        "capabilityId": "sda-python-predicate-contract-validator.v1",
+        "kind": "contract-validator",
+        "status": "ADMITTED",
+        "projectionTarget": "python",
+        "provider": "scenario_kernel.adapters.PredicateContractValidator",
+        "providesMechanics": [
+          "contract-validation"
+        ],
+        "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+        "conformanceRef": "languages/python/tests/conformance/test_platform_adapters.py"
+      },
+      {
+        "capabilityId": "sda-python-json-document-mechanics.v1",
+        "kind": "representation",
+        "status": "ADMITTED",
+        "projectionTarget": "python",
+        "provider": "scenario_kernel.adapters.JsonDocumentMechanics",
+        "providesMechanics": [
+          "contract-document-reading",
+          "canonicalization",
+          "artifact-result-delivery"
+        ],
+        "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+        "conformanceRef": "languages/python/tests/conformance/test_platform_adapters.py"
+      },
+      {
+        "capabilityId": "sda-python-json-schema-contract-validator.v1",
+        "kind": "contract-validator",
+        "status": "ADMITTED",
+        "projectionTarget": "python",
+        "provider": "scenario_kernel.adapters.JsonSchemaContractValidator",
+        "providesMechanics": [
+          "schema-admission"
+        ],
+        "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+        "conformanceRef": "languages/python/tests/conformance/test_platform_adapters.py"
+      },
+      {
+        "capabilityId": "sda-python-declarative-consumer-mechanics.v1",
+        "kind": "consumer-runtime",
+        "status": "ADMITTED",
+        "projectionTarget": "python",
+        "provider": "scenario_kernel.adapters.DeclarativeConsumerMechanics",
+        "providesMechanics": [
+          "transition-binding-projection",
+          "interface-delivery",
+          "runtime-projection",
+          "artifact-result-delivery"
+        ],
+        "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+        "conformanceRef": "languages/python/tests/conformance/test_platform_adapters.py"
+      },
+      {
+        "capabilityId": "sda-python-semantic-transformation.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "python",
+        "provider": "scenario_kernel.adapters.SemanticTransformationEngine",
+        "providesMechanics": [
+          "authority-driven-transformation"
+        ],
+        "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+        "conformanceRef": "languages/python/tests/conformance/test_platform_adapters.py"
+      },
+      {
+        "capabilityId": "sda-python-filesystem-artifact-store.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "python",
+        "provider": "scenario_kernel.adapters.AtomicFilesystemArtifactStore",
+        "providesMechanics": [
+          "durable-artifact-materialization"
+        ],
+        "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+        "conformanceRef": "languages/python/tests/conformance/test_platform_adapters.py"
+      },
+      {
+        "capabilityId": "sda-python-in-memory-authority-resolver.v1",
+        "kind": "authority-resolver",
+        "status": "ADMITTED",
+        "projectionTarget": "python",
+        "provider": "scenario_kernel.adapters.InMemoryExecutionAuthorityResolver",
+        "providesMechanics": [
+          "authority-resolution"
+        ],
+        "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+        "conformanceRef": "languages/python/tests/conformance/test_platform_adapters.py"
+      },
+      {
+        "capabilityId": "sda-python-in-memory-semantic-executor.v1",
+        "kind": "semantic-executor",
+        "status": "ADMITTED",
+        "projectionTarget": "python",
+        "provider": "scenario_kernel.adapters.InMemorySemanticExecutor",
+        "providesMechanics": [
+          "semantic-execution"
+        ],
+        "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+        "conformanceRef": "languages/python/tests/conformance/test_platform_adapters.py"
+      },
+      {
+        "capabilityId": "sda-python-in-memory-execution-observer.v1",
+        "kind": "execution-observer",
+        "status": "ADMITTED",
+        "projectionTarget": "python",
+        "provider": "scenario_kernel.adapters.InMemoryExecutionObserver",
+        "providesMechanics": [
+          "telemetry-observation"
+        ],
+        "implementationRef": "languages/python/src/scenario_kernel/adapters/core.py",
+        "conformanceRef": "languages/python/tests/conformance/test_platform_adapters.py"
+      }
+    ]
+  },
+  "expectedTelemetry": {
+    "traceType": "projected-expected-consumer-trace.v1",
+    "telemetryId": "consumer-scenario-execution-telemetry",
+    "capabilityId": "decide-tooling-migration",
+    "rootScenarioId": "decide-tooling-migration",
+    "observationType": "scenario-execution-observation.v1",
+    "lineageFields": [
+      "executionId",
+      "rootExecutionId",
+      "parentExecutionId",
+      "scenarioId"
+    ],
+    "scenarios": [
+      {
+        "scenarioId": "decide-tooling-migration",
+        "steps": [
+          "admit-input",
+          "resolve-event-authority",
+          "execute-event-authority",
+          "admit-outcome",
+          "resolve-disposition"
+        ],
+        "expectedTransitionId": null
+      }
+    ]
+  },
+  "mechanicResolution": {
+    "resolutionType": "consumer-platform-mechanic-resolution.v1",
+    "projectionTarget": "csharp",
+    "requirements": [
+      {
+        "mechanicId": "contract-document-reading",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "canonicalization",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "schema-admission",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "authority-resolution",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "semantic-execution",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "telemetry-observation",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "scenario-invocation",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "transition-binding-projection",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "interface-delivery",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "runtime-projection",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "artifact-result-delivery",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "authority-driven-transformation",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "durable-artifact-materialization",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "contract-validation",
+        "capabilityKind": "contract-validator",
+        "requiredBy": "scenario-contract-admission",
+        "requestedCapabilityId": "sda-schema-contract-admission.v1"
+      },
+      {
+        "mechanicId": "cli-delivery",
+        "capabilityKind": "interface-delivery",
+        "requiredBy": "interface:tooling-migration-decision-cli",
+        "requestedCapabilityId": "sda-json-cli.v1"
+      },
+      {
+        "mechanicId": "json-reading",
+        "capabilityKind": "interface-delivery",
+        "requiredBy": "interface:tooling-migration-decision-cli",
+        "requestedCapabilityId": "sda-json-cli.v1"
+      },
+      {
+        "mechanicId": "json-serialization",
+        "capabilityKind": "interface-delivery",
+        "requiredBy": "interface:tooling-migration-decision-cli",
+        "requestedCapabilityId": "sda-json-cli.v1"
+      },
+      {
+        "mechanicId": "event-port-invocation",
+        "capabilityKind": "event-port",
+        "requiredBy": "port:decide-tooling-migration",
+        "requestedCapabilityId": "sda-authority-transformation-port.v1"
+      }
+    ],
+    "resolutions": [
+      {
+        "mechanicId": "contract-document-reading",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-csharp-admitted-consumer-platform.v1",
+        "provider": "ScenarioKernel.Adapters.Consumer.AdmittedConsumerPlatform",
+        "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Consumer/AdmittedConsumerPlatform.cs",
+        "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+      },
+      {
+        "mechanicId": "canonicalization",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-csharp-admitted-consumer-platform.v1",
+        "provider": "ScenarioKernel.Adapters.Consumer.AdmittedConsumerPlatform",
+        "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Consumer/AdmittedConsumerPlatform.cs",
+        "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+      },
+      {
+        "mechanicId": "schema-admission",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-csharp-admitted-consumer-platform.v1",
+        "provider": "ScenarioKernel.Adapters.Consumer.AdmittedConsumerPlatform",
+        "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Consumer/AdmittedConsumerPlatform.cs",
+        "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+      },
+      {
+        "mechanicId": "authority-resolution",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-csharp-admitted-consumer-platform.v1",
+        "provider": "ScenarioKernel.Adapters.Consumer.AdmittedConsumerPlatform",
+        "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Consumer/AdmittedConsumerPlatform.cs",
+        "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+      },
+      {
+        "mechanicId": "semantic-execution",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-csharp-admitted-consumer-platform.v1",
+        "provider": "ScenarioKernel.Adapters.Consumer.AdmittedConsumerPlatform",
+        "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Consumer/AdmittedConsumerPlatform.cs",
+        "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+      },
+      {
+        "mechanicId": "telemetry-observation",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-csharp-admitted-consumer-platform.v1",
+        "provider": "ScenarioKernel.Adapters.Consumer.AdmittedConsumerPlatform",
+        "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Consumer/AdmittedConsumerPlatform.cs",
+        "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+      },
+      {
+        "mechanicId": "scenario-invocation",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-csharp-admitted-consumer-platform.v1",
+        "provider": "ScenarioKernel.Adapters.Consumer.AdmittedConsumerPlatform",
+        "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Consumer/AdmittedConsumerPlatform.cs",
+        "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+      },
+      {
+        "mechanicId": "transition-binding-projection",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-csharp-admitted-consumer-platform.v1",
+        "provider": "ScenarioKernel.Adapters.Consumer.AdmittedConsumerPlatform",
+        "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Consumer/AdmittedConsumerPlatform.cs",
+        "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+      },
+      {
+        "mechanicId": "interface-delivery",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-csharp-admitted-consumer-platform.v1",
+        "provider": "ScenarioKernel.Adapters.Consumer.AdmittedConsumerPlatform",
+        "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Consumer/AdmittedConsumerPlatform.cs",
+        "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+      },
+      {
+        "mechanicId": "runtime-projection",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-csharp-admitted-consumer-platform.v1",
+        "provider": "ScenarioKernel.Adapters.Consumer.AdmittedConsumerPlatform",
+        "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Consumer/AdmittedConsumerPlatform.cs",
+        "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+      },
+      {
+        "mechanicId": "artifact-result-delivery",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-csharp-admitted-consumer-platform.v1",
+        "provider": "ScenarioKernel.Adapters.Consumer.AdmittedConsumerPlatform",
+        "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Consumer/AdmittedConsumerPlatform.cs",
+        "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+      },
+      {
+        "mechanicId": "authority-driven-transformation",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-csharp-admitted-consumer-platform.v1",
+        "provider": "ScenarioKernel.Adapters.Consumer.AdmittedConsumerPlatform",
+        "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Consumer/AdmittedConsumerPlatform.cs",
+        "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+      },
+      {
+        "mechanicId": "durable-artifact-materialization",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-csharp-admitted-consumer-platform.v1",
+        "provider": "ScenarioKernel.Adapters.Consumer.AdmittedConsumerPlatform",
+        "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Consumer/AdmittedConsumerPlatform.cs",
+        "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+      },
+      {
+        "mechanicId": "contract-validation",
+        "capabilityKind": "contract-validator",
+        "requiredBy": "scenario-contract-admission",
+        "requestedCapabilityId": "sda-schema-contract-admission.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-schema-contract-admission.v1",
+        "provider": "ScenarioKernel.Adapters.Schema.JsonSchemaContractValidator",
+        "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Schema/JsonSchemaContractValidator.cs",
+        "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+      },
+      {
+        "mechanicId": "cli-delivery",
+        "capabilityKind": "interface-delivery",
+        "requiredBy": "interface:tooling-migration-decision-cli",
+        "requestedCapabilityId": "sda-json-cli.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-json-cli.v1",
+        "provider": "ScenarioKernel.Adapters.Consumer.AdmittedConsumerPlatform",
+        "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Consumer/AdmittedConsumerPlatform.cs",
+        "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+      },
+      {
+        "mechanicId": "json-reading",
+        "capabilityKind": "interface-delivery",
+        "requiredBy": "interface:tooling-migration-decision-cli",
+        "requestedCapabilityId": "sda-json-cli.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-json-cli.v1",
+        "provider": "ScenarioKernel.Adapters.Consumer.AdmittedConsumerPlatform",
+        "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Consumer/AdmittedConsumerPlatform.cs",
+        "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+      },
+      {
+        "mechanicId": "json-serialization",
+        "capabilityKind": "interface-delivery",
+        "requiredBy": "interface:tooling-migration-decision-cli",
+        "requestedCapabilityId": "sda-json-cli.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-json-cli.v1",
+        "provider": "ScenarioKernel.Adapters.Consumer.AdmittedConsumerPlatform",
+        "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Consumer/AdmittedConsumerPlatform.cs",
+        "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+      },
+      {
+        "mechanicId": "event-port-invocation",
+        "capabilityKind": "event-port",
+        "requiredBy": "port:decide-tooling-migration",
+        "requestedCapabilityId": "sda-authority-transformation-port.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-authority-transformation-port.v1",
+        "provider": "ScenarioKernel.Adapters.Consumer.SemanticTransformationEngine",
+        "implementationRef": "languages/csharp/src/ScenarioKernel.Adapters/Consumer/SemanticTransformationEngine.cs",
+        "conformanceRef": "languages/csharp/tests/ScenarioKernel.ConformanceTests/AdapterConformanceTests.cs"
+      }
+    ],
+    "disposition": "RESOLVED"
+  },
+  "executableOrigin": {
+    "originType": "consumer-executable-origin.v1",
+    "disposition": "PROJECTED_ONLY",
+    "unauthorizedFiles": []
+  }
+}

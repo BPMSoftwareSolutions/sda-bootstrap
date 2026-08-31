@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/sda-platform/semantic-vector-index-record.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["recordType", "embeddingModelId", "embeddingParameters", "snapshotDigest", "catalogDigest", "indexDigest", "indexedMemberCount", "queryVectorDigest", "minimumOverlapScore", "orderingRule", "integerCoordinatesOnly", "candidates", "truncated", "recordDigest"],
+  "properties": {
+    "recordType": {"const": "semantic-vector-index-record.v1"},
+    "embeddingModelId": {"type": "string", "minLength": 1},
+    "embeddingParameters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["gramSize", "caseFold"],
+      "properties": {
+        "gramSize": {"type": "integer", "minimum": 1, "maximum": 8},
+        "caseFold": {"type": "boolean"}
+      }
+    },
+    "snapshotDigest": {"$ref": "#/$defs/digest"},
+    "catalogDigest": {"$ref": "#/$defs/digest"},
+    "indexDigest": {"$ref": "#/$defs/digest"},
+    "indexedMemberCount": {"type": "integer", "minimum": 0},
+    "queryVectorDigest": {"$ref": "#/$defs/digest"},
+    "minimumOverlapScore": {"type": "integer", "minimum": 1},
+    "orderingRule": {"const": "overlap score descending, then catalog ordinal ascending"},
+    "integerCoordinatesOnly": {"const": true},
+    "candidates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["semanticObjectId", "catalogOrdinal", "overlapScore", "rank"],
+        "properties": {
+          "semanticObjectId": {"type": "string", "minLength": 1},
+          "catalogOrdinal": {"type": "integer", "minimum": 0},
+          "overlapScore": {"type": "integer", "minimum": 1},
+          "rank": {"type": "integer", "minimum": 0}
+        }
+      }
+    },
+    "truncated": {"type": "boolean"},
+    "recordDigest": {"$ref": "#/$defs/digest"}
+  },
+  "$defs": {"digest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"}}
+}

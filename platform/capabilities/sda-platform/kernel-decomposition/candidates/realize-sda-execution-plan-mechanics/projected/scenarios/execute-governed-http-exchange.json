@@ -1,0 +1,37 @@
+{
+  "scenarioId": "execute-governed-http-exchange",
+  "input": {
+    "inputId": "governed-http-exchange-request",
+    "contract": {
+      "contractId": "governed-http-exchange-request.v1"
+    }
+  },
+  "event": {
+    "eventId": "execute-governed-http-exchange",
+    "executionAuthorityId": "execute-governed-http-exchange.v1"
+  },
+  "outcome": {
+    "outcomeId": "governed-http-exchange-evidence",
+    "contract": {
+      "contractId": "governed-http-exchange-evidence.v1"
+    },
+    "experience": {
+      "statement": "one bounded attributable HTTP exchange testimony is available"
+    }
+  },
+  "gherkin": {
+    "given": {
+      "semanticRef": "execute-governed-http-exchange.given",
+      "text": "admitted endpoint authority and an authorized credential binding"
+    },
+    "when": {
+      "semanticRef": "execute-governed-http-exchange.when",
+      "text": "the governed HTTP exchange is executed"
+    },
+    "then": {
+      "semanticRef": "execute-governed-http-exchange.then",
+      "text": "one bounded attributable HTTP exchange testimony is available"
+    }
+  },
+  "name": "Execute a governed HTTP exchange"
+}

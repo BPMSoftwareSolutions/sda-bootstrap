@@ -1,0 +1,202 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/platform/consumer-execution/consumer-execution-embodiment-plan.v1.schema.json",
+  "title": "Consumer execution embodiment plan v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "executionEmbodimentPlanType",
+    "target",
+    "capabilityId",
+    "source",
+    "rootNodeId",
+    "nodes",
+    "mechanicBindings",
+    "conformance",
+    "requiredProviderCapabilityIds"
+  ],
+  "properties": {
+    "executionEmbodimentPlanType": { "const": "consumer-execution-embodiment-plan.v1" },
+    "target": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+    "capabilityId": { "$ref": "#/$defs/id" },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["queryType", "queryId", "queryDigest", "capabilityAuthorityDigest", "mechanicResolutionDigest"],
+      "properties": {
+        "queryType": { "const": "projected-consumer-conformance-query.v1" },
+        "queryId": { "$ref": "#/$defs/id" },
+        "queryDigest": { "$ref": "#/$defs/digest" },
+        "capabilityAuthorityDigest": { "$ref": "#/$defs/digest" },
+        "mechanicResolutionDigest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "rootNodeId": { "$ref": "#/$defs/id" },
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/node" }
+    },
+    "mechanicBindings": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/mechanicBinding" }
+    },
+    "conformance": { "$ref": "#/$defs/conformance" },
+    "requiredProviderCapabilityIds": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/id" }
+    }
+  },
+  "$defs": {
+    "id": { "type": "string", "minLength": 1, "maxLength": 300 },
+    "digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "finding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "context"],
+      "properties": {
+        "code": { "type": "string", "minLength": 1 },
+        "context": { "type": "object" }
+      }
+    },
+    "contractReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contractId"],
+      "properties": {
+        "contractId": { "$ref": "#/$defs/id" },
+        "contractVersion": { "type": "string", "minLength": 1 },
+        "schemaRef": { "type": "string", "minLength": 1 }
+      }
+    },
+    "scenario": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scenarioId", "input", "event", "outcome"],
+      "properties": {
+        "scenarioId": { "$ref": "#/$defs/id" },
+        "input": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["inputId", "contract"],
+          "properties": {
+            "inputId": { "$ref": "#/$defs/id" },
+            "contract": { "$ref": "#/$defs/contractReference" }
+          }
+        },
+        "event": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["eventId", "executionAuthorityId"],
+          "properties": {
+            "eventId": { "$ref": "#/$defs/id" },
+            "executionAuthorityId": { "$ref": "#/$defs/id" }
+          }
+        },
+        "outcome": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["outcomeId", "contract", "terminal"],
+          "properties": {
+            "outcomeId": { "$ref": "#/$defs/id" },
+            "contract": { "$ref": "#/$defs/contractReference" },
+            "terminal": { "type": "boolean" }
+          }
+        }
+      }
+    },
+    "operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operationId", "mechanicBindingId"],
+      "properties": {
+        "operationId": { "$ref": "#/$defs/id" },
+        "mechanicBindingId": { "$ref": "#/$defs/id" }
+      }
+    },
+    "transition": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["transitionId", "nextNodeId", "mechanicBindingId"],
+      "properties": {
+        "transitionId": { "$ref": "#/$defs/id" },
+        "nextNodeId": { "$ref": "#/$defs/id" },
+        "mechanicBindingId": { "type": ["string", "null"], "minLength": 1 }
+      }
+    },
+    "node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["nodeId", "scenario", "operations", "transition"],
+      "properties": {
+        "nodeId": { "$ref": "#/$defs/id" },
+        "scenario": { "$ref": "#/$defs/scenario" },
+        "operations": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/operation" }
+        },
+        "transition": { "$ref": "#/$defs/transition" }
+      }
+    },
+    "mechanicBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["bindingId", "mechanicType", "providerCapabilityId", "provider", "implementationRef", "configuration"],
+      "properties": {
+        "bindingId": { "$ref": "#/$defs/id" },
+        "mechanicType": { "enum": ["contract-admission", "event-port", "state-projection"] },
+        "providerCapabilityId": { "$ref": "#/$defs/id" },
+        "provider": { "type": "string", "minLength": 1 },
+        "implementationRef": { "type": "string", "minLength": 1 },
+        "configuration": { "type": "object" }
+      }
+    },
+    "staticClosure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["closureId", "evaluation", "disposition", "findings"],
+      "properties": {
+        "closureId": { "$ref": "#/$defs/id" },
+        "evaluation": { "const": "compiled" },
+        "disposition": { "enum": ["PASS", "FAIL"] },
+        "findings": { "type": "array", "items": { "$ref": "#/$defs/finding" } }
+      }
+    },
+    "runtimeClosure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["closureId", "evaluation", "evaluatorId", "configuration"],
+      "properties": {
+        "closureId": { "$ref": "#/$defs/id" },
+        "evaluation": { "const": "runtime-evidence" },
+        "evaluatorId": {
+          "enum": [
+            "expected-execution-trace.v1",
+            "artifact-binding-observation.v1",
+            "projected-origin-observation.v1"
+          ]
+        },
+        "configuration": { "type": "object" }
+      }
+    },
+    "conformance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["queryId", "platformMechanics", "executableOrigin", "closures"],
+      "properties": {
+        "queryId": { "$ref": "#/$defs/id" },
+        "platformMechanics": { "type": "object" },
+        "executableOrigin": { "type": "object" },
+        "closures": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "oneOf": [{ "$ref": "#/$defs/staticClosure" }, { "$ref": "#/$defs/runtimeClosure" }] }
+        }
+      }
+    }
+  }
+}

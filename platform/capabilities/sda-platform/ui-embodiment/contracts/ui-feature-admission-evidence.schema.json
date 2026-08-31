@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ui-feature-admission-evidence.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["evidenceType", "authorityType", "capabilityId", "embodimentTarget", "featureProfileId", "requiredFeatureCount", "resolutions", "disposition"],
+  "properties": {
+    "evidenceType": { "const": "sda-ui-feature-admission-evidence.v1" },
+    "authorityType": { "const": "consumer-ui-authority.v1" },
+    "capabilityId": { "type": "string", "minLength": 1 },
+    "embodimentTarget": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+    "featureProfileId": { "type": "string", "minLength": 1 },
+    "requiredFeatureCount": { "type": "integer", "minimum": 1 },
+    "resolutions": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["featureId", "authorityPaths", "disposition", "adaptationId", "evidenceRefs"],
+        "properties": {
+          "featureId": { "type": "string", "minLength": 1 },
+          "authorityPaths": { "type": "array", "uniqueItems": true, "items": { "type": "string" } },
+          "disposition": { "type": "string", "enum": ["SUPPORTED", "ADAPTED", "NOT_SUPPORTED"] },
+          "adaptationId": { "type": ["string", "null"] },
+          "evidenceRefs": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } }
+        }
+      }
+    },
+    "disposition": { "type": "string", "enum": ["SUPPORTED", "NOT_SUPPORTED"] }
+  }
+}

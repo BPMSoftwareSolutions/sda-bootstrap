@@ -1,0 +1,385 @@
+{
+  "capabilityType": "scenario-driven-capability.v1",
+  "capabilityId": "verify-sda-execution-plan-realization",
+  "userStory": {
+    "actor": "SDA conformance system",
+    "intent": "compare observed execution with its canonical execution plan",
+    "outcome": "language realization can be admitted only when semantic execution ties out"
+  },
+  "scenarios": [
+    {
+      "scenarioId": "verify-sda-execution-plan-realization",
+      "input": {
+        "inputId": "execution-plan-realization-verification-request",
+        "contract": {
+          "contractId": "execution-plan-realization-verification-request.v1"
+        }
+      },
+      "event": {
+        "eventId": "verify-sda-execution-plan-realization",
+        "executionAuthorityId": "verify-sda-execution-plan-realization.v1"
+      },
+      "outcome": {
+        "outcomeId": "execution-plan-realization-conformance",
+        "contract": {
+          "contractId": "execution-plan-realization-conformance.v1"
+        },
+        "experience": {
+          "statement": "one attributable realization-conformance disposition is established"
+        }
+      },
+      "gherkin": {
+        "given": {
+          "semanticRef": "verify-sda-execution-plan-realization.given",
+          "text": "canonical execution expectations and observed execution testimony"
+        },
+        "when": {
+          "semanticRef": "verify-sda-execution-plan-realization.when",
+          "text": "execution-plan realization is verified"
+        },
+        "then": {
+          "semanticRef": "verify-sda-execution-plan-realization.then",
+          "text": "one attributable realization-conformance disposition is established"
+        }
+      },
+      "name": "Verify an execution-plan realization"
+    },
+    {
+      "scenarioId": "verify-expected-execution-trace",
+      "input": {
+        "inputId": "expected-and-observed-execution",
+        "contract": {
+          "contractId": "expected-and-observed-execution.v1"
+        }
+      },
+      "event": {
+        "eventId": "verify-expected-execution-trace",
+        "executionAuthorityId": "verify-expected-execution-trace.v1"
+      },
+      "outcome": {
+        "outcomeId": "execution-trace-conformance",
+        "contract": {
+          "contractId": "execution-trace-conformance.v1"
+        },
+        "experience": {
+          "statement": "one execution-trace conformance disposition is established"
+        }
+      },
+      "gherkin": {
+        "given": {
+          "semanticRef": "verify-expected-execution-trace.given",
+          "text": "expected semantic telemetry and observed execution testimony"
+        },
+        "when": {
+          "semanticRef": "verify-expected-execution-trace.when",
+          "text": "execution trace conformance is evaluated"
+        },
+        "then": {
+          "semanticRef": "verify-expected-execution-trace.then",
+          "text": "one execution-trace conformance disposition is established"
+        }
+      },
+      "name": "Verify the expected execution trace is observed"
+    },
+    {
+      "scenarioId": "verify-artifact-materialization",
+      "input": {
+        "inputId": "artifact-materialization-verification-request",
+        "contract": {
+          "contractId": "artifact-materialization-verification-request.v1"
+        }
+      },
+      "event": {
+        "eventId": "verify-artifact-materialization",
+        "executionAuthorityId": "verify-artifact-materialization.v1"
+      },
+      "outcome": {
+        "outcomeId": "artifact-materialization-conformance",
+        "contract": {
+          "contractId": "artifact-materialization-conformance.v1"
+        },
+        "experience": {
+          "statement": "one artifact-materialization conformance disposition is established"
+        }
+      },
+      "gherkin": {
+        "given": {
+          "semanticRef": "verify-artifact-materialization.given",
+          "text": "observed execution and required artifact references"
+        },
+        "when": {
+          "semanticRef": "verify-artifact-materialization.when",
+          "text": "artifact materialization is verified"
+        },
+        "then": {
+          "semanticRef": "verify-artifact-materialization.then",
+          "text": "one artifact-materialization conformance disposition is established"
+        }
+      },
+      "name": "Verify artifact materialization"
+    },
+    {
+      "scenarioId": "verify-projected-executable-origin",
+      "input": {
+        "inputId": "projected-executable-origin-verification-request",
+        "contract": {
+          "contractId": "projected-executable-origin-verification-request.v1"
+        }
+      },
+      "event": {
+        "eventId": "verify-projected-executable-origin",
+        "executionAuthorityId": "verify-projected-executable-origin.v1"
+      },
+      "outcome": {
+        "outcomeId": "projected-executable-origin-conformance",
+        "contract": {
+          "contractId": "projected-executable-origin-conformance.v1"
+        },
+        "experience": {
+          "statement": "one projected-origin conformance disposition is established"
+        }
+      },
+      "gherkin": {
+        "given": {
+          "semanticRef": "verify-projected-executable-origin.given",
+          "text": "executable-origin testimony and required projection policy"
+        },
+        "when": {
+          "semanticRef": "verify-projected-executable-origin.when",
+          "text": "executable origin is verified"
+        },
+        "then": {
+          "semanticRef": "verify-projected-executable-origin.then",
+          "text": "one projected-origin conformance disposition is established"
+        }
+      },
+      "name": "Verify the projected executable origin"
+    },
+    {
+      "scenarioId": "verify-mechanic-resolution",
+      "input": {
+        "inputId": "mechanic-resolution-verification-request",
+        "contract": {
+          "contractId": "mechanic-resolution-verification-request.v1"
+        }
+      },
+      "event": {
+        "eventId": "verify-mechanic-resolution",
+        "executionAuthorityId": "verify-mechanic-resolution.v1"
+      },
+      "outcome": {
+        "outcomeId": "mechanic-resolution-conformance",
+        "contract": {
+          "contractId": "mechanic-resolution-conformance.v1"
+        },
+        "experience": {
+          "statement": "one mechanic-resolution conformance disposition is established"
+        }
+      },
+      "gherkin": {
+        "given": {
+          "semanticRef": "verify-mechanic-resolution.given",
+          "text": "required execution mechanics and the admitted platform capability catalog"
+        },
+        "when": {
+          "semanticRef": "verify-mechanic-resolution.when",
+          "text": "mechanic resolution is verified"
+        },
+        "then": {
+          "semanticRef": "verify-mechanic-resolution.then",
+          "text": "one mechanic-resolution conformance disposition is established"
+        }
+      },
+      "name": "Verify mechanic resolution"
+    },
+    {
+      "scenarioId": "verify-language-mechanic-parity",
+      "input": {
+        "inputId": "language-mechanic-parity-verification-request",
+        "contract": {
+          "contractId": "language-mechanic-parity-verification-request.v1"
+        }
+      },
+      "event": {
+        "eventId": "verify-language-mechanic-parity",
+        "executionAuthorityId": "verify-language-mechanic-parity.v1"
+      },
+      "outcome": {
+        "outcomeId": "language-mechanic-parity-conformance",
+        "contract": {
+          "contractId": "language-mechanic-parity-conformance.v1"
+        },
+        "experience": {
+          "statement": "one cross-language mechanic-parity disposition is established"
+        }
+      },
+      "gherkin": {
+        "given": {
+          "semanticRef": "verify-language-mechanic-parity.given",
+          "text": "canonical mechanic authority and the required language projections"
+        },
+        "when": {
+          "semanticRef": "verify-language-mechanic-parity.when",
+          "text": "language mechanic parity is evaluated"
+        },
+        "then": {
+          "semanticRef": "verify-language-mechanic-parity.then",
+          "text": "one cross-language mechanic-parity disposition is established"
+        }
+      },
+      "name": "Verify language mechanic parity"
+    },
+    {
+      "scenarioId": "verify-canonical-outcome-parity",
+      "input": {
+        "inputId": "canonical-outcome-parity-verification-request",
+        "contract": {
+          "contractId": "canonical-outcome-parity-verification-request.v1"
+        }
+      },
+      "event": {
+        "eventId": "verify-canonical-outcome-parity",
+        "executionAuthorityId": "verify-canonical-outcome-parity.v1"
+      },
+      "outcome": {
+        "outcomeId": "canonical-outcome-parity-conformance",
+        "contract": {
+          "contractId": "canonical-outcome-parity-conformance.v1"
+        },
+        "experience": {
+          "statement": "one cross-target outcome-parity disposition is established"
+        },
+        "terminal": true
+      },
+      "gherkin": {
+        "given": {
+          "semanticRef": "verify-canonical-outcome-parity.given",
+          "text": "admitted canonical outcome authority and per-target observed outcomes"
+        },
+        "when": {
+          "semanticRef": "verify-canonical-outcome-parity.when",
+          "text": "canonical outcome parity is evaluated"
+        },
+        "then": {
+          "semanticRef": "verify-canonical-outcome-parity.then",
+          "text": "one cross-target outcome-parity disposition is established"
+        }
+      },
+      "name": "Verify canonical outcome parity"
+    }
+  ],
+  "transitions": [
+    {
+      "transitionId": "verify-root-to-trace",
+      "from": {
+        "scenarioId": "verify-sda-execution-plan-realization",
+        "outcomeId": "execution-plan-realization-conformance",
+        "contractId": "execution-plan-realization-conformance.v1"
+      },
+      "to": {
+        "scenarioId": "verify-expected-execution-trace",
+        "inputId": "expected-and-observed-execution",
+        "contractId": "expected-and-observed-execution.v1"
+      },
+      "semanticProgress": "monotonic",
+      "bindingAuthorityId": "project-verification-to-trace"
+    },
+    {
+      "transitionId": "verify-trace-to-artifact",
+      "from": {
+        "scenarioId": "verify-expected-execution-trace",
+        "outcomeId": "execution-trace-conformance",
+        "contractId": "execution-trace-conformance.v1"
+      },
+      "to": {
+        "scenarioId": "verify-artifact-materialization",
+        "inputId": "artifact-materialization-verification-request",
+        "contractId": "artifact-materialization-verification-request.v1"
+      },
+      "semanticProgress": "monotonic",
+      "bindingAuthorityId": "project-trace-to-artifact"
+    },
+    {
+      "transitionId": "verify-artifact-to-origin",
+      "from": {
+        "scenarioId": "verify-artifact-materialization",
+        "outcomeId": "artifact-materialization-conformance",
+        "contractId": "artifact-materialization-conformance.v1"
+      },
+      "to": {
+        "scenarioId": "verify-projected-executable-origin",
+        "inputId": "projected-executable-origin-verification-request",
+        "contractId": "projected-executable-origin-verification-request.v1"
+      },
+      "semanticProgress": "monotonic",
+      "bindingAuthorityId": "project-artifact-to-origin"
+    },
+    {
+      "transitionId": "verify-origin-to-mechanic-resolution",
+      "from": {
+        "scenarioId": "verify-projected-executable-origin",
+        "outcomeId": "projected-executable-origin-conformance",
+        "contractId": "projected-executable-origin-conformance.v1"
+      },
+      "to": {
+        "scenarioId": "verify-mechanic-resolution",
+        "inputId": "mechanic-resolution-verification-request",
+        "contractId": "mechanic-resolution-verification-request.v1"
+      },
+      "semanticProgress": "monotonic",
+      "bindingAuthorityId": "project-origin-to-mechanic-resolution"
+    },
+    {
+      "transitionId": "verify-mechanic-resolution-to-parity",
+      "from": {
+        "scenarioId": "verify-mechanic-resolution",
+        "outcomeId": "mechanic-resolution-conformance",
+        "contractId": "mechanic-resolution-conformance.v1"
+      },
+      "to": {
+        "scenarioId": "verify-language-mechanic-parity",
+        "inputId": "language-mechanic-parity-verification-request",
+        "contractId": "language-mechanic-parity-verification-request.v1"
+      },
+      "semanticProgress": "monotonic",
+      "bindingAuthorityId": "project-mechanic-resolution-to-parity"
+    },
+    {
+      "transitionId": "verify-parity-to-outcome-parity",
+      "from": {
+        "scenarioId": "verify-language-mechanic-parity",
+        "outcomeId": "language-mechanic-parity-conformance",
+        "contractId": "language-mechanic-parity-conformance.v1"
+      },
+      "to": {
+        "scenarioId": "verify-canonical-outcome-parity",
+        "inputId": "canonical-outcome-parity-verification-request",
+        "contractId": "canonical-outcome-parity-verification-request.v1"
+      },
+      "semanticProgress": "monotonic",
+      "bindingAuthorityId": "project-parity-to-outcome-parity"
+    }
+  ],
+  "rootScenarioId": "verify-sda-execution-plan-realization",
+  "name": "Verify SDA execution-plan realization",
+  "experience": {
+    "experienceType": "promised-experience.v1",
+    "experienceId": "execution-plan-realization-is-verifiable",
+    "actor": "SDA conformance system",
+    "promise": "The projected capability returns an attributable realization-conformance disposition for every observed execution, without the verifier producing any effect.",
+    "observableConditions": [
+      {
+        "conditionId": "provider-and-verifier-are-separate",
+        "statement": "verification establishes conformance dispositions and never performs realization effects"
+      },
+      {
+        "conditionId": "divergence-is-attributable",
+        "statement": "every non-conformant observation carries an attributable divergence finding"
+      },
+      {
+        "conditionId": "verification-claims-nothing",
+        "statement": "the conformance disposition claims no admission, projection, or promotion"
+      }
+    ]
+  }
+}

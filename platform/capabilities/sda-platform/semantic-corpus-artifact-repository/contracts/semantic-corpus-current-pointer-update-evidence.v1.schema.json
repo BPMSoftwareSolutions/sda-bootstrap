@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/semantic-corpus/semantic-corpus-current-pointer-update-evidence.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contractId", "repositoryAuthorityDigest", "pointerId", "expectedGeneration", "observedGeneration", "expectedCurrentSnapshotDigest", "previousSnapshotDigest", "candidateSnapshotDigest", "closureReceiptDigest", "findings", "disposition", "receiptDigest"],
+  "properties": {
+    "contractId": {"const": "semantic-corpus-current-pointer-update-evidence.v1"},
+    "repositoryAuthorityDigest": {"$ref": "#/$defs/digest"},
+    "pointerId": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9._-]{0,127}$"},
+    "expectedGeneration": {"type": "integer", "minimum": 0},
+    "observedGeneration": {"type": "integer", "minimum": 0},
+    "expectedCurrentSnapshotDigest": {"$ref": "#/$defs/nullableDigest"},
+    "previousSnapshotDigest": {"$ref": "#/$defs/nullableDigest"},
+    "candidateSnapshotDigest": {"$ref": "#/$defs/digest"},
+    "closureReceiptDigest": {"$ref": "#/$defs/digest"},
+    "findings": {"type": "array", "items": {"$ref": "#/$defs/finding"}},
+    "disposition": {"enum": ["UPDATED", "CONFLICT", "REJECTED"]},
+    "receiptDigest": {"$ref": "#/$defs/digest"}
+  },
+  "$defs": {
+    "digest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "nullableDigest": {"oneOf": [{"$ref": "#/$defs/digest"}, {"type": "null"}]},
+    "finding": {"type": "object", "additionalProperties": false, "required": ["code", "subjectRef"], "properties": {"code": {"type": "string", "minLength": 1}, "subjectRef": {"type": "string", "minLength": 1}}}
+  }
+}

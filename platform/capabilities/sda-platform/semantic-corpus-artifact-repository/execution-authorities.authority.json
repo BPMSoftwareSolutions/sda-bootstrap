@@ -1,0 +1,60 @@
+{
+  "authorityType": "execution-authorities.v1",
+  "executionAuthorities": [
+    {
+      "id": "publish-immutable-semantic-corpus-artifact.v1",
+      "owningScenarioId": "publish-immutable-semantic-corpus-artifact",
+      "operations": [
+        {"kind": "invoke-port", "portId": "publish-immutable-semantic-corpus-artifact-port"},
+        {"kind": "invoke-scenario", "scenarioId": "reject-semantic-corpus-artifact-publication-conflict"},
+        {"kind": "invoke-scenario", "scenarioId": "read-immutable-semantic-corpus-artifact"},
+        {"kind": "invoke-scenario", "scenarioId": "retain-referenced-semantic-corpus-snapshot"},
+        {"kind": "invoke-scenario", "scenarioId": "update-current-semantic-corpus-pointer"},
+        {"kind": "invoke-scenario", "scenarioId": "reject-open-semantic-corpus-pointer-update"},
+        {"kind": "invoke-scenario", "scenarioId": "reproduce-semantic-corpus-artifact-address"}
+      ]
+    },
+    {
+      "id": "reject-semantic-corpus-artifact-publication-conflict.v1",
+      "owningScenarioId": "reject-semantic-corpus-artifact-publication-conflict",
+      "operations": [
+        {"kind": "invoke-port", "portId": "reject-semantic-corpus-artifact-publication-conflict-port"}
+      ]
+    },
+    {
+      "id": "read-immutable-semantic-corpus-artifact.v1",
+      "owningScenarioId": "read-immutable-semantic-corpus-artifact",
+      "operations": [
+        {"kind": "invoke-port", "portId": "read-immutable-semantic-corpus-artifact-port"}
+      ]
+    },
+    {
+      "id": "retain-referenced-semantic-corpus-snapshot.v1",
+      "owningScenarioId": "retain-referenced-semantic-corpus-snapshot",
+      "operations": [
+        {"kind": "invoke-port", "portId": "retain-referenced-semantic-corpus-snapshot-port"}
+      ]
+    },
+    {
+      "id": "update-current-semantic-corpus-pointer.v1",
+      "owningScenarioId": "update-current-semantic-corpus-pointer",
+      "operations": [
+        {"kind": "invoke-port", "portId": "update-current-semantic-corpus-pointer-port"}
+      ]
+    },
+    {
+      "id": "reject-open-semantic-corpus-pointer-update.v1",
+      "owningScenarioId": "reject-open-semantic-corpus-pointer-update",
+      "operations": [
+        {"kind": "invoke-port", "portId": "reject-open-semantic-corpus-pointer-update-port"}
+      ]
+    },
+    {
+      "id": "reproduce-semantic-corpus-artifact-address.v1",
+      "owningScenarioId": "reproduce-semantic-corpus-artifact-address",
+      "operations": [
+        {"kind": "invoke-port", "portId": "reproduce-semantic-corpus-artifact-address-port"}
+      ]
+    }
+  ]
+}

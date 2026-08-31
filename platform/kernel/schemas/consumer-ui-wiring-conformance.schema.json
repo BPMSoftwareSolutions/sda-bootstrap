@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/consumer-ui-wiring-conformance.v1.schema.json",
+  "title": "Consumer UI Native Wiring Conformance",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["wiringConformanceType", "applicationId", "embodimentTarget", "authorityDigest", "requiredInteractions", "realizedInteractions", "unboundRequiredInteractions", "inventedInteractions", "disposition"],
+  "properties": {
+    "wiringConformanceType": { "const": "consumer-ui-wiring-conformance.v1" },
+    "applicationId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "embodimentTarget": { "$ref": "consumer-ui-parity-evidence.schema.json#/$defs/target" },
+    "authorityDigest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "requiredInteractions": { "type": "array", "items": { "$ref": "#/$defs/interaction" } },
+    "realizedInteractions": { "type": "array", "items": { "$ref": "#/$defs/realization" } },
+    "unboundRequiredInteractions": { "type": "array", "items": { "$ref": "#/$defs/interaction" } },
+    "inventedInteractions": { "type": "array", "items": { "$ref": "#/$defs/realization" } },
+    "disposition": { "type": "string", "enum": ["PASS", "FAIL"] }
+  },
+  "$defs": {
+    "semanticId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "interaction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["semanticKind", "refId"],
+      "properties": {
+        "semanticKind": { "type": "string", "enum": ["input", "action"] },
+        "refId": { "$ref": "#/$defs/semanticId" },
+        "commitOperationId": { "$ref": "#/$defs/semanticId" }
+      }
+    },
+    "realization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["semanticKind", "refId", "nativeRole", "nativeLocator"],
+      "properties": {
+        "semanticKind": { "type": "string", "enum": ["input", "action"] },
+        "refId": { "$ref": "#/$defs/semanticId" },
+        "commitOperationId": { "$ref": "#/$defs/semanticId" },
+        "nativeRole": { "type": "string", "minLength": 1 },
+        "nativeLocator": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "evidenceType": "semantic-presentation-compilation-evidence.v1",
+  "semanticPresentationDigest": "sha256:72cb72eb44e571b4382f9b7224159f914696000160918d43607c12cf458103e1",
+  "compilerAuthorityId": "compile-semantic-presentation.v1",
+  "compilerAuthorityDigest": "sha256:f3b82ee8d5136d70006f68c4b619828995b9fcb915a02995fd0d869d66a22333",
+  "presentationIrDigest": "sha256:d7730b82074183c4029786a77f767f81300b2d5b6cca84ce31d90d3006bb0ff8",
+  "findings": [],
+  "disposition": "COMPILED"
+}

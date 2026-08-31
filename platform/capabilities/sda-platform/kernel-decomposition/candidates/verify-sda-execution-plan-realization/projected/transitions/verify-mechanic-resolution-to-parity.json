@@ -1,0 +1,15 @@
+{
+  "transitionId": "verify-mechanic-resolution-to-parity",
+  "from": {
+    "scenarioId": "verify-mechanic-resolution",
+    "outcomeId": "mechanic-resolution-conformance",
+    "contractId": "mechanic-resolution-conformance.v1"
+  },
+  "to": {
+    "scenarioId": "verify-language-mechanic-parity",
+    "inputId": "language-mechanic-parity-verification-request",
+    "contractId": "language-mechanic-parity-verification-request.v1"
+  },
+  "semanticProgress": "monotonic",
+  "bindingAuthorityId": "project-mechanic-resolution-to-parity"
+}

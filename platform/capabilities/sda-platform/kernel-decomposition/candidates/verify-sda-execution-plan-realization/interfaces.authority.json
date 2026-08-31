@@ -1,0 +1,123 @@
+{
+  "interfaceAuthorityType": "consumer-interface-authority.v1",
+  "contractValidatorCapabilityId": "sda-schema-contract-admission.v1",
+  "contractCatalog": "contracts/contract-catalog.json",
+  "requiredPlatformObligations": ["dynamic-semantic-execution", "domain-contract-admission"],
+  "interfaces": [
+    {
+      "interfaceId": "verify-sda-execution-plan-realization-cli",
+      "kind": "cli",
+      "rootScenarioId": "verify-sda-execution-plan-realization",
+      "platformCapabilityId": "sda-json-cli.v1",
+      "projectionTargets": ["node", "csharp", "python"]
+    }
+  ],
+  "portBindings": [
+    {
+      "portId": "verify-sda-execution-plan-realization",
+      "platformCapabilityId": "sda-authority-transformation-port.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "verify-sda-execution-plan-realization.v1"
+      }
+    },
+    {
+      "portId": "verify-expected-execution-trace",
+      "platformCapabilityId": "sda-authority-transformation-port.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "verify-expected-execution-trace.v1"
+      }
+    },
+    {
+      "portId": "verify-artifact-materialization",
+      "platformCapabilityId": "sda-authority-transformation-port.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "verify-artifact-materialization.v1"
+      }
+    },
+    {
+      "portId": "verify-projected-executable-origin",
+      "platformCapabilityId": "sda-authority-transformation-port.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "verify-projected-executable-origin.v1"
+      }
+    },
+    {
+      "portId": "verify-mechanic-resolution",
+      "platformCapabilityId": "sda-authority-transformation-port.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "verify-mechanic-resolution.v1"
+      }
+    },
+    {
+      "portId": "verify-language-mechanic-parity",
+      "platformCapabilityId": "sda-authority-transformation-port.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "verify-language-mechanic-parity.v1"
+      }
+    },
+    {
+      "portId": "verify-canonical-outcome-parity",
+      "platformCapabilityId": "sda-authority-transformation-port.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "verify-canonical-outcome-parity.v1"
+      }
+    }
+  ],
+  "projectionBindings": [
+    {
+      "projectionId": "project-verification-to-trace",
+      "platformCapabilityId": "sda-authority-state-projection.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "project-verification-to-trace.v1"
+      }
+    },
+    {
+      "projectionId": "project-trace-to-artifact",
+      "platformCapabilityId": "sda-authority-state-projection.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "project-trace-to-artifact.v1"
+      }
+    },
+    {
+      "projectionId": "project-artifact-to-origin",
+      "platformCapabilityId": "sda-authority-state-projection.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "project-artifact-to-origin.v1"
+      }
+    },
+    {
+      "projectionId": "project-origin-to-mechanic-resolution",
+      "platformCapabilityId": "sda-authority-state-projection.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "project-origin-to-mechanic-resolution.v1"
+      }
+    },
+    {
+      "projectionId": "project-mechanic-resolution-to-parity",
+      "platformCapabilityId": "sda-authority-state-projection.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "project-mechanic-resolution-to-parity.v1"
+      }
+    },
+    {
+      "projectionId": "project-parity-to-outcome-parity",
+      "platformCapabilityId": "sda-authority-state-projection.v1",
+      "configuration": {
+        "transformationAuthorityRef": "semantic-transformation.authority.json",
+        "transformationId": "project-parity-to-outcome-parity.v1"
+      }
+    }
+  ]
+}

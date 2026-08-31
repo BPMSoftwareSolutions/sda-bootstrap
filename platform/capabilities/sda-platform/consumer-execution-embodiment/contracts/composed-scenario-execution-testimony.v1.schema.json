@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/platform/consumer-execution/composed-scenario-execution-testimony.v1.schema.json",
+  "title": "Composed scenario execution testimony",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["testimonyType", "rootExecutionId", "rootScenarioId", "disposition", "executions", "finalCarrier"],
+  "properties": {
+    "testimonyType": { "const": "composed-scenario-execution-testimony.v1" },
+    "rootExecutionId": { "$ref": "consumer-execution-embodiment-plan.v1.schema.json#/$defs/id" },
+    "rootScenarioId": { "$ref": "consumer-execution-embodiment-plan.v1.schema.json#/$defs/id" },
+    "disposition": {
+      "enum": [
+        "TERMINATED",
+        "UNKNOWN_SCENARIO_REJECTED",
+        "RECURSIVE_INVOCATION_REJECTED",
+        "INTERMEDIATE_CONTRACT_REJECTED",
+        "BINDING_AUTHORITY_REJECTED",
+        "INPUT_REJECTED",
+        "EVENT_FAILED",
+        "OUTCOME_REJECTED"
+      ]
+    },
+    "executions": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/execution" }
+    },
+    "finalCarrier": {},
+    "stoppedAt": { "type": ["string", "null"], "minLength": 1 }
+  },
+  "$defs": {
+    "execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["executionId", "scenarioId", "parentExecutionId", "sequence", "disposition", "inputContractDisposition", "outcomeContractDisposition"],
+      "properties": {
+        "executionId": { "$ref": "consumer-execution-embodiment-plan.v1.schema.json#/$defs/id" },
+        "scenarioId": { "$ref": "consumer-execution-embodiment-plan.v1.schema.json#/$defs/id" },
+        "parentExecutionId": { "type": ["string", "null"], "minLength": 1 },
+        "sequence": { "type": "integer", "minimum": 0 },
+        "disposition": { "type": "string", "minLength": 1 },
+        "inputContractDisposition": { "enum": ["ADMITTED", "REJECTED", "NOT_REACHED"] },
+        "outcomeContractDisposition": { "enum": ["ADMITTED", "REJECTED", "NOT_REACHED"] }
+      }
+    }
+  }
+}

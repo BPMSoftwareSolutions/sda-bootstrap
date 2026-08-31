@@ -1,0 +1,3218 @@
+{
+  "queryType": "projected-consumer-conformance-query.v1",
+  "queryId": "scenario-conformance-closure",
+  "capabilityId": "semantic-corpus-artifact-repository",
+  "subjects": [
+    "feature",
+    "scenario",
+    "contract",
+    "execution-authority",
+    "transition",
+    "interface",
+    "projection",
+    "telemetry",
+    "execution",
+    "behavior",
+    "platform-capability",
+    "executable-origin"
+  ],
+  "requiredClosures": [
+    "feature-to-scenario",
+    "scenario-to-contract",
+    "scenario-to-event-authority",
+    "outcome-to-transition",
+    "transition-to-next-input",
+    "scenario-to-interface",
+    "execution-to-telemetry",
+    "scenario-to-projection",
+    "expected-to-observed-execution",
+    "root-to-terminal-behavior",
+    "required-mechanic-to-platform-capability",
+    "consumer-executable-origin",
+    "dynamic-semantic-execution",
+    "domain-contract-admission"
+  ],
+  "dispositionPolicy": "all-required-closures-conform",
+  "authorityGraph": {
+    "rootScenarioId": "publish-immutable-semantic-corpus-artifact",
+    "scenarios": [
+      {
+        "scenarioId": "publish-immutable-semantic-corpus-artifact",
+        "input": {
+          "inputId": "semantic-corpus-artifact-publication-request",
+          "contract": {
+            "contractId": "semantic-corpus-artifact-publication-request.v1"
+          }
+        },
+        "event": {
+          "eventId": "semantic-corpus-artifact-publication-requested",
+          "executionAuthorityId": "publish-immutable-semantic-corpus-artifact.v1"
+        },
+        "outcome": {
+          "outcomeId": "semantic-corpus-artifact-publication-evidence",
+          "contract": {
+            "contractId": "semantic-corpus-artifact-publication-evidence.v1"
+          },
+          "experience": {
+            "statement": "exact bytes are retained once or matched idempotently without overwrite, pointer movement, semantic interpretation, or mixed generation"
+          },
+          "terminal": true
+        },
+        "gherkin": {
+          "given": {
+            "semanticRef": "publish-immutable-semantic-corpus-artifact.given",
+            "text": "one canonical artifact, declared artifact kind, expected digest, and bounded repository authority"
+          },
+          "when": {
+            "semanticRef": "publish-immutable-semantic-corpus-artifact.when",
+            "text": "the artifact is published atomically at its content address"
+          },
+          "then": {
+            "semanticRef": "publish-immutable-semantic-corpus-artifact.then",
+            "text": "exact bytes are retained once or matched idempotently without overwrite, pointer movement, semantic interpretation, or mixed generation"
+          }
+        },
+        "name": "Publish one canonical immutable artifact"
+      },
+      {
+        "scenarioId": "reject-semantic-corpus-artifact-publication-conflict",
+        "input": {
+          "inputId": "semantic-corpus-artifact-publication-request",
+          "contract": {
+            "contractId": "semantic-corpus-artifact-publication-request.v1"
+          }
+        },
+        "event": {
+          "eventId": "conflicting-semantic-corpus-artifact-publication-requested",
+          "executionAuthorityId": "reject-semantic-corpus-artifact-publication-conflict.v1"
+        },
+        "outcome": {
+          "outcomeId": "rejected-semantic-corpus-artifact-publication-evidence",
+          "contract": {
+            "contractId": "semantic-corpus-artifact-publication-evidence.v1"
+          },
+          "experience": {
+            "statement": "publication is rejected without overwrite, partial artifact, pointer movement, or reinterpretation of either digest"
+          },
+          "terminal": true
+        },
+        "gherkin": {
+          "given": {
+            "semanticRef": "reject-semantic-corpus-artifact-publication-conflict.given",
+            "text": "supplied bytes do not match the expected digest or an occupied content address contains different bytes"
+          },
+          "when": {
+            "semanticRef": "reject-semantic-corpus-artifact-publication-conflict.when",
+            "text": "publication admission is evaluated"
+          },
+          "then": {
+            "semanticRef": "reject-semantic-corpus-artifact-publication-conflict.then",
+            "text": "publication is rejected without overwrite, partial artifact, pointer movement, or reinterpretation of either digest"
+          }
+        },
+        "name": "Reject digest mismatch or occupied-address byte conflict"
+      },
+      {
+        "scenarioId": "read-immutable-semantic-corpus-artifact",
+        "input": {
+          "inputId": "semantic-corpus-artifact-read-request",
+          "contract": {
+            "contractId": "semantic-corpus-artifact-read-request.v1"
+          }
+        },
+        "event": {
+          "eventId": "semantic-corpus-artifact-read-requested",
+          "executionAuthorityId": "read-immutable-semantic-corpus-artifact.v1"
+        },
+        "outcome": {
+          "outcomeId": "semantic-corpus-artifact-read-evidence",
+          "contract": {
+            "contractId": "semantic-corpus-artifact-read-evidence.v1"
+          },
+          "experience": {
+            "statement": "the exact artifact or an attributable missing, corrupted, or unauthorized finding is returned without fallback to current or latest state"
+          },
+          "terminal": true
+        },
+        "gherkin": {
+          "given": {
+            "semanticRef": "read-immutable-semantic-corpus-artifact.given",
+            "text": "one authorized artifact digest and bounded repository authority"
+          },
+          "when": {
+            "semanticRef": "read-immutable-semantic-corpus-artifact.when",
+            "text": "the exact stored artifact is read and its digest and canonical form are verified"
+          },
+          "then": {
+            "semanticRef": "read-immutable-semantic-corpus-artifact.then",
+            "text": "the exact artifact or an attributable missing, corrupted, or unauthorized finding is returned without fallback to current or latest state"
+          }
+        },
+        "name": "Read and verify one content-addressed artifact"
+      },
+      {
+        "scenarioId": "retain-referenced-semantic-corpus-snapshot",
+        "input": {
+          "inputId": "semantic-corpus-artifact-read-request",
+          "contract": {
+            "contractId": "semantic-corpus-artifact-read-request.v1"
+          }
+        },
+        "event": {
+          "eventId": "retained-semantic-corpus-snapshot-read-requested",
+          "executionAuthorityId": "retain-referenced-semantic-corpus-snapshot.v1"
+        },
+        "outcome": {
+          "outcomeId": "semantic-corpus-artifact-read-evidence",
+          "contract": {
+            "contractId": "semantic-corpus-artifact-read-evidence.v1"
+          },
+          "experience": {
+            "statement": "its original bytes and digest are returned independently of the current pointer generation"
+          },
+          "terminal": true
+        },
+        "gherkin": {
+          "given": {
+            "semanticRef": "retain-referenced-semantic-corpus-snapshot.given",
+            "text": "a non-current snapshot digest is still referenced by a retained query, publication, or authoring receipt"
+          },
+          "when": {
+            "semanticRef": "retain-referenced-semantic-corpus-snapshot.when",
+            "text": "that exact content address is read"
+          },
+          "then": {
+            "semanticRef": "retain-referenced-semantic-corpus-snapshot.then",
+            "text": "its original bytes and digest are returned independently of the current pointer generation"
+          }
+        },
+        "name": "Read an older snapshot retained by receipt lineage"
+      },
+      {
+        "scenarioId": "update-current-semantic-corpus-pointer",
+        "input": {
+          "inputId": "semantic-corpus-current-pointer-update-request",
+          "contract": {
+            "contractId": "semantic-corpus-current-pointer-update-request.v1"
+          }
+        },
+        "event": {
+          "eventId": "semantic-corpus-current-pointer-update-requested",
+          "executionAuthorityId": "update-current-semantic-corpus-pointer.v1"
+        },
+        "outcome": {
+          "outcomeId": "semantic-corpus-current-pointer-update-evidence",
+          "contract": {
+            "contractId": "semantic-corpus-current-pointer-update-evidence.v1"
+          },
+          "experience": {
+            "statement": "it advances exactly one generation or returns a conflict without changing any artifact, old pointer, or retained snapshot"
+          },
+          "terminal": true
+        },
+        "gherkin": {
+          "given": {
+            "semanticRef": "update-current-semantic-corpus-pointer.given",
+            "text": "one expected current digest, one published closed candidate snapshot, and a current closure receipt"
+          },
+          "when": {
+            "semanticRef": "update-current-semantic-corpus-pointer.when",
+            "text": "the environment pointer is updated through one atomic compare-and-swap"
+          },
+          "then": {
+            "semanticRef": "update-current-semantic-corpus-pointer.then",
+            "text": "it advances exactly one generation or returns a conflict without changing any artifact, old pointer, or retained snapshot"
+          }
+        },
+        "name": "Compare and swap the current pointer after corpus closure"
+      },
+      {
+        "scenarioId": "reject-open-semantic-corpus-pointer-update",
+        "input": {
+          "inputId": "semantic-corpus-current-pointer-update-request",
+          "contract": {
+            "contractId": "semantic-corpus-current-pointer-update-request.v1"
+          }
+        },
+        "event": {
+          "eventId": "open-semantic-corpus-pointer-update-requested",
+          "executionAuthorityId": "reject-open-semantic-corpus-pointer-update.v1"
+        },
+        "outcome": {
+          "outcomeId": "rejected-semantic-corpus-current-pointer-update-evidence",
+          "contract": {
+            "contractId": "semantic-corpus-current-pointer-update-evidence.v1"
+          },
+          "experience": {
+            "statement": "the current pointer is unchanged and every missing, stale, or rejected subject is returned as an attributable finding"
+          },
+          "terminal": true
+        },
+        "gherkin": {
+          "given": {
+            "semanticRef": "reject-open-semantic-corpus-pointer-update.given",
+            "text": "the candidate snapshot is missing, corrupted, open, rejected, or bound to a stale closure receipt"
+          },
+          "when": {
+            "semanticRef": "reject-open-semantic-corpus-pointer-update.when",
+            "text": "pointer advancement is requested"
+          },
+          "then": {
+            "semanticRef": "reject-open-semantic-corpus-pointer-update.then",
+            "text": "the current pointer is unchanged and every missing, stale, or rejected subject is returned as an attributable finding"
+          }
+        },
+        "name": "Reject a pointer update without current corpus closure"
+      },
+      {
+        "scenarioId": "reproduce-semantic-corpus-artifact-address",
+        "input": {
+          "inputId": "semantic-corpus-artifact-publication-request",
+          "contract": {
+            "contractId": "semantic-corpus-artifact-publication-request.v1"
+          }
+        },
+        "event": {
+          "eventId": "semantic-corpus-artifact-address-reproduction-requested",
+          "executionAuthorityId": "reproduce-semantic-corpus-artifact-address.v1"
+        },
+        "outcome": {
+          "outcomeId": "semantic-corpus-artifact-publication-evidence",
+          "contract": {
+            "contractId": "semantic-corpus-artifact-publication-evidence.v1"
+          },
+          "experience": {
+            "statement": "artifact digests and immutable address identities are identical without timestamp, machine, user, or path input"
+          },
+          "terminal": true
+        },
+        "gherkin": {
+          "given": {
+            "semanticRef": "reproduce-semantic-corpus-artifact-address.given",
+            "text": "byte-identical canonical artifacts are published in different process and discovery orders"
+          },
+          "when": {
+            "semanticRef": "reproduce-semantic-corpus-artifact-address.when",
+            "text": "their content addresses and publication evidence are derived"
+          },
+          "then": {
+            "semanticRef": "reproduce-semantic-corpus-artifact-address.then",
+            "text": "artifact digests and immutable address identities are identical without timestamp, machine, user, or path input"
+          }
+        },
+        "name": "Reproduce one content address from identical canonical bytes"
+      }
+    ],
+    "transitions": [],
+    "executionAuthorities": [
+      {
+        "id": "publish-immutable-semantic-corpus-artifact.v1",
+        "owningScenarioId": "publish-immutable-semantic-corpus-artifact",
+        "operations": [
+          {
+            "kind": "invoke-port",
+            "portId": "publish-immutable-semantic-corpus-artifact-port"
+          },
+          {
+            "kind": "invoke-scenario",
+            "scenarioId": "reject-semantic-corpus-artifact-publication-conflict"
+          },
+          {
+            "kind": "invoke-scenario",
+            "scenarioId": "read-immutable-semantic-corpus-artifact"
+          },
+          {
+            "kind": "invoke-scenario",
+            "scenarioId": "retain-referenced-semantic-corpus-snapshot"
+          },
+          {
+            "kind": "invoke-scenario",
+            "scenarioId": "update-current-semantic-corpus-pointer"
+          },
+          {
+            "kind": "invoke-scenario",
+            "scenarioId": "reject-open-semantic-corpus-pointer-update"
+          },
+          {
+            "kind": "invoke-scenario",
+            "scenarioId": "reproduce-semantic-corpus-artifact-address"
+          }
+        ]
+      },
+      {
+        "id": "reject-semantic-corpus-artifact-publication-conflict.v1",
+        "owningScenarioId": "reject-semantic-corpus-artifact-publication-conflict",
+        "operations": [
+          {
+            "kind": "invoke-port",
+            "portId": "reject-semantic-corpus-artifact-publication-conflict-port"
+          }
+        ]
+      },
+      {
+        "id": "read-immutable-semantic-corpus-artifact.v1",
+        "owningScenarioId": "read-immutable-semantic-corpus-artifact",
+        "operations": [
+          {
+            "kind": "invoke-port",
+            "portId": "read-immutable-semantic-corpus-artifact-port"
+          }
+        ]
+      },
+      {
+        "id": "retain-referenced-semantic-corpus-snapshot.v1",
+        "owningScenarioId": "retain-referenced-semantic-corpus-snapshot",
+        "operations": [
+          {
+            "kind": "invoke-port",
+            "portId": "retain-referenced-semantic-corpus-snapshot-port"
+          }
+        ]
+      },
+      {
+        "id": "update-current-semantic-corpus-pointer.v1",
+        "owningScenarioId": "update-current-semantic-corpus-pointer",
+        "operations": [
+          {
+            "kind": "invoke-port",
+            "portId": "update-current-semantic-corpus-pointer-port"
+          }
+        ]
+      },
+      {
+        "id": "reject-open-semantic-corpus-pointer-update.v1",
+        "owningScenarioId": "reject-open-semantic-corpus-pointer-update",
+        "operations": [
+          {
+            "kind": "invoke-port",
+            "portId": "reject-open-semantic-corpus-pointer-update-port"
+          }
+        ]
+      },
+      {
+        "id": "reproduce-semantic-corpus-artifact-address.v1",
+        "owningScenarioId": "reproduce-semantic-corpus-artifact-address",
+        "operations": [
+          {
+            "kind": "invoke-port",
+            "portId": "reproduce-semantic-corpus-artifact-address-port"
+          }
+        ]
+      }
+    ],
+    "projectionAuthorities": [],
+    "interfaceAuthority": {
+      "interfaceAuthorityType": "consumer-interface-authority.v1",
+      "contractValidatorCapabilityId": "sda-schema-contract-admission.v1",
+      "contractCatalog": "contracts/contract-catalog.json",
+      "requiredPlatformObligations": [
+        "dynamic-semantic-execution",
+        "domain-contract-admission"
+      ],
+      "interfaces": [
+        {
+          "interfaceId": "semantic-corpus-artifact-repository-cli",
+          "kind": "cli",
+          "rootScenarioId": "publish-immutable-semantic-corpus-artifact",
+          "platformCapabilityId": "sda-json-cli.v1",
+          "projectionTargets": [
+            "node"
+          ]
+        }
+      ],
+      "portBindings": [
+        {
+          "portId": "publish-immutable-semantic-corpus-artifact-port",
+          "platformCapabilityId": "sda-authority-transformation-port.v1",
+          "configuration": {
+            "expression": {
+              "op": "let",
+              "bindings": {
+                "authorityBound": {
+                  "op": "equals",
+                  "left": {
+                    "op": "path",
+                    "from": "input",
+                    "path": "repositoryAuthorityDigest"
+                  },
+                  "right": {
+                    "op": "literal",
+                    "value": "sha256:4f1eae11041c8ce43b0c7b0aa7d3ecb48bf12073cf727b8b9ba3950c2da1269e"
+                  }
+                },
+                "kindAdmitted": {
+                  "op": "includes",
+                  "in": {
+                    "op": "literal",
+                    "value": [
+                      "SOURCE_MANIFEST",
+                      "CORPUS_SNAPSHOT",
+                      "OBJECT_CATALOG",
+                      "RELATIONSHIP_GRAPH",
+                      "IDENTITY_INDEX",
+                      "LEXICAL_INDEX",
+                      "QUERY_RECEIPT",
+                      "AUTHORING_RECEIPT",
+                      "CLOSURE_RECEIPT",
+                      "PUBLICATION_RECEIPT"
+                    ]
+                  },
+                  "value": {
+                    "op": "path",
+                    "from": "input",
+                    "path": "artifactKind"
+                  }
+                },
+                "decoded": {
+                  "op": "base64-decode-utf8",
+                  "value": {
+                    "op": "path",
+                    "from": "input",
+                    "path": "artifactBytesBase64"
+                  }
+                },
+                "recomputedDigest": {
+                  "op": "format",
+                  "template": "sha256:{digest}",
+                  "values": {
+                    "digest": {
+                      "op": "sha256",
+                      "value": {
+                        "op": "path",
+                        "from": "decoded",
+                        "path": ""
+                      }
+                    }
+                  }
+                },
+                "digestMatches": {
+                  "op": "equals",
+                  "left": {
+                    "op": "path",
+                    "from": "recomputedDigest",
+                    "path": ""
+                  },
+                  "right": {
+                    "op": "path",
+                    "from": "input",
+                    "path": "expectedDigest"
+                  }
+                },
+                "canonicalizationBound": {
+                  "op": "equals",
+                  "left": {
+                    "op": "path",
+                    "from": "input",
+                    "path": "canonicalizationAuthorityId"
+                  },
+                  "right": {
+                    "op": "literal",
+                    "value": "canonical-recursive-key-order-json.v1"
+                  }
+                },
+                "admitted": {
+                  "op": "every",
+                  "from": {
+                    "op": "array",
+                    "items": [
+                      {
+                        "op": "path",
+                        "from": "authorityBound",
+                        "path": ""
+                      },
+                      {
+                        "op": "path",
+                        "from": "kindAdmitted",
+                        "path": ""
+                      },
+                      {
+                        "op": "path",
+                        "from": "digestMatches",
+                        "path": ""
+                      },
+                      {
+                        "op": "path",
+                        "from": "canonicalizationBound",
+                        "path": ""
+                      }
+                    ]
+                  },
+                  "as": "check",
+                  "where": {
+                    "op": "path",
+                    "from": "check",
+                    "path": ""
+                  }
+                },
+                "findingCodes": {
+                  "op": "if",
+                  "when": {
+                    "op": "equals",
+                    "left": {
+                      "op": "path",
+                      "from": "authorityBound",
+                      "path": ""
+                    },
+                    "right": {
+                      "op": "literal",
+                      "value": false
+                    }
+                  },
+                  "then": {
+                    "op": "literal",
+                    "value": [
+                      "REPOSITORY_AUTHORITY_NOT_AUTHORIZED"
+                    ]
+                  },
+                  "else": {
+                    "op": "if",
+                    "when": {
+                      "op": "equals",
+                      "left": {
+                        "op": "path",
+                        "from": "digestMatches",
+                        "path": ""
+                      },
+                      "right": {
+                        "op": "literal",
+                        "value": false
+                      }
+                    },
+                    "then": {
+                      "op": "literal",
+                      "value": [
+                        "ARTIFACT_DIGEST_MISMATCH"
+                      ]
+                    },
+                    "else": {
+                      "op": "if",
+                      "when": {
+                        "op": "equals",
+                        "left": {
+                          "op": "path",
+                          "from": "kindAdmitted",
+                          "path": ""
+                        },
+                        "right": {
+                          "op": "literal",
+                          "value": false
+                        }
+                      },
+                      "then": {
+                        "op": "literal",
+                        "value": [
+                          "ARTIFACT_KIND_NOT_ADMITTED"
+                        ]
+                      },
+                      "else": {
+                        "op": "if",
+                        "when": {
+                          "op": "equals",
+                          "left": {
+                            "op": "path",
+                            "from": "canonicalizationBound",
+                            "path": ""
+                          },
+                          "right": {
+                            "op": "literal",
+                            "value": false
+                          }
+                        },
+                        "then": {
+                          "op": "literal",
+                          "value": [
+                            "CANONICALIZATION_AUTHORITY_UNBOUND"
+                          ]
+                        },
+                        "else": {
+                          "op": "if",
+                          "when": {
+                            "op": "path",
+                            "from": "admitted",
+                            "path": ""
+                          },
+                          "then": {
+                            "op": "literal",
+                            "value": [
+                              "CANONICAL_ARTIFACT_ADDRESS_PLANNING_UNAVAILABLE"
+                            ]
+                          },
+                          "else": {
+                            "op": "literal",
+                            "value": [
+                              "CONTRACT_ID_NOT_ADMITTED"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "value": {
+                "op": "object",
+                "fields": {
+                  "contractId": {
+                    "op": "literal",
+                    "value": "semantic-corpus-artifact-publication-evidence.v1"
+                  },
+                  "disposition": {
+                    "op": "literal",
+                    "value": "REJECTED"
+                  },
+                  "artifactKind": {
+                    "op": "path",
+                    "from": "input",
+                    "path": "artifactKind"
+                  },
+                  "expectedDigest": {
+                    "op": "path",
+                    "from": "input",
+                    "path": "expectedDigest"
+                  },
+                  "recomputedDigest": {
+                    "op": "path",
+                    "from": "recomputedDigest",
+                    "path": ""
+                  },
+                  "findingCodes": {
+                    "op": "path",
+                    "from": "findingCodes",
+                    "path": ""
+                  },
+                  "authorityClaims": {
+                    "op": "object",
+                    "fields": {
+                      "publication": {
+                        "op": "literal",
+                        "value": "NOT_CLAIMED"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "portId": "reject-semantic-corpus-artifact-publication-conflict-port",
+          "platformCapabilityId": "sda-authority-transformation-port.v1",
+          "configuration": {
+            "expression": {
+              "op": "let",
+              "bindings": {
+                "authorityBound": {
+                  "op": "equals",
+                  "left": {
+                    "op": "path",
+                    "from": "input",
+                    "path": "repositoryAuthorityDigest"
+                  },
+                  "right": {
+                    "op": "literal",
+                    "value": "sha256:4f1eae11041c8ce43b0c7b0aa7d3ecb48bf12073cf727b8b9ba3950c2da1269e"
+                  }
+                },
+                "decoded": {
+                  "op": "base64-decode-utf8",
+                  "value": {
+                    "op": "path",
+                    "from": "input",
+                    "path": "artifactBytesBase64"
+                  }
+                },
+                "recomputedDigest": {
+                  "op": "format",
+                  "template": "sha256:{digest}",
+                  "values": {
+                    "digest": {
+                      "op": "sha256",
+                      "value": {
+                        "op": "path",
+                        "from": "decoded",
+                        "path": ""
+                      }
+                    }
+                  }
+                },
+                "digestMatches": {
+                  "op": "equals",
+                  "left": {
+                    "op": "path",
+                    "from": "recomputedDigest",
+                    "path": ""
+                  },
+                  "right": {
+                    "op": "path",
+                    "from": "input",
+                    "path": "expectedDigest"
+                  }
+                },
+                "findingCodes": {
+                  "op": "if",
+                  "when": {
+                    "op": "equals",
+                    "left": {
+                      "op": "path",
+                      "from": "authorityBound",
+                      "path": ""
+                    },
+                    "right": {
+                      "op": "literal",
+                      "value": false
+                    }
+                  },
+                  "then": {
+                    "op": "literal",
+                    "value": [
+                      "REPOSITORY_AUTHORITY_NOT_AUTHORIZED"
+                    ]
+                  },
+                  "else": {
+                    "op": "if",
+                    "when": {
+                      "op": "equals",
+                      "left": {
+                        "op": "path",
+                        "from": "digestMatches",
+                        "path": ""
+                      },
+                      "right": {
+                        "op": "literal",
+                        "value": false
+                      }
+                    },
+                    "then": {
+                      "op": "literal",
+                      "value": [
+                        "ARTIFACT_DIGEST_MISMATCH"
+                      ]
+                    },
+                    "else": {
+                      "op": "literal",
+                      "value": [
+                        "CANONICAL_ARTIFACT_ADDRESS_PLANNING_UNAVAILABLE"
+                      ]
+                    }
+                  }
+                }
+              },
+              "value": {
+                "op": "object",
+                "fields": {
+                  "contractId": {
+                    "op": "literal",
+                    "value": "semantic-corpus-artifact-publication-evidence.v1"
+                  },
+                  "disposition": {
+                    "op": "literal",
+                    "value": "REJECTED"
+                  },
+                  "artifactKind": {
+                    "op": "path",
+                    "from": "input",
+                    "path": "artifactKind"
+                  },
+                  "expectedDigest": {
+                    "op": "path",
+                    "from": "input",
+                    "path": "expectedDigest"
+                  },
+                  "recomputedDigest": {
+                    "op": "path",
+                    "from": "recomputedDigest",
+                    "path": ""
+                  },
+                  "findingCodes": {
+                    "op": "path",
+                    "from": "findingCodes",
+                    "path": ""
+                  },
+                  "authorityClaims": {
+                    "op": "object",
+                    "fields": {
+                      "publication": {
+                        "op": "literal",
+                        "value": "NOT_CLAIMED"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "portId": "read-immutable-semantic-corpus-artifact-port",
+          "platformCapabilityId": "sda-authority-transformation-port.v1",
+          "configuration": {
+            "expression": {
+              "op": "let",
+              "bindings": {
+                "authorityBound": {
+                  "op": "equals",
+                  "left": {
+                    "op": "path",
+                    "from": "input",
+                    "path": "repositoryAuthorityDigest"
+                  },
+                  "right": {
+                    "op": "literal",
+                    "value": "sha256:4f1eae11041c8ce43b0c7b0aa7d3ecb48bf12073cf727b8b9ba3950c2da1269e"
+                  }
+                },
+                "digestWellFormed": {
+                  "op": "equals",
+                  "left": {
+                    "op": "path",
+                    "from": "input",
+                    "path": "artifactDigest"
+                  },
+                  "right": {
+                    "op": "format",
+                    "template": "sha256:{hex}",
+                    "values": {
+                      "hex": {
+                        "op": "sha256",
+                        "value": {
+                          "op": "path",
+                          "from": "input",
+                          "path": "artifactDigest"
+                        }
+                      }
+                    }
+                  }
+                },
+                "findingCodes": {
+                  "op": "if",
+                  "when": {
+                    "op": "equals",
+                    "left": {
+                      "op": "path",
+                      "from": "authorityBound",
+                      "path": ""
+                    },
+                    "right": {
+                      "op": "literal",
+                      "value": false
+                    }
+                  },
+                  "then": {
+                    "op": "literal",
+                    "value": [
+                      "REPOSITORY_AUTHORITY_NOT_AUTHORIZED"
+                    ]
+                  },
+                  "else": {
+                    "op": "literal",
+                    "value": [
+                      "CANONICAL_ARTIFACT_ADDRESS_PLANNING_UNAVAILABLE"
+                    ]
+                  }
+                },
+                "disposition": {
+                  "op": "if",
+                  "when": {
+                    "op": "equals",
+                    "left": {
+                      "op": "path",
+                      "from": "authorityBound",
+                      "path": ""
+                    },
+                    "right": {
+                      "op": "literal",
+                      "value": false
+                    }
+                  },
+                  "then": {
+                    "op": "literal",
+                    "value": "UNAUTHORIZED"
+                  },
+                  "else": {
+                    "op": "literal",
+                    "value": "MISSING"
+                  }
+                }
+              },
+              "value": {
+                "op": "object",
+                "fields": {
+                  "contractId": {
+                    "op": "literal",
+                    "value": "semantic-corpus-artifact-read-evidence.v1"
+                  },
+                  "disposition": {
+                    "op": "path",
+                    "from": "disposition",
+                    "path": ""
+                  },
+                  "artifactDigest": {
+                    "op": "path",
+                    "from": "input",
+                    "path": "artifactDigest"
+                  },
+                  "artifactKind": {
+                    "op": "path",
+                    "from": "input",
+                    "path": "artifactKind"
+                  },
+                  "findingCodes": {
+                    "op": "path",
+                    "from": "findingCodes",
+                    "path": ""
+                  },
+                  "authorityClaims": {
+                    "op": "object",
+                    "fields": {
+                      "read": {
+                        "op": "literal",
+                        "value": "NOT_CLAIMED"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "portId": "retain-referenced-semantic-corpus-snapshot-port",
+          "platformCapabilityId": "sda-authority-transformation-port.v1",
+          "configuration": {
+            "expression": {
+              "op": "let",
+              "bindings": {
+                "authorityBound": {
+                  "op": "equals",
+                  "left": {
+                    "op": "path",
+                    "from": "input",
+                    "path": "repositoryAuthorityDigest"
+                  },
+                  "right": {
+                    "op": "literal",
+                    "value": "sha256:4f1eae11041c8ce43b0c7b0aa7d3ecb48bf12073cf727b8b9ba3950c2da1269e"
+                  }
+                },
+                "lineageDeclared": {
+                  "op": "greater-than",
+                  "left": {
+                    "op": "length",
+                    "value": {
+                      "op": "path",
+                      "from": "input",
+                      "path": "retentionEvidence"
+                    }
+                  },
+                  "right": {
+                    "op": "literal",
+                    "value": 0
+                  }
+                },
+                "findingCodes": {
+                  "op": "if",
+                  "when": {
+                    "op": "equals",
+                    "left": {
+                      "op": "path",
+                      "from": "authorityBound",
+                      "path": ""
+                    },
+                    "right": {
+                      "op": "literal",
+                      "value": false
+                    }
+                  },
+                  "then": {
+                    "op": "literal",
+                    "value": [
+                      "REPOSITORY_AUTHORITY_NOT_AUTHORIZED"
+                    ]
+                  },
+                  "else": {
+                    "op": "if",
+                    "when": {
+                      "op": "equals",
+                      "left": {
+                        "op": "path",
+                        "from": "lineageDeclared",
+                        "path": ""
+                      },
+                      "right": {
+                        "op": "literal",
+                        "value": false
+                      }
+                    },
+                    "then": {
+                      "op": "literal",
+                      "value": [
+                        "RETAINED_LINEAGE_NOT_DECLARED"
+                      ]
+                    },
+                    "else": {
+                      "op": "literal",
+                      "value": [
+                        "CANONICAL_ARTIFACT_ADDRESS_PLANNING_UNAVAILABLE"
+                      ]
+                    }
+                  }
+                },
+                "disposition": {
+                  "op": "if",
+                  "when": {
+                    "op": "equals",
+                    "left": {
+                      "op": "path",
+                      "from": "authorityBound",
+                      "path": ""
+                    },
+                    "right": {
+                      "op": "literal",
+                      "value": false
+                    }
+                  },
+                  "then": {
+                    "op": "literal",
+                    "value": "UNAUTHORIZED"
+                  },
+                  "else": {
+                    "op": "literal",
+                    "value": "MISSING"
+                  }
+                }
+              },
+              "value": {
+                "op": "object",
+                "fields": {
+                  "contractId": {
+                    "op": "literal",
+                    "value": "semantic-corpus-artifact-read-evidence.v1"
+                  },
+                  "disposition": {
+                    "op": "path",
+                    "from": "disposition",
+                    "path": ""
+                  },
+                  "artifactDigest": {
+                    "op": "path",
+                    "from": "input",
+                    "path": "artifactDigest"
+                  },
+                  "artifactKind": {
+                    "op": "path",
+                    "from": "input",
+                    "path": "artifactKind"
+                  },
+                  "findingCodes": {
+                    "op": "path",
+                    "from": "findingCodes",
+                    "path": ""
+                  },
+                  "authorityClaims": {
+                    "op": "object",
+                    "fields": {
+                      "read": {
+                        "op": "literal",
+                        "value": "NOT_CLAIMED"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "portId": "update-current-semantic-corpus-pointer-port",
+          "platformCapabilityId": "sda-authority-transformation-port.v1",
+          "configuration": {
+            "expression": {
+              "op": "let",
+              "bindings": {
+                "authorityBound": {
+                  "op": "equals",
+                  "left": {
+                    "op": "path",
+                    "from": "input",
+                    "path": "repositoryAuthorityDigest"
+                  },
+                  "right": {
+                    "op": "literal",
+                    "value": "sha256:4f1eae11041c8ce43b0c7b0aa7d3ecb48bf12073cf727b8b9ba3950c2da1269e"
+                  }
+                },
+                "pointerAdmitted": {
+                  "op": "includes",
+                  "in": {
+                    "op": "literal",
+                    "value": [
+                      "CurrentSemanticCorpus"
+                    ]
+                  },
+                  "value": {
+                    "op": "path",
+                    "from": "input",
+                    "path": "pointerId"
+                  }
+                },
+                "closureContractBound": {
+                  "op": "equals",
+                  "left": {
+                    "op": "path",
+                    "from": "input",
+                    "path": "closureReceiptContractId"
+                  },
+                  "right": {
+                    "op": "literal",
+                    "value": "semantic-corpus-closure-receipt.v1"
+                  }
+                },
+                "expectedGenerationBound": {
+                  "op": "equals",
+                  "left": {
+                    "op": "path",
+                    "from": "input",
+                    "path": "expectedGeneration"
+                  },
+                  "right": {
+                    "op": "literal",
+                    "value": 0
+                  }
+                },
+                "candidateKindAdmitted": {
+                  "op": "equals",
+                  "left": {
+                    "op": "path",
+                    "from": "input",
+                    "path": "candidateArtifactKind"
+                  },
+                  "right": {
+                    "op": "literal",
+                    "value": "CORPUS_SNAPSHOT"
+                  }
+                },
+                "findingCodes": {
+                  "op": "if",
+                  "when": {
+                    "op": "equals",
+                    "left": {
+                      "op": "path",
+                      "from": "authorityBound",
+                      "path": ""
+                    },
+                    "right": {
+                      "op": "literal",
+                      "value": false
+                    }
+                  },
+                  "then": {
+                    "op": "literal",
+                    "value": [
+                      "REPOSITORY_AUTHORITY_NOT_AUTHORIZED"
+                    ]
+                  },
+                  "else": {
+                    "op": "if",
+                    "when": {
+                      "op": "equals",
+                      "left": {
+                        "op": "path",
+                        "from": "pointerAdmitted",
+                        "path": ""
+                      },
+                      "right": {
+                        "op": "literal",
+                        "value": false
+                      }
+                    },
+                    "then": {
+                      "op": "literal",
+                      "value": [
+                        "POINTER_ID_NOT_ADMITTED"
+                      ]
+                    },
+                    "else": {
+                      "op": "if",
+                      "when": {
+                        "op": "equals",
+                        "left": {
+                          "op": "path",
+                          "from": "closureContractBound",
+                          "path": ""
+                        },
+                        "right": {
+                          "op": "literal",
+                          "value": false
+                        }
+                      },
+                      "then": {
+                        "op": "literal",
+                        "value": [
+                          "CLOSURE_RECEIPT_CONTRACT_UNBOUND"
+                        ]
+                      },
+                      "else": {
+                        "op": "literal",
+                        "value": [
+                          "ATOMIC_POINTER_CAS_PORT_UNAVAILABLE"
+                        ]
+                      }
+                    }
+                  }
+                }
+              },
+              "value": {
+                "op": "object",
+                "fields": {
+                  "contractId": {
+                    "op": "literal",
+                    "value": "semantic-corpus-current-pointer-update-evidence.v1"
+                  },
+                  "disposition": {
+                    "op": "literal",
+                    "value": "REJECTED"
+                  },
+                  "pointerId": {
+                    "op": "path",
+                    "from": "input",
+                    "path": "pointerId"
+                  },
+                  "candidateSnapshotDigest": {
+                    "op": "path",
+                    "from": "input",
+                    "path": "candidateSnapshotDigest"
+                  },
+                  "findingCodes": {
+                    "op": "path",
+                    "from": "findingCodes",
+                    "path": ""
+                  },
+                  "authorityClaims": {
+                    "op": "object",
+                    "fields": {
+                      "pointerUpdate": {
+                        "op": "literal",
+                        "value": "NOT_CLAIMED"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "portId": "reject-open-semantic-corpus-pointer-update-port",
+          "platformCapabilityId": "sda-authority-transformation-port.v1",
+          "configuration": {
+            "expression": {
+              "op": "let",
+              "bindings": {
+                "authorityBound": {
+                  "op": "equals",
+                  "left": {
+                    "op": "path",
+                    "from": "input",
+                    "path": "repositoryAuthorityDigest"
+                  },
+                  "right": {
+                    "op": "literal",
+                    "value": "sha256:4f1eae11041c8ce43b0c7b0aa7d3ecb48bf12073cf727b8b9ba3950c2da1269e"
+                  }
+                },
+                "closureContractBound": {
+                  "op": "equals",
+                  "left": {
+                    "op": "path",
+                    "from": "input",
+                    "path": "closureReceiptContractId"
+                  },
+                  "right": {
+                    "op": "literal",
+                    "value": "semantic-corpus-closure-receipt.v1"
+                  }
+                },
+                "findingCodes": {
+                  "op": "if",
+                  "when": {
+                    "op": "equals",
+                    "left": {
+                      "op": "path",
+                      "from": "authorityBound",
+                      "path": ""
+                    },
+                    "right": {
+                      "op": "literal",
+                      "value": false
+                    }
+                  },
+                  "then": {
+                    "op": "literal",
+                    "value": [
+                      "REPOSITORY_AUTHORITY_NOT_AUTHORIZED"
+                    ]
+                  },
+                  "else": {
+                    "op": "if",
+                    "when": {
+                      "op": "equals",
+                      "left": {
+                        "op": "path",
+                        "from": "closureContractBound",
+                        "path": ""
+                      },
+                      "right": {
+                        "op": "literal",
+                        "value": false
+                      }
+                    },
+                    "then": {
+                      "op": "literal",
+                      "value": [
+                        "CLOSURE_RECEIPT_CONTRACT_UNBOUND"
+                      ]
+                    },
+                    "else": {
+                      "op": "literal",
+                      "value": [
+                        "CLOSURE_RECEIPT_DOCUMENT_NOT_OBSERVABLE"
+                      ]
+                    }
+                  }
+                }
+              },
+              "value": {
+                "op": "object",
+                "fields": {
+                  "contractId": {
+                    "op": "literal",
+                    "value": "semantic-corpus-current-pointer-update-evidence.v1"
+                  },
+                  "disposition": {
+                    "op": "literal",
+                    "value": "REJECTED"
+                  },
+                  "pointerId": {
+                    "op": "path",
+                    "from": "input",
+                    "path": "pointerId"
+                  },
+                  "findingCodes": {
+                    "op": "path",
+                    "from": "findingCodes",
+                    "path": ""
+                  },
+                  "authorityClaims": {
+                    "op": "object",
+                    "fields": {
+                      "pointerUpdate": {
+                        "op": "literal",
+                        "value": "NOT_CLAIMED"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "portId": "reproduce-semantic-corpus-artifact-address-port",
+          "platformCapabilityId": "sda-authority-transformation-port.v1",
+          "configuration": {
+            "expression": {
+              "op": "let",
+              "bindings": {
+                "decoded": {
+                  "op": "base64-decode-utf8",
+                  "value": {
+                    "op": "path",
+                    "from": "input",
+                    "path": "artifactBytesBase64"
+                  }
+                },
+                "recomputedDigest": {
+                  "op": "format",
+                  "template": "sha256:{digest}",
+                  "values": {
+                    "digest": {
+                      "op": "sha256",
+                      "value": {
+                        "op": "path",
+                        "from": "decoded",
+                        "path": ""
+                      }
+                    }
+                  }
+                },
+                "digestReproduces": {
+                  "op": "equals",
+                  "left": {
+                    "op": "path",
+                    "from": "recomputedDigest",
+                    "path": ""
+                  },
+                  "right": {
+                    "op": "path",
+                    "from": "input",
+                    "path": "expectedDigest"
+                  }
+                },
+                "findingCodes": {
+                  "op": "if",
+                  "when": {
+                    "op": "path",
+                    "from": "digestReproduces",
+                    "path": ""
+                  },
+                  "then": {
+                    "op": "literal",
+                    "value": [
+                      "CANONICAL_ARTIFACT_ADDRESS_PLANNING_UNAVAILABLE"
+                    ]
+                  },
+                  "else": {
+                    "op": "literal",
+                    "value": [
+                      "ARTIFACT_DIGEST_MISMATCH"
+                    ]
+                  }
+                }
+              },
+              "value": {
+                "op": "object",
+                "fields": {
+                  "contractId": {
+                    "op": "literal",
+                    "value": "semantic-corpus-artifact-publication-evidence.v1"
+                  },
+                  "disposition": {
+                    "op": "literal",
+                    "value": "REJECTED"
+                  },
+                  "artifactKind": {
+                    "op": "path",
+                    "from": "input",
+                    "path": "artifactKind"
+                  },
+                  "expectedDigest": {
+                    "op": "path",
+                    "from": "input",
+                    "path": "expectedDigest"
+                  },
+                  "recomputedDigest": {
+                    "op": "path",
+                    "from": "recomputedDigest",
+                    "path": ""
+                  },
+                  "findingCodes": {
+                    "op": "path",
+                    "from": "findingCodes",
+                    "path": ""
+                  },
+                  "authorityClaims": {
+                    "op": "object",
+                    "fields": {
+                      "publication": {
+                        "op": "literal",
+                        "value": "NOT_CLAIMED"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "projectionBindings": []
+    },
+    "contractAuthorities": {
+      "authorityType": "consumer-contract-authorities.v1",
+      "contracts": {
+        "semantic-corpus-artifact-publication-request.v1": {
+          "schemaRef": "semantic-corpus-artifact-publication-request.v1.schema.json",
+          "schemaId": "https://schemas.scenario-driven.dev/semantic-corpus/semantic-corpus-artifact-publication-request.v1.schema.json",
+          "schemaDigest": "e6962c4183fddaec8c48cf23e5838e917f21134c74a71304583e22f4d6f8e016",
+          "schema": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "$id": "https://schemas.scenario-driven.dev/semantic-corpus/semantic-corpus-artifact-publication-request.v1.schema.json",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "contractId",
+              "repositoryAuthorityRef",
+              "repositoryAuthorityDigest",
+              "artifactKind",
+              "artifactBytesBase64",
+              "byteLength",
+              "expectedDigest",
+              "canonicalizationAuthorityId",
+              "canonicalizationAuthorityDigest"
+            ],
+            "properties": {
+              "contractId": {
+                "const": "semantic-corpus-artifact-publication-request.v1"
+              },
+              "repositoryAuthorityRef": {
+                "$ref": "#/$defs/reference"
+              },
+              "repositoryAuthorityDigest": {
+                "$ref": "#/$defs/digest"
+              },
+              "artifactKind": {
+                "$ref": "#/$defs/artifactKind"
+              },
+              "artifactBytesBase64": {
+                "$ref": "#/$defs/canonicalBase64"
+              },
+              "byteLength": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "expectedDigest": {
+                "$ref": "#/$defs/digest"
+              },
+              "canonicalizationAuthorityId": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9.-]*\\.v[0-9]+$"
+              },
+              "canonicalizationAuthorityDigest": {
+                "$ref": "#/$defs/digest"
+              }
+            },
+            "$defs": {
+              "digest": {
+                "type": "string",
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              },
+              "reference": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^(?![A-Za-z]:)(?![/\\\\])(?!.*(?:^|[/\\\\])\\.\\.(?:[/\\\\]|$)).+$"
+              },
+              "canonicalBase64": {
+                "type": "string",
+                "minLength": 4,
+                "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$",
+                "contentEncoding": "base64"
+              },
+              "artifactKind": {
+                "enum": [
+                  "SOURCE_MANIFEST",
+                  "CORPUS_SNAPSHOT",
+                  "OBJECT_CATALOG",
+                  "RELATIONSHIP_GRAPH",
+                  "IDENTITY_INDEX",
+                  "LEXICAL_INDEX",
+                  "QUERY_RECEIPT",
+                  "AUTHORING_RECEIPT",
+                  "CLOSURE_RECEIPT",
+                  "PUBLICATION_RECEIPT"
+                ]
+              }
+            }
+          }
+        },
+        "semantic-corpus-artifact-publication-evidence.v1": {
+          "schemaRef": "semantic-corpus-artifact-publication-evidence.v1.schema.json",
+          "schemaId": "https://schemas.scenario-driven.dev/semantic-corpus/semantic-corpus-artifact-publication-evidence.v1.schema.json",
+          "schemaDigest": "47a15c0cf56e14e91b9d26903aaff2c3b282c45d661089b02343ab0ddebd39d8",
+          "schema": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "$id": "https://schemas.scenario-driven.dev/semantic-corpus/semantic-corpus-artifact-publication-evidence.v1.schema.json",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "contractId",
+              "repositoryAuthorityDigest",
+              "artifactKind",
+              "canonicalizationAuthorityDigest",
+              "expectedDigest",
+              "observedDigest",
+              "byteLength",
+              "contentAddress",
+              "findings",
+              "disposition"
+            ],
+            "properties": {
+              "contractId": {
+                "const": "semantic-corpus-artifact-publication-evidence.v1"
+              },
+              "repositoryAuthorityDigest": {
+                "$ref": "#/$defs/digest"
+              },
+              "artifactKind": {
+                "$ref": "#/$defs/artifactKind"
+              },
+              "canonicalizationAuthorityDigest": {
+                "$ref": "#/$defs/digest"
+              },
+              "expectedDigest": {
+                "$ref": "#/$defs/digest"
+              },
+              "observedDigest": {
+                "$ref": "#/$defs/nullableDigest"
+              },
+              "byteLength": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 0
+              },
+              "contentAddress": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/contentAddress"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "findings": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/finding"
+                }
+              },
+              "disposition": {
+                "enum": [
+                  "PUBLISHED",
+                  "ALREADY_PRESENT",
+                  "REJECTED"
+                ]
+              }
+            },
+            "$defs": {
+              "digest": {
+                "type": "string",
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              },
+              "nullableDigest": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/digest"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "contentAddress": {
+                "type": "string",
+                "pattern": "^objects/[a-f0-9]{2}/[a-f0-9]{64}\\.json$"
+              },
+              "artifactKind": {
+                "enum": [
+                  "SOURCE_MANIFEST",
+                  "CORPUS_SNAPSHOT",
+                  "OBJECT_CATALOG",
+                  "RELATIONSHIP_GRAPH",
+                  "IDENTITY_INDEX",
+                  "LEXICAL_INDEX",
+                  "QUERY_RECEIPT",
+                  "AUTHORING_RECEIPT",
+                  "CLOSURE_RECEIPT",
+                  "PUBLICATION_RECEIPT"
+                ]
+              },
+              "finding": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "code",
+                  "subjectRef"
+                ],
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "subjectRef": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "semantic-corpus-artifact-read-request.v1": {
+          "schemaRef": "semantic-corpus-artifact-read-request.v1.schema.json",
+          "schemaId": "https://schemas.scenario-driven.dev/semantic-corpus/semantic-corpus-artifact-read-request.v1.schema.json",
+          "schemaDigest": "e2036862d64f2ed874ce195a1b78d15c65db7a1bbc7a7eadc9fb7698470ebbec",
+          "schema": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "$id": "https://schemas.scenario-driven.dev/semantic-corpus/semantic-corpus-artifact-read-request.v1.schema.json",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "contractId",
+              "repositoryAuthorityRef",
+              "repositoryAuthorityDigest",
+              "artifactKind",
+              "artifactDigest",
+              "canonicalizationAuthorityId",
+              "canonicalizationAuthorityDigest",
+              "readPurpose",
+              "retentionEvidence"
+            ],
+            "properties": {
+              "contractId": {
+                "const": "semantic-corpus-artifact-read-request.v1"
+              },
+              "repositoryAuthorityRef": {
+                "$ref": "#/$defs/reference"
+              },
+              "repositoryAuthorityDigest": {
+                "$ref": "#/$defs/digest"
+              },
+              "artifactKind": {
+                "$ref": "#/$defs/artifactKind"
+              },
+              "artifactDigest": {
+                "$ref": "#/$defs/digest"
+              },
+              "canonicalizationAuthorityId": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9.-]*\\.v[0-9]+$"
+              },
+              "canonicalizationAuthorityDigest": {
+                "$ref": "#/$defs/digest"
+              },
+              "readPurpose": {
+                "enum": [
+                  "DIRECT",
+                  "RETAINED_SNAPSHOT"
+                ]
+              },
+              "retentionEvidence": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "receiptRef",
+                    "receiptDigest",
+                    "receiptContractId"
+                  ],
+                  "properties": {
+                    "receiptRef": {
+                      "$ref": "#/$defs/contentAddress"
+                    },
+                    "receiptDigest": {
+                      "$ref": "#/$defs/digest"
+                    },
+                    "receiptContractId": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                }
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "type": "object",
+                  "properties": {
+                    "readPurpose": {
+                      "const": "RETAINED_SNAPSHOT"
+                    }
+                  },
+                  "required": [
+                    "readPurpose"
+                  ]
+                },
+                "then": {
+                  "type": "object",
+                  "properties": {
+                    "artifactKind": {
+                      "const": "CORPUS_SNAPSHOT"
+                    },
+                    "retentionEvidence": {
+                      "type": "array",
+                      "minItems": 1
+                    }
+                  }
+                }
+              }
+            ],
+            "$defs": {
+              "digest": {
+                "type": "string",
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              },
+              "reference": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^(?![A-Za-z]:)(?![/\\\\])(?!.*(?:^|[/\\\\])\\.\\.(?:[/\\\\]|$)).+$"
+              },
+              "contentAddress": {
+                "type": "string",
+                "pattern": "^objects/[a-f0-9]{2}/[a-f0-9]{64}\\.json$"
+              },
+              "artifactKind": {
+                "enum": [
+                  "SOURCE_MANIFEST",
+                  "CORPUS_SNAPSHOT",
+                  "OBJECT_CATALOG",
+                  "RELATIONSHIP_GRAPH",
+                  "IDENTITY_INDEX",
+                  "LEXICAL_INDEX",
+                  "QUERY_RECEIPT",
+                  "AUTHORING_RECEIPT",
+                  "CLOSURE_RECEIPT",
+                  "PUBLICATION_RECEIPT"
+                ]
+              }
+            }
+          }
+        },
+        "semantic-corpus-artifact-read-evidence.v1": {
+          "schemaRef": "semantic-corpus-artifact-read-evidence.v1.schema.json",
+          "schemaId": "https://schemas.scenario-driven.dev/semantic-corpus/semantic-corpus-artifact-read-evidence.v1.schema.json",
+          "schemaDigest": "25ae7ba72282ea93858ec5df5e1f7a4d2966a07ae41f69a68c0ecdbe0d4babae",
+          "schema": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "$id": "https://schemas.scenario-driven.dev/semantic-corpus/semantic-corpus-artifact-read-evidence.v1.schema.json",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "contractId",
+              "repositoryAuthorityDigest",
+              "artifactKind",
+              "canonicalizationAuthorityDigest",
+              "requestedDigest",
+              "observedDigest",
+              "artifactBytesBase64",
+              "byteLength",
+              "readPurpose",
+              "retentionEvidenceDigests",
+              "findings",
+              "disposition"
+            ],
+            "properties": {
+              "contractId": {
+                "const": "semantic-corpus-artifact-read-evidence.v1"
+              },
+              "repositoryAuthorityDigest": {
+                "$ref": "#/$defs/digest"
+              },
+              "artifactKind": {
+                "$ref": "#/$defs/artifactKind"
+              },
+              "canonicalizationAuthorityDigest": {
+                "$ref": "#/$defs/digest"
+              },
+              "requestedDigest": {
+                "$ref": "#/$defs/digest"
+              },
+              "observedDigest": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/digest"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "artifactBytesBase64": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/canonicalBase64"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "byteLength": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 0
+              },
+              "readPurpose": {
+                "enum": [
+                  "DIRECT",
+                  "RETAINED_SNAPSHOT"
+                ]
+              },
+              "retentionEvidenceDigests": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {
+                  "$ref": "#/$defs/digest"
+                }
+              },
+              "findings": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/finding"
+                }
+              },
+              "disposition": {
+                "enum": [
+                  "READ",
+                  "MISSING",
+                  "CORRUPTED",
+                  "UNAUTHORIZED"
+                ]
+              }
+            },
+            "$defs": {
+              "digest": {
+                "type": "string",
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              },
+              "canonicalBase64": {
+                "type": "string",
+                "minLength": 4,
+                "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$",
+                "contentEncoding": "base64"
+              },
+              "artifactKind": {
+                "enum": [
+                  "SOURCE_MANIFEST",
+                  "CORPUS_SNAPSHOT",
+                  "OBJECT_CATALOG",
+                  "RELATIONSHIP_GRAPH",
+                  "IDENTITY_INDEX",
+                  "LEXICAL_INDEX",
+                  "QUERY_RECEIPT",
+                  "AUTHORING_RECEIPT",
+                  "CLOSURE_RECEIPT",
+                  "PUBLICATION_RECEIPT"
+                ]
+              },
+              "finding": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "code",
+                  "subjectRef"
+                ],
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "subjectRef": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "semantic-corpus-current-pointer-update-request.v1": {
+          "schemaRef": "semantic-corpus-current-pointer-update-request.v1.schema.json",
+          "schemaId": "https://schemas.scenario-driven.dev/semantic-corpus/semantic-corpus-current-pointer-update-request.v1.schema.json",
+          "schemaDigest": "f24eff04608a22abe322a92460c9ba94bd70782a1a2be9394c533a125f67fd0b",
+          "schema": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "$id": "https://schemas.scenario-driven.dev/semantic-corpus/semantic-corpus-current-pointer-update-request.v1.schema.json",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "contractId",
+              "repositoryAuthorityRef",
+              "repositoryAuthorityDigest",
+              "pointerId",
+              "expectedGeneration",
+              "expectedCurrentSnapshotDigest",
+              "candidateArtifactKind",
+              "candidateSnapshotDigest",
+              "closureReceiptRef",
+              "closureReceiptDigest",
+              "closureReceiptContractId"
+            ],
+            "properties": {
+              "contractId": {
+                "const": "semantic-corpus-current-pointer-update-request.v1"
+              },
+              "repositoryAuthorityRef": {
+                "$ref": "#/$defs/reference"
+              },
+              "repositoryAuthorityDigest": {
+                "$ref": "#/$defs/digest"
+              },
+              "pointerId": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9._-]{0,127}$"
+              },
+              "expectedGeneration": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "expectedCurrentSnapshotDigest": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/digest"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "candidateArtifactKind": {
+                "const": "CORPUS_SNAPSHOT"
+              },
+              "candidateSnapshotDigest": {
+                "$ref": "#/$defs/digest"
+              },
+              "closureReceiptRef": {
+                "$ref": "#/$defs/contentAddress"
+              },
+              "closureReceiptDigest": {
+                "$ref": "#/$defs/digest"
+              },
+              "closureReceiptContractId": {
+                "const": "semantic-corpus-closure-receipt.v1"
+              }
+            },
+            "$defs": {
+              "digest": {
+                "type": "string",
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              },
+              "reference": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^(?![A-Za-z]:)(?![/\\\\])(?!.*(?:^|[/\\\\])\\.\\.(?:[/\\\\]|$)).+$"
+              },
+              "contentAddress": {
+                "type": "string",
+                "pattern": "^objects/[a-f0-9]{2}/[a-f0-9]{64}\\.json$"
+              }
+            }
+          }
+        },
+        "semantic-corpus-current-pointer-update-evidence.v1": {
+          "schemaRef": "semantic-corpus-current-pointer-update-evidence.v1.schema.json",
+          "schemaId": "https://schemas.scenario-driven.dev/semantic-corpus/semantic-corpus-current-pointer-update-evidence.v1.schema.json",
+          "schemaDigest": "47ea0f1c315a8529baa24de21d36cd5758db5bddbd172abeb53667f9b6101615",
+          "schema": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "$id": "https://schemas.scenario-driven.dev/semantic-corpus/semantic-corpus-current-pointer-update-evidence.v1.schema.json",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "contractId",
+              "repositoryAuthorityDigest",
+              "pointerId",
+              "expectedGeneration",
+              "observedGeneration",
+              "expectedCurrentSnapshotDigest",
+              "previousSnapshotDigest",
+              "candidateSnapshotDigest",
+              "closureReceiptDigest",
+              "findings",
+              "disposition",
+              "receiptDigest"
+            ],
+            "properties": {
+              "contractId": {
+                "const": "semantic-corpus-current-pointer-update-evidence.v1"
+              },
+              "repositoryAuthorityDigest": {
+                "$ref": "#/$defs/digest"
+              },
+              "pointerId": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9._-]{0,127}$"
+              },
+              "expectedGeneration": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "observedGeneration": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "expectedCurrentSnapshotDigest": {
+                "$ref": "#/$defs/nullableDigest"
+              },
+              "previousSnapshotDigest": {
+                "$ref": "#/$defs/nullableDigest"
+              },
+              "candidateSnapshotDigest": {
+                "$ref": "#/$defs/digest"
+              },
+              "closureReceiptDigest": {
+                "$ref": "#/$defs/digest"
+              },
+              "findings": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/finding"
+                }
+              },
+              "disposition": {
+                "enum": [
+                  "UPDATED",
+                  "CONFLICT",
+                  "REJECTED"
+                ]
+              },
+              "receiptDigest": {
+                "$ref": "#/$defs/digest"
+              }
+            },
+            "$defs": {
+              "digest": {
+                "type": "string",
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              },
+              "nullableDigest": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/digest"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "finding": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "code",
+                  "subjectRef"
+                ],
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "subjectRef": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "semantic-corpus-closure-receipt.v1": {
+          "schemaRef": "semantic-corpus-closure-receipt.v1.schema.json",
+          "schemaId": "https://schemas.scenario-driven.dev/semantic-corpus/semantic-corpus-closure-receipt.v1.schema.json",
+          "schemaDigest": "90816302d8fe45d123858cf1e20e7887cad2634ef1749281623b9b108ae955c2",
+          "schema": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "$id": "https://schemas.scenario-driven.dev/semantic-corpus/semantic-corpus-closure-receipt.v1.schema.json",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "contractId",
+              "repositoryAuthorityDigest",
+              "pointerId",
+              "candidateSnapshotDigest",
+              "candidateGeneration",
+              "evaluatedCurrentGeneration",
+              "evaluatedCurrentSnapshotDigest",
+              "findings",
+              "disposition",
+              "receiptDigest"
+            ],
+            "properties": {
+              "contractId": {
+                "const": "semantic-corpus-closure-receipt.v1"
+              },
+              "repositoryAuthorityDigest": {
+                "$ref": "#/$defs/digest"
+              },
+              "pointerId": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9._-]{0,127}$"
+              },
+              "candidateSnapshotDigest": {
+                "$ref": "#/$defs/digest"
+              },
+              "candidateGeneration": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "evaluatedCurrentGeneration": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "evaluatedCurrentSnapshotDigest": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/digest"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "findings": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/finding"
+                }
+              },
+              "disposition": {
+                "enum": [
+                  "CORPUS_CLOSED",
+                  "CORPUS_OPEN",
+                  "CORPUS_REJECTED"
+                ]
+              },
+              "receiptDigest": {
+                "$ref": "#/$defs/digest"
+              }
+            },
+            "$defs": {
+              "digest": {
+                "type": "string",
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              },
+              "finding": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "code",
+                  "subjectRef"
+                ],
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "subjectRef": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "admittedPlatformCapabilities": [
+      {
+        "capabilityId": "sda-node-consumer-runtime.v1",
+        "kind": "consumer-runtime",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform",
+        "providesMechanics": [
+          "scenario-orchestration",
+          "contract-document-reading",
+          "canonicalization",
+          "schema-admission",
+          "authority-resolution",
+          "semantic-execution",
+          "telemetry-observation",
+          "scenario-invocation",
+          "transition-binding-projection",
+          "interface-delivery",
+          "runtime-projection",
+          "artifact-result-delivery",
+          "authority-driven-transformation",
+          "durable-artifact-materialization"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "capabilityId": "sda-json-cli.v1",
+        "kind": "interface-delivery",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Interface.JsonCli",
+        "providesMechanics": [
+          "cli-delivery",
+          "json-reading",
+          "json-serialization"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "capabilityId": "sda-declarative-value-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Execution.DeclarativeValuePort",
+        "providesMechanics": [
+          "event-port-invocation"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "capabilityId": "sda-declarative-state-projection.v1",
+        "kind": "state-projection",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Projection.DeclarativeStateProjection",
+        "providesMechanics": [
+          "state-projection"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "capabilityId": "sda-fixture-contract-validator.v1",
+        "kind": "contract-validator",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Schema.FixtureContractValidator",
+        "providesMechanics": [
+          "contract-validation"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "capabilityId": "sda-schema-contract-admission.v1",
+        "kind": "contract-validator",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Schema.JsonSchemaContractAdmission",
+        "providesMechanics": [
+          "contract-validation",
+          "schema-admission"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "capabilityId": "sda-authority-transformation-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Execution.AuthorityTransformation",
+        "providesMechanics": [
+          "event-port-invocation",
+          "authority-driven-transformation"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "capabilityId": "sda-json-authority-ingestion-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Ingestion.ProfileGovernedJsonAuthority",
+        "providesMechanics": [
+          "event-port-invocation",
+          "exact-byte-json-observation",
+          "duplicate-key-detecting-lossless-json-parsing",
+          "declared-json-schema-authority-resolution",
+          "admitted-json-reference-closure",
+          "content-addressed-json-ingestion-receipt"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/json-authority-ingestion-provider.mjs",
+        "conformanceRef": "tools/tests/conformance/json-authority-ingestion.test.js",
+        "providerAuthorityRef": "capabilities/sda-platform/bind-profile-governed-json-authority-ingestion/profile-governed-json-authority-ingestor.authority.json",
+        "providerAuthorityDigest": "sha256:0e70643184ba992dada8d90b0dc284785672494024df62cc3f413e278ea39017",
+        "conformanceDigest": "sha256:3cba4d9ef435068c355751760225c18b0dee9a74d3c51dab64ae66fd25b38155"
+      },
+      {
+        "capabilityId": "sda-proof-binding-evaluation-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Evaluation.ProfileGovernedProofBinding",
+        "providesMechanics": [
+          "event-port-invocation",
+          "profile-governed-proof-binding-evaluation",
+          "ordered-proof-lineage-admission",
+          "prohibited-basis-rejection",
+          "stale-or-mixed-lineage-rejection",
+          "deterministic-reproduction-pinning",
+          "exactly-one-obligation-disposition"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/proof-binding-evaluation-provider.mjs",
+        "conformanceRef": "tools/tests/conformance/proof-binding-evaluation.test.js",
+        "providerAuthorityRef": "capabilities/sda-platform/bind-profile-governed-proof-binding-evaluation/profile-governed-proof-binding-evaluator.authority.json",
+        "providerAuthorityDigest": "sha256:9e8b4d1ff6a488e6bd389a14eaa879d0832fbba802ef073c0d63dcd696402ef9",
+        "conformanceDigest": "sha256:fa7f35df4751da1318d93c4c05bb8527a2200ca0485788986d6760f9b2c71533"
+      },
+      {
+        "capabilityId": "sda-semantic-vector-index.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Recall.DeterministicSemanticVectorIndex",
+        "providesMechanics": [
+          "event-port-invocation",
+          "deterministic-semantic-vector-projection",
+          "integer-overlap-similarity",
+          "provider-owned-ordering",
+          "novel-wording-recall"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/semantic-vector-index-provider.mjs",
+        "conformanceRef": "tools/tests/conformance/semantic-vector-index.test.js",
+        "providerAuthorityRef": "capabilities/sda-platform/bind-deterministic-semantic-vector-index/deterministic-semantic-vector-indexer.authority.json",
+        "providerAuthorityDigest": "sha256:0d07140194ed8dcfbf327d48b9885c510846a06a211943377d0d52a87f0712b3",
+        "conformanceDigest": "sha256:f5e03a90582f6e41d7e36d9054fb47d259621635d61d19b538ec6b735c0a382d"
+      },
+      {
+        "capabilityId": "sda-os-environment-credential-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Effects.OsEnvironmentCredentialBinding",
+        "providesMechanics": [
+          "event-port-invocation",
+          "fixed-order-os-environment-credential-resolution",
+          "opaque-effect-scoped-credential-binding",
+          "secret-non-disclosure"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/os-environment-credential-provider.mjs",
+        "conformanceRef": "tools/tests/conformance/os-environment-credential.test.js",
+        "providerAuthorityRef": "capabilities/sda-platform/verify-os-environment-credential-conformance/conformance/os-environment-credential-conformance.v1.json",
+        "providerAuthorityDigest": "sha256:18fd84451cc39df955bcb89cc06e32d49b1f13c01cfa241d127e516c802940d5",
+        "conformanceDigest": "sha256:f5745c66095ec069dffb5f93810ba21ebb1ca1ca5db81479a614a73d48b53421"
+      },
+      {
+        "capabilityId": "sda-authority-state-projection.v1",
+        "kind": "state-projection",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Projection.AuthorityTransformation",
+        "providesMechanics": [
+          "state-projection",
+          "transition-binding-projection"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "capabilityId": "sda-filesystem-artifact-store.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Delivery.AtomicFilesystemArtifactStore",
+        "providesMechanics": [
+          "event-port-invocation",
+          "durable-artifact-materialization"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "capabilityId": "sda-external-observation-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Observation.HttpExternalObservationProvider",
+        "providesMechanics": [
+          "event-port-invocation",
+          "external-representation-observation"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/external-observation-port.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-external-credential-reference-binding-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Effects.ExternalCredentialReferenceBinding",
+        "providesMechanics": [
+          "event-port-invocation",
+          "external-credential-reference-binding",
+          "one-use-opaque-credential-handle",
+          "secret-non-disclosure"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/external-credential-reference-binding-provider.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/governed-http-effect-ports.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-governed-http-exchange-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Effects.GovernedHttpExchange",
+        "providesMechanics": [
+          "event-port-invocation",
+          "single-governed-http-exchange",
+          "bounded-response-observation",
+          "credential-injection-without-disclosure"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/governed-http-exchange-provider.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/governed-http-effect-ports.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-governed-repository-observation-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Observation.GovernedRepository",
+        "providesMechanics": [
+          "event-port-invocation",
+          "governed-repository-observation"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/governed-repository-observation-provider.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/governed-repository-observation-port.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-generic-llm-connector-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Cognition.GenericLlmConnector",
+        "providesMechanics": [
+          "event-port-invocation",
+          "governed-model-invocation",
+          "external-credential-reference",
+          "model-execution-lineage"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/generic-llm-connector-provider.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/generic-llm-connector-port.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-semantic-execution-graph-compilation-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Execution.SemanticExecutionGraphCompilation",
+        "providesMechanics": [
+          "event-port-invocation",
+          "authority-driven-transformation",
+          "semantic-execution-graph-compilation",
+          "canonical-topology-normalization",
+          "source-lineage-publication"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/semantic-execution-graph-compilation-provider.mjs",
+        "conformanceRef": "tools/tests/semantic-execution-graph.test.js"
+      },
+      {
+        "capabilityId": "sda-governed-tooling-binding-transaction-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Effects.GovernedToolingBindingTransaction",
+        "providesMechanics": [
+          "event-port-invocation",
+          "governed-binding-transaction",
+          "exact-byte-rollback",
+          "gate-execution-lineage"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/governed-tooling-binding-transaction-provider.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/governed-tooling-binding-transaction-port.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-governed-tooling-migration-operation-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Effects.GovernedToolingMigrationOperation",
+        "providesMechanics": [
+          "event-port-invocation",
+          "governed-tooling-migration-operation",
+          "effect-lineage"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/governed-tooling-migration-operation-provider.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/governed-tooling-migration-operation-port.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-batch-filesystem-shaper-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Delivery.TransactionalBatchFilesystemShaper",
+        "providesMechanics": [
+          "event-port-invocation",
+          "closed-batch-file-system-shaping",
+          "staged-hash-verified-commit",
+          "rollback-evidence"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/batch-filesystem-shaper-provider.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/batch-filesystem-shaper-port.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-governed-target-execution-observation-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Observation.GovernedTargetExecution",
+        "providesMechanics": [
+          "event-port-invocation",
+          "governed-target-execution-observation"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/governed-target-execution-observation-provider.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/governed-target-execution-observation-port.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-canonical-capability-feature-resolution-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Observation.CanonicalCapabilityFeatureResolution",
+        "providesMechanics": [
+          "event-port-invocation",
+          "governed-feature-reference-resolution",
+          "canonical-feature-byte-observation",
+          "canonical-root-identity-resolution"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/canonical-capability-feature-resolution-provider.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/canonical-capability-feature-resolution-port.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-projected-capability-invocation-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Execution.ProjectedCapabilityInvocation",
+        "providesMechanics": [
+          "event-port-invocation",
+          "projected-capability-invocation"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/projected-capability-invocation-port.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-projected-capability-invocation-port.v2",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Execution.ProjectedCapabilityInvocationAndBinding",
+        "providesMechanics": [
+          "event-port-invocation",
+          "projected-capability-invocation",
+          "parent-carrier-preservation",
+          "nested-execution-lineage",
+          "pinned-capability-binding"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/projected-capability-invocation-port.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-governed-serial-execution-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Execution.GovernedSerialExecution",
+        "providesMechanics": [
+          "event-port-invocation",
+          "bounded-ordered-transaction-execution",
+          "projected-capability-invocation",
+          "nested-execution-lineage",
+          "continuation-authority-consultation"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/governed-serial-execution-provider.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/governed-serial-execution-port.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-json-query-cli.v1",
+        "kind": "interface-delivery",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Interface.JsonQueryCli",
+        "providesMechanics": [
+          "query-cli-delivery",
+          "declared-query-evaluation",
+          "json-reading",
+          "json-serialization"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/query-cli.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/query-cli.conformance.test.mjs"
+      }
+    ]
+  },
+  "expectedTelemetry": {
+    "traceType": "projected-expected-consumer-trace.v1",
+    "telemetryId": "consumer-scenario-execution-telemetry",
+    "capabilityId": "semantic-corpus-artifact-repository",
+    "rootScenarioId": "publish-immutable-semantic-corpus-artifact",
+    "observationType": "scenario-execution-observation.v1",
+    "lineageFields": [
+      "executionId",
+      "rootExecutionId",
+      "parentExecutionId",
+      "scenarioId"
+    ],
+    "scenarios": [
+      {
+        "scenarioId": "publish-immutable-semantic-corpus-artifact",
+        "steps": [
+          "admit-input",
+          "resolve-event-authority",
+          "execute-event-authority",
+          "admit-outcome",
+          "resolve-disposition"
+        ],
+        "expectedTransitionId": null
+      },
+      {
+        "scenarioId": "reject-semantic-corpus-artifact-publication-conflict",
+        "steps": [
+          "admit-input",
+          "resolve-event-authority",
+          "execute-event-authority",
+          "admit-outcome",
+          "resolve-disposition"
+        ],
+        "expectedTransitionId": null
+      },
+      {
+        "scenarioId": "read-immutable-semantic-corpus-artifact",
+        "steps": [
+          "admit-input",
+          "resolve-event-authority",
+          "execute-event-authority",
+          "admit-outcome",
+          "resolve-disposition"
+        ],
+        "expectedTransitionId": null
+      },
+      {
+        "scenarioId": "retain-referenced-semantic-corpus-snapshot",
+        "steps": [
+          "admit-input",
+          "resolve-event-authority",
+          "execute-event-authority",
+          "admit-outcome",
+          "resolve-disposition"
+        ],
+        "expectedTransitionId": null
+      },
+      {
+        "scenarioId": "update-current-semantic-corpus-pointer",
+        "steps": [
+          "admit-input",
+          "resolve-event-authority",
+          "execute-event-authority",
+          "admit-outcome",
+          "resolve-disposition"
+        ],
+        "expectedTransitionId": null
+      },
+      {
+        "scenarioId": "reject-open-semantic-corpus-pointer-update",
+        "steps": [
+          "admit-input",
+          "resolve-event-authority",
+          "execute-event-authority",
+          "admit-outcome",
+          "resolve-disposition"
+        ],
+        "expectedTransitionId": null
+      },
+      {
+        "scenarioId": "reproduce-semantic-corpus-artifact-address",
+        "steps": [
+          "admit-input",
+          "resolve-event-authority",
+          "execute-event-authority",
+          "admit-outcome",
+          "resolve-disposition"
+        ],
+        "expectedTransitionId": null
+      }
+    ]
+  },
+  "mechanicResolution": {
+    "resolutionType": "consumer-platform-mechanic-resolution.v1",
+    "projectionTarget": "node",
+    "requirements": [
+      {
+        "mechanicId": "contract-document-reading",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "canonicalization",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "schema-admission",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "authority-resolution",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "semantic-execution",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "telemetry-observation",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "scenario-invocation",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "transition-binding-projection",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "interface-delivery",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "runtime-projection",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "artifact-result-delivery",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "authority-driven-transformation",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "durable-artifact-materialization",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "contract-validation",
+        "capabilityKind": "contract-validator",
+        "requiredBy": "scenario-contract-admission",
+        "requestedCapabilityId": "sda-schema-contract-admission.v1"
+      },
+      {
+        "mechanicId": "cli-delivery",
+        "capabilityKind": "interface-delivery",
+        "requiredBy": "interface:semantic-corpus-artifact-repository-cli",
+        "requestedCapabilityId": "sda-json-cli.v1"
+      },
+      {
+        "mechanicId": "json-reading",
+        "capabilityKind": "interface-delivery",
+        "requiredBy": "interface:semantic-corpus-artifact-repository-cli",
+        "requestedCapabilityId": "sda-json-cli.v1"
+      },
+      {
+        "mechanicId": "json-serialization",
+        "capabilityKind": "interface-delivery",
+        "requiredBy": "interface:semantic-corpus-artifact-repository-cli",
+        "requestedCapabilityId": "sda-json-cli.v1"
+      },
+      {
+        "mechanicId": "event-port-invocation",
+        "capabilityKind": "event-port",
+        "requiredBy": "port:publish-immutable-semantic-corpus-artifact-port",
+        "requestedCapabilityId": "sda-authority-transformation-port.v1"
+      },
+      {
+        "mechanicId": "event-port-invocation",
+        "capabilityKind": "event-port",
+        "requiredBy": "port:reject-semantic-corpus-artifact-publication-conflict-port",
+        "requestedCapabilityId": "sda-authority-transformation-port.v1"
+      },
+      {
+        "mechanicId": "event-port-invocation",
+        "capabilityKind": "event-port",
+        "requiredBy": "port:read-immutable-semantic-corpus-artifact-port",
+        "requestedCapabilityId": "sda-authority-transformation-port.v1"
+      },
+      {
+        "mechanicId": "event-port-invocation",
+        "capabilityKind": "event-port",
+        "requiredBy": "port:retain-referenced-semantic-corpus-snapshot-port",
+        "requestedCapabilityId": "sda-authority-transformation-port.v1"
+      },
+      {
+        "mechanicId": "event-port-invocation",
+        "capabilityKind": "event-port",
+        "requiredBy": "port:update-current-semantic-corpus-pointer-port",
+        "requestedCapabilityId": "sda-authority-transformation-port.v1"
+      },
+      {
+        "mechanicId": "event-port-invocation",
+        "capabilityKind": "event-port",
+        "requiredBy": "port:reject-open-semantic-corpus-pointer-update-port",
+        "requestedCapabilityId": "sda-authority-transformation-port.v1"
+      },
+      {
+        "mechanicId": "event-port-invocation",
+        "capabilityKind": "event-port",
+        "requiredBy": "port:reproduce-semantic-corpus-artifact-address-port",
+        "requestedCapabilityId": "sda-authority-transformation-port.v1"
+      }
+    ],
+    "resolutions": [
+      {
+        "mechanicId": "contract-document-reading",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-node-consumer-runtime.v1",
+        "provider": "ScenarioKernel.NodePlatform",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "canonicalization",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-node-consumer-runtime.v1",
+        "provider": "ScenarioKernel.NodePlatform",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "schema-admission",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-node-consumer-runtime.v1",
+        "provider": "ScenarioKernel.NodePlatform",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "authority-resolution",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-node-consumer-runtime.v1",
+        "provider": "ScenarioKernel.NodePlatform",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "semantic-execution",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-node-consumer-runtime.v1",
+        "provider": "ScenarioKernel.NodePlatform",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "telemetry-observation",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-node-consumer-runtime.v1",
+        "provider": "ScenarioKernel.NodePlatform",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "scenario-invocation",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-node-consumer-runtime.v1",
+        "provider": "ScenarioKernel.NodePlatform",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "transition-binding-projection",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-node-consumer-runtime.v1",
+        "provider": "ScenarioKernel.NodePlatform",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "interface-delivery",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-node-consumer-runtime.v1",
+        "provider": "ScenarioKernel.NodePlatform",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "runtime-projection",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-node-consumer-runtime.v1",
+        "provider": "ScenarioKernel.NodePlatform",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "artifact-result-delivery",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-node-consumer-runtime.v1",
+        "provider": "ScenarioKernel.NodePlatform",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "authority-driven-transformation",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-node-consumer-runtime.v1",
+        "provider": "ScenarioKernel.NodePlatform",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "durable-artifact-materialization",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-node-consumer-runtime.v1",
+        "provider": "ScenarioKernel.NodePlatform",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "contract-validation",
+        "capabilityKind": "contract-validator",
+        "requiredBy": "scenario-contract-admission",
+        "requestedCapabilityId": "sda-schema-contract-admission.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-schema-contract-admission.v1",
+        "provider": "ScenarioKernel.NodePlatform.Schema.JsonSchemaContractAdmission",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "cli-delivery",
+        "capabilityKind": "interface-delivery",
+        "requiredBy": "interface:semantic-corpus-artifact-repository-cli",
+        "requestedCapabilityId": "sda-json-cli.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-json-cli.v1",
+        "provider": "ScenarioKernel.NodePlatform.Interface.JsonCli",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "json-reading",
+        "capabilityKind": "interface-delivery",
+        "requiredBy": "interface:semantic-corpus-artifact-repository-cli",
+        "requestedCapabilityId": "sda-json-cli.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-json-cli.v1",
+        "provider": "ScenarioKernel.NodePlatform.Interface.JsonCli",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "json-serialization",
+        "capabilityKind": "interface-delivery",
+        "requiredBy": "interface:semantic-corpus-artifact-repository-cli",
+        "requestedCapabilityId": "sda-json-cli.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-json-cli.v1",
+        "provider": "ScenarioKernel.NodePlatform.Interface.JsonCli",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "event-port-invocation",
+        "capabilityKind": "event-port",
+        "requiredBy": "port:publish-immutable-semantic-corpus-artifact-port",
+        "requestedCapabilityId": "sda-authority-transformation-port.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-authority-transformation-port.v1",
+        "provider": "ScenarioKernel.NodePlatform.Execution.AuthorityTransformation",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "event-port-invocation",
+        "capabilityKind": "event-port",
+        "requiredBy": "port:reject-semantic-corpus-artifact-publication-conflict-port",
+        "requestedCapabilityId": "sda-authority-transformation-port.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-authority-transformation-port.v1",
+        "provider": "ScenarioKernel.NodePlatform.Execution.AuthorityTransformation",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "event-port-invocation",
+        "capabilityKind": "event-port",
+        "requiredBy": "port:read-immutable-semantic-corpus-artifact-port",
+        "requestedCapabilityId": "sda-authority-transformation-port.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-authority-transformation-port.v1",
+        "provider": "ScenarioKernel.NodePlatform.Execution.AuthorityTransformation",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "event-port-invocation",
+        "capabilityKind": "event-port",
+        "requiredBy": "port:retain-referenced-semantic-corpus-snapshot-port",
+        "requestedCapabilityId": "sda-authority-transformation-port.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-authority-transformation-port.v1",
+        "provider": "ScenarioKernel.NodePlatform.Execution.AuthorityTransformation",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "event-port-invocation",
+        "capabilityKind": "event-port",
+        "requiredBy": "port:update-current-semantic-corpus-pointer-port",
+        "requestedCapabilityId": "sda-authority-transformation-port.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-authority-transformation-port.v1",
+        "provider": "ScenarioKernel.NodePlatform.Execution.AuthorityTransformation",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "event-port-invocation",
+        "capabilityKind": "event-port",
+        "requiredBy": "port:reject-open-semantic-corpus-pointer-update-port",
+        "requestedCapabilityId": "sda-authority-transformation-port.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-authority-transformation-port.v1",
+        "provider": "ScenarioKernel.NodePlatform.Execution.AuthorityTransformation",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "event-port-invocation",
+        "capabilityKind": "event-port",
+        "requiredBy": "port:reproduce-semantic-corpus-artifact-address-port",
+        "requestedCapabilityId": "sda-authority-transformation-port.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-authority-transformation-port.v1",
+        "provider": "ScenarioKernel.NodePlatform.Execution.AuthorityTransformation",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      }
+    ],
+    "disposition": "RESOLVED"
+  },
+  "executableOrigin": {
+    "originType": "consumer-executable-origin.v1",
+    "disposition": "PROJECTED_ONLY",
+    "unauthorizedFiles": []
+  }
+}

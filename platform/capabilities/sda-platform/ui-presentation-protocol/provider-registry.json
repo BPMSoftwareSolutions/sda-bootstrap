@@ -1,0 +1,24 @@
+{
+  "registryType": "ui-embodiment-provider-registry.v1",
+  "protocolType": "sda-ui-presentation-ir.v2",
+  "protocolSchemaDigest": "sha256:9d4dbc6a5b355754bc96cf27ed9112b31cc93f61d41646f8aeba30ef984618b0",
+  "providers": [
+    {
+      "providerId": "sda-react-ir-embodiment-provider.v1",
+      "providerKind": "browser-module-shell.v1",
+      "embodimentTarget": "react",
+      "capabilityId": "sda-react-ui.v1",
+      "implementationRef": "languages/typescript/presentation/react/runtime/authority-backed-application.mjs",
+      "configuration": {
+        "outputRoot": "react",
+        "documentBaseHref": "/react/",
+        "rootElementId": "sda-root",
+        "runtimeModuleUrl": "/__sda/react/authority-backed-application.mjs",
+        "scripts": [
+          "/__sda/react/react.production.min.js",
+          "/__sda/react/react-dom.production.min.js"
+        ]
+      }
+    }
+  ]
+}

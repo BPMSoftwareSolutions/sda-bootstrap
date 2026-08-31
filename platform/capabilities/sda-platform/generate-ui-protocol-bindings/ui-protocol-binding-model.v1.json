@@ -1,0 +1,11 @@
+{
+  "modelType": "ui-protocol-binding-model.v1",
+  "protocolType": "sda-ui-presentation-ir.v3",
+  "protocolSchemaDigest": "sha256:a075cd28d63f51500018549feacca600f2dacb769c06f386c559d9e39b2f8f53",
+  "planType": "ui-embodiment-plan.v1",
+  "capabilityCategories": ["COMPOSITION", "CONTENT", "INTERACTION", "ADAPTATION", "ACCESSIBILITY", "PROFILE", "TOKEN"],
+  "evidenceCapabilities": ["ACCESSIBILITY", "ADAPTATION", "OBSERVATION"],
+  "languages": ["typescript", "csharp", "java", "kotlin", "swift", "cpp", "python", "go"],
+  "canonicalization": "recursive-key-order.v1",
+  "modelDigest": "sha256:b35edd0d723cda004bb48e691790458ed9406c778195763f4f0be54f7bf6d25c"
+}

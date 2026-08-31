@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/platform/ui/sda-ui-semantic-presentation.v1.schema.json",
+  "title": "Canonical semantic UI presentation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["presentationType", "presentationId", "sourceAuthority", "promisedExperienceRefs", "elements", "relationships", "adaptationIntents", "presentationProfileRefs", "canonicalDigest"],
+  "properties": {
+    "presentationType": { "const": "sda-ui-semantic-presentation.v1" },
+    "presentationId": { "$ref": "declared-ui-authority.v1.schema.json#/$defs/id" },
+    "sourceAuthority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authorityType", "authorityId", "authorityDigest"],
+      "properties": {
+        "authorityType": { "const": "declared-ui-authority.v1" },
+        "authorityId": { "$ref": "declared-ui-authority.v1.schema.json#/$defs/id" },
+        "authorityDigest": { "$ref": "declared-ui-authority.v1.schema.json#/$defs/digest" }
+      }
+    },
+    "promisedExperienceRefs": { "$ref": "declared-ui-authority.v1.schema.json#/$defs/refList" },
+    "elements": {
+      "type": "array",
+      "items": {
+        "allOf": [
+          { "$ref": "declared-ui-authority.v1.schema.json#/$defs/element" },
+          {
+            "properties": {
+              "lineage": { "minItems": 1 }
+            }
+          }
+        ]
+      }
+    },
+    "relationships": {
+      "type": "array",
+      "items": {
+        "allOf": [
+          { "$ref": "declared-ui-authority.v1.schema.json#/$defs/relationship" },
+          {
+            "properties": {
+              "lineage": { "minItems": 1 }
+            }
+          }
+        ]
+      }
+    },
+    "adaptationIntents": {
+      "type": "array",
+      "items": { "$ref": "declared-ui-authority.v1.schema.json#/$defs/adaptationIntent" }
+    },
+    "presentationProfileRefs": { "$ref": "declared-ui-authority.v1.schema.json#/$defs/refList" },
+    "canonicalDigest": { "$ref": "declared-ui-authority.v1.schema.json#/$defs/digest" }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "transitionId": "realize-to-admit-contract-value",
+  "from": {
+    "scenarioId": "realize-sda-execution-plan-mechanics",
+    "outcomeId": "sda-execution-plan-realization",
+    "contractId": "sda-execution-plan-realization.v1"
+  },
+  "to": {
+    "scenarioId": "admit-contract-value",
+    "inputId": "contract-admission-request",
+    "contractId": "contract-admission-request.v1"
+  },
+  "semanticProgress": "monotonic",
+  "bindingAuthorityId": "project-realization-to-admission"
+}

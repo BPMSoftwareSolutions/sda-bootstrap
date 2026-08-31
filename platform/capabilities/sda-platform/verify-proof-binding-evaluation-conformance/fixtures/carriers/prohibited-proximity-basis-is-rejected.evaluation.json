@@ -1,0 +1,28 @@
+{
+  "contractId": "profile-governed-proof-binding-evaluation-input.v1",
+  "payload": {
+    "evaluationCaseId": "prohibited-proximity-basis-is-rejected",
+    "profileId": "generic-proof-binding-evaluation-conformance-profile.v1",
+    "snapshotDigest": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "proofObligationId": "obligation:prohibited-basis",
+    "subjectSemanticObjectId": "scenario:prohibited-basis",
+    "authorityApplicability": "REQUIRED",
+    "bindingCandidates": [
+      {
+        "fromSemanticObjectId": "fixture:nearby",
+        "relationshipKind": "FIXTURE_EXERCISES_SCENARIO",
+        "toSemanticObjectId": "scenario:prohibited-basis",
+        "basis": "DIRECTORY_PROXIMITY",
+        "lineageState": "CURRENT"
+      }
+    ],
+    "evidenceState": "ABSENT",
+    "reproduction": {
+      "orderedInputDigest": "sha256:4023a11761e5968120073edc755a9b64fb56a117203ed2d171bcec9cba8c8260",
+      "evaluationRuleIds": [
+        "evaluation-order.v1",
+        "bind-fixture-scenario.v1"
+      ]
+    }
+  }
+}

@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/json-ingestion/json-authority-ingestion-fixture-manifest.authority.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "fixtureType", "lifecycle", "fixtureSetDigest", "fixtureSetDigestAlgorithm", "artifacts", "cases", "reproductionSets", "admissionClaims"],
+  "properties": {
+    "$schema": {"const": "fixture-manifest.authority.schema.json"},
+    "fixtureType": {"const": "json-authority-ingestion-provider-fixture-manifest.v1"},
+    "lifecycle": {"enum": ["PROPOSED", "ADMITTED"]},
+    "fixtureSetDigest": {"$ref": "#/$defs/digest"},
+    "fixtureSetDigestAlgorithm": {"const": "sha256 over UTF-8 path, NUL, sha256 exact artifact-file bytes digest, LF records sorted by bytewise path"},
+    "artifacts": {
+      "type": "array",
+      "minItems": 27,
+      "maxItems": 27,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/artifact"}
+    },
+    "cases": {
+      "type": "array",
+      "minItems": 18,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/case"},
+      "allOf": [
+        {"contains": {"type": "object", "properties": {"provesPartitions": {"type": "array", "contains": {"const": "EXACT_SOURCE_BYTES_AND_POINTERS"}}}, "required": ["provesPartitions"]}},
+        {"contains": {"type": "object", "properties": {"provesPartitions": {"type": "array", "contains": {"const": "STRICT_UTF8_AND_LOSSLESS_JSON"}}}, "required": ["provesPartitions"]}},
+        {"contains": {"type": "object", "properties": {"provesPartitions": {"type": "array", "contains": {"const": "DUPLICATE_OBJECT_KEYS"}}}, "required": ["provesPartitions"]}},
+        {"contains": {"type": "object", "properties": {"provesPartitions": {"type": "array", "contains": {"const": "CANONICAL_JSON_IDENTITY"}}}, "required": ["provesPartitions"]}},
+        {"contains": {"type": "object", "properties": {"provesPartitions": {"type": "array", "contains": {"const": "DECLARED_SCHEMA_AUTHORITY"}}}, "required": ["provesPartitions"]}},
+        {"contains": {"type": "object", "properties": {"provesPartitions": {"type": "array", "contains": {"const": "SCHEMA_VALIDATION"}}}, "required": ["provesPartitions"]}},
+        {"contains": {"type": "object", "properties": {"provesPartitions": {"type": "array", "contains": {"const": "DECLARED_VERSION_POLICY"}}}, "required": ["provesPartitions"]}},
+        {"contains": {"type": "object", "properties": {"provesPartitions": {"type": "array", "contains": {"const": "ADMITTED_REFERENCE_CLOSURE"}}}, "required": ["provesPartitions"]}},
+        {"contains": {"type": "object", "properties": {"provesPartitions": {"type": "array", "contains": {"const": "SOURCE_CLASS_NON_ESCALATION"}}}, "required": ["provesPartitions"]}},
+        {"contains": {"type": "object", "properties": {"provesPartitions": {"type": "array", "contains": {"const": "TYPED_DIAGNOSTICS_AND_DISPOSITIONS"}}}, "required": ["provesPartitions"]}},
+        {"contains": {"type": "object", "properties": {"provesPartitions": {"type": "array", "contains": {"const": "PROVIDER_AND_AUTHORITY_IDENTITIES"}}}, "required": ["provesPartitions"]}},
+        {"contains": {"type": "object", "properties": {"provesPartitions": {"type": "array", "contains": {"const": "ORDERED_REPRODUCTION_AND_RECEIPT_DIGEST"}}}, "required": ["provesPartitions"]}}
+      ]
+    },
+    "reproductionSets": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["reproductionSetId", "fixtureIds", "canonicalResourceOrder", "discoveryOrders", "requiredEqualityFields"],
+        "properties": {
+          "reproductionSetId": {"const": "reordered-independent-reproduction"},
+          "fixtureIds": {"const": ["reproduction-a", "reproduction-b"]},
+          "canonicalResourceOrder": {"const": ["fixture:reproduction-a", "fixture:reproduction-b"]},
+          "discoveryOrders": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "uniqueItems": true,
+            "items": {"oneOf": [{"const": ["reproduction-a", "reproduction-b"]}, {"const": ["reproduction-b", "reproduction-a"]}]}
+          },
+          "requiredEqualityFields": {
+            "const": ["SOURCE_DIGESTS", "JSON_POINTERS", "RESOURCE_ORDER", "RESOURCE_EVIDENCE", "FINDINGS", "RECEIPT_DIGEST"]
+          }
+        }
+      }
+    },
+    "admissionClaims": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["providerConformance", "runtimeProjection", "receiptIssuance"],
+      "properties": {
+        "providerConformance": {"enum": ["SATISFIED", "NOT_OBSERVABLE"]},
+        "runtimeProjection": {"enum": ["SATISFIED", "NOT_OBSERVABLE"]},
+        "receiptIssuance": {"enum": ["SATISFIED", "NOT_OBSERVABLE"]}
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {"type": "object", "properties": {"lifecycle": {"const": "PROPOSED"}}, "required": ["lifecycle"]},
+      "then": {"type": "object", "properties": {"admissionClaims": {"type": "object", "properties": {"providerConformance": {"const": "NOT_OBSERVABLE"}, "runtimeProjection": {"const": "NOT_OBSERVABLE"}, "receiptIssuance": {"const": "NOT_OBSERVABLE"}}}}}
+    }
+  ],
+  "$defs": {
+    "digest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "id": {"type": "string", "pattern": "^[a-z][a-z0-9-]*$"},
+    "partitionId": {
+      "enum": [
+        "EXACT_SOURCE_BYTES_AND_POINTERS",
+        "STRICT_UTF8_AND_LOSSLESS_JSON",
+        "DUPLICATE_OBJECT_KEYS",
+        "CANONICAL_JSON_IDENTITY",
+        "DECLARED_SCHEMA_AUTHORITY",
+        "SCHEMA_VALIDATION",
+        "DECLARED_VERSION_POLICY",
+        "ADMITTED_REFERENCE_CLOSURE",
+        "SOURCE_CLASS_NON_ESCALATION",
+        "TYPED_DIAGNOSTICS_AND_DISPOSITIONS",
+        "PROVIDER_AND_AUTHORITY_IDENTITIES",
+        "ORDERED_REPRODUCTION_AND_RECEIPT_DIGEST"
+      ]
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["artifactId", "path", "role", "digestSubject", "sourceDigest"],
+      "properties": {
+        "artifactId": {"$ref": "#/$defs/id"},
+        "path": {"type": "string", "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[A-Za-z0-9._/-]+$"},
+        "role": {"enum": ["SOURCE_BYTES", "BASE64_LITERAL", "REQUEST_MUTATION", "SCHEMA", "PROFILE", "POLICY", "SCHEMA_CATALOG", "VERSION_POLICY", "REFERENCE_SCOPE"]},
+        "digestSubject": {"const": "EXACT_CARRIER_FILE_BYTES"},
+        "sourceDigest": {"$ref": "#/$defs/digest"}
+      }
+    },
+    "case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fixtureId", "carrierArtifactId", "carrierEncoding", "sourceClass", "requestedSourceClass", "declaredSchemaRef", "declaredVersion", "referenceRefs", "expected", "provesPartitions"],
+      "properties": {
+        "fixtureId": {"$ref": "#/$defs/id"},
+        "carrierArtifactId": {"$ref": "#/$defs/id"},
+        "carrierEncoding": {"enum": ["EXACT_SOURCE_BYTES", "BASE64_LITERAL", "REQUEST_DOCUMENT"]},
+        "sourceClass": {"enum": ["CANONICAL_AUTHORITY", "ADMITTED_EVIDENCE", "PROJECTION_EVIDENCE", "MODEL_TESTIMONY"]},
+        "requestedSourceClass": {"enum": ["CANONICAL_AUTHORITY", "ADMITTED_EVIDENCE", "PROJECTION_EVIDENCE", "MODEL_TESTIMONY"]},
+        "declaredSchemaRef": {"type": "string", "minLength": 1},
+        "declaredVersion": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+        "referenceRefs": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "expected": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["parseDisposition", "schemaDisposition", "versionDisposition", "referenceDisposition", "ingestionDisposition", "diagnosticCodes"],
+          "properties": {
+            "parseDisposition": {"enum": ["PARSED", "REJECTED"]},
+            "schemaDisposition": {"enum": ["ADMITTED", "NOT_OBSERVABLE", "REJECTED"]},
+            "versionDisposition": {"enum": ["SUPPORTED", "NOT_OBSERVABLE", "UNSUPPORTED"]},
+            "referenceDisposition": {"enum": ["CLOSED", "OPEN", "REJECTED"]},
+            "ingestionDisposition": {"enum": ["ADMITTED", "OPEN", "REJECTED"]},
+            "diagnosticCodes": {"type": "array", "uniqueItems": true, "items": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]*$"}}
+          }
+        },
+        "provesPartitions": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/partitionId"}}
+      }
+    }
+  }
+}

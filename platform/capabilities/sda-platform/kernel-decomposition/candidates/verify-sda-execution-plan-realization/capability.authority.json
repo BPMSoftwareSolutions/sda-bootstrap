@@ -1,0 +1,22 @@
+{
+  "capabilityId": "verify-sda-execution-plan-realization",
+  "name": "Verify SDA execution-plan realization",
+  "mode": ["feature", "capability"],
+  "userStory": {
+    "actor": "SDA conformance system",
+    "intent": "compare observed execution with its canonical execution plan",
+    "outcome": "language realization can be admitted only when semantic execution ties out"
+  },
+  "experience": {
+    "experienceType": "promised-experience.v1",
+    "experienceId": "execution-plan-realization-is-verifiable",
+    "actor": "SDA conformance system",
+    "promise": "The projected capability returns an attributable realization-conformance disposition for every observed execution, without the verifier producing any effect.",
+    "observableConditions": [
+      {"conditionId": "provider-and-verifier-are-separate", "statement": "verification establishes conformance dispositions and never performs realization effects"},
+      {"conditionId": "divergence-is-attributable", "statement": "every non-conformant observation carries an attributable divergence finding"},
+      {"conditionId": "verification-claims-nothing", "statement": "the conformance disposition claims no admission, projection, or promotion"}
+    ]
+  },
+  "rootScenarioId": "verify-sda-execution-plan-realization"
+}

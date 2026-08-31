@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/consumer-ui-claimant-implementation.v1.schema.json",
+  "title": "Consumer UI Claimant Static Implementation Coverage",
+  "description": "Non-testimonial source coverage for a UI claimant. This artifact cannot admit native execution.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["claimantImplementationType", "embodimentTarget", "objectModelRef", "disposition", "conceptGroups", "nativeAdmissionRequirements"],
+  "properties": {
+    "claimantImplementationType": { "const": "consumer-ui-claimant-implementation.v1" },
+    "embodimentTarget": { "$ref": "consumer-ui-parity-evidence.schema.json#/$defs/target" },
+    "objectModelRef": { "const": "kernel/semantic-authority/consumer/consumer-ui-object-model.semantic-authority.json" },
+    "disposition": { "type": "string", "enum": ["NATIVE_PROOF_ADMITTED", "IMPLEMENTED_AWAITING_NATIVE_PROOF"] },
+    "conceptGroups": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["implementationRef", "representation", "conceptIds"],
+        "properties": {
+          "implementationRef": { "type": "string", "minLength": 1 },
+          "representation": { "type": "string", "minLength": 1 },
+          "conceptIds": {
+            "type": "array", "minItems": 1, "uniqueItems": true,
+            "items": { "type": "string", "pattern": "^[A-Z][A-Za-z0-9]*$" }
+          }
+        }
+      }
+    },
+    "nativeAdmissionRequirements": {
+      "type": "array", "minItems": 1, "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    }
+  }
+}

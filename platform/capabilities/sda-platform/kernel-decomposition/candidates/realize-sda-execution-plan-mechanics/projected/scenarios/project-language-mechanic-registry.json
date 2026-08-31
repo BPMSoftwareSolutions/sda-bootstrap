@@ -1,0 +1,38 @@
+{
+  "scenarioId": "project-language-mechanic-registry",
+  "input": {
+    "inputId": "language-mechanic-registry-projection-request",
+    "contract": {
+      "contractId": "language-mechanic-registry-projection-request.v1"
+    }
+  },
+  "event": {
+    "eventId": "project-language-mechanic-registry",
+    "executionAuthorityId": "project-language-mechanic-registry.v1"
+  },
+  "outcome": {
+    "outcomeId": "projected-language-mechanic-registry",
+    "contract": {
+      "contractId": "projected-language-mechanic-registry.v1"
+    },
+    "experience": {
+      "statement": "one authority-derived target-language registry is available"
+    },
+    "terminal": true
+  },
+  "gherkin": {
+    "given": {
+      "semanticRef": "project-language-mechanic-registry.given",
+      "text": "admitted mechanic authority and a target-language profile"
+    },
+    "when": {
+      "semanticRef": "project-language-mechanic-registry.when",
+      "text": "the mechanic registry is projected"
+    },
+    "then": {
+      "semanticRef": "project-language-mechanic-registry.then",
+      "text": "one authority-derived target-language registry is available"
+    }
+  },
+  "name": "Project a language mechanic registry"
+}

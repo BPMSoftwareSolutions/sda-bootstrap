@@ -1,0 +1,175 @@
+{
+  "authorityType": "projection-authorities.v1",
+  "projectionAuthorities": [
+    {
+      "id": "project-realization-to-admission",
+      "inputContract": {
+        "contractId": "sda-execution-plan-realization.v1"
+      },
+      "outputContract": {
+        "contractId": "contract-admission-request.v1"
+      },
+      "kind": "projection"
+    },
+    {
+      "id": "project-admission-to-transformation",
+      "inputContract": {
+        "contractId": "contract-admission-disposition.v1"
+      },
+      "outputContract": {
+        "contractId": "authority-transformation-request.v1"
+      },
+      "kind": "projection"
+    },
+    {
+      "id": "project-transformation-to-schema-evaluation",
+      "inputContract": {
+        "contractId": "authority-transformation-result.v1"
+      },
+      "outputContract": {
+        "contractId": "bounded-schema-evaluation-request.v1"
+      },
+      "kind": "projection"
+    },
+    {
+      "id": "project-evaluate-to-materialize",
+      "inputContract": {
+        "contractId": "bounded-schema-evaluation.v1"
+      },
+      "outputContract": {
+        "contractId": "governed-artifact-materialization-request.v1"
+      },
+      "kind": "projection"
+    },
+    {
+      "id": "project-materialize-to-repository",
+      "inputContract": {
+        "contractId": "governed-artifact-reference.v1"
+      },
+      "outputContract": {
+        "contractId": "bounded-governed-repository-observation-context.v1"
+      },
+      "kind": "projection"
+    },
+    {
+      "id": "project-repository-to-external",
+      "inputContract": {
+        "contractId": "governed-repository-observation.v1"
+      },
+      "outputContract": {
+        "contractId": "external-representation-observation-request.v1"
+      },
+      "kind": "projection"
+    },
+    {
+      "id": "project-external-to-credential",
+      "inputContract": {
+        "contractId": "external-representation-observation.v1"
+      },
+      "outputContract": {
+        "contractId": "bind-external-credential-reference-input.v1"
+      },
+      "kind": "projection"
+    },
+    {
+      "id": "project-credential-to-http",
+      "inputContract": {
+        "contractId": "external-credential-binding-evidence.v1"
+      },
+      "outputContract": {
+        "contractId": "governed-http-exchange-request.v1"
+      },
+      "kind": "projection"
+    },
+    {
+      "id": "project-http-to-model",
+      "inputContract": {
+        "contractId": "governed-http-exchange-evidence.v1"
+      },
+      "outputContract": {
+        "contractId": "governed-model-invocation-request.v1"
+      },
+      "kind": "projection"
+    },
+    {
+      "id": "project-model-to-shape",
+      "inputContract": {
+        "contractId": "governed-model-response-evidence.v1"
+      },
+      "outputContract": {
+        "contractId": "batch-file-system-shape-request.v1"
+      },
+      "kind": "projection"
+    },
+    {
+      "id": "project-shape-to-target-execution",
+      "inputContract": {
+        "contractId": "batch-file-system-shape-evidence.v1"
+      },
+      "outputContract": {
+        "contractId": "bounded-projected-target-execution-context.v1"
+      },
+      "kind": "projection"
+    },
+    {
+      "id": "project-target-execution-to-invoke-capability",
+      "inputContract": {
+        "contractId": "projected-target-execution-observation.v1"
+      },
+      "outputContract": {
+        "contractId": "projected-capability-invocation-request.v1"
+      },
+      "kind": "projection"
+    },
+    {
+      "id": "project-invoke-capability-to-sequence",
+      "inputContract": {
+        "contractId": "projected-capability-invocation-result.v1"
+      },
+      "outputContract": {
+        "contractId": "governed-capability-sequence-request.v1"
+      },
+      "kind": "projection"
+    },
+    {
+      "id": "project-sequence-to-resolve-feature",
+      "inputContract": {
+        "contractId": "governed-capability-sequence-result.v1"
+      },
+      "outputContract": {
+        "contractId": "capability-feature-authoring-request.v1"
+      },
+      "kind": "projection"
+    },
+    {
+      "id": "project-resolve-feature-to-transact-binding",
+      "inputContract": {
+        "contractId": "canonical-capability-feature.v1"
+      },
+      "outputContract": {
+        "contractId": "governed-tooling-binding-transaction-request.v1"
+      },
+      "kind": "projection"
+    },
+    {
+      "id": "project-transact-binding-to-execute-migration",
+      "inputContract": {
+        "contractId": "governed-tooling-binding-transaction-evidence.v1"
+      },
+      "outputContract": {
+        "contractId": "governed-tooling-migration-operation-request.v1"
+      },
+      "kind": "projection"
+    },
+    {
+      "id": "project-execute-migration-to-project-registry",
+      "inputContract": {
+        "contractId": "governed-tooling-migration-operation-evidence.v1"
+      },
+      "outputContract": {
+        "contractId": "language-mechanic-registry-projection-request.v1"
+      },
+      "kind": "projection"
+    }
+  ]
+}

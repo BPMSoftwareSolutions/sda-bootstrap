@@ -1,0 +1,167 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/scenario-kernel-implementation-conformance.v1.schema.json",
+  "title": "Scenario Kernel Implementation Conformance",
+  "description": "Proves that a specific language embodiment of an admitted language binding preserves canonical kernel authority: every semantic object is traceably embodied by a named language type, the embodiment claims a canonical execution vector, and every runtime value that matters is declared to originate from contract data rather than hardcoded language behavior. Complements language-binding.schema.json (which declares WHAT a binding claims to implement) by proving HOW. Structural claims here (semanticObjects, dataAuthority) record assertions; verifying those assertions against actual source code requires a per-language reflection/AST inspector, which is outside what JSON Schema validation of this document alone can prove.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "conformanceType",
+    "kernelSpecification",
+    "languageBinding",
+    "executionVectorReference",
+    "semanticObjects",
+    "executionStepEmbodiments",
+    "dataAuthority",
+    "conformanceCorpus"
+  ],
+  "properties": {
+    "conformanceType": {
+      "const": "scenario-kernel-implementation-conformance.v1"
+    },
+    "kernelSpecification": {
+      "$ref": "semantic-primitives.schema.json#/$defs/kernelSpecificationReference"
+    },
+    "languageBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["language", "implementationId"],
+      "properties": {
+        "language": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$"
+        },
+        "implementationId": { "type": "string", "minLength": 1 }
+      }
+    },
+    "executionVectorReference": {
+      "const": "scenario-kernel-execution-vector.v1"
+    },
+    "semanticObjects": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/semanticObjectEmbodiment" }
+    },
+    "executionStepEmbodiments": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/executionStepEmbodiment" }
+    },
+    "dataAuthority": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/dataAuthorityAssertion" }
+    },
+    "conformanceCorpus": { "type": "string", "minLength": 1 }
+  },
+  "$defs": {
+    "executionStepEmbodiment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stepId", "embodiment"],
+      "properties": {
+        "stepId": {
+          "$ref": "scenario-kernel-execution-vector.schema.json#/$defs/step/properties/stepId"
+        },
+        "embodiment": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["typeName", "member"],
+          "properties": {
+            "typeName": { "type": "string", "minLength": 1 },
+            "member": { "type": "string", "minLength": 1 },
+            "sourceRef": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Path to the source file/member that embodies this execution-vector step, for traceability."
+            }
+          }
+        }
+      }
+    },
+    "semanticObjectEmbodiment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["objectId", "schemaRef", "embodiment"],
+      "properties": {
+        "objectId": {
+          "$ref": "scenario-kernel.schema.json#/properties/objects/items"
+        },
+        "schemaRef": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The kernel/schemas/*.schema.json file this semantic object is admitted by."
+        },
+        "embodiment": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "typeName"],
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": ["class", "record", "struct", "interface", "dataclass", "module", "function", "other"]
+            },
+            "typeName": { "type": "string", "minLength": 1 },
+            "sourceRef": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Path to the source file/member that embodies this semantic object, for traceability."
+            },
+            "implementsInterfaces": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": { "type": "string", "minLength": 1 }
+            }
+          }
+        },
+        "memberMappings": {
+          "type": "array",
+          "uniqueItems": true,
+          "description": "Maps each schema property that matters to the language member that embodies it. Deliberately does not restate cardinality or required-ness — those stay authoritative in schemaRef's own schema, not duplicated here.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["schemaProperty", "member"],
+            "properties": {
+              "schemaProperty": { "type": "string", "minLength": 1 },
+              "member": { "type": "string", "minLength": 1 }
+            }
+          }
+        }
+      }
+    },
+    "dataAuthorityAssertion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "source", "hardCoding"],
+      "properties": {
+        "value": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The runtime value being governed, e.g. 'event.executionAuthorityId'."
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The canonical authority this value must originate from, e.g. 'scenario.event.executionAuthorityId'."
+        },
+        "hardCoding": {
+          "type": "string",
+          "enum": ["forbidden", "permitted-kernel-constant"]
+        },
+        "kernelConstantRef": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Required when hardCoding is permitted-kernel-constant — identifies the canonical kernel specification constant that justifies the literal value."
+        }
+      },
+      "if": {
+        "properties": { "hardCoding": { "const": "permitted-kernel-constant" } },
+        "required": ["hardCoding"]
+      },
+      "then": {
+        "required": ["kernelConstantRef"]
+      }
+    }
+  }
+}

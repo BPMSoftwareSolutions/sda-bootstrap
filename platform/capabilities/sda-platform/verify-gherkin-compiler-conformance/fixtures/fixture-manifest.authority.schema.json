@@ -1,0 +1,193 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/gherkin/fixture-manifest.authority.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "fixtureType", "fixtureSetDigest", "fixtures", "invalidCarrierCases", "reproductionSets"],
+  "properties": {
+    "$schema": { "const": "fixture-manifest.authority.schema.json" },
+    "fixtureType": { "const": "gherkin-compiler-conformance-fixture-manifest.v1" },
+    "fixtureSetDigest": { "$ref": "#/$defs/digest" },
+    "fixtures": {
+      "type": "array",
+      "minItems": 1,
+      "allOf": [
+        {
+          "contains": {
+            "type": "object",
+            "required": ["mediaType"],
+            "properties": { "mediaType": { "const": "text/x.cucumber.gherkin+plain" } }
+          },
+          "minContains": 1
+        },
+        {
+          "contains": {
+            "type": "object",
+            "required": ["mediaType"],
+            "properties": { "mediaType": { "const": "text/x.cucumber.gherkin+markdown" } }
+          },
+          "minContains": 1
+        }
+      ],
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "fixtureId",
+          "path",
+          "sourceDigest",
+          "mediaType",
+          "declaredDialect",
+          "expectedProofPartitions",
+          "expectedParseDisposition",
+          "expectedProfileDisposition",
+          "expectedDiagnosticCodes"
+        ],
+        "properties": {
+          "fixtureId": { "$ref": "#/$defs/id" },
+          "path": { "type": "string", "pattern": "^[a-z0-9-]+\\.feature(?:\\.md)?$" },
+          "sourceDigest": { "$ref": "#/$defs/digest" },
+          "mediaType": {
+            "enum": [
+              "text/x.cucumber.gherkin+plain",
+              "text/x.cucumber.gherkin+markdown"
+            ]
+          },
+          "declaredDialect": { "type": "string", "minLength": 2 },
+          "expectedProofPartitions": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": { "$ref": "#/$defs/partition" }
+          },
+          "expectedParseDisposition": {
+            "enum": ["PARSE_SUCCEEDED", "PARSE_REJECTED"]
+          },
+          "expectedProfileDisposition": {
+            "enum": ["PROFILE_ADMITTED", "PROFILE_HELD", "REJECTED", "NOT_EVALUATED"]
+          },
+          "expectedDiagnosticCodes": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": { "type": "string", "minLength": 1 }
+          },
+          "reproductionSetId": { "$ref": "#/$defs/id" }
+        }
+      }
+    },
+    "invalidCarrierCases": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "uniqueItems": true,
+      "allOf": [
+        {
+          "contains": { "type": "object", "required": ["mutation"], "properties": { "mutation": { "const": "NON_CANONICAL_BASE64" } } },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": { "type": "object", "required": ["mutation"], "properties": { "mutation": { "const": "INVALID_UTF8" } } },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": { "type": "object", "required": ["mutation"], "properties": { "mutation": { "const": "UNSUPPORTED_MEDIA_TYPE" } } },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": { "type": "object", "required": ["mutation"], "properties": { "mutation": { "const": "UNSUPPORTED_DIALECT" } } },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": { "type": "object", "required": ["mutation"], "properties": { "mutation": { "const": "STALE_GRAMMAR_BINDING" } } },
+          "minContains": 1,
+          "maxContains": 1
+        }
+      ],
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["carrierCaseId", "basisFixtureId", "mutation", "expectedDiagnosticCode"],
+        "properties": {
+          "carrierCaseId": { "$ref": "#/$defs/id" },
+          "basisFixtureId": { "$ref": "#/$defs/id" },
+          "mutation": {
+            "enum": [
+              "NON_CANONICAL_BASE64",
+              "INVALID_UTF8",
+              "UNSUPPORTED_MEDIA_TYPE",
+              "UNSUPPORTED_DIALECT",
+              "STALE_GRAMMAR_BINDING"
+            ]
+          },
+          "expectedDiagnosticCode": {
+            "enum": [
+              "INVALID_SOURCE_BASE64",
+              "INVALID_UTF8",
+              "UNSUPPORTED_MEDIA_TYPE",
+              "UNSUPPORTED_DIALECT",
+              "STALE_GRAMMAR_BINDING"
+            ]
+          }
+        }
+      }
+    },
+    "reproductionSets": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["reproductionSetId", "fixtureIds", "discoveryOrders", "expectedProofPartitions"],
+        "properties": {
+          "reproductionSetId": { "$ref": "#/$defs/id" },
+          "fixtureIds": {
+            "type": "array",
+            "minItems": 2,
+            "uniqueItems": true,
+            "items": { "$ref": "#/$defs/id" }
+          },
+          "discoveryOrders": {
+            "type": "array",
+            "minItems": 2,
+            "items": {
+              "type": "array",
+              "minItems": 2,
+              "uniqueItems": true,
+              "items": { "$ref": "#/$defs/id" }
+            }
+          },
+          "expectedProofPartitions": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": { "$ref": "#/$defs/partition" }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9.-]*$" },
+    "digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "partition": {
+      "enum": [
+        "EXACT_BYTES",
+        "FEATURE_IDENTITY",
+        "SCENARIO_IDENTITY",
+        "ORDERED_STEPS",
+        "STEP_ARGUMENTS",
+        "COMMENTS_AND_NARRATIVE",
+        "DIALECT_AND_ADVANCED_CONSTRUCTS",
+        "CONNECTOR_REFERENCES",
+        "COMPILER_IDENTITIES",
+        "AST_CASE_COMPILATION_DIGESTS",
+        "TYPED_DIAGNOSTICS",
+        "REORDERED_REPRODUCTION"
+      ]
+    }
+  }
+}

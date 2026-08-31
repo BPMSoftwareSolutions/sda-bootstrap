@@ -1,0 +1,259 @@
+{
+  "transitions": [
+    {
+      "transitionId": "realize-to-admit-contract-value",
+      "from": {
+        "scenarioId": "realize-sda-execution-plan-mechanics",
+        "outcomeId": "sda-execution-plan-realization",
+        "contractId": "sda-execution-plan-realization.v1"
+      },
+      "to": {
+        "scenarioId": "admit-contract-value",
+        "inputId": "contract-admission-request",
+        "contractId": "contract-admission-request.v1"
+      },
+      "semanticProgress": "monotonic",
+      "bindingAuthorityId": "project-realization-to-admission"
+    },
+    {
+      "transitionId": "admit-to-execute-authority-transformation",
+      "from": {
+        "scenarioId": "admit-contract-value",
+        "outcomeId": "contract-admission-disposition",
+        "contractId": "contract-admission-disposition.v1"
+      },
+      "to": {
+        "scenarioId": "execute-authority-transformation",
+        "inputId": "authority-transformation-request",
+        "contractId": "authority-transformation-request.v1"
+      },
+      "semanticProgress": "monotonic",
+      "bindingAuthorityId": "project-admission-to-transformation"
+    },
+    {
+      "transitionId": "execute-to-evaluate-bounded-schema",
+      "from": {
+        "scenarioId": "execute-authority-transformation",
+        "outcomeId": "authority-transformation-result",
+        "contractId": "authority-transformation-result.v1"
+      },
+      "to": {
+        "scenarioId": "evaluate-bounded-schema",
+        "inputId": "bounded-schema-evaluation-request",
+        "contractId": "bounded-schema-evaluation-request.v1"
+      },
+      "semanticProgress": "monotonic",
+      "bindingAuthorityId": "project-transformation-to-schema-evaluation"
+    },
+    {
+      "transitionId": "evaluate-to-materialize",
+      "from": {
+        "scenarioId": "evaluate-bounded-schema",
+        "outcomeId": "bounded-schema-evaluation",
+        "contractId": "bounded-schema-evaluation.v1"
+      },
+      "to": {
+        "scenarioId": "materialize-governed-artifact",
+        "inputId": "governed-artifact-materialization-request",
+        "contractId": "governed-artifact-materialization-request.v1"
+      },
+      "semanticProgress": "monotonic",
+      "bindingAuthorityId": "project-evaluate-to-materialize"
+    },
+    {
+      "transitionId": "materialize-to-repository",
+      "from": {
+        "scenarioId": "materialize-governed-artifact",
+        "outcomeId": "governed-artifact-reference",
+        "contractId": "governed-artifact-reference.v1"
+      },
+      "to": {
+        "scenarioId": "observe-governed-repository",
+        "inputId": "bounded-governed-repository-observation-context",
+        "contractId": "bounded-governed-repository-observation-context.v1"
+      },
+      "semanticProgress": "monotonic",
+      "bindingAuthorityId": "project-materialize-to-repository"
+    },
+    {
+      "transitionId": "repository-to-external",
+      "from": {
+        "scenarioId": "observe-governed-repository",
+        "outcomeId": "governed-repository-observation",
+        "contractId": "governed-repository-observation.v1"
+      },
+      "to": {
+        "scenarioId": "observe-external-representation",
+        "inputId": "external-representation-observation-request",
+        "contractId": "external-representation-observation-request.v1"
+      },
+      "semanticProgress": "monotonic",
+      "bindingAuthorityId": "project-repository-to-external"
+    },
+    {
+      "transitionId": "external-to-credential",
+      "from": {
+        "scenarioId": "observe-external-representation",
+        "outcomeId": "external-representation-observation",
+        "contractId": "external-representation-observation.v1"
+      },
+      "to": {
+        "scenarioId": "bind-external-credential-reference",
+        "inputId": "bind-external-credential-reference-input",
+        "contractId": "bind-external-credential-reference-input.v1"
+      },
+      "semanticProgress": "monotonic",
+      "bindingAuthorityId": "project-external-to-credential"
+    },
+    {
+      "transitionId": "credential-to-http",
+      "from": {
+        "scenarioId": "bind-external-credential-reference",
+        "outcomeId": "external-credential-binding-evidence",
+        "contractId": "external-credential-binding-evidence.v1"
+      },
+      "to": {
+        "scenarioId": "execute-governed-http-exchange",
+        "inputId": "governed-http-exchange-request",
+        "contractId": "governed-http-exchange-request.v1"
+      },
+      "semanticProgress": "monotonic",
+      "bindingAuthorityId": "project-credential-to-http"
+    },
+    {
+      "transitionId": "http-to-model",
+      "from": {
+        "scenarioId": "execute-governed-http-exchange",
+        "outcomeId": "governed-http-exchange-evidence",
+        "contractId": "governed-http-exchange-evidence.v1"
+      },
+      "to": {
+        "scenarioId": "invoke-governed-model",
+        "inputId": "governed-model-invocation-request",
+        "contractId": "governed-model-invocation-request.v1"
+      },
+      "semanticProgress": "monotonic",
+      "bindingAuthorityId": "project-http-to-model"
+    },
+    {
+      "transitionId": "model-to-shape",
+      "from": {
+        "scenarioId": "invoke-governed-model",
+        "outcomeId": "governed-model-response-evidence",
+        "contractId": "governed-model-response-evidence.v1"
+      },
+      "to": {
+        "scenarioId": "shape-file-system-batch",
+        "inputId": "batch-file-system-shape-request",
+        "contractId": "batch-file-system-shape-request.v1"
+      },
+      "semanticProgress": "monotonic",
+      "bindingAuthorityId": "project-model-to-shape"
+    },
+    {
+      "transitionId": "shape-to-target-execution",
+      "from": {
+        "scenarioId": "shape-file-system-batch",
+        "outcomeId": "batch-file-system-shape-evidence",
+        "contractId": "batch-file-system-shape-evidence.v1"
+      },
+      "to": {
+        "scenarioId": "observe-governed-target-execution",
+        "inputId": "bounded-projected-target-execution-context",
+        "contractId": "bounded-projected-target-execution-context.v1"
+      },
+      "semanticProgress": "monotonic",
+      "bindingAuthorityId": "project-shape-to-target-execution"
+    },
+    {
+      "transitionId": "target-execution-to-invoke-capability",
+      "from": {
+        "scenarioId": "observe-governed-target-execution",
+        "outcomeId": "projected-target-execution-observation",
+        "contractId": "projected-target-execution-observation.v1"
+      },
+      "to": {
+        "scenarioId": "invoke-projected-capability",
+        "inputId": "projected-capability-invocation-request",
+        "contractId": "projected-capability-invocation-request.v1"
+      },
+      "semanticProgress": "monotonic",
+      "bindingAuthorityId": "project-target-execution-to-invoke-capability"
+    },
+    {
+      "transitionId": "invoke-capability-to-sequence",
+      "from": {
+        "scenarioId": "invoke-projected-capability",
+        "outcomeId": "projected-capability-invocation-result",
+        "contractId": "projected-capability-invocation-result.v1"
+      },
+      "to": {
+        "scenarioId": "execute-governed-capability-sequence",
+        "inputId": "governed-capability-sequence-request",
+        "contractId": "governed-capability-sequence-request.v1"
+      },
+      "semanticProgress": "monotonic",
+      "bindingAuthorityId": "project-invoke-capability-to-sequence"
+    },
+    {
+      "transitionId": "sequence-to-resolve-feature",
+      "from": {
+        "scenarioId": "execute-governed-capability-sequence",
+        "outcomeId": "governed-capability-sequence-result",
+        "contractId": "governed-capability-sequence-result.v1"
+      },
+      "to": {
+        "scenarioId": "resolve-canonical-capability-feature",
+        "inputId": "capability-feature-authoring-request",
+        "contractId": "capability-feature-authoring-request.v1"
+      },
+      "semanticProgress": "monotonic",
+      "bindingAuthorityId": "project-sequence-to-resolve-feature"
+    },
+    {
+      "transitionId": "resolve-feature-to-transact-binding",
+      "from": {
+        "scenarioId": "resolve-canonical-capability-feature",
+        "outcomeId": "canonical-capability-feature",
+        "contractId": "canonical-capability-feature.v1"
+      },
+      "to": {
+        "scenarioId": "transact-governed-tooling-binding",
+        "inputId": "governed-tooling-binding-transaction-request",
+        "contractId": "governed-tooling-binding-transaction-request.v1"
+      },
+      "semanticProgress": "monotonic",
+      "bindingAuthorityId": "project-resolve-feature-to-transact-binding"
+    },
+    {
+      "transitionId": "transact-binding-to-execute-migration",
+      "from": {
+        "scenarioId": "transact-governed-tooling-binding",
+        "outcomeId": "governed-tooling-binding-transaction-evidence",
+        "contractId": "governed-tooling-binding-transaction-evidence.v1"
+      },
+      "to": {
+        "scenarioId": "execute-governed-tooling-migration-operation",
+        "inputId": "governed-tooling-migration-operation-request",
+        "contractId": "governed-tooling-migration-operation-request.v1"
+      },
+      "semanticProgress": "monotonic",
+      "bindingAuthorityId": "project-transact-binding-to-execute-migration"
+    },
+    {
+      "transitionId": "execute-migration-to-project-registry",
+      "from": {
+        "scenarioId": "execute-governed-tooling-migration-operation",
+        "outcomeId": "governed-tooling-migration-operation-evidence",
+        "contractId": "governed-tooling-migration-operation-evidence.v1"
+      },
+      "to": {
+        "scenarioId": "project-language-mechanic-registry",
+        "inputId": "language-mechanic-registry-projection-request",
+        "contractId": "language-mechanic-registry-projection-request.v1"
+      },
+      "semanticProgress": "monotonic",
+      "bindingAuthorityId": "project-execute-migration-to-project-registry"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/scenario-input.v1.schema.json",
+  "title": "Scenario Input",
+  "description": "Canonical Scenario Kernel input definition. Separates the input's own identity from the contract authority it admits.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["inputId", "contract"],
+  "properties": {
+    "inputId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "contract": { "$ref": "semantic-primitives.schema.json#/$defs/contractReference" },
+    "semanticType": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" }
+  }
+}

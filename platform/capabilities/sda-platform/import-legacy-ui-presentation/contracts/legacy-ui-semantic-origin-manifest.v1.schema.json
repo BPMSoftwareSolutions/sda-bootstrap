@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/platform/ui-compatibility/legacy-ui-semantic-origin-manifest.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["manifestType", "manifestId", "sourceType", "sourceDigest", "declaredAuthorityDigest", "factMappings", "manifestDigest"],
+  "properties": {
+    "manifestType": { "const": "legacy-ui-semantic-origin-manifest.v1" },
+    "manifestId": { "$ref": "#/$defs/id" },
+    "sourceType": { "enum": ["consumer-ui-authority.v1", "sda-ui-presentation-ir.v2"] },
+    "sourceDigest": { "$ref": "#/$defs/digest" },
+    "declaredAuthorityDigest": { "$ref": "#/$defs/digest" },
+    "factMappings": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["sourcePath", "targetKind", "targetRef"],
+        "properties": {
+          "sourcePath": { "type": "string", "pattern": "^/" },
+          "targetKind": { "enum": ["PROMISED_EXPERIENCE", "ELEMENT", "RELATIONSHIP", "ADAPTATION", "PRESENTATION_PROFILE"] },
+          "targetRef": { "$ref": "#/$defs/id" }
+        }
+      }
+    },
+    "manifestDigest": { "$ref": "#/$defs/digest" }
+  },
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._:-]*$" },
+    "digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }
+  }
+}

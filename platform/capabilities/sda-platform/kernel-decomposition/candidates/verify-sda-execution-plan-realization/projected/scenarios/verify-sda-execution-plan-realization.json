@@ -1,0 +1,37 @@
+{
+  "scenarioId": "verify-sda-execution-plan-realization",
+  "input": {
+    "inputId": "execution-plan-realization-verification-request",
+    "contract": {
+      "contractId": "execution-plan-realization-verification-request.v1"
+    }
+  },
+  "event": {
+    "eventId": "verify-sda-execution-plan-realization",
+    "executionAuthorityId": "verify-sda-execution-plan-realization.v1"
+  },
+  "outcome": {
+    "outcomeId": "execution-plan-realization-conformance",
+    "contract": {
+      "contractId": "execution-plan-realization-conformance.v1"
+    },
+    "experience": {
+      "statement": "one attributable realization-conformance disposition is established"
+    }
+  },
+  "gherkin": {
+    "given": {
+      "semanticRef": "verify-sda-execution-plan-realization.given",
+      "text": "canonical execution expectations and observed execution testimony"
+    },
+    "when": {
+      "semanticRef": "verify-sda-execution-plan-realization.when",
+      "text": "execution-plan realization is verified"
+    },
+    "then": {
+      "semanticRef": "verify-sda-execution-plan-realization.then",
+      "text": "one attributable realization-conformance disposition is established"
+    }
+  },
+  "name": "Verify an execution-plan realization"
+}

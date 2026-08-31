@@ -1,0 +1,8 @@
+{
+  "profileType": "ui-target-profile.v1",
+  "targetId": "target.headless-proof",
+  "targetKind": "headless-proof",
+  "requestedProviderId": null,
+  "requiredEvidenceCapabilities": ["ACCESSIBILITY", "ADAPTATION", "OBSERVATION"],
+  "canonicalDigest": "sha256:689933510518e49c02a517250a1e2751afbcabad2bfddf3662491ddbcea34d6f"
+}

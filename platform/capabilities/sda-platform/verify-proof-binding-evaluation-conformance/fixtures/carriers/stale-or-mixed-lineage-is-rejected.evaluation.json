@@ -1,0 +1,28 @@
+{
+  "contractId": "profile-governed-proof-binding-evaluation-input.v1",
+  "payload": {
+    "evaluationCaseId": "stale-or-mixed-lineage-is-rejected",
+    "profileId": "generic-proof-binding-evaluation-conformance-profile.v1",
+    "snapshotDigest": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "proofObligationId": "obligation:stale-lineage",
+    "subjectSemanticObjectId": "scenario:stale-lineage",
+    "authorityApplicability": "REQUIRED",
+    "bindingCandidates": [
+      {
+        "fromSemanticObjectId": "evidence:stale",
+        "relationshipKind": "EVIDENCE_PROVES_SUBJECT",
+        "toSemanticObjectId": "obligation:stale-lineage",
+        "basis": "EXPLICIT_AUTHORITY",
+        "lineageState": "STALE"
+      }
+    ],
+    "evidenceState": "STALE",
+    "reproduction": {
+      "orderedInputDigest": "sha256:d2043c2a50e544a6db52358d9b4f17611187db05a1dd1dedd4dacb5779f99c2e",
+      "evaluationRuleIds": [
+        "evaluation-order.v1",
+        "bind-evidence-subject.v1"
+      ]
+    }
+  }
+}

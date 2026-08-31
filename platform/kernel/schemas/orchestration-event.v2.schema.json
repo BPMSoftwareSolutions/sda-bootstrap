@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/enterprise/orchestration-event.v2.schema.json",
+  "title": "SDA graph orchestration event v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["eventType", "eventId", "graphId", "canonicalGraphDigest", "executionId", "rootExecutionId", "cellId", "cellExecutionId", "attempt", "kind", "occurredAt"],
+  "properties": {
+    "eventType": { "const": "sda-orchestration-event.v2" },
+    "eventId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "graphId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "canonicalGraphDigest": { "$ref": "semantic-primitives.schema.json#/$defs/digest" },
+    "executionId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "rootExecutionId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "cellId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "cellExecutionId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "edgeId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "providerProfileId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "attempt": { "type": "integer", "minimum": 0 },
+    "kind": { "type": "string", "enum": ["TOKEN_ADMITTED", "CELL_READY", "CELL_STARTED", "CELL_COMPLETED", "CELL_REJECTED", "CELL_FAILED", "EDGE_EMITTED", "JOIN_BUFFERED", "RECURRENCE_CONTINUED", "RECURRENCE_STOPPED", "CANCELLED", "PHYSICAL_EFFECT_OBSERVED"] },
+    "occurredAt": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?Z$" },
+    "reasonCode": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" }
+  }
+}

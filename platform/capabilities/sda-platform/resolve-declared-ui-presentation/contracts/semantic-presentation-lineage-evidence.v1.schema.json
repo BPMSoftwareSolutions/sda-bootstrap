@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/platform/ui/semantic-presentation-lineage-evidence.v1.schema.json",
+  "title": "Semantic presentation lineage evidence",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["evidenceType", "sourceAuthorityDigest", "presentationDigest", "elementResults", "relationshipResults", "findings", "disposition"],
+  "properties": {
+    "evidenceType": { "const": "semantic-presentation-lineage-evidence.v1" },
+    "sourceAuthorityDigest": { "$ref": "declared-ui-authority.v1.schema.json#/$defs/digest" },
+    "presentationDigest": { "$ref": "declared-ui-authority.v1.schema.json#/$defs/digest" },
+    "elementResults": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/result" }
+    },
+    "relationshipResults": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/result" }
+    },
+    "findings": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/finding" }
+    },
+    "disposition": { "enum": ["ADMITTED", "REJECTED"] }
+  },
+  "$defs": {
+    "result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["subjectId", "originCount", "disposition"],
+      "properties": {
+        "subjectId": { "$ref": "declared-ui-authority.v1.schema.json#/$defs/id" },
+        "originCount": { "type": "integer", "minimum": 0 },
+        "disposition": { "enum": ["JUSTIFIED", "UNJUSTIFIED"] }
+      }
+    },
+    "finding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "subjectRef"],
+      "properties": {
+        "code": { "enum": ["UNJUSTIFIED_PRESENTATION_ELEMENT", "UNJUSTIFIED_PRESENTATION_RELATIONSHIP", "UNKNOWN_RELATIONSHIP_ENDPOINT"] },
+        "subjectRef": { "$ref": "declared-ui-authority.v1.schema.json#/$defs/id" }
+      }
+    }
+  }
+}

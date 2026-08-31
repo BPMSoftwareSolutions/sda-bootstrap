@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/interface-binding.v2.schema.json",
+  "title": "Interface Binding v2",
+  "description": "Binds a canonical interface surface to the scenarios it admits. New API authority uses 'api'; 'http' is admitted only as an explicit legacy migration input.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["interfaceId", "kind", "scenarioIds"],
+  "properties": {
+    "interfaceId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "kind": {
+      "oneOf": [
+        { "enum": ["semantic", "cli", "api", "sdk", "ui", "mcp", "agent", "message", "rpc", "other"] },
+        { "const": "http", "deprecated": true, "description": "Legacy interface-binding.v1 spelling; normalize to api before projection." }
+      ]
+    },
+    "scenarioIds": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" }
+    }
+  }
+}

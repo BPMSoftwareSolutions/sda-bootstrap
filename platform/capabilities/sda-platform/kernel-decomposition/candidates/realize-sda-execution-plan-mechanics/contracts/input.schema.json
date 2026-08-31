@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.sda.local/sda-execution-plan-realization-request.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contractId", "carrierType", "executionPlan", "targetLanguage"],
+  "properties": {
+    "contractId": {"const": "sda-execution-plan-realization-request.v1"},
+    "carrierType": {"const": "sda-execution-plan-realization-request.v1"},
+    "executionPlan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["planId", "requiredMechanics"],
+      "properties": {
+        "planId": {"type": "string", "minLength": 1},
+        "requiredMechanics": {"type": "array", "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "targetLanguage": {"type": "string", "enum": ["node", "csharp", "python", "java", "go"]},
+    "mechanicPayloads": {"type": "object", "additionalProperties": true},
+    "requestLineage": {"type": "array", "items": {"type": "string"}}
+  }
+}

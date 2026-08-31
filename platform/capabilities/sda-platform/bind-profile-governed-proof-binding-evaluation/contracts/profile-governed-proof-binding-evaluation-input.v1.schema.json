@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/proof-binding/profile-governed-proof-binding-evaluation-input.v1.schema.json",
+  "title": "Profile-governed proof-binding evaluation input",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contractId", "payload"],
+  "properties": {
+    "contractId": {"const": "profile-governed-proof-binding-evaluation-input.v1"},
+    "payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["evaluationCaseId", "profileId", "snapshotDigest", "proofObligationId", "subjectSemanticObjectId", "authorityApplicability", "bindingCandidates", "evidenceState", "reproduction"],
+      "properties": {
+        "evaluationCaseId": {"type": "string", "minLength": 1},
+        "profileId": {"type": "string", "minLength": 1},
+        "snapshotDigest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+        "proofObligationId": {"type": "string", "minLength": 1},
+        "subjectSemanticObjectId": {"type": "string", "minLength": 1},
+        "authorityApplicability": {"enum": ["REQUIRED", "EXCLUDED_BY_ADMITTED_AUTHORITY"]},
+        "bindingCandidates": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["fromSemanticObjectId", "relationshipKind", "toSemanticObjectId", "basis", "lineageState"],
+            "properties": {
+              "fromSemanticObjectId": {"type": "string", "minLength": 1},
+              "relationshipKind": {"enum": ["FIXTURE_EXERCISES_SCENARIO", "FIXTURE_EXECUTED_AS_PROJECTED_TEST", "EVIDENCE_PROVES_SUBJECT"]},
+              "toSemanticObjectId": {"type": "string", "minLength": 1},
+              "basis": {"enum": ["EXPLICIT_AUTHORITY", "DETERMINISTIC_RULE", "DIRECTORY_PROXIMITY", "MATCHING_PROSE", "LEXICAL_SIMILARITY", "EMBEDDING_SIMILARITY", "MODEL_TESTIMONY"]},
+              "lineageState": {"enum": ["CURRENT", "STALE", "MIXED"]}
+            }
+          }
+        },
+        "evidenceState": {"enum": ["ABSENT", "CURRENT_PASSING", "CURRENT_FAILING", "STALE", "MIXED_LINEAGE"]},
+        "reproduction": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["orderedInputDigest", "evaluationRuleIds"],
+          "properties": {
+            "orderedInputDigest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+            "evaluationRuleIds": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+          }
+        }
+      }
+    }
+  }
+}

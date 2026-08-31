@@ -1,0 +1,15 @@
+{
+  "transitionId": "target-execution-to-invoke-capability",
+  "from": {
+    "scenarioId": "observe-governed-target-execution",
+    "outcomeId": "projected-target-execution-observation",
+    "contractId": "projected-target-execution-observation.v1"
+  },
+  "to": {
+    "scenarioId": "invoke-projected-capability",
+    "inputId": "projected-capability-invocation-request",
+    "contractId": "projected-capability-invocation-request.v1"
+  },
+  "semanticProgress": "monotonic",
+  "bindingAuthorityId": "project-target-execution-to-invoke-capability"
+}

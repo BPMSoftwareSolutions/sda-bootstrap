@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\..\languages\csharp\src\ScenarioKernel.Platform\ScenarioKernel.Platform.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Program.generated.cs;ProjectedUiViewModel.generated.cs;avalonia\**\*.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\application-binding.csharp.json" Link="authority\application-binding.csharp.json" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\capability.json" Link="authority\capability.json" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\query\conformance-query.csharp.json" Link="authority\query\conformance-query.csharp.json" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\fixtures\fixtures.json" Link="authority\fixtures\fixtures.json" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\projection-conformance.json" Link="authority\projection-conformance.json" CopyToOutputDirectory="PreserveNewest" Condition="Exists('..\projection-conformance.json')" />
+  </ItemGroup>
+</Project>

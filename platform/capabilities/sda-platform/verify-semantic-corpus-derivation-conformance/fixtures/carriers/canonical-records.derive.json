@@ -1,0 +1,42 @@
+{
+  "fixtureType": "semantic-corpus-derivation-carrier.v1",
+  "fixtureId": "canonical-records",
+  "scenarioId": "derive-semantic-corpus-records",
+  "variants": [
+    {
+      "variantId": "canonical",
+      "declaredResourceOrder": ["gherkin-alpha", "json-contracts"],
+      "sourceRecords": [
+        {
+          "resourceId": "gherkin-alpha",
+          "representationKind": "GHERKIN_COMPILATION",
+          "sourceClass": "CANONICAL_AUTHORITY",
+          "sourceText": "Feature: Alpha\n  Scenario: One\n",
+          "representation": {
+            "capabilities": [{"capabilityId": "alpha", "name": "Alpha"}],
+            "scenarios": [{"scenarioId": "one", "ownerSemanticObjectId": "capability:alpha", "name": "One"}],
+            "relationships": [{"fromSemanticObjectId": "capability:alpha", "toSemanticObjectId": "scenario:capability:alpha:one"}]
+          }
+        },
+        {
+          "resourceId": "json-contracts",
+          "representationKind": "SCHEMA_ADMITTED_JSON",
+          "sourceClass": "ADMITTED_EVIDENCE",
+          "sourceText": "{\"schemas\":[\"request\",\"evidence\"]}",
+          "representation": {
+            "schemas": [{"schemaId": "evidence", "title": "Evidence"}, {"schemaId": "request", "title": "Request"}],
+            "relationships": [{"fromSemanticObjectId": "schema:request", "toSemanticObjectId": "schema:evidence"}]
+          }
+        }
+      ],
+      "mutations": []
+    }
+  ],
+  "expected": {
+    "disposition": "DERIVED",
+    "findingCodes": [],
+    "objectIds": ["capability:alpha", "scenario:capability:alpha:one", "schema:evidence", "schema:request"],
+    "relationshipIds": ["capability-has-scenario:capability:alpha->scenario:capability:alpha:one", "contract-validated-by-schema:schema:request->schema:evidence"]
+  },
+  "provesPartitions": ["AUTHORITY_SCHEMA_BOUNDARY", "EXACT_LINEAGE_VALIDATION", "CANONICAL_OBJECT_DERIVATION", "OWNER_SCOPED_IDENTITY", "RELATIONSHIP_DERIVATION", "SOURCE_CLASS_NON_ESCALATION", "PROJECTED_INVOCATION_AND_RECEIPT"]
+}

@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/json-ingestion/json-authority-ingestion-provider-conformance-request.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contractId", "providerAuthorityBinding", "fixtureManifestBinding", "requestedPartitions"],
+  "properties": {
+    "contractId": {"const": "json-authority-ingestion-provider-conformance-request.v1"},
+    "providerAuthorityBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authorityId", "authorityRef", "authorityDigest"],
+      "properties": {
+        "authorityId": {"const": "profile-governed-json-authority-ingestor.v1"},
+        "authorityRef": {"const": "capabilities/sda-platform/bind-profile-governed-json-authority-ingestion/profile-governed-json-authority-ingestor.authority.json"},
+        "authorityDigest": {"$ref": "#/$defs/digest"}
+      }
+    },
+    "fixtureManifestBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["manifestRef", "manifestDigest", "fixtureSetDigest"],
+      "properties": {
+        "manifestRef": {"const": "capabilities/sda-platform/verify-json-authority-ingestion-conformance/fixtures/fixture-manifest.authority.json"},
+        "manifestDigest": {"$ref": "#/$defs/digest"},
+        "fixtureSetDigest": {"$ref": "#/$defs/digest"}
+      }
+    },
+    "requestedPartitions": {
+      "type": "array",
+      "minItems": 12,
+      "maxItems": 12,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/partitionId"}
+    }
+  },
+  "$defs": {
+    "digest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "partitionId": {
+      "enum": [
+        "EXACT_SOURCE_BYTES_AND_POINTERS",
+        "STRICT_UTF8_AND_LOSSLESS_JSON",
+        "DUPLICATE_OBJECT_KEYS",
+        "CANONICAL_JSON_IDENTITY",
+        "DECLARED_SCHEMA_AUTHORITY",
+        "SCHEMA_VALIDATION",
+        "DECLARED_VERSION_POLICY",
+        "ADMITTED_REFERENCE_CLOSURE",
+        "SOURCE_CLASS_NON_ESCALATION",
+        "TYPED_DIAGNOSTICS_AND_DISPOSITIONS",
+        "PROVIDER_AND_AUTHORITY_IDENTITIES",
+        "ORDERED_REPRODUCTION_AND_RECEIPT_DIGEST"
+      ]
+    }
+  }
+}

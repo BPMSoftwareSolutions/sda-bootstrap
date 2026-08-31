@@ -1,0 +1,141 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/platform/ui/declared-ui-authority.v1.schema.json",
+  "title": "Declared UI authority",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["authorityType", "authorityId", "authorityDigest", "promisedExperiences", "elements", "relationships", "adaptationIntents", "presentationProfileRefs"],
+  "properties": {
+    "authorityType": { "const": "declared-ui-authority.v1" },
+    "authorityId": { "$ref": "#/$defs/id" },
+    "authorityDigest": { "$ref": "#/$defs/digest" },
+    "promisedExperiences": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/promisedExperience" }
+    },
+    "elements": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/element" }
+    },
+    "relationships": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/relationship" }
+    },
+    "adaptationIntents": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/adaptationIntent" }
+    },
+    "presentationProfileRefs": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/id" },
+      "uniqueItems": true
+    }
+  },
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._:-]*$" },
+    "digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "refList": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/id" },
+      "uniqueItems": true
+    },
+    "promisedExperience": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["experienceRef", "presentationRequirement"],
+      "properties": {
+        "experienceRef": { "$ref": "#/$defs/id" },
+        "presentationRequirement": { "enum": ["OBSERVABLE_OR_OPERABLE", "NO_OBSERVABLE_PRESENTATION"] }
+      }
+    },
+    "content": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["literal"],
+          "properties": { "literal": { "type": "string" } }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["readModelRef"],
+          "properties": { "readModelRef": { "$ref": "#/$defs/id" } }
+        }
+      ]
+    },
+    "accessibilityObligation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["obligationRef", "kind"],
+      "properties": {
+        "obligationRef": { "$ref": "#/$defs/id" },
+        "kind": { "enum": ["NAME", "DESCRIPTION", "FOCUS_ORDER", "LIVE_FEEDBACK", "OPERABLE_ACTION", "RELATIONSHIP"] }
+      }
+    },
+    "lineageOrigin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["originType", "originRef", "authorityDigest"],
+      "properties": {
+        "originType": { "enum": ["SCENARIO_OBLIGATION", "PROMISED_EXPERIENCE", "INFORMATION", "RELATIONSHIP", "INTERACTION", "FEEDBACK", "ACCESSIBILITY", "ADAPTATION", "PRESENTATION_PROFILE"] },
+        "originRef": { "$ref": "#/$defs/id" },
+        "authorityDigest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "element": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["elementId", "semanticKind", "semanticRole", "informationRefs", "interactionRefs", "feedbackRefs", "stateRefs", "eventRefs", "accessibilityObligations", "lineage"],
+      "properties": {
+        "elementId": { "$ref": "#/$defs/id" },
+        "semanticKind": { "enum": ["INFORMATION", "ACTION", "INPUT", "NAVIGATION", "FEEDBACK", "REGION"] },
+        "semanticRole": { "enum": ["PRIMARY", "SUPPORTING", "LEADING", "PERSISTENT", "ON_DEMAND", "GROUP", "STATUS", "DOCUMENT", "NAVIGATION"] },
+        "content": { "$ref": "#/$defs/content" },
+        "informationRefs": { "$ref": "#/$defs/refList" },
+        "interactionRefs": { "$ref": "#/$defs/refList" },
+        "feedbackRefs": { "$ref": "#/$defs/refList" },
+        "stateRefs": { "$ref": "#/$defs/refList" },
+        "eventRefs": { "$ref": "#/$defs/refList" },
+        "accessibilityObligations": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/accessibilityObligation" }
+        },
+        "lineage": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/lineageOrigin" }
+        }
+      }
+    },
+    "relationship": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["relationshipId", "kind", "sourceElementId", "targetElementId", "lineage"],
+      "properties": {
+        "relationshipId": { "$ref": "#/$defs/id" },
+        "kind": { "enum": ["CONTAINS", "FOLLOWS", "GROUPED", "RELATED_TO", "CONTINUITY", "NAVIGATION", "INDEPENDENTLY_NAVIGABLE"] },
+        "sourceElementId": { "$ref": "#/$defs/id" },
+        "targetElementId": { "$ref": "#/$defs/id" },
+        "lineage": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/lineageOrigin" }
+        }
+      }
+    },
+    "adaptationIntent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["adaptationId", "contextRef", "allowedChangeKinds", "invariantRefs"],
+      "properties": {
+        "adaptationId": { "$ref": "#/$defs/id" },
+        "contextRef": { "$ref": "#/$defs/id" },
+        "allowedChangeKinds": {
+          "type": "array",
+          "items": { "enum": ["ORDER", "VISIBILITY", "GROUPING", "DENSITY", "NAVIGATION", "CONTENT_PRIORITY"] },
+          "uniqueItems": true
+        },
+        "invariantRefs": { "$ref": "#/$defs/refList" }
+      }
+    }
+  }
+}

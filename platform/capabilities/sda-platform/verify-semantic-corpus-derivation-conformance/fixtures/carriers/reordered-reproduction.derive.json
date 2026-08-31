@@ -1,0 +1,29 @@
+{
+  "fixtureType": "semantic-corpus-derivation-carrier.v1",
+  "fixtureId": "reordered-reproduction",
+  "scenarioId": "reproduce-semantic-corpus-derivation",
+  "variants": [
+    {
+      "variantId": "order-a",
+      "declaredResourceOrder": ["gherkin-alpha", "gherkin-zeta", "json-empty"],
+      "sourceRecords": [
+        {"resourceId": "gherkin-zeta", "representationKind": "GHERKIN_COMPILATION", "sourceClass": "CANONICAL_AUTHORITY", "sourceText": "Feature: Zeta\n", "representation": {"capabilities": [{"capabilityId": "zeta", "name": "Zeta"}], "scenarios": [{"scenarioId": "same", "ownerSemanticObjectId": "capability:zeta", "name": "Same"}], "relationships": []}},
+        {"resourceId": "gherkin-alpha", "representationKind": "GHERKIN_COMPILATION", "sourceClass": "CANONICAL_AUTHORITY", "sourceText": "Feature: Alpha\n", "representation": {"capabilities": [{"capabilityId": "alpha", "name": "Alpha"}], "scenarios": [{"scenarioId": "same", "ownerSemanticObjectId": "capability:alpha", "name": "Same"}], "relationships": []}},
+        {"resourceId": "json-empty", "representationKind": "SCHEMA_ADMITTED_JSON", "sourceClass": "ADMITTED_EVIDENCE", "sourceText": "{}", "representation": {"schemas": [], "relationships": []}}
+      ],
+      "mutations": []
+    },
+    {
+      "variantId": "order-b",
+      "declaredResourceOrder": ["gherkin-alpha", "gherkin-zeta", "json-empty"],
+      "sourceRecords": [
+        {"resourceId": "json-empty", "representationKind": "SCHEMA_ADMITTED_JSON", "sourceClass": "ADMITTED_EVIDENCE", "sourceText": "{}", "representation": {"schemas": [], "relationships": []}},
+        {"resourceId": "gherkin-alpha", "representationKind": "GHERKIN_COMPILATION", "sourceClass": "CANONICAL_AUTHORITY", "sourceText": "Feature: Alpha\n", "representation": {"capabilities": [{"capabilityId": "alpha", "name": "Alpha"}], "scenarios": [{"scenarioId": "same", "ownerSemanticObjectId": "capability:alpha", "name": "Same"}], "relationships": []}},
+        {"resourceId": "gherkin-zeta", "representationKind": "GHERKIN_COMPILATION", "sourceClass": "CANONICAL_AUTHORITY", "sourceText": "Feature: Zeta\n", "representation": {"capabilities": [{"capabilityId": "zeta", "name": "Zeta"}], "scenarios": [{"scenarioId": "same", "ownerSemanticObjectId": "capability:zeta", "name": "Same"}], "relationships": []}}
+      ],
+      "mutations": []
+    }
+  ],
+  "expected": {"disposition": "DERIVED", "findingCodes": [], "objectIds": ["capability:alpha", "capability:zeta", "scenario:capability:alpha:same", "scenario:capability:zeta:same"], "relationshipIds": []},
+  "provesPartitions": ["OWNER_SCOPED_IDENTITY", "DETERMINISTIC_ORDERING", "REPRODUCTION_IDENTITY"]
+}

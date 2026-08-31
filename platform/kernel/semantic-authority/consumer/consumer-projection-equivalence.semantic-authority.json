@@ -1,0 +1,13 @@
+{
+  "authorityType": "consumer-projection-equivalence-authority.v1",
+  "authorityId": "consumer-projection-equivalence.v1",
+  "canonicalization": "recursive-key-sorted-json.v1",
+  "comparisonStrategy": "canonical-target-hub-and-spoke.v1",
+  "requirements": [
+    "successful-execution",
+    "canonical-outcome-equivalence",
+    "scenario-lineage-identity",
+    "projected-only-executable-origin",
+    "resolved-platform-mechanics"
+  ]
+}

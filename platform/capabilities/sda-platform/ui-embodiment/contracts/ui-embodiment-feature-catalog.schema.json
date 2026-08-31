@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ui-embodiment-feature-catalog.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["catalogType", "protocol", "profiles", "providers"],
+  "properties": {
+    "catalogType": { "const": "sda-ui-embodiment-feature-catalog.v1" },
+    "protocol": {
+      "type": "object", "additionalProperties": false,
+      "required": ["authorityType", "schemaRef", "schemaDigest"],
+      "properties": {
+        "authorityType": { "const": "consumer-ui-authority.v1" },
+        "schemaRef": { "type": "string", "minLength": 1 },
+        "schemaDigest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }
+      }
+    },
+    "profiles": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["profileId", "featureIds"],
+        "properties": {
+          "profileId": { "type": "string", "pattern": "^[a-z][a-z0-9.-]*$" },
+          "extends": { "type": "string", "pattern": "^[a-z][a-z0-9.-]*$" },
+          "featureIds": { "type": "array", "uniqueItems": true, "items": { "type": "string", "pattern": "^ui\\.[a-z0-9.-]+\\.v1$" } }
+        }
+      }
+    },
+    "providers": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["capabilityId", "embodimentTarget", "featureProfileId", "evidenceRefs"],
+        "properties": {
+          "capabilityId": { "type": "string", "minLength": 1 },
+          "embodimentTarget": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+          "featureProfileId": { "type": "string", "minLength": 1 },
+          "evidenceRefs": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+          "adaptedFeatures": {
+            "type": "array", "uniqueItems": true,
+            "items": {
+              "type": "object", "additionalProperties": false,
+              "required": ["featureId", "adaptationId", "evidenceRefs"],
+              "properties": {
+                "featureId": { "type": "string", "minLength": 1 },
+                "adaptationId": { "type": "string", "minLength": 1 },
+                "evidenceRefs": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

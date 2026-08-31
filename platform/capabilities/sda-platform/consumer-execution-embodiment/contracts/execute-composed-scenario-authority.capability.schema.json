@@ -1,0 +1,136 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/platform/consumer-execution/execute-composed-scenario-authority.capability.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capabilityType",
+    "capabilityId",
+    "featureRef",
+    "contracts",
+    "eventAuthority",
+    "protocol",
+    "mechanics",
+    "projectionTargets",
+    "acceptanceAuthority",
+    "authoringTestimony",
+    "targetDispositions",
+    "executableOrigin",
+    "promotionDisposition"
+  ],
+  "properties": {
+    "$schema": { "type": "string", "minLength": 1 },
+    "capabilityType": { "const": "sda-platform-capability-candidate.v1" },
+    "capabilityId": { "const": "execute-composed-scenario-authority" },
+    "featureRef": { "type": "string", "minLength": 1 },
+    "contracts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["inputContractId", "inputContractRef", "outcomeContractId", "outcomeContractRef"],
+      "properties": {
+        "inputContractId": { "const": "composed-scenario-execution-context.v1" },
+        "inputContractRef": { "type": "string", "minLength": 1 },
+        "outcomeContractId": { "const": "composed-scenario-execution-testimony.v1" },
+        "outcomeContractRef": { "type": "string", "minLength": 1 }
+      }
+    },
+    "eventAuthority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["eventId", "authorityId", "authorityRef"],
+      "properties": {
+        "eventId": { "const": "execute-declared-scenario-composition" },
+        "authorityId": { "const": "execute-declared-scenario-composition.v1" },
+        "authorityRef": { "type": "string", "minLength": 1 }
+      }
+    },
+    "protocol": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["protocolId", "contractRef", "supersedes"],
+      "properties": {
+        "protocolId": { "const": "consumer-execution-embodiment-plan.v2" },
+        "contractRef": { "type": "string", "minLength": 1 },
+        "supersedes": { "const": "consumer-execution-embodiment-plan.v1" }
+      }
+    },
+    "mechanics": {
+      "type": "array",
+      "minItems": 5,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "projectionTargets": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "uniqueItems": true,
+      "items": { "type": "string", "enum": ["node", "csharp", "python"] }
+    },
+    "acceptanceAuthority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fixturesRef", "testSignal", "acceptanceAuthority", "requiredTargetDisposition"],
+      "properties": {
+        "fixturesRef": { "type": "string", "minLength": 1 },
+        "testSignal": { "const": "deterministic-fixture-conformance" },
+        "acceptanceAuthority": { "const": "deterministic-conveyor" },
+        "requiredTargetDisposition": { "const": "ADMITTED" }
+      }
+    },
+    "authoringTestimony": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["requestRef", "responseRef", "requestFileHash", "responseFileHash", "candidateHash", "providerKind", "resolvedModel", "attemptCount", "candidateWording", "authorityLimit"],
+      "properties": {
+        "requestRef": { "type": "string", "minLength": 1 },
+        "responseRef": { "type": "string", "minLength": 1 },
+        "requestFileHash": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+        "responseFileHash": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+        "candidateHash": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+        "providerKind": { "const": "gemini" },
+        "resolvedModel": { "type": "string", "minLength": 1 },
+        "attemptCount": { "const": 1 },
+        "candidateWording": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["name", "actor", "intent", "outcome", "promise"],
+          "properties": {
+            "name": { "type": "string", "minLength": 1 },
+            "actor": { "type": "string", "minLength": 1 },
+            "intent": { "type": "string", "minLength": 1 },
+            "outcome": { "type": "string", "minLength": 1 },
+            "promise": { "type": "string", "minLength": 1 }
+          }
+        },
+        "authorityLimit": { "const": "CANDIDATE_TESTIMONY_ONLY" }
+      }
+    },
+    "targetDispositions": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["target", "disposition", "finding"],
+        "properties": {
+          "target": { "enum": ["node", "csharp", "python"] },
+          "disposition": { "const": "HELD" },
+          "finding": { "const": "PROJECTED_COMPOSED_SCENARIO_EMBODIMENT_NOT_AVAILABLE" }
+        }
+      }
+    },
+    "executableOrigin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required", "handwrittenExecutableCode"],
+      "properties": {
+        "required": { "const": "PROJECTED_ONLY" },
+        "handwrittenExecutableCode": { "const": false }
+      }
+    },
+    "promotionDisposition": { "const": "HELD_PENDING_PROJECTED_TARGET_EMBODIMENTS" }
+  }
+}

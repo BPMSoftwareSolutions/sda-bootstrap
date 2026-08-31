@@ -1,0 +1,118 @@
+{
+  "planType": "ui-embodiment-plan.v1",
+  "providerId": "sda-projected-wpf-semantic-element-proof.v1",
+  "providerDigest": "sha256:projected-wpf-semantic-element-proof",
+  "rootNodeRefs": [
+    "root"
+  ],
+  "instructions": [
+    {
+      "instructionId": "element-0",
+      "instructionKind": "REALIZE_SEMANTIC_ELEMENT",
+      "sourceRef": "element-0",
+      "semanticKind": "INFORMATION",
+      "semanticRole": "information",
+      "content": {
+        "kind": "LITERAL",
+        "value": "INFORMATION"
+      },
+      "stateRefs": []
+    },
+    {
+      "instructionId": "element-1",
+      "instructionKind": "REALIZE_SEMANTIC_ELEMENT",
+      "sourceRef": "element-1",
+      "semanticKind": "ACTION",
+      "semanticRole": "action",
+      "content": {
+        "kind": "LITERAL",
+        "value": "ACTION"
+      },
+      "stateRefs": []
+    },
+    {
+      "instructionId": "element-2",
+      "instructionKind": "REALIZE_SEMANTIC_ELEMENT",
+      "sourceRef": "element-2",
+      "semanticKind": "INPUT",
+      "semanticRole": "input",
+      "content": {
+        "kind": "LITERAL",
+        "value": "INPUT"
+      },
+      "stateRefs": []
+    },
+    {
+      "instructionId": "element-3",
+      "instructionKind": "REALIZE_SEMANTIC_ELEMENT",
+      "sourceRef": "element-3",
+      "semanticKind": "NAVIGATION",
+      "semanticRole": "navigation",
+      "content": {
+        "kind": "LITERAL",
+        "value": "NAVIGATION"
+      },
+      "stateRefs": []
+    },
+    {
+      "instructionId": "element-4",
+      "instructionKind": "REALIZE_SEMANTIC_ELEMENT",
+      "sourceRef": "element-4",
+      "semanticKind": "FEEDBACK",
+      "semanticRole": "feedback",
+      "content": {
+        "kind": "LITERAL",
+        "value": "FEEDBACK"
+      },
+      "stateRefs": []
+    },
+    {
+      "instructionId": "element-5",
+      "instructionKind": "REALIZE_SEMANTIC_ELEMENT",
+      "sourceRef": "element-5",
+      "semanticKind": "REGION",
+      "semanticRole": "region",
+      "content": {
+        "kind": "LITERAL",
+        "value": "REGION"
+      },
+      "stateRefs": []
+    },
+    {
+      "instructionId": "event-action",
+      "instructionKind": "BIND_EVENT",
+      "sourceRef": "binding-action",
+      "semanticElementRef": "element-1",
+      "semanticEventRef": "event.activate",
+      "trigger": "ACTIVATE",
+      "mechanicId": "interaction.activation.v1"
+    },
+    {
+      "instructionId": "accessibility-feedback",
+      "instructionKind": "APPLY_ACCESSIBILITY",
+      "sourceRef": "obligation-feedback",
+      "semanticElementRef": "element-4",
+      "obligationKind": "LIVE_FEEDBACK",
+      "mechanicId": "accessibility.live-feedback.v1"
+    },
+    {
+      "instructionId": "root",
+      "instructionKind": "COMPOSE_NODE",
+      "sourceRef": "root",
+      "mechanicId": "layout.flow.v1",
+      "configuration": {
+        "axis": "BLOCK"
+      },
+      "childNodeRefs": [],
+      "semanticElementRefs": [
+        "element-0",
+        "element-1",
+        "element-2",
+        "element-3",
+        "element-4",
+        "element-5"
+      ]
+    }
+  ],
+  "canonicalDigest": "sha256:88ac456dd73f730970c920fd5ef93c57ae3be14c64735fee6d304ff5a086c536"
+}

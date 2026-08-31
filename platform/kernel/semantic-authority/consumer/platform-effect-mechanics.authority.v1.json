@@ -1,0 +1,317 @@
+{
+  "authorityType": "platform-effect-mechanics-authority.v1",
+  "authorityId": "platform-effect-mechanics.v1",
+  "authorityVersion": "1.0.0",
+  "lifecycle": "ADMITTED",
+  "family": "Physical effect mechanics: irreducible effects outside the current semantic value. Their meaning is fixed by this authority; the language projector owns their per-target lowering. No language runtime may become their semantic home.",
+  "mechanics": [
+    {
+      "mechanicId": "read-file-bytes",
+      "meaning": "Read a file as bytes.",
+      "input": "admitted file path",
+      "output": "bytes",
+      "inputContractId": "mechanic:read-file-bytes:input.v1",
+      "outcomeContractId": "mechanic:read-file-bytes:outcome.v1",
+      "determinism": "testimony-governed",
+      "effectClassification": "observation",
+      "sourceProfiles": [
+        "platform-effect-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/read-file-bytes.v1"
+      ],
+      "nativeFloor": true
+    },
+    {
+      "mechanicId": "write-file-bytes",
+      "meaning": "Write bytes to a file.",
+      "input": "admitted file path and bytes",
+      "output": "write effect",
+      "inputContractId": "mechanic:write-file-bytes:input.v1",
+      "outcomeContractId": "mechanic:write-file-bytes:outcome.v1",
+      "determinism": "testimony-governed",
+      "effectClassification": "effect",
+      "sourceProfiles": [
+        "platform-effect-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/write-file-bytes.v1"
+      ],
+      "nativeFloor": true
+    },
+    {
+      "mechanicId": "write-file-atomically",
+      "meaning": "Write bytes via staged temporary and atomic rename.",
+      "input": "admitted file path and bytes",
+      "output": "atomic write effect",
+      "inputContractId": "mechanic:write-file-atomically:input.v1",
+      "outcomeContractId": "mechanic:write-file-atomically:outcome.v1",
+      "determinism": "testimony-governed",
+      "effectClassification": "effect",
+      "sourceProfiles": [
+        "platform-effect-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/write-file-atomically.v1"
+      ],
+      "nativeFloor": true
+    },
+    {
+      "mechanicId": "rename-file",
+      "meaning": "Rename a file within the admitted boundary.",
+      "input": "admitted source and destination",
+      "output": "rename effect",
+      "inputContractId": "mechanic:rename-file:input.v1",
+      "outcomeContractId": "mechanic:rename-file:outcome.v1",
+      "determinism": "testimony-governed",
+      "effectClassification": "effect",
+      "sourceProfiles": [
+        "platform-effect-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/rename-file.v1"
+      ],
+      "nativeFloor": true
+    },
+    {
+      "mechanicId": "create-directory",
+      "meaning": "Create a directory recursively.",
+      "input": "admitted directory path",
+      "output": "directory effect",
+      "inputContractId": "mechanic:create-directory:input.v1",
+      "outcomeContractId": "mechanic:create-directory:outcome.v1",
+      "determinism": "testimony-governed",
+      "effectClassification": "effect",
+      "sourceProfiles": [
+        "platform-effect-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/create-directory.v1"
+      ],
+      "nativeFloor": true
+    },
+    {
+      "mechanicId": "list-directory",
+      "meaning": "List directory entries in stable sorted order.",
+      "input": "admitted directory path",
+      "output": "entry names",
+      "inputContractId": "mechanic:list-directory:input.v1",
+      "outcomeContractId": "mechanic:list-directory:outcome.v1",
+      "determinism": "testimony-governed",
+      "effectClassification": "observation",
+      "sourceProfiles": [
+        "platform-effect-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/list-directory.v1"
+      ],
+      "nativeFloor": true
+    },
+    {
+      "mechanicId": "file-exists",
+      "meaning": "Report whether a file or directory exists.",
+      "input": "admitted path",
+      "output": "boolean",
+      "inputContractId": "mechanic:file-exists:input.v1",
+      "outcomeContractId": "mechanic:file-exists:outcome.v1",
+      "determinism": "testimony-governed",
+      "effectClassification": "observation",
+      "sourceProfiles": [
+        "platform-effect-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/file-exists.v1"
+      ],
+      "nativeFloor": true
+    },
+    {
+      "mechanicId": "file-stat",
+      "meaning": "Report file kind without following links.",
+      "input": "admitted path",
+      "output": "kind observation",
+      "inputContractId": "mechanic:file-stat:input.v1",
+      "outcomeContractId": "mechanic:file-stat:outcome.v1",
+      "determinism": "testimony-governed",
+      "effectClassification": "observation",
+      "sourceProfiles": [
+        "platform-effect-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/file-stat.v1"
+      ],
+      "nativeFloor": true
+    },
+    {
+      "mechanicId": "file-lstat",
+      "meaning": "Report link status without following links.",
+      "input": "admitted path",
+      "output": "link observation",
+      "inputContractId": "mechanic:file-lstat:input.v1",
+      "outcomeContractId": "mechanic:file-lstat:outcome.v1",
+      "determinism": "testimony-governed",
+      "effectClassification": "observation",
+      "sourceProfiles": [
+        "platform-effect-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/file-lstat.v1"
+      ],
+      "nativeFloor": true
+    },
+    {
+      "mechanicId": "realpath",
+      "meaning": "Resolve the real path of an admitted path.",
+      "input": "admitted path",
+      "output": "real path",
+      "inputContractId": "mechanic:realpath:input.v1",
+      "outcomeContractId": "mechanic:realpath:outcome.v1",
+      "determinism": "testimony-governed",
+      "effectClassification": "observation",
+      "sourceProfiles": [
+        "platform-effect-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/realpath.v1"
+      ],
+      "nativeFloor": true
+    },
+    {
+      "mechanicId": "read-environment-credential",
+      "meaning": "Read a named environment credential without disclosure.",
+      "input": "admitted reference name",
+      "output": "credential value or absence",
+      "inputContractId": "mechanic:read-environment-credential:input.v1",
+      "outcomeContractId": "mechanic:read-environment-credential:outcome.v1",
+      "determinism": "testimony-governed",
+      "effectClassification": "observation",
+      "sourceProfiles": [
+        "platform-effect-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/read-environment-credential.v1"
+      ],
+      "nativeFloor": true
+    },
+    {
+      "mechanicId": "read-os-environment-credential",
+      "meaning": "Read a named credential from the operating-system user or machine environment scope when the process environment block lacks it, without disclosure. Resolution order is fixed: process environment, then operating-system user scope, then operating-system machine scope.",
+      "input": "admitted reference name",
+      "output": "credential value or absence",
+      "inputContractId": "mechanic:read-os-environment-credential:input.v1",
+      "outcomeContractId": "mechanic:read-os-environment-credential:outcome.v1",
+      "determinism": "testimony-governed",
+      "effectClassification": "observation",
+      "sourceProfiles": [
+        "platform-effect-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/read-os-environment-credential.v1"
+      ],
+      "nativeFloor": true
+    },
+    {
+      "mechanicId": "perform-http-exchange",
+      "meaning": "Perform one bounded HTTP exchange under admitted endpoint authority.",
+      "input": "endpoint authority, method, headers, bounded body",
+      "output": "bounded response testimony",
+      "inputContractId": "mechanic:perform-http-exchange:input.v1",
+      "outcomeContractId": "mechanic:perform-http-exchange:outcome.v1",
+      "determinism": "testimony-governed",
+      "effectClassification": "effect",
+      "sourceProfiles": [
+        "platform-effect-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/perform-http-exchange.v1"
+      ],
+      "nativeFloor": true
+    },
+    {
+      "mechanicId": "execute-bounded-process",
+      "meaning": "Spawn one bounded process without a shell and capture bounded output.",
+      "input": "admitted executable, arguments, working directory, timeout",
+      "output": "process testimony",
+      "inputContractId": "mechanic:execute-bounded-process:input.v1",
+      "outcomeContractId": "mechanic:execute-bounded-process:outcome.v1",
+      "determinism": "testimony-governed",
+      "effectClassification": "effect",
+      "sourceProfiles": [
+        "platform-effect-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/execute-bounded-process.v1"
+      ],
+      "nativeFloor": true
+    },
+    {
+      "mechanicId": "read-clock",
+      "meaning": "Read the current clock inside a governed effect context.",
+      "input": "effect context",
+      "output": "timestamp",
+      "inputContractId": "mechanic:read-clock:input.v1",
+      "outcomeContractId": "mechanic:read-clock:outcome.v1",
+      "determinism": "testimony-governed",
+      "effectClassification": "observation",
+      "sourceProfiles": [
+        "platform-effect-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/read-clock.v1"
+      ],
+      "nativeFloor": true
+    },
+    {
+      "mechanicId": "generate-random-identity",
+      "meaning": "Generate a random identity inside a governed effect context.",
+      "input": "effect context",
+      "output": "identity",
+      "inputContractId": "mechanic:generate-random-identity:input.v1",
+      "outcomeContractId": "mechanic:generate-random-identity:outcome.v1",
+      "determinism": "testimony-governed",
+      "effectClassification": "effect",
+      "sourceProfiles": [
+        "platform-effect-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/generate-random-identity.v1"
+      ],
+      "nativeFloor": true
+    },
+    {
+      "mechanicId": "exclusive-create-or-exact-match",
+      "meaning": "Create an artifact only when absent, or verify an existing artifact matches the expected bytes exactly; occupied addresses never overwrite.",
+      "input": "admitted artifact address, expected bytes, expected digest",
+      "output": "create-or-match effect testimony",
+      "inputContractId": "mechanic:exclusive-create-or-exact-match:input.v1",
+      "outcomeContractId": "mechanic:exclusive-create-or-exact-match:outcome.v1",
+      "determinism": "testimony-governed",
+      "effectClassification": "effect",
+      "sourceProfiles": [
+        "platform-effect-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/exclusive-create-or-exact-match.v1"
+      ],
+      "nativeFloor": true
+    },
+    {
+      "mechanicId": "atomic-current-pointer-compare-and-swap",
+      "meaning": "Atomically replace a pointer record only when the current record matches the expected one; otherwise report the observed winner without mutation. The provider compares and replaces; it never calculates the next generation.",
+      "input": "admitted pointer address, complete expected-current pointer state, complete proposed-next pointer state",
+      "output": "compare-and-swap effect testimony",
+      "inputContractId": "mechanic:atomic-current-pointer-compare-and-swap:input.v1",
+      "outcomeContractId": "mechanic:atomic-current-pointer-compare-and-swap:outcome.v1",
+      "determinism": "testimony-governed",
+      "effectClassification": "effect",
+      "sourceProfiles": [
+        "platform-effect-provider.v1"
+      ],
+      "conformanceRefs": [
+        "conformance/execution-graph/mechanics/atomic-current-pointer-compare-and-swap.v1"
+      ],
+      "nativeFloor": true
+    }
+  ],
+  "digestAlgorithm": "sha256 of canonical recursive-key-order JSON excluding authorityDigest",
+  "authorityDigest": "sha256:3b39afa785c925525086acddb65166fad1e52001ddcd6d66bc65448e5efe0bac"
+}

@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/scenario-execution.v1.schema.json",
+  "title": "Scenario Execution",
+  "description": "Runtime testimony envelope for one execution of an admitted scenario definition.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["executionId", "scenarioId", "rootExecutionId", "input", "event"],
+  "properties": {
+    "executionId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "scenarioId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "rootExecutionId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "parentExecutionId": {
+      "oneOf": [
+        { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+        { "type": "null" }
+      ]
+    },
+    "input": {},
+    "event": { "$ref": "scenario-event.schema.json" },
+    "outcome": {},
+    "disposition": {
+      "type": "string",
+      "enum": ["completed", "terminated", "rejected", "failed"]
+    }
+  }
+}

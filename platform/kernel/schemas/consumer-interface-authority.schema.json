@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/consumer-interface-authority.v1.schema.json",
+  "title": "Consumer Interface and Platform Binding Authority",
+  "description": "Declarative interface and adapter bindings. Every physical mechanism resolves to an admitted SDA platform capability.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["interfaceAuthorityType", "contractValidatorCapabilityId", "interfaces", "portBindings", "projectionBindings"],
+  "properties": {
+    "interfaceAuthorityType": { "const": "consumer-interface-authority.v1" },
+    "contractValidatorCapabilityId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "contractCatalog": { "type": "string", "minLength": 1 },
+    "requiredPlatformObligations": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": ["dynamic-semantic-execution", "domain-contract-admission", "artifact-materialization"]
+      }
+    },
+    "interfaces": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["interfaceId", "kind", "rootScenarioId", "platformCapabilityId"],
+        "properties": {
+          "interfaceId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "kind": { "type": "string", "enum": ["cli", "api", "mcp", "agent", "sdk", "ui"] },
+          "rootScenarioId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "platformCapabilityId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "projectionTargets": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": { "type": "string", "enum": ["node", "csharp", "python"] }
+          },
+          "configuration": {}
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": { "kind": { "const": "ui" } },
+              "required": ["kind"]
+            },
+            "then": {
+              "required": ["configuration"],
+              "properties": {
+                "configuration": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["authorityRef", "vectorRef"],
+                  "properties": {
+                    "authorityRef": { "type": "string", "minLength": 1 },
+                    "vectorRef": { "type": "string", "minLength": 1 }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "portBindings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["portId", "platformCapabilityId", "configuration"],
+        "properties": {
+          "portId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "platformCapabilityId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "configuration": {}
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "platformCapabilityId": { "const": "sda-projected-capability-invocation-port.v2" }
+              },
+              "required": ["platformCapabilityId"]
+            },
+            "then": {
+              "properties": {
+                "configuration": { "$ref": "#/$defs/projectedCapabilityInvocationV2" }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "projectionBindings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["projectionId", "platformCapabilityId", "configuration"],
+        "properties": {
+          "projectionId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "platformCapabilityId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "configuration": {}
+        }
+      }
+    }
+  },
+  "$defs": {
+    "projectedCapabilityInvocationV2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["bindingRef", "bindingDigest", "capabilityAuthorityDigest", "requestPath", "lineageMode"],
+      "properties": {
+        "bindingRef": { "type": "string", "minLength": 1 },
+        "bindingDigest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+        "capabilityAuthorityDigest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+        "requestPath": { "type": "string", "minLength": 1 },
+        "resultPath": { "type": "string", "minLength": 1 },
+        "resultMode": { "enum": ["bind-outcome", "replace-carrier"] },
+        "invocationCondition": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["path", "equals", "whenFalse"],
+          "properties": {
+            "path": { "type": "string", "minLength": 1 },
+            "equals": {},
+            "whenFalse": { "const": "preserve-carrier" }
+          }
+        },
+        "lineageMode": { "const": "retain-nested-execution" }
+      },
+      "oneOf": [
+        {
+          "required": ["resultPath"],
+          "not": {
+            "properties": { "resultMode": { "const": "replace-carrier" } },
+            "required": ["resultMode"]
+          }
+        },
+        {
+          "properties": { "resultMode": { "const": "replace-carrier" } },
+          "required": ["resultMode"],
+          "not": { "required": ["resultPath"] }
+        }
+      ]
+    }
+  }
+}

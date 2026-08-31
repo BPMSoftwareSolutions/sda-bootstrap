@@ -1,0 +1,8 @@
+{
+  "profileType": "ui-target-profile.v1",
+  "targetId": "target.avalonia-v3",
+  "targetKind": "avalonia-v3",
+  "requestedProviderId": null,
+  "requiredEvidenceCapabilities": ["ACCESSIBILITY", "ADAPTATION", "OBSERVATION"],
+  "canonicalDigest": "sha256:3dbcca055d0d606f0522b7f52869fac612c0545ad6baaf6b7e846ce1dde54406"
+}

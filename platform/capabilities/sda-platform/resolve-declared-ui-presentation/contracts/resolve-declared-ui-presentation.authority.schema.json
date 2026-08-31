@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/platform/ui/resolve-declared-ui-presentation.authority.schema.json",
+  "title": "Resolve declared UI presentation event authority",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["eventAuthorityType", "eventId", "authorityId", "inputContractId", "outcomeContractId", "operation", "invariants", "governedFindings"],
+  "properties": {
+    "$schema": { "type": "string", "minLength": 1 },
+    "eventAuthorityType": { "const": "semantic-presentation-resolution-authority.v1" },
+    "eventId": { "const": "resolve-declared-ui-presentation" },
+    "authorityId": { "const": "resolve-declared-ui-presentation.v1" },
+    "inputContractId": { "const": "declared-ui-authority.v1" },
+    "outcomeContractId": { "const": "sda-ui-semantic-presentation.v1" },
+    "operation": { "const": "resolve-only-justified-semantic-presentation" },
+    "invariants": {
+      "type": "array",
+      "minItems": 5,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "governedFindings": {
+      "type": "array",
+      "minItems": 4,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "UNJUSTIFIED_PRESENTATION_ELEMENT",
+          "UNJUSTIFIED_PRESENTATION_RELATIONSHIP",
+          "UNKNOWN_RELATIONSHIP_ENDPOINT",
+          "MISSING_PRESENTATION_FOR_EXPERIENCE"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/platform/ui/presentation-closure-evidence.v1.schema.json",
+  "title": "Presentation closure evidence",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["evidenceType", "sourceAuthorityDigest", "presentationDigest", "promiseResults", "zeroOpinionCounts", "findings", "disposition"],
+  "properties": {
+    "evidenceType": { "const": "presentation-closure-evidence.v1" },
+    "sourceAuthorityDigest": { "$ref": "declared-ui-authority.v1.schema.json#/$defs/digest" },
+    "presentationDigest": { "$ref": "declared-ui-authority.v1.schema.json#/$defs/digest" },
+    "promiseResults": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["experienceRef", "disposition"],
+        "properties": {
+          "experienceRef": { "$ref": "declared-ui-authority.v1.schema.json#/$defs/id" },
+          "disposition": { "enum": ["SATISFIED", "MISSING_PRESENTATION"] }
+        }
+      }
+    },
+    "zeroOpinionCounts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["visibleElements", "interactions", "stylingDecisions", "implicitActions", "implicitLayouts", "defaultPresentationProfiles"],
+      "properties": {
+        "visibleElements": { "type": "integer", "minimum": 0 },
+        "interactions": { "type": "integer", "minimum": 0 },
+        "stylingDecisions": { "const": 0 },
+        "implicitActions": { "const": 0 },
+        "implicitLayouts": { "const": 0 },
+        "defaultPresentationProfiles": { "const": 0 }
+      }
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["code", "subjectRef"],
+        "properties": {
+          "code": { "const": "MISSING_PRESENTATION_FOR_EXPERIENCE" },
+          "subjectRef": { "$ref": "declared-ui-authority.v1.schema.json#/$defs/id" }
+        }
+      }
+    },
+    "disposition": { "enum": ["VALID_EMPTY_PRESENTATION", "CLOSED", "REJECTED"] }
+  }
+}

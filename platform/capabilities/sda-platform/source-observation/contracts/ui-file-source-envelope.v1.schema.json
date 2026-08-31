@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/platform/source-observation/ui-file-source-envelope.v1.schema.json",
+  "title": "UI file source envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["fileName", "mediaType", "contentBase64"],
+  "properties": {
+    "fileName": { "type": "string", "minLength": 1, "pattern": ".*\\S.*" },
+    "mediaType": { "type": "string", "minLength": 3, "pattern": "^[^/\\s]+/[^\\s]+$" },
+    "contentBase64": {
+      "type": "string",
+      "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$"
+    }
+  }
+}

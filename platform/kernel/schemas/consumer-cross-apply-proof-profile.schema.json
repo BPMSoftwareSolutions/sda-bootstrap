@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.io/consumer-cross-apply-proof-profile.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "proofProfileType",
+    "profileId",
+    "capabilityId",
+    "capsuleDigest",
+    "capabilityAuthorityDigest",
+    "mandatoryTargets",
+    "bindings"
+  ],
+  "properties": {
+    "proofProfileType": { "const": "consumer-cross-apply-proof-profile.v1" },
+    "profileId": { "type": "string", "minLength": 1 },
+    "capabilityId": { "type": "string", "minLength": 1 },
+    "capsuleDigest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "capabilityAuthorityDigest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "mandatoryTargets": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "enum": ["node", "csharp", "python"] }
+    },
+    "bindings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["target", "requestedCapabilityId", "providerCapabilityId", "executionMode"],
+        "properties": {
+          "target": { "enum": ["node", "csharp", "python"] },
+          "requestedCapabilityId": { "type": "string", "minLength": 1 },
+          "providerCapabilityId": { "type": "string", "minLength": 1 },
+          "executionMode": { "const": "fixture-port-outcomes-only" }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "fixtureType": "semantic-corpus-derivation-carrier.v1",
+  "fixtureId": "open-reference",
+  "scenarioId": "retain-open-semantic-references",
+  "variants": [
+    {
+      "variantId": "absent-target",
+      "declaredResourceOrder": ["gherkin-open", "json-empty"],
+      "sourceRecords": [
+        {
+          "resourceId": "gherkin-open",
+          "representationKind": "GHERKIN_COMPILATION",
+          "sourceClass": "CANONICAL_AUTHORITY",
+          "sourceText": "Feature: Open\n",
+          "representation": {
+            "capabilities": [{"capabilityId": "open", "name": "Open"}],
+            "scenarios": [],
+            "relationships": [{"fromSemanticObjectId": "capability:open", "toSemanticObjectId": "scenario:capability:open:missing"}]
+          }
+        },
+        {
+          "resourceId": "json-empty",
+          "representationKind": "SCHEMA_ADMITTED_JSON",
+          "sourceClass": "ADMITTED_EVIDENCE",
+          "sourceText": "{}",
+          "representation": {"schemas": [], "relationships": []}
+        }
+      ],
+      "mutations": []
+    }
+  ],
+  "expected": {"disposition": "OPEN", "findingCodes": ["SEMANTIC_CORPUS_REFERENCE_OPEN"], "objectIds": ["capability:open"], "relationshipIds": []},
+  "provesPartitions": ["OPEN_REFERENCE_NON_INVENTION", "DETERMINISTIC_ORDERING"]
+}

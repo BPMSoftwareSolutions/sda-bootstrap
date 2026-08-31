@@ -1,0 +1,741 @@
+{
+  "executionEmbodimentPlanType": "consumer-execution-embodiment-plan.v1",
+  "target": "node",
+  "capabilityId": "project-semantic-element-realization",
+  "source": {
+    "queryType": "projected-consumer-conformance-query.v1",
+    "queryId": "scenario-conformance-closure",
+    "queryDigest": "sha256:e50759be319e8b8e5a230c4acac996983dc7b4f0b194f459719f07970ba83002",
+    "capabilityAuthorityDigest": "sha256:25e2d66fe627c288a125b4cf135c573f8cfb6a2f6e6f02905e31f37d1e99a226",
+    "mechanicResolutionDigest": "sha256:7c09144f3db0409f3001e90984ee4830794b092b4bd5e94f0a5330f2bd3dad66"
+  },
+  "rootNodeId": "project-semantic-element-realization",
+  "nodes": [
+    {
+      "nodeId": "project-semantic-element-realization",
+      "scenario": {
+        "scenarioId": "project-semantic-element-realization",
+        "input": {
+          "inputId": "semantic-element-realization-facts",
+          "contract": {
+            "contractId": "project-semantic-element-realization-input.v1"
+          }
+        },
+        "event": {
+          "eventId": "semantic-element-realization-projection-requested",
+          "executionAuthorityId": "semantic-element-realization-projection.v1"
+        },
+        "outcome": {
+          "outcomeId": "semantic-element-realization-projection-known",
+          "contract": {
+            "contractId": "semantic-element-realization-projection-evidence.v1"
+          },
+          "terminal": true
+        }
+      },
+      "operations": [
+        {
+          "operationId": "project-semantic-element-realization.operation.1",
+          "mechanicBindingId": "port:project-semantic-element-realization"
+        }
+      ],
+      "transition": null
+    }
+  ],
+  "mechanicBindings": [
+    {
+      "bindingId": "contract-admission",
+      "mechanicType": "contract-admission",
+      "providerCapabilityId": "sda-schema-contract-admission.v1",
+      "provider": "ScenarioKernel.NodePlatform.Schema.JsonSchemaContractAdmission",
+      "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+      "configuration": {
+        "contractAuthorities": {
+          "authorityType": "consumer-contract-authorities.v1",
+          "contracts": {
+            "project-semantic-element-realization-input.v1": {
+              "schemaRef": "input.schema.json",
+              "schemaId": "https://schemas.agentic-harness.local/project-semantic-element-realization-input.v1.json",
+              "schemaDigest": "bdd1bd46aed76c9b3bb7bf4981a98d4888d98471b3bfd5080c326bc56a79cd48",
+              "schema": {
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "$id": "https://schemas.agentic-harness.local/project-semantic-element-realization-input.v1.json",
+                "type": "object",
+                "properties": {
+                  "instruction": {
+                    "type": "object",
+                    "properties": {
+                      "instructionId": {
+                        "type": "string"
+                      },
+                      "instructionKind": {
+                        "const": "REALIZE_SEMANTIC_ELEMENT"
+                      },
+                      "sourceRef": {
+                        "type": "string"
+                      },
+                      "capabilityId": {
+                        "const": "content.semantic-element.v1"
+                      },
+                      "mechanicId": {
+                        "type": "string"
+                      },
+                      "semanticKind": {
+                        "type": "string",
+                        "enum": [
+                          "INFORMATION",
+                          "ACTION",
+                          "INPUT",
+                          "NAVIGATION",
+                          "FEEDBACK",
+                          "REGION"
+                        ]
+                      },
+                      "semanticRole": {
+                        "type": "string"
+                      },
+                      "content": {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "type": "string",
+                            "enum": [
+                              "LITERAL",
+                              "READ_MODEL_REF"
+                            ]
+                          },
+                          "value": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "stateRefs": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "eventRefs": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "lineage": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "required": [
+                      "instructionId",
+                      "instructionKind",
+                      "sourceRef",
+                      "capabilityId",
+                      "mechanicId",
+                      "semanticKind",
+                      "semanticRole",
+                      "content",
+                      "stateRefs",
+                      "eventRefs",
+                      "lineage"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "instruction"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "semantic-element-realization-projection-evidence.v1": {
+              "schemaRef": "outcome.schema.json",
+              "schemaId": "https://schemas.agentic-harness.local/semantic-element-realization-projection-evidence.v1.json",
+              "schemaDigest": "9dce95a327452241d5d961af3751cd1bfa8b4eab844683b1bf40dff4891f7c66",
+              "schema": {
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "$id": "https://schemas.agentic-harness.local/semantic-element-realization-projection-evidence.v1.json",
+                "type": "object",
+                "properties": {
+                  "instructionId": {
+                    "type": "string"
+                  },
+                  "instructionKind": {
+                    "const": "REALIZE_SEMANTIC_ELEMENT"
+                  },
+                  "sourceRef": {
+                    "type": "string"
+                  },
+                  "capabilityId": {
+                    "const": "content.semantic-element.v1"
+                  },
+                  "mechanicId": {
+                    "type": "string"
+                  },
+                  "semanticKind": {
+                    "type": "string",
+                    "enum": [
+                      "INFORMATION",
+                      "ACTION",
+                      "INPUT",
+                      "NAVIGATION",
+                      "FEEDBACK",
+                      "REGION"
+                    ]
+                  },
+                  "semanticRole": {
+                    "type": "string"
+                  },
+                  "content": {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "enum": [
+                          "LITERAL",
+                          "READ_MODEL_REF"
+                        ]
+                      },
+                      "value": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "value"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "stateRefs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "eventRefs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "lineage": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "instructionId",
+                  "instructionKind",
+                  "sourceRef",
+                  "capabilityId",
+                  "mechanicId",
+                  "semanticKind",
+                  "semanticRole",
+                  "content",
+                  "stateRefs",
+                  "eventRefs",
+                  "lineage"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "bindingId": "port:project-semantic-element-realization",
+      "mechanicType": "event-port",
+      "providerCapabilityId": "sda-authority-transformation-port.v1",
+      "provider": "ScenarioKernel.NodePlatform.Execution.AuthorityTransformation",
+      "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+      "configuration": {
+        "expression": {
+          "op": "object",
+          "fields": {
+            "instructionId": {
+              "op": "path",
+              "from": "input",
+              "path": "instruction.instructionId"
+            },
+            "instructionKind": {
+              "op": "path",
+              "from": "input",
+              "path": "instruction.instructionKind"
+            },
+            "sourceRef": {
+              "op": "path",
+              "from": "input",
+              "path": "instruction.sourceRef"
+            },
+            "capabilityId": {
+              "op": "path",
+              "from": "input",
+              "path": "instruction.capabilityId"
+            },
+            "mechanicId": {
+              "op": "path",
+              "from": "input",
+              "path": "instruction.mechanicId"
+            },
+            "semanticKind": {
+              "op": "path",
+              "from": "input",
+              "path": "instruction.semanticKind"
+            },
+            "semanticRole": {
+              "op": "path",
+              "from": "input",
+              "path": "instruction.semanticRole"
+            },
+            "content": {
+              "op": "path",
+              "from": "input",
+              "path": "instruction.content"
+            },
+            "stateRefs": {
+              "op": "path",
+              "from": "input",
+              "path": "instruction.stateRefs"
+            },
+            "eventRefs": {
+              "op": "path",
+              "from": "input",
+              "path": "instruction.eventRefs"
+            },
+            "lineage": {
+              "op": "path",
+              "from": "input",
+              "path": "instruction.lineage"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "conformance": {
+    "queryId": "scenario-conformance-closure",
+    "platformMechanics": {
+      "resolutionType": "consumer-platform-mechanic-resolution.v1",
+      "projectionTarget": "node",
+      "requirements": [
+        {
+          "mechanicId": "contract-document-reading",
+          "capabilityKind": "consumer-runtime",
+          "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+        },
+        {
+          "mechanicId": "canonicalization",
+          "capabilityKind": "consumer-runtime",
+          "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+        },
+        {
+          "mechanicId": "schema-admission",
+          "capabilityKind": "consumer-runtime",
+          "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+        },
+        {
+          "mechanicId": "authority-resolution",
+          "capabilityKind": "consumer-runtime",
+          "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+        },
+        {
+          "mechanicId": "semantic-execution",
+          "capabilityKind": "consumer-runtime",
+          "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+        },
+        {
+          "mechanicId": "telemetry-observation",
+          "capabilityKind": "consumer-runtime",
+          "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+        },
+        {
+          "mechanicId": "scenario-invocation",
+          "capabilityKind": "consumer-runtime",
+          "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+        },
+        {
+          "mechanicId": "transition-binding-projection",
+          "capabilityKind": "consumer-runtime",
+          "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+        },
+        {
+          "mechanicId": "interface-delivery",
+          "capabilityKind": "consumer-runtime",
+          "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+        },
+        {
+          "mechanicId": "runtime-projection",
+          "capabilityKind": "consumer-runtime",
+          "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+        },
+        {
+          "mechanicId": "artifact-result-delivery",
+          "capabilityKind": "consumer-runtime",
+          "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+        },
+        {
+          "mechanicId": "authority-driven-transformation",
+          "capabilityKind": "consumer-runtime",
+          "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+        },
+        {
+          "mechanicId": "durable-artifact-materialization",
+          "capabilityKind": "consumer-runtime",
+          "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+        },
+        {
+          "mechanicId": "contract-validation",
+          "capabilityKind": "contract-validator",
+          "requiredBy": "scenario-contract-admission",
+          "requestedCapabilityId": "sda-schema-contract-admission.v1"
+        },
+        {
+          "mechanicId": "cli-delivery",
+          "capabilityKind": "interface-delivery",
+          "requiredBy": "interface:semantic-element-realization-cli",
+          "requestedCapabilityId": "sda-json-cli.v1"
+        },
+        {
+          "mechanicId": "json-reading",
+          "capabilityKind": "interface-delivery",
+          "requiredBy": "interface:semantic-element-realization-cli",
+          "requestedCapabilityId": "sda-json-cli.v1"
+        },
+        {
+          "mechanicId": "json-serialization",
+          "capabilityKind": "interface-delivery",
+          "requiredBy": "interface:semantic-element-realization-cli",
+          "requestedCapabilityId": "sda-json-cli.v1"
+        },
+        {
+          "mechanicId": "event-port-invocation",
+          "capabilityKind": "event-port",
+          "requiredBy": "port:project-semantic-element-realization",
+          "requestedCapabilityId": "sda-authority-transformation-port.v1"
+        }
+      ],
+      "resolutions": [
+        {
+          "mechanicId": "contract-document-reading",
+          "capabilityKind": "consumer-runtime",
+          "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+          "status": "AVAILABLE",
+          "capabilityId": "sda-node-consumer-runtime.v1",
+          "provider": "ScenarioKernel.NodePlatform",
+          "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+          "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+        },
+        {
+          "mechanicId": "canonicalization",
+          "capabilityKind": "consumer-runtime",
+          "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+          "status": "AVAILABLE",
+          "capabilityId": "sda-node-consumer-runtime.v1",
+          "provider": "ScenarioKernel.NodePlatform",
+          "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+          "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+        },
+        {
+          "mechanicId": "schema-admission",
+          "capabilityKind": "consumer-runtime",
+          "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+          "status": "AVAILABLE",
+          "capabilityId": "sda-node-consumer-runtime.v1",
+          "provider": "ScenarioKernel.NodePlatform",
+          "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+          "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+        },
+        {
+          "mechanicId": "authority-resolution",
+          "capabilityKind": "consumer-runtime",
+          "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+          "status": "AVAILABLE",
+          "capabilityId": "sda-node-consumer-runtime.v1",
+          "provider": "ScenarioKernel.NodePlatform",
+          "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+          "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+        },
+        {
+          "mechanicId": "semantic-execution",
+          "capabilityKind": "consumer-runtime",
+          "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+          "status": "AVAILABLE",
+          "capabilityId": "sda-node-consumer-runtime.v1",
+          "provider": "ScenarioKernel.NodePlatform",
+          "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+          "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+        },
+        {
+          "mechanicId": "telemetry-observation",
+          "capabilityKind": "consumer-runtime",
+          "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+          "status": "AVAILABLE",
+          "capabilityId": "sda-node-consumer-runtime.v1",
+          "provider": "ScenarioKernel.NodePlatform",
+          "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+          "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+        },
+        {
+          "mechanicId": "scenario-invocation",
+          "capabilityKind": "consumer-runtime",
+          "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+          "status": "AVAILABLE",
+          "capabilityId": "sda-node-consumer-runtime.v1",
+          "provider": "ScenarioKernel.NodePlatform",
+          "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+          "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+        },
+        {
+          "mechanicId": "transition-binding-projection",
+          "capabilityKind": "consumer-runtime",
+          "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+          "status": "AVAILABLE",
+          "capabilityId": "sda-node-consumer-runtime.v1",
+          "provider": "ScenarioKernel.NodePlatform",
+          "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+          "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+        },
+        {
+          "mechanicId": "interface-delivery",
+          "capabilityKind": "consumer-runtime",
+          "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+          "status": "AVAILABLE",
+          "capabilityId": "sda-node-consumer-runtime.v1",
+          "provider": "ScenarioKernel.NodePlatform",
+          "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+          "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+        },
+        {
+          "mechanicId": "runtime-projection",
+          "capabilityKind": "consumer-runtime",
+          "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+          "status": "AVAILABLE",
+          "capabilityId": "sda-node-consumer-runtime.v1",
+          "provider": "ScenarioKernel.NodePlatform",
+          "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+          "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+        },
+        {
+          "mechanicId": "artifact-result-delivery",
+          "capabilityKind": "consumer-runtime",
+          "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+          "status": "AVAILABLE",
+          "capabilityId": "sda-node-consumer-runtime.v1",
+          "provider": "ScenarioKernel.NodePlatform",
+          "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+          "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+        },
+        {
+          "mechanicId": "authority-driven-transformation",
+          "capabilityKind": "consumer-runtime",
+          "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+          "status": "AVAILABLE",
+          "capabilityId": "sda-node-consumer-runtime.v1",
+          "provider": "ScenarioKernel.NodePlatform",
+          "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+          "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+        },
+        {
+          "mechanicId": "durable-artifact-materialization",
+          "capabilityKind": "consumer-runtime",
+          "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+          "status": "AVAILABLE",
+          "capabilityId": "sda-node-consumer-runtime.v1",
+          "provider": "ScenarioKernel.NodePlatform",
+          "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+          "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+        },
+        {
+          "mechanicId": "contract-validation",
+          "capabilityKind": "contract-validator",
+          "requiredBy": "scenario-contract-admission",
+          "requestedCapabilityId": "sda-schema-contract-admission.v1",
+          "status": "AVAILABLE",
+          "capabilityId": "sda-schema-contract-admission.v1",
+          "provider": "ScenarioKernel.NodePlatform.Schema.JsonSchemaContractAdmission",
+          "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+          "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+        },
+        {
+          "mechanicId": "cli-delivery",
+          "capabilityKind": "interface-delivery",
+          "requiredBy": "interface:semantic-element-realization-cli",
+          "requestedCapabilityId": "sda-json-cli.v1",
+          "status": "AVAILABLE",
+          "capabilityId": "sda-json-cli.v1",
+          "provider": "ScenarioKernel.NodePlatform.Interface.JsonCli",
+          "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+          "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+        },
+        {
+          "mechanicId": "json-reading",
+          "capabilityKind": "interface-delivery",
+          "requiredBy": "interface:semantic-element-realization-cli",
+          "requestedCapabilityId": "sda-json-cli.v1",
+          "status": "AVAILABLE",
+          "capabilityId": "sda-json-cli.v1",
+          "provider": "ScenarioKernel.NodePlatform.Interface.JsonCli",
+          "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+          "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+        },
+        {
+          "mechanicId": "json-serialization",
+          "capabilityKind": "interface-delivery",
+          "requiredBy": "interface:semantic-element-realization-cli",
+          "requestedCapabilityId": "sda-json-cli.v1",
+          "status": "AVAILABLE",
+          "capabilityId": "sda-json-cli.v1",
+          "provider": "ScenarioKernel.NodePlatform.Interface.JsonCli",
+          "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+          "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+        },
+        {
+          "mechanicId": "event-port-invocation",
+          "capabilityKind": "event-port",
+          "requiredBy": "port:project-semantic-element-realization",
+          "requestedCapabilityId": "sda-authority-transformation-port.v1",
+          "status": "AVAILABLE",
+          "capabilityId": "sda-authority-transformation-port.v1",
+          "provider": "ScenarioKernel.NodePlatform.Execution.AuthorityTransformation",
+          "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+          "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+        }
+      ],
+      "disposition": "RESOLVED"
+    },
+    "executableOrigin": {
+      "originType": "consumer-executable-origin.v1",
+      "disposition": "PROJECTED_ONLY",
+      "unauthorizedFiles": []
+    },
+    "closures": [
+      {
+        "closureId": "feature-to-scenario",
+        "evaluation": "compiled",
+        "disposition": "PASS",
+        "findings": []
+      },
+      {
+        "closureId": "scenario-to-contract",
+        "evaluation": "compiled",
+        "disposition": "PASS",
+        "findings": []
+      },
+      {
+        "closureId": "scenario-to-event-authority",
+        "evaluation": "compiled",
+        "disposition": "PASS",
+        "findings": []
+      },
+      {
+        "closureId": "outcome-to-transition",
+        "evaluation": "compiled",
+        "disposition": "PASS",
+        "findings": []
+      },
+      {
+        "closureId": "transition-to-next-input",
+        "evaluation": "compiled",
+        "disposition": "PASS",
+        "findings": []
+      },
+      {
+        "closureId": "scenario-to-interface",
+        "evaluation": "compiled",
+        "disposition": "PASS",
+        "findings": []
+      },
+      {
+        "closureId": "execution-to-telemetry",
+        "evaluation": "compiled",
+        "disposition": "PASS",
+        "findings": []
+      },
+      {
+        "closureId": "scenario-to-projection",
+        "evaluation": "compiled",
+        "disposition": "PASS",
+        "findings": []
+      },
+      {
+        "closureId": "expected-to-observed-execution",
+        "evaluation": "runtime-evidence",
+        "evaluatorId": "expected-execution-trace.v1",
+        "configuration": {
+          "expectedTelemetry": {
+            "traceType": "projected-expected-consumer-trace.v1",
+            "telemetryId": "consumer-scenario-execution-telemetry",
+            "capabilityId": "project-semantic-element-realization",
+            "rootScenarioId": "project-semantic-element-realization",
+            "observationType": "scenario-execution-observation.v1",
+            "lineageFields": [
+              "executionId",
+              "rootExecutionId",
+              "parentExecutionId",
+              "scenarioId"
+            ],
+            "scenarios": [
+              {
+                "scenarioId": "project-semantic-element-realization",
+                "steps": [
+                  "admit-input",
+                  "resolve-event-authority",
+                  "execute-event-authority",
+                  "admit-outcome",
+                  "resolve-disposition"
+                ],
+                "expectedTransitionId": null
+              }
+            ]
+          }
+        }
+      },
+      {
+        "closureId": "root-to-terminal-behavior",
+        "evaluation": "compiled",
+        "disposition": "PASS",
+        "findings": []
+      },
+      {
+        "closureId": "required-mechanic-to-platform-capability",
+        "evaluation": "compiled",
+        "disposition": "PASS",
+        "findings": []
+      },
+      {
+        "closureId": "consumer-executable-origin",
+        "evaluation": "runtime-evidence",
+        "evaluatorId": "projected-origin-observation.v1",
+        "configuration": {
+          "requiredDisposition": "PURE_PROJECTION_CONFORMS"
+        }
+      },
+      {
+        "closureId": "dynamic-semantic-execution",
+        "evaluation": "compiled",
+        "disposition": "PASS",
+        "findings": []
+      },
+      {
+        "closureId": "domain-contract-admission",
+        "evaluation": "compiled",
+        "disposition": "PASS",
+        "findings": []
+      }
+    ]
+  },
+  "requiredProviderCapabilityIds": [
+    "sda-authority-transformation-port.v1",
+    "sda-schema-contract-admission.v1"
+  ]
+}

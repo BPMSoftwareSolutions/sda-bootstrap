@@ -1,0 +1,37 @@
+{
+  "scenarioId": "admit-contract-value",
+  "input": {
+    "inputId": "contract-admission-request",
+    "contract": {
+      "contractId": "contract-admission-request.v1"
+    }
+  },
+  "event": {
+    "eventId": "admit-contract-value",
+    "executionAuthorityId": "admit-contract-value.v1"
+  },
+  "outcome": {
+    "outcomeId": "contract-admission-disposition",
+    "contract": {
+      "contractId": "contract-admission-disposition.v1"
+    },
+    "experience": {
+      "statement": "one contract admission disposition is established"
+    }
+  },
+  "gherkin": {
+    "given": {
+      "semanticRef": "admit-contract-value.given",
+      "text": "a candidate value and admitted contract authority"
+    },
+    "when": {
+      "semanticRef": "admit-contract-value.when",
+      "text": "contract admission is evaluated"
+    },
+    "then": {
+      "semanticRef": "admit-contract-value.then",
+      "text": "one contract admission disposition is established"
+    }
+  },
+  "name": "Admit a value against its declared contract"
+}

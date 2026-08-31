@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/consumer-capability-fixtures.v1.schema.json",
+  "title": "Consumer Capability Fixture Authority",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["fixtureType", "fixtures"],
+  "properties": {
+    "fixtureType": { "const": "consumer-capability-fixtures.v1" },
+    "graphOutcomeCatalog": {
+      "description": "Named immutable carrier corpus shared by graph-native route fixtures.",
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": { "type": "object", "additionalProperties": true }
+    },
+    "portOutcomes": { "type": "object", "minProperties": 1, "additionalProperties": true },
+    "fixtures": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["fixtureId", "input", "expected"],
+        "properties": {
+          "fixtureId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "input": {},
+          "portOutcomes": { "type": "object", "minProperties": 1, "additionalProperties": true },
+          "graphOutcomes": {
+            "description": "Testimony injected at declared scenario decomposition exits for graph-native route fixtures.",
+            "type": "object",
+            "minProperties": 1,
+            "additionalProperties": {
+              "oneOf": [
+                { "type": "object", "additionalProperties": true },
+                { "type": "array", "minItems": 1, "items": { "type": "object", "additionalProperties": true } }
+              ]
+            }
+          },
+          "graphOutcomeCatalog": {
+            "description": "Named immutable carrier values reused by graph-native route outcomes without duplicating semantic authority inside one fixture.",
+            "type": "object",
+            "minProperties": 1,
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "projectionOutputs": { "type": "object", "additionalProperties": true },
+          "expected": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["disposition", "terminalScenarioId", "scenarioSequence"],
+            "properties": {
+              "disposition": { "type": "string", "enum": ["completed", "terminated", "rejected", "failed"] },
+              "terminalScenarioId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+              "scenarioSequence": {
+                "type": "array",
+                "minItems": 1,
+                "items": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" }
+              },
+              "outcomeAssertions": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["path", "operator", "value"],
+                  "properties": {
+                    "conditionId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+                    "path": { "type": "string", "minLength": 1 },
+                    "operator": { "type": "string", "enum": ["equals", "contains", "not-contains"] },
+                    "value": {}
+                  }
+                }
+              },
+              "queryAssertions": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["queryId", "params", "resultAssertions"],
+                  "properties": {
+                    "queryId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+                    "params": { "type": "object" },
+                    "resultAssertions": {
+                      "type": "array",
+                      "minItems": 1,
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": ["path", "operator", "value"],
+                        "properties": {
+                          "path": { "type": "string" },
+                          "operator": { "type": "string", "enum": ["equals", "contains", "not-contains"] },
+                          "value": {}
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

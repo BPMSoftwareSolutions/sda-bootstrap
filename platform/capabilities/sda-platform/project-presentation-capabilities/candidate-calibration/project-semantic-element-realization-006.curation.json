@@ -1,0 +1,30 @@
+{
+  "receiptType": "presentation-capability-candidate-curation.v1",
+  "capabilityId": "project-semantic-element-realization",
+  "requestRef": "../agentic-harness/live/project-semantic-element-realization-006/model-request.json",
+  "responseRef": "../agentic-harness/artifacts/live/project-semantic-element-realization-006/model-response.json",
+  "providerKind": "gemini",
+  "resolvedModel": "gemini-flash-latest",
+  "attemptCount": 1,
+  "requestHash": "sha256:f0e24e58cd8120413992f74c71cfb3ba174fac6429d2454f0b8ea901094aedd9",
+  "responseHash": "sha256:846f459a22742b2b4c33bd6cf9c36e3a463b0f760fcc4db321d53cb47490b4ce",
+  "requestFileHash": "sha256:14c66772e67f910517dbc99fdca173ed0eb79c7b85f33f2b72100151d068e448",
+  "responseFileHash": "sha256:6d4ef88712dbcd56593dde2369f86d9677a7bdeb203ac30534b6645f8d5ea3c2",
+  "structuredCandidateHash": "sha256:4a0f45e1c6624424c105dbf025223cc54bf59a80efa5a9f722b607128c4ae47d",
+  "changedArtifacts": [
+    { "logicalName": "capability.authority.json", "sourceArtifactHash": "sha256:fa84aa43ca60ba180af78a6bbd840b3700e765b4fe9829e06f97fd007673b19e", "curatedArtifactHash": "sha256:eefd0cb3266c32bfb6532739b8e19ec67c1b4994a67e6aaf26d892a5576b31fb", "finding": "CAPABILITY_STORY_AND_EXPERIENCE_VOCABULARY_INVALID", "editOperation": "replace bounded userStory and experience shapes from admitted archetype" },
+    { "logicalName": "consumer-workspace.authority.json", "sourceArtifactHash": "sha256:2a1856e10ce4ebe00fb0bf55eb2683c4df8a03794f928ea13155df4cc31f822f", "curatedArtifactHash": "sha256:1c2e8092004bda2b9ad5b4b9a613cce87813fa345b4305beb56c46dfa531ab04", "finding": "CONSUMER_WORKSPACE_REFERENCES_INVALID", "editOperation": "replace bounded kernel, governance, authority references, identity, and feature path" },
+    { "logicalName": "semantic-graph.authority.json", "sourceArtifactHash": "sha256:38d1298dc6352e552ee210338ce037d33f820685012e7dfbfee3b586278cab1b", "curatedArtifactHash": "sha256:ddc5962afef46ab3ff46062d80c65a23655f7587e5664386a8278664a4b1635b", "finding": "JSON_TEXT_SLOT_MATERIALIZATION", "editOperation": "parse and materialize unchanged declarative value" },
+    { "logicalName": "execution-authorities.authority.json", "sourceArtifactHash": "sha256:8e143e8c7bbf74cef3c9dae26a0df0b2346fd32315fb0a563adfacfa67d7ff23", "curatedArtifactHash": "sha256:9c838bb857a15354499d745910ada952a610bb339e4c7730888a70e2987b8fd8", "finding": "JSON_TEXT_SLOT_MATERIALIZATION", "editOperation": "parse and materialize unchanged declarative value" },
+    { "logicalName": "projection-authorities.authority.json", "sourceArtifactHash": "sha256:61c3c7dfe158b48b5f3a7a9dab5f7573bd6111b87eb7edff3922a1588e891914", "curatedArtifactHash": "sha256:b75f76d2be1d22e1c28a5f347290d8b344121a1984955aba84dd58040cb6bf24", "finding": "JSON_TEXT_SLOT_MATERIALIZATION", "editOperation": "parse and materialize unchanged declarative value" },
+    { "logicalName": "interfaces.authority.json", "sourceArtifactHash": "sha256:4374bc0d8b4e1cb5973cb95e8c6b3ce4f6a3a634db47cc00b2fc87642cd61bef", "curatedArtifactHash": "sha256:76d146844d23037fbb7d29d95db6f83434251aabb34cdb56abe3c21efffcd171", "finding": "INTERFACE_AND_PORT_BINDING_VOCABULARY_INVALID", "editOperation": "rename CLI collection and nest transformation configuration per admitted interface schema" },
+    { "logicalName": "semantic-transformation.authority.json", "sourceArtifactHash": "sha256:52468c3c91ad052ee4418c087ec6e4ac76c675ba348d8cea67dd55225603990b", "curatedArtifactHash": "sha256:87c7d0937db2ae2360199ca8112747c383e6b3d608b8eb3beebfbf2be995b3b6", "finding": "JSON_TEXT_SLOT_MATERIALIZATION", "editOperation": "parse and materialize unchanged declarative value" },
+    { "logicalName": "fixtures.authority.json", "sourceArtifactHash": "sha256:55c579c6e9c1ebc715dc098afebbc6dacf6f2a884ddccc52ecd9354f16b941d0", "curatedArtifactHash": "sha256:1223198bcee4b1a838d62e3838620cb82adf8ebd9aa213cca693e3dce36908a6", "finding": "FIXTURE_ASSERTION_AND_BINDING_VOCABULARY_INVALID", "editOperation": "normalize fixture IDs, authority-driven port outcomes, field assertions, and frozen mechanic identity" },
+    { "logicalName": "contracts/contract-catalog.json", "sourceArtifactHash": "sha256:b7e329250feec26997666769aa71e7fd3bec2a546609325f4144bd3217423d5e", "curatedArtifactHash": "sha256:d423bac7a6873353a8101b74804c8ad3c2c7b4ab19d5397b7f3bcfa4297020b0", "finding": "CONTRACT_CATALOG_PATH_PREFIX_INVALID", "editOperation": "remove redundant contracts path prefix" },
+    { "logicalName": "contracts/input.schema.json", "sourceArtifactHash": "sha256:15243f774b0e00a5d1c05da01512dc47978ec4ab06ae1644ff5be38fcdabb1df", "curatedArtifactHash": "sha256:c46c1e8620980018e78c67bcae5899d054587cd66df085528d77514ffe8c5568", "finding": "FROZEN_INSTRUCTION_IDENTITY_UNCONSTRAINED", "editOperation": "constrain instruction kind and content.semantic-element.v1 capability identity" },
+    { "logicalName": "contracts/outcome.schema.json", "sourceArtifactHash": "sha256:9712cb5422258bb79c6965556c528100cf05331fcb6e8174e0142bd6953596d1", "curatedArtifactHash": "sha256:b088de8941f2209cee86893e78e4ea7213bd4ee23b84d5cd94a9735b6d5298c5", "finding": "FROZEN_INSTRUCTION_IDENTITY_UNCONSTRAINED", "editOperation": "constrain instruction kind and content.semantic-element.v1 capability identity" }
+  ],
+  "unchangedArtifactCount": 0,
+  "claims": { "admission": "NOT_CLAIMED_BY_CURATION", "projection": "NOT_CLAIMED_BY_CURATION", "acceptance": "NOT_CLAIMED_BY_CURATION", "promotion": "NOT_CLAIMED_BY_CURATION" },
+  "disposition": "CURATED_FOR_DETERMINISTIC_ADMISSION"
+}

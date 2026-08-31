@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/semantic-corpus/semantic-corpus-closure-receipt.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contractId", "repositoryAuthorityDigest", "pointerId", "candidateSnapshotDigest", "candidateGeneration", "evaluatedCurrentGeneration", "evaluatedCurrentSnapshotDigest", "findings", "disposition", "receiptDigest"],
+  "properties": {
+    "contractId": {"const": "semantic-corpus-closure-receipt.v1"},
+    "repositoryAuthorityDigest": {"$ref": "#/$defs/digest"},
+    "pointerId": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9._-]{0,127}$"},
+    "candidateSnapshotDigest": {"$ref": "#/$defs/digest"},
+    "candidateGeneration": {"type": "integer", "minimum": 1},
+    "evaluatedCurrentGeneration": {"type": "integer", "minimum": 0},
+    "evaluatedCurrentSnapshotDigest": {"oneOf": [{"$ref": "#/$defs/digest"}, {"type": "null"}]},
+    "findings": {"type": "array", "items": {"$ref": "#/$defs/finding"}},
+    "disposition": {"enum": ["CORPUS_CLOSED", "CORPUS_OPEN", "CORPUS_REJECTED"]},
+    "receiptDigest": {"$ref": "#/$defs/digest"}
+  },
+  "$defs": {
+    "digest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "finding": {"type": "object", "additionalProperties": false, "required": ["code", "subjectRef"], "properties": {"code": {"type": "string", "minLength": 1}, "subjectRef": {"type": "string", "minLength": 1}}}
+  }
+}

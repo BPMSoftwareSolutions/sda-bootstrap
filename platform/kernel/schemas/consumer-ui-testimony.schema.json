@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/consumer-ui-testimony.v1.schema.json",
+  "title": "Consumer UI Testimony",
+  "description": "Canonical semantic observations emitted by one native UI embodiment while applying a shared vector corpus.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["testimonyType", "applicationId", "embodimentTarget", "authorityDigest", "vectorCorpusDigest", "executableOrigin", "vectorResults"],
+  "properties": {
+    "testimonyType": { "const": "consumer-ui-testimony.v1" },
+    "applicationId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "embodimentTarget": { "$ref": "consumer-ui-parity-evidence.schema.json#/$defs/target" },
+    "authorityDigest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "vectorCorpusDigest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "executableOrigin": { "const": "PROJECTED_ONLY" },
+    "vectorResults": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/vectorResult" }
+    }
+  },
+  "$defs": {
+    "semanticId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "disposition": {
+      "type": "string",
+      "enum": ["COMPLETED", "BLOCKED_BY_VALIDATION", "UNAVAILABLE", "FAILED_TO_REALIZE"]
+    },
+    "observation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["target", "value"],
+      "properties": {
+        "target": { "$ref": "#/$defs/semanticId" },
+        "value": true
+      }
+    },
+    "observations": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["information", "availability", "validation", "state", "feedback", "navigation", "accessibility"],
+      "properties": {
+        "information": { "type": "array", "items": { "$ref": "#/$defs/observation" } },
+        "availability": { "type": "array", "items": { "$ref": "#/$defs/observation" } },
+        "validation": { "type": "array", "items": { "$ref": "#/$defs/observation" } },
+        "state": { "type": "array", "items": { "$ref": "#/$defs/observation" } },
+        "feedback": { "type": "array", "items": { "$ref": "#/$defs/observation" } },
+        "navigation": { "type": "array", "items": { "$ref": "#/$defs/observation" } },
+        "accessibility": { "type": "array", "items": { "$ref": "#/$defs/observation" } }
+      }
+    },
+    "stepResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stepId", "semanticAction", "target", "interactionDisposition", "observations"],
+      "properties": {
+        "stepId": { "$ref": "#/$defs/semanticId" },
+        "semanticAction": { "type": "string", "enum": ["set-state", "invoke-action", "observe"] },
+        "target": { "$ref": "#/$defs/semanticId" },
+        "interactionDisposition": { "$ref": "#/$defs/disposition" },
+        "observations": { "$ref": "#/$defs/observations" }
+      }
+    },
+    "vectorResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["vectorId", "interactionDisposition", "steps"],
+      "properties": {
+        "vectorId": { "$ref": "#/$defs/semanticId" },
+        "interactionDisposition": { "$ref": "#/$defs/disposition" },
+        "steps": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/stepResult" } }
+      }
+    }
+  }
+}

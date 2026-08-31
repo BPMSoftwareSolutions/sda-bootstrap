@@ -1,0 +1,84 @@
+{
+  "profileType": "generic-proof-binding-evaluation-conformance-profile.v1",
+  "lifecycle": "ADMITTED",
+  "bindingRules": [
+    {
+      "ruleId": "bind-fixture-scenario.v1",
+      "fromKind": "FIXTURE",
+      "relationshipKind": "FIXTURE_EXERCISES_SCENARIO",
+      "toKind": "SCENARIO",
+      "permittedBasis": [
+        "explicit fixture authority scenario reference",
+        "canonical fixture ownership and declared scenario ID under this rule"
+      ],
+      "permittedBasisKinds": [
+        "EXPLICIT_AUTHORITY",
+        "DETERMINISTIC_RULE"
+      ]
+    },
+    {
+      "ruleId": "bind-fixture-projected-test.v1",
+      "fromKind": "FIXTURE",
+      "relationshipKind": "FIXTURE_EXECUTED_AS_PROJECTED_TEST",
+      "toKind": "PROJECTED_TEST",
+      "permittedBasis": [
+        "declared projected fixture connector and direct projected test seam"
+      ],
+      "permittedBasisKinds": [
+        "EXPLICIT_AUTHORITY",
+        "DETERMINISTIC_RULE"
+      ]
+    },
+    {
+      "ruleId": "bind-evidence-subject.v1",
+      "fromKind": "CONFORMANCE_EVIDENCE",
+      "relationshipKind": "EVIDENCE_PROVES_SUBJECT",
+      "toKinds": [
+        "PROJECTED_TEST",
+        "PROOF_OBLIGATION",
+        "SCENARIO",
+        "CAPABILITY"
+      ],
+      "permittedBasis": [
+        "explicit evidence subject lineage",
+        "projected execution receipt with pinned fixture and test identities"
+      ],
+      "permittedBasisKinds": [
+        "EXPLICIT_AUTHORITY",
+        "DETERMINISTIC_RULE"
+      ]
+    }
+  ],
+  "prohibitedBasis": [
+    "directory proximity",
+    "matching prose",
+    "lexical similarity",
+    "embedding similarity",
+    "model testimony"
+  ],
+  "obligationDispositions": [
+    "SATISFIED",
+    "NOT_SATISFIED",
+    "NOT_OBSERVABLE",
+    "NOT_APPLICABLE"
+  ],
+  "evaluationOrder": [
+    "NOT_APPLICABLE when admitted authority excludes the obligation",
+    "NOT_OBSERVABLE when required subject binding or evidence is absent or stale",
+    "NOT_SATISFIED when current admitted evidence explicitly fails the obligation",
+    "SATISFIED when current admitted evidence explicitly closes the obligation"
+  ],
+  "evaluationRuleIds": [
+    "evaluation-order.v1",
+    "bind-fixture-scenario.v1",
+    "bind-fixture-projected-test.v1",
+    "bind-evidence-subject.v1"
+  ],
+  "absenceMeansFailureByDefault": false,
+  "exactlyOneDispositionPerObligation": true,
+  "conformanceReceiptContractId": "proof-binding-evaluation-provider-conformance.v1",
+  "admissionClaims": {
+    "providerConformance": "NOT_OBSERVABLE",
+    "receiptIssuance": "NOT_OBSERVABLE"
+  }
+}

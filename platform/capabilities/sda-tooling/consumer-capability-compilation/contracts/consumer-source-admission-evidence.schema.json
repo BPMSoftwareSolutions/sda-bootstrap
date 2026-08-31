@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/tooling/consumer-source-admission-evidence.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["evidenceType", "workspaceId", "sourceFacts", "facts", "disposition"],
+  "properties": {
+    "evidenceType": { "const": "consumer-source-admission-evidence.v1" },
+    "workspaceId": { "type": "string" },
+    "sourceFacts": { "type": "array", "minItems": 1 },
+    "facts": { "type": "object" },
+    "disposition": { "const": "ADMITTED" }
+  }
+}

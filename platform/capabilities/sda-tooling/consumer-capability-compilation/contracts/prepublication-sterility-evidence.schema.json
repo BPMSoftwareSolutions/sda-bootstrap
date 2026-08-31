@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/tooling/prepublication-sterility-evidence.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["conformanceType", "sourceOrigin", "forbiddenExecutableMechanics", "violations", "disposition"],
+  "properties": {
+    "conformanceType": { "const": "projected-artifact-mechanical-sterility.v1" },
+    "sourceOrigin": { "const": "PROJECTED" },
+    "forbiddenExecutableMechanics": { "type": "object" },
+    "violations": { "type": "array" },
+    "disposition": { "enum": ["PURE_PROJECTION_CONFORMS", "PROJECTED_EXECUTION_MECHANIC_VIOLATION"] }
+  }
+}

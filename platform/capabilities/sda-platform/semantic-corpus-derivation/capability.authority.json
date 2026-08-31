@@ -1,0 +1,24 @@
+{
+  "capabilityId": "semantic-corpus-derivation",
+  "name": "Derive semantic corpus records",
+  "mode": ["feature", "capability"],
+  "userStory": {
+    "actor": "semantic corpus maintainer",
+    "intent": "derive canonical semantic objects, relationships, and attributable findings from one pinned source generation",
+    "outcome": "semantic corpus candidates remain exact, reproducible, and non-authoritative for admission or proof"
+  },
+  "experience": {
+    "experienceType": "promised-experience.v1",
+    "experienceId": "semantic-corpus-derivation-is-exact-and-reproducible",
+    "actor": "semantic corpus maintainer",
+    "promise": "The projected capability either returns exact deterministic derivation evidence or an attributable rejection without inventing semantic authority.",
+    "observableConditions": [
+      {"conditionId": "authority-and-lineage-bindings-are-exact", "statement": "profile, ontology, rule, receipt, source-byte, representation, and snapshot identities are recomputed before derivation"},
+      {"conditionId": "objects-and-relationships-follow-admitted-rules", "statement": "only admitted explicit or deterministic rule bases may create canonical records"},
+      {"conditionId": "absent-endpoints-remain-open", "statement": "declared relationships with absent endpoints produce attributable open findings and no invented endpoint"},
+      {"conditionId": "record-order-and-digests-are-reproducible", "statement": "discovery order, locale, time, and randomness do not influence ordered records or evidence digests"},
+      {"conditionId": "unavailable-pure-mechanics-reject-without-claims", "statement": "a projection missing required pure mechanics returns rejected evidence and claims no corpus, proof, publication, or conformance authority"}
+    ]
+  },
+  "rootScenarioId": "derive-semantic-corpus-records"
+}

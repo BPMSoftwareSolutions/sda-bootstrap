@@ -1,0 +1,165 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/semantic-carrier/semantic-carrier-compilation-evaluation-request.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contractId",
+    "payload"
+  ],
+  "properties": {
+    "contractId": {
+      "const": "semantic-carrier-compilation-evaluation-request.v1"
+    },
+    "payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "graphDigest",
+        "subject",
+        "evaluatorCapabilityId",
+        "validatorReceipt",
+        "extractionReceipt",
+        "evidence"
+      ],
+      "properties": {
+        "graphDigest": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "subject": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "capabilityId"
+          ],
+          "properties": {
+            "kind": {
+              "enum": [
+                "ORDINARY_CAPABILITY",
+                "EVALUATOR_REPLACEMENT"
+              ]
+            },
+            "capabilityId": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "evaluatorCapabilityId": {
+          "const": "evaluate-semantic-carrier-compilation-evidence"
+        },
+        "validatorReceipt": {
+          "type": "object",
+          "required": [
+            "disposition",
+            "sourceDigest",
+            "receiptDigest"
+          ],
+          "properties": {
+            "disposition": {
+              "type": "string"
+            },
+            "sourceDigest": {
+              "type": "string",
+              "pattern": "^sha256:[a-f0-9]{64}$"
+            },
+            "receiptDigest": {
+              "type": "string",
+              "pattern": "^sha256:[a-f0-9]{64}$"
+            }
+          },
+          "additionalProperties": true
+        },
+        "extractionReceipt": {
+          "type": "object",
+          "required": [
+            "disposition",
+            "graphDigest",
+            "carrierBlackout",
+            "validatorReceiptDigest",
+            "receiptDigest"
+          ],
+          "properties": {
+            "disposition": {
+              "type": "string"
+            },
+            "graphDigest": {
+              "type": "string",
+              "pattern": "^sha256:[a-f0-9]{64}$"
+            },
+            "carrierBlackout": {
+              "type": "boolean"
+            },
+            "validatorReceiptDigest": {
+              "type": "string",
+              "pattern": "^sha256:[a-f0-9]{64}$"
+            },
+            "receiptDigest": {
+              "type": "string",
+              "pattern": "^sha256:[a-f0-9]{64}$"
+            }
+          },
+          "additionalProperties": true
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "evidenceId",
+              "graphDigest",
+              "producerCapabilityId",
+              "manufacturedByEvaluator",
+              "disposition",
+              "receiptDigest"
+            ],
+            "properties": {
+              "evidenceId": {
+                "enum": [
+                  "blackout-proof",
+                  "blueprint-projection",
+                  "fixture-origin-proof",
+                  "geometry-proof",
+                  "gherkin-projection",
+                  "invalid-specimen-proof",
+                  "mutation-proof",
+                  "provider-target-qualification",
+                  "realization-proof",
+                  "replay-proof",
+                  "route-contract-continuity-proof",
+                  "semantic-projection",
+                  "specimen-independence-proof",
+                  "zero-inference-proof"
+                ]
+              },
+              "graphDigest": {
+                "type": "string",
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              },
+              "producerCapabilityId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "manufacturedByEvaluator": {
+                "type": "boolean"
+              },
+              "disposition": {
+                "enum": [
+                  "PASS",
+                  "FAIL"
+                ]
+              },
+              "receiptDigest": {
+                "type": "string",
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

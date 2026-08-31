@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/scenario-execution-vector-fixture.v1.schema.json",
+  "title": "Scenario Execution Vector Fixture",
+  "description": "A canonical behavioral conformance vector's given half: a scenario, an input, and prescribed test-double behavior for the three adapter-variable execution-vector steps (admit-input, execute-event-authority, admit-outcome). Every conforming language embodiment must produce the disposition declared by the paired expectation (expectationId), which lives separately under conformance/expectations/ so the given and the then remain independently authored and independently checkable. See K006A/K006B/K006E in governance/workspace/governance-rules.json.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["fixtureId", "expectationId", "scenario", "input", "admitInput"],
+  "properties": {
+    "fixtureId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "expectationId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "description": { "type": "string", "minLength": 1 },
+    "scenario": { "$ref": "scenario.schema.json" },
+    "input": {},
+    "admitInput": { "$ref": "#/$defs/admissionBehavior" },
+    "executeEventAuthority": { "$ref": "#/$defs/executionBehavior" },
+    "admitOutcome": { "$ref": "#/$defs/admissionBehavior" }
+  },
+  "$defs": {
+    "admissionBehavior": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["outcome"],
+      "properties": {
+        "outcome": { "type": "string", "enum": ["admit", "reject"] },
+        "admittedValue": {}
+      }
+    },
+    "executionBehavior": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["outcome"],
+      "properties": {
+        "outcome": { "type": "string", "enum": ["succeed", "throw"] },
+        "candidateOutcome": {}
+      }
+    }
+  }
+}

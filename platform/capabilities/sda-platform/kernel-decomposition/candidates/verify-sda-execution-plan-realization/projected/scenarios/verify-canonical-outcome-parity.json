@@ -1,0 +1,38 @@
+{
+  "scenarioId": "verify-canonical-outcome-parity",
+  "input": {
+    "inputId": "canonical-outcome-parity-verification-request",
+    "contract": {
+      "contractId": "canonical-outcome-parity-verification-request.v1"
+    }
+  },
+  "event": {
+    "eventId": "verify-canonical-outcome-parity",
+    "executionAuthorityId": "verify-canonical-outcome-parity.v1"
+  },
+  "outcome": {
+    "outcomeId": "canonical-outcome-parity-conformance",
+    "contract": {
+      "contractId": "canonical-outcome-parity-conformance.v1"
+    },
+    "experience": {
+      "statement": "one cross-target outcome-parity disposition is established"
+    },
+    "terminal": true
+  },
+  "gherkin": {
+    "given": {
+      "semanticRef": "verify-canonical-outcome-parity.given",
+      "text": "admitted canonical outcome authority and per-target observed outcomes"
+    },
+    "when": {
+      "semanticRef": "verify-canonical-outcome-parity.when",
+      "text": "canonical outcome parity is evaluated"
+    },
+    "then": {
+      "semanticRef": "verify-canonical-outcome-parity.then",
+      "text": "one cross-target outcome-parity disposition is established"
+    }
+  },
+  "name": "Verify canonical outcome parity"
+}

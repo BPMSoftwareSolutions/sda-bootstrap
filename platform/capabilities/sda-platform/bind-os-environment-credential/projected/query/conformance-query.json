@@ -1,0 +1,1240 @@
+{
+  "queryType": "projected-consumer-conformance-query.v1",
+  "queryId": "scenario-conformance-closure",
+  "capabilityId": "bind-os-environment-credential",
+  "subjects": [
+    "feature",
+    "scenario",
+    "contract",
+    "execution-authority",
+    "transition",
+    "interface",
+    "projection",
+    "telemetry",
+    "execution",
+    "behavior",
+    "platform-capability",
+    "executable-origin"
+  ],
+  "requiredClosures": [
+    "feature-to-scenario",
+    "scenario-to-contract",
+    "scenario-to-event-authority",
+    "outcome-to-transition",
+    "transition-to-next-input",
+    "scenario-to-interface",
+    "execution-to-telemetry",
+    "scenario-to-projection",
+    "expected-to-observed-execution",
+    "root-to-terminal-behavior",
+    "required-mechanic-to-platform-capability",
+    "consumer-executable-origin",
+    "dynamic-semantic-execution",
+    "domain-contract-admission"
+  ],
+  "dispositionPolicy": "all-required-closures-conform",
+  "authorityGraph": {
+    "rootScenarioId": "bind-os-environment-credential",
+    "scenarios": [
+      {
+        "scenarioId": "bind-os-environment-credential",
+        "input": {
+          "inputId": "os-environment-credential-binding-request",
+          "contract": {
+            "contractId": "os-environment-credential-binding-request.v1"
+          }
+        },
+        "event": {
+          "eventId": "os-environment-credential-binding-requested",
+          "executionAuthorityId": "bind-os-environment-credential.v1"
+        },
+        "outcome": {
+          "outcomeId": "os-environment-credential-binding",
+          "contract": {
+            "contractId": "os-environment-credential-binding-evidence.v1"
+          },
+          "experience": {
+            "statement": "an opaque invocation-scoped binding and secret-free availability lineage are returned without exposing the credential value"
+          },
+          "terminal": true
+        },
+        "gherkin": {
+          "given": {
+            "semanticRef": "bind-os-environment-credential.given",
+            "text": "one admitted credential reference name and one matching invocation identity"
+          },
+          "when": {
+            "semanticRef": "bind-os-environment-credential.when",
+            "text": "the reference is bound in the fixed resolution order"
+          },
+          "then": {
+            "semanticRef": "bind-os-environment-credential.then",
+            "text": "an opaque invocation-scoped binding and secret-free availability lineage are returned without exposing the credential value"
+          }
+        },
+        "name": "Bind one authorized OS environment credential reference"
+      },
+      {
+        "scenarioId": "hold-missing-os-environment-credential",
+        "input": {
+          "inputId": "os-environment-credential-binding-request",
+          "contract": {
+            "contractId": "os-environment-credential-binding-request.v1"
+          }
+        },
+        "event": {
+          "eventId": "missing-os-environment-credential-binding-requested",
+          "executionAuthorityId": "hold-missing-os-environment-credential.v1"
+        },
+        "outcome": {
+          "outcomeId": "os-environment-credential-not-available",
+          "contract": {
+            "contractId": "os-environment-credential-binding-evidence.v1"
+          },
+          "experience": {
+            "statement": "CREDENTIAL_NOT_AVAILABLE and secret-free reference lineage are returned without creating a binding, reading alternatives, or authorizing an HTTP exchange"
+          },
+          "terminal": true
+        },
+        "gherkin": {
+          "given": {
+            "semanticRef": "hold-missing-os-environment-credential.given",
+            "text": "an admitted credential reference whose value is absent from the process environment and every operating-system scope"
+          },
+          "when": {
+            "semanticRef": "hold-missing-os-environment-credential.when",
+            "text": "the reference is bound"
+          },
+          "then": {
+            "semanticRef": "hold-missing-os-environment-credential.then",
+            "text": "CREDENTIAL_NOT_AVAILABLE and secret-free reference lineage are returned without creating a binding, reading alternatives, or authorizing an HTTP exchange"
+          }
+        },
+        "name": "Hold a reference absent from every resolution scope"
+      },
+      {
+        "scenarioId": "reject-unauthorized-os-environment-credential-reference",
+        "input": {
+          "inputId": "os-environment-credential-binding-request",
+          "contract": {
+            "contractId": "os-environment-credential-binding-request.v1"
+          }
+        },
+        "event": {
+          "eventId": "unauthorized-os-environment-credential-binding-requested",
+          "executionAuthorityId": "reject-unauthorized-os-environment-credential-reference.v1"
+        },
+        "outcome": {
+          "outcomeId": "os-environment-credential-not-available",
+          "contract": {
+            "contractId": "os-environment-credential-binding-evidence.v1"
+          },
+          "experience": {
+            "statement": "the unauthorized reference is rejected without attempting to read it or enumerating nearby credentials"
+          },
+          "terminal": true
+        },
+        "gherkin": {
+          "given": {
+            "semanticRef": "reject-unauthorized-os-environment-credential-reference.given",
+            "text": "a request naming a reference the credential authority does not declare"
+          },
+          "when": {
+            "semanticRef": "reject-unauthorized-os-environment-credential-reference.when",
+            "text": "credential-reference authorization is evaluated"
+          },
+          "then": {
+            "semanticRef": "reject-unauthorized-os-environment-credential-reference.then",
+            "text": "the unauthorized reference is rejected without attempting to read it or enumerating nearby credentials"
+          }
+        },
+        "name": "Reject a reference name outside the admitted credential authority"
+      }
+    ],
+    "transitions": [],
+    "executionAuthorities": [
+      {
+        "id": "bind-os-environment-credential.v1",
+        "owningScenarioId": "bind-os-environment-credential",
+        "operations": [
+          {
+            "kind": "invoke-port",
+            "portId": "bind-os-credential-port"
+          },
+          {
+            "kind": "invoke-scenario",
+            "scenarioId": "hold-missing-os-environment-credential"
+          },
+          {
+            "kind": "invoke-scenario",
+            "scenarioId": "reject-unauthorized-os-environment-credential-reference"
+          }
+        ]
+      },
+      {
+        "id": "hold-missing-os-environment-credential.v1",
+        "owningScenarioId": "hold-missing-os-environment-credential",
+        "operations": [
+          {
+            "kind": "invoke-port",
+            "portId": "preserve-os-credential-evidence-port"
+          }
+        ]
+      },
+      {
+        "id": "reject-unauthorized-os-environment-credential-reference.v1",
+        "owningScenarioId": "reject-unauthorized-os-environment-credential-reference",
+        "operations": [
+          {
+            "kind": "invoke-port",
+            "portId": "preserve-os-credential-evidence-port"
+          }
+        ]
+      }
+    ],
+    "projectionAuthorities": [],
+    "interfaceAuthority": {
+      "interfaceAuthorityType": "consumer-interface-authority.v1",
+      "contractValidatorCapabilityId": "sda-schema-contract-admission.v1",
+      "contractCatalog": "contracts/contract-catalog.json",
+      "requiredPlatformObligations": [
+        "dynamic-semantic-execution",
+        "domain-contract-admission"
+      ],
+      "interfaces": [
+        {
+          "interfaceId": "bind-os-environment-credential-cli",
+          "kind": "cli",
+          "rootScenarioId": "bind-os-environment-credential",
+          "platformCapabilityId": "sda-json-cli.v1",
+          "projectionTargets": [
+            "node"
+          ]
+        }
+      ],
+      "portBindings": [
+        {
+          "portId": "bind-os-credential-port",
+          "platformCapabilityId": "sda-os-environment-credential-port.v1",
+          "configuration": {
+            "credentialAuthorities": [
+              {
+                "referenceName": "LOC_GEMINI_API_KEY",
+                "requestingCapabilityIds": [
+                  "execute-governed-model-invocation",
+                  "obtain-governed-model-response",
+                  "author-tooling-capability-candidate",
+                  "execute-projected-model-provider-attempt"
+                ],
+                "endpointAuthorityDigests": [
+                  "sha256:57ab352b0978dca5e5ce33a28ccd7027c20df96da4138dbc7e8088f7c8fb0c04"
+                ],
+                "effectScopes": [
+                  "governed-model-invocation"
+                ],
+                "injectionRule": {
+                  "id": "gemini-x-goog-api-key.v1",
+                  "headerName": "x-goog-api-key"
+                },
+                "lifetimeMilliseconds": 120000
+              },
+              {
+                "referenceName": "LOC_OPENAI_API_KEY",
+                "requestingCapabilityIds": [
+                  "execute-governed-model-invocation",
+                  "obtain-governed-model-response",
+                  "author-tooling-capability-candidate",
+                  "execute-projected-model-provider-attempt"
+                ],
+                "endpointAuthorityDigests": [
+                  "sha256:b70b8bc81f93ef949d7ae6cabbf71a56b4af2440c5489c5c4037923b534f0109"
+                ],
+                "effectScopes": [
+                  "governed-model-invocation"
+                ],
+                "injectionRule": {
+                  "id": "openai-bearer-authorization.v1",
+                  "headerName": "authorization"
+                },
+                "lifetimeMilliseconds": 120000
+              },
+              {
+                "referenceName": "SIDEFX_ABSENT_TEST_CREDENTIAL",
+                "requestingCapabilityIds": [
+                  "execute-governed-model-invocation"
+                ],
+                "endpointAuthorityDigests": [
+                  "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+                ],
+                "effectScopes": [
+                  "governed-model-invocation"
+                ],
+                "injectionRule": {
+                  "id": "absent-test-credential.v1",
+                  "headerName": "x-test-credential"
+                },
+                "lifetimeMilliseconds": 120000
+              }
+            ]
+          }
+        },
+        {
+          "portId": "preserve-os-credential-evidence-port",
+          "platformCapabilityId": "sda-authority-transformation-port.v1",
+          "configuration": {
+            "expression": {
+              "op": "path",
+              "from": "input",
+              "path": ""
+            }
+          }
+        }
+      ],
+      "projectionBindings": []
+    },
+    "contractAuthorities": {
+      "authorityType": "consumer-contract-authorities.v1",
+      "contracts": {
+        "os-environment-credential-binding-request.v1": {
+          "schemaRef": "input.schema.json",
+          "schemaId": "https://schemas.scenario-driven.dev/sda-platform/os-environment-credential-binding-request.v1.schema.json",
+          "schemaDigest": "f016c249286c0213a8ea238e285f23b5919bb8a6458ef0785b3ba4637778253b",
+          "schema": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "$id": "https://schemas.scenario-driven.dev/sda-platform/os-environment-credential-binding-request.v1.schema.json",
+            "title": "OS environment credential binding request v1",
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "contractId",
+                  "credentialReference",
+                  "invocationIdentity",
+                  "requestingCapabilityId",
+                  "endpointAuthorityDigest",
+                  "effectScope"
+                ],
+                "properties": {
+                  "contractId": {
+                    "const": "os-environment-credential-binding-request.v1"
+                  },
+                  "credentialReference": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9_-]+$"
+                  },
+                  "invocationIdentity": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "requestingCapabilityId": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "endpointAuthorityDigest": {
+                    "type": "string",
+                    "pattern": "^sha256:[a-f0-9]{64}$"
+                  },
+                  "effectScope": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "required": [
+                  "contractId",
+                  "disposition",
+                  "opaqueBindingId",
+                  "nonDisclosureVerified"
+                ],
+                "properties": {
+                  "contractId": {
+                    "const": "os-environment-credential-binding-evidence.v1"
+                  },
+                  "disposition": {
+                    "type": "string"
+                  },
+                  "opaqueBindingId": {
+                    "type": "string"
+                  },
+                  "nonDisclosureVerified": {
+                    "const": true
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "os-environment-credential-binding-evidence.v1": {
+          "schemaRef": "outcome.schema.json",
+          "schemaId": "https://schemas.scenario-driven.dev/sda-platform/os-environment-credential-binding-evidence.v1.schema.json",
+          "schemaDigest": "4b4507fca6a63a4c2a5360f57209418177877696875e7a2864b0ade4ca2e4dfb",
+          "schema": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "$id": "https://schemas.scenario-driven.dev/sda-platform/os-environment-credential-binding-evidence.v1.schema.json",
+            "title": "OS environment credential binding evidence v1",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "contractId",
+              "disposition",
+              "opaqueBindingId",
+              "referenceName",
+              "invocationIdentity",
+              "requestingCapabilityId",
+              "endpointAuthorityDigest",
+              "resolutionScope",
+              "credentialInjectionRuleId",
+              "nonDisclosureVerified",
+              "effectLineage"
+            ],
+            "properties": {
+              "contractId": {
+                "const": "os-environment-credential-binding-evidence.v1"
+              },
+              "disposition": {
+                "enum": [
+                  "BOUND",
+                  "CREDENTIAL_NOT_AVAILABLE",
+                  "UNAUTHORIZED_REFERENCE",
+                  "IDENTITY_MISMATCH"
+                ]
+              },
+              "opaqueBindingId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "referenceName": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]+$"
+              },
+              "invocationIdentity": {
+                "type": "string",
+                "minLength": 1
+              },
+              "requestingCapabilityId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "endpointAuthorityDigest": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "pattern": "^(sha256:[a-f0-9]{64}|null)$"
+              },
+              "resolutionScope": {
+                "enum": [
+                  "PROCESS_ENVIRONMENT",
+                  "OS_USER_SCOPE",
+                  "OS_MACHINE_SCOPE",
+                  "NONE"
+                ]
+              },
+              "credentialInjectionRuleId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "nonDisclosureVerified": {
+                "const": true
+              },
+              "effectLineage": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "admittedPlatformCapabilities": [
+      {
+        "capabilityId": "sda-node-consumer-runtime.v1",
+        "kind": "consumer-runtime",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform",
+        "providesMechanics": [
+          "scenario-orchestration",
+          "contract-document-reading",
+          "canonicalization",
+          "schema-admission",
+          "authority-resolution",
+          "semantic-execution",
+          "telemetry-observation",
+          "scenario-invocation",
+          "transition-binding-projection",
+          "interface-delivery",
+          "runtime-projection",
+          "artifact-result-delivery",
+          "authority-driven-transformation",
+          "durable-artifact-materialization"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "capabilityId": "sda-json-cli.v1",
+        "kind": "interface-delivery",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Interface.JsonCli",
+        "providesMechanics": [
+          "cli-delivery",
+          "json-reading",
+          "json-serialization"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "capabilityId": "sda-declarative-value-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Execution.DeclarativeValuePort",
+        "providesMechanics": [
+          "event-port-invocation"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "capabilityId": "sda-declarative-state-projection.v1",
+        "kind": "state-projection",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Projection.DeclarativeStateProjection",
+        "providesMechanics": [
+          "state-projection"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "capabilityId": "sda-fixture-contract-validator.v1",
+        "kind": "contract-validator",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Schema.FixtureContractValidator",
+        "providesMechanics": [
+          "contract-validation"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "capabilityId": "sda-schema-contract-admission.v1",
+        "kind": "contract-validator",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Schema.JsonSchemaContractAdmission",
+        "providesMechanics": [
+          "contract-validation",
+          "schema-admission"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "capabilityId": "sda-authority-transformation-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Execution.AuthorityTransformation",
+        "providesMechanics": [
+          "event-port-invocation",
+          "authority-driven-transformation"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "capabilityId": "sda-json-authority-ingestion-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Ingestion.ProfileGovernedJsonAuthority",
+        "providesMechanics": [
+          "event-port-invocation",
+          "exact-byte-json-observation",
+          "duplicate-key-detecting-lossless-json-parsing",
+          "declared-json-schema-authority-resolution",
+          "admitted-json-reference-closure",
+          "content-addressed-json-ingestion-receipt"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/json-authority-ingestion-provider.mjs",
+        "conformanceRef": "tools/tests/conformance/json-authority-ingestion.test.js",
+        "providerAuthorityRef": "capabilities/sda-platform/bind-profile-governed-json-authority-ingestion/profile-governed-json-authority-ingestor.authority.json",
+        "providerAuthorityDigest": "sha256:d1e595cbb627fc74baa5e25ff89616f21a2694e3188f6b4e794ee0e19a2111dd",
+        "conformanceDigest": "sha256:996da4aa2be1cc142434acb52af530b83889103572feaf00639e8af155a89fb8"
+      },
+      {
+        "capabilityId": "sda-proof-binding-evaluation-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Evaluation.ProfileGovernedProofBinding",
+        "providesMechanics": [
+          "event-port-invocation",
+          "profile-governed-proof-binding-evaluation",
+          "ordered-proof-lineage-admission",
+          "prohibited-basis-rejection",
+          "stale-or-mixed-lineage-rejection",
+          "deterministic-reproduction-pinning",
+          "exactly-one-obligation-disposition"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/proof-binding-evaluation-provider.mjs",
+        "conformanceRef": "tools/tests/conformance/proof-binding-evaluation.test.js",
+        "providerAuthorityRef": "capabilities/sda-platform/bind-profile-governed-proof-binding-evaluation/profile-governed-proof-binding-evaluator.authority.json",
+        "providerAuthorityDigest": "sha256:d5dc07479b61141edb4e7e65ed8d1d1bf03cd9da1003d2f18c93b1190c5db3d2",
+        "conformanceDigest": "sha256:45d1aa258bde24c69090aa6a2b7944d4f56a52086833abe6081960799bdba584"
+      },
+      {
+        "capabilityId": "sda-semantic-vector-index.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Recall.DeterministicSemanticVectorIndex",
+        "providesMechanics": [
+          "event-port-invocation",
+          "deterministic-semantic-vector-projection",
+          "integer-overlap-similarity",
+          "provider-owned-ordering",
+          "novel-wording-recall"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/semantic-vector-index-provider.mjs",
+        "conformanceRef": "tools/tests/conformance/semantic-vector-index.test.js",
+        "providerAuthorityRef": "capabilities/sda-platform/bind-deterministic-semantic-vector-index/deterministic-semantic-vector-indexer.authority.json",
+        "providerAuthorityDigest": "sha256:09257724542df6afeedc0c2cf75ab1fab83bec8eabea22aa987918ebd3039293",
+        "conformanceDigest": "sha256:328d85d59e152bb62c297263db01e7b0dbfebc03c44039ed9dbbeaa318121ebb"
+      },
+      {
+        "capabilityId": "sda-os-environment-credential-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Effects.OsEnvironmentCredentialBinding",
+        "providesMechanics": [
+          "event-port-invocation",
+          "fixed-order-os-environment-credential-resolution",
+          "opaque-effect-scoped-credential-binding",
+          "secret-non-disclosure"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/os-environment-credential-provider.mjs",
+        "conformanceRef": "tools/tests/conformance/os-environment-credential.test.js",
+        "providerAuthorityRef": "capabilities/sda-platform/verify-os-environment-credential-conformance/conformance/os-environment-credential-conformance.v1.json",
+        "providerAuthorityDigest": "sha256:18fd84451cc39df955bcb89cc06e32d49b1f13c01cfa241d127e516c802940d5",
+        "conformanceDigest": "sha256:f5745c66095ec069dffb5f93810ba21ebb1ca1ca5db81479a614a73d48b53421"
+      },
+      {
+        "capabilityId": "sda-authority-state-projection.v1",
+        "kind": "state-projection",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Projection.AuthorityTransformation",
+        "providesMechanics": [
+          "state-projection",
+          "transition-binding-projection"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "capabilityId": "sda-filesystem-artifact-store.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Delivery.AtomicFilesystemArtifactStore",
+        "providesMechanics": [
+          "event-port-invocation",
+          "durable-artifact-materialization"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "capabilityId": "sda-external-observation-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Observation.HttpExternalObservationProvider",
+        "providesMechanics": [
+          "event-port-invocation",
+          "external-representation-observation"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/external-observation-port.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-external-credential-reference-binding-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Effects.ExternalCredentialReferenceBinding",
+        "providesMechanics": [
+          "event-port-invocation",
+          "external-credential-reference-binding",
+          "one-use-opaque-credential-handle",
+          "secret-non-disclosure"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/external-credential-reference-binding-provider.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/governed-http-effect-ports.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-governed-http-exchange-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Effects.GovernedHttpExchange",
+        "providesMechanics": [
+          "event-port-invocation",
+          "single-governed-http-exchange",
+          "bounded-response-observation",
+          "credential-injection-without-disclosure"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/governed-http-exchange-provider.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/governed-http-effect-ports.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-governed-repository-observation-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Observation.GovernedRepository",
+        "providesMechanics": [
+          "event-port-invocation",
+          "governed-repository-observation"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/governed-repository-observation-provider.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/governed-repository-observation-port.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-generic-llm-connector-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Cognition.GenericLlmConnector",
+        "providesMechanics": [
+          "event-port-invocation",
+          "governed-model-invocation",
+          "external-credential-reference",
+          "model-execution-lineage"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/generic-llm-connector-provider.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/generic-llm-connector-port.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-semantic-execution-graph-compilation-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Execution.SemanticExecutionGraphCompilation",
+        "providesMechanics": [
+          "event-port-invocation",
+          "authority-driven-transformation",
+          "semantic-execution-graph-compilation",
+          "canonical-topology-normalization",
+          "source-lineage-publication"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/semantic-execution-graph-compilation-provider.mjs",
+        "conformanceRef": "tools/tests/semantic-execution-graph.test.js"
+      },
+      {
+        "capabilityId": "sda-governed-tooling-binding-transaction-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Effects.GovernedToolingBindingTransaction",
+        "providesMechanics": [
+          "event-port-invocation",
+          "governed-binding-transaction",
+          "exact-byte-rollback",
+          "gate-execution-lineage"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/governed-tooling-binding-transaction-provider.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/governed-tooling-binding-transaction-port.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-governed-tooling-migration-operation-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Effects.GovernedToolingMigrationOperation",
+        "providesMechanics": [
+          "event-port-invocation",
+          "governed-tooling-migration-operation",
+          "effect-lineage"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/governed-tooling-migration-operation-provider.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/governed-tooling-migration-operation-port.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-batch-filesystem-shaper-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Delivery.TransactionalBatchFilesystemShaper",
+        "providesMechanics": [
+          "event-port-invocation",
+          "closed-batch-file-system-shaping",
+          "staged-hash-verified-commit",
+          "rollback-evidence"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/batch-filesystem-shaper-provider.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/batch-filesystem-shaper-port.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-governed-target-execution-observation-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Observation.GovernedTargetExecution",
+        "providesMechanics": [
+          "event-port-invocation",
+          "governed-target-execution-observation"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/governed-target-execution-observation-provider.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/governed-target-execution-observation-port.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-canonical-capability-feature-resolution-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Observation.CanonicalCapabilityFeatureResolution",
+        "providesMechanics": [
+          "event-port-invocation",
+          "governed-feature-reference-resolution",
+          "canonical-feature-byte-observation",
+          "canonical-root-identity-resolution"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/canonical-capability-feature-resolution-provider.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/canonical-capability-feature-resolution-port.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-projected-capability-invocation-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Execution.ProjectedCapabilityInvocation",
+        "providesMechanics": [
+          "event-port-invocation",
+          "projected-capability-invocation"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/projected-capability-invocation-port.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-projected-capability-invocation-port.v2",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Execution.ProjectedCapabilityInvocationAndBinding",
+        "providesMechanics": [
+          "event-port-invocation",
+          "projected-capability-invocation",
+          "parent-carrier-preservation",
+          "nested-execution-lineage",
+          "pinned-capability-binding"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/projected-capability-invocation-port.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-governed-serial-execution-port.v1",
+        "kind": "event-port",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Execution.GovernedSerialExecution",
+        "providesMechanics": [
+          "event-port-invocation",
+          "bounded-ordered-transaction-execution",
+          "projected-capability-invocation",
+          "nested-execution-lineage",
+          "continuation-authority-consultation"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/governed-serial-execution-provider.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/governed-serial-execution-port.conformance.test.mjs"
+      },
+      {
+        "capabilityId": "sda-json-query-cli.v1",
+        "kind": "interface-delivery",
+        "status": "ADMITTED",
+        "projectionTarget": "node",
+        "provider": "ScenarioKernel.NodePlatform.Interface.JsonQueryCli",
+        "providesMechanics": [
+          "query-cli-delivery",
+          "declared-query-evaluation",
+          "json-reading",
+          "json-serialization"
+        ],
+        "implementationRef": "languages/typescript/runtimes/node/query-cli.mjs",
+        "conformanceRef": "languages/typescript/runtimes/node/query-cli.conformance.test.mjs"
+      }
+    ]
+  },
+  "expectedTelemetry": {
+    "traceType": "projected-expected-consumer-trace.v1",
+    "telemetryId": "consumer-scenario-execution-telemetry",
+    "capabilityId": "bind-os-environment-credential",
+    "rootScenarioId": "bind-os-environment-credential",
+    "observationType": "scenario-execution-observation.v1",
+    "lineageFields": [
+      "executionId",
+      "rootExecutionId",
+      "parentExecutionId",
+      "scenarioId"
+    ],
+    "scenarios": [
+      {
+        "scenarioId": "bind-os-environment-credential",
+        "steps": [
+          "admit-input",
+          "resolve-event-authority",
+          "execute-event-authority",
+          "admit-outcome",
+          "resolve-disposition"
+        ],
+        "expectedTransitionId": null
+      },
+      {
+        "scenarioId": "hold-missing-os-environment-credential",
+        "steps": [
+          "admit-input",
+          "resolve-event-authority",
+          "execute-event-authority",
+          "admit-outcome",
+          "resolve-disposition"
+        ],
+        "expectedTransitionId": null
+      },
+      {
+        "scenarioId": "reject-unauthorized-os-environment-credential-reference",
+        "steps": [
+          "admit-input",
+          "resolve-event-authority",
+          "execute-event-authority",
+          "admit-outcome",
+          "resolve-disposition"
+        ],
+        "expectedTransitionId": null
+      }
+    ]
+  },
+  "mechanicResolution": {
+    "resolutionType": "consumer-platform-mechanic-resolution.v1",
+    "projectionTarget": "node",
+    "requirements": [
+      {
+        "mechanicId": "contract-document-reading",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "canonicalization",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "schema-admission",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "authority-resolution",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "semantic-execution",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "telemetry-observation",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "scenario-invocation",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "transition-binding-projection",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "interface-delivery",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "runtime-projection",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "artifact-result-delivery",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "authority-driven-transformation",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "durable-artifact-materialization",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1"
+      },
+      {
+        "mechanicId": "contract-validation",
+        "capabilityKind": "contract-validator",
+        "requiredBy": "scenario-contract-admission",
+        "requestedCapabilityId": "sda-schema-contract-admission.v1"
+      },
+      {
+        "mechanicId": "cli-delivery",
+        "capabilityKind": "interface-delivery",
+        "requiredBy": "interface:bind-os-environment-credential-cli",
+        "requestedCapabilityId": "sda-json-cli.v1"
+      },
+      {
+        "mechanicId": "json-reading",
+        "capabilityKind": "interface-delivery",
+        "requiredBy": "interface:bind-os-environment-credential-cli",
+        "requestedCapabilityId": "sda-json-cli.v1"
+      },
+      {
+        "mechanicId": "json-serialization",
+        "capabilityKind": "interface-delivery",
+        "requiredBy": "interface:bind-os-environment-credential-cli",
+        "requestedCapabilityId": "sda-json-cli.v1"
+      },
+      {
+        "mechanicId": "event-port-invocation",
+        "capabilityKind": "event-port",
+        "requiredBy": "port:bind-os-credential-port",
+        "requestedCapabilityId": "sda-os-environment-credential-port.v1"
+      },
+      {
+        "mechanicId": "event-port-invocation",
+        "capabilityKind": "event-port",
+        "requiredBy": "port:preserve-os-credential-evidence-port",
+        "requestedCapabilityId": "sda-authority-transformation-port.v1"
+      }
+    ],
+    "resolutions": [
+      {
+        "mechanicId": "contract-document-reading",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-node-consumer-runtime.v1",
+        "provider": "ScenarioKernel.NodePlatform",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "canonicalization",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-node-consumer-runtime.v1",
+        "provider": "ScenarioKernel.NodePlatform",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "schema-admission",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-node-consumer-runtime.v1",
+        "provider": "ScenarioKernel.NodePlatform",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "authority-resolution",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-node-consumer-runtime.v1",
+        "provider": "ScenarioKernel.NodePlatform",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "semantic-execution",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-node-consumer-runtime.v1",
+        "provider": "ScenarioKernel.NodePlatform",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "telemetry-observation",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-node-consumer-runtime.v1",
+        "provider": "ScenarioKernel.NodePlatform",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "scenario-invocation",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-node-consumer-runtime.v1",
+        "provider": "ScenarioKernel.NodePlatform",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "transition-binding-projection",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-node-consumer-runtime.v1",
+        "provider": "ScenarioKernel.NodePlatform",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "interface-delivery",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-node-consumer-runtime.v1",
+        "provider": "ScenarioKernel.NodePlatform",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "runtime-projection",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-node-consumer-runtime.v1",
+        "provider": "ScenarioKernel.NodePlatform",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "artifact-result-delivery",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-node-consumer-runtime.v1",
+        "provider": "ScenarioKernel.NodePlatform",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "authority-driven-transformation",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-node-consumer-runtime.v1",
+        "provider": "ScenarioKernel.NodePlatform",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "durable-artifact-materialization",
+        "capabilityKind": "consumer-runtime",
+        "requiredBy": "mandatory-profile:sda-consumer-mandatory-mechanics.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-node-consumer-runtime.v1",
+        "provider": "ScenarioKernel.NodePlatform",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "contract-validation",
+        "capabilityKind": "contract-validator",
+        "requiredBy": "scenario-contract-admission",
+        "requestedCapabilityId": "sda-schema-contract-admission.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-schema-contract-admission.v1",
+        "provider": "ScenarioKernel.NodePlatform.Schema.JsonSchemaContractAdmission",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "cli-delivery",
+        "capabilityKind": "interface-delivery",
+        "requiredBy": "interface:bind-os-environment-credential-cli",
+        "requestedCapabilityId": "sda-json-cli.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-json-cli.v1",
+        "provider": "ScenarioKernel.NodePlatform.Interface.JsonCli",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "json-reading",
+        "capabilityKind": "interface-delivery",
+        "requiredBy": "interface:bind-os-environment-credential-cli",
+        "requestedCapabilityId": "sda-json-cli.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-json-cli.v1",
+        "provider": "ScenarioKernel.NodePlatform.Interface.JsonCli",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "json-serialization",
+        "capabilityKind": "interface-delivery",
+        "requiredBy": "interface:bind-os-environment-credential-cli",
+        "requestedCapabilityId": "sda-json-cli.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-json-cli.v1",
+        "provider": "ScenarioKernel.NodePlatform.Interface.JsonCli",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      },
+      {
+        "mechanicId": "event-port-invocation",
+        "capabilityKind": "event-port",
+        "requiredBy": "port:bind-os-credential-port",
+        "requestedCapabilityId": "sda-os-environment-credential-port.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-os-environment-credential-port.v1",
+        "provider": "ScenarioKernel.NodePlatform.Effects.OsEnvironmentCredentialBinding",
+        "implementationRef": "languages/typescript/runtimes/node/os-environment-credential-provider.mjs",
+        "conformanceRef": "tools/tests/conformance/os-environment-credential.test.js"
+      },
+      {
+        "mechanicId": "event-port-invocation",
+        "capabilityKind": "event-port",
+        "requiredBy": "port:preserve-os-credential-evidence-port",
+        "requestedCapabilityId": "sda-authority-transformation-port.v1",
+        "status": "AVAILABLE",
+        "capabilityId": "sda-authority-transformation-port.v1",
+        "provider": "ScenarioKernel.NodePlatform.Execution.AuthorityTransformation",
+        "implementationRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+        "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
+      }
+    ],
+    "disposition": "RESOLVED"
+  },
+  "executableOrigin": {
+    "originType": "consumer-executable-origin.v1",
+    "disposition": "PROJECTED_ONLY",
+    "unauthorizedFiles": []
+  }
+}

@@ -1,0 +1,203 @@
+{
+  "projectionManifestType": "consumer-capability-projection-manifest.v1",
+  "generator": "scenario-driven-architecture/tools/src/consumer-projection",
+  "authorityRefs": [
+    "../features/project-semantic-element-realization.feature",
+    "capability.authority.json",
+    "semantic-graph.authority.json",
+    "execution-authorities.authority.json",
+    "projection-authorities.authority.json",
+    "interfaces.authority.json",
+    "fixtures.authority.json",
+    "../../../../kernel/semantic-authority/consumer/scenario-conformance-closure.query-authority.json",
+    "../../../../kernel/semantic-authority/consumer/scenario-execution.telemetry-authority.json"
+  ],
+  "admittedPlatformCapabilities": [
+    "sda-authority-state-projection.v1",
+    "sda-authority-transformation-port.v1",
+    "sda-batch-filesystem-shaper-port.v1",
+    "sda-canonical-capability-feature-resolution-port.v1",
+    "sda-csharp-admitted-consumer-platform.v1",
+    "sda-csharp-consumer-runtime.v1",
+    "sda-csharp-declarative-consumer-mechanics.v1",
+    "sda-csharp-filesystem-artifact-store.v1",
+    "sda-csharp-in-memory-authority-resolver.v1",
+    "sda-csharp-in-memory-execution-observer.v1",
+    "sda-csharp-in-memory-semantic-executor.v1",
+    "sda-csharp-json-representation.v1",
+    "sda-csharp-json-schema-contract-validator.v1",
+    "sda-csharp-sdk.v1",
+    "sda-csharp-semantic-transformation.v1",
+    "sda-declarative-state-projection.v1",
+    "sda-declarative-value-port.v1",
+    "sda-external-observation-port.v1",
+    "sda-filesystem-artifact-store.v1",
+    "sda-fixture-contract-validator.v1",
+    "sda-generic-llm-connector-port.v1",
+    "sda-governed-repository-observation-port.v1",
+    "sda-governed-serial-execution-port.v1",
+    "sda-governed-target-execution-observation-port.v1",
+    "sda-governed-tooling-binding-transaction-port.v1",
+    "sda-governed-tooling-migration-operation-port.v1",
+    "sda-json-cli.v1",
+    "sda-json-query-cli.v1",
+    "sda-node-consumer-runtime.v1",
+    "sda-projected-capability-invocation-port.v1",
+    "sda-projected-capability-invocation-port.v2",
+    "sda-python-admitted-consumer-platform.v1",
+    "sda-python-consumer-runtime.v1",
+    "sda-python-declarative-consumer-mechanics.v1",
+    "sda-python-filesystem-artifact-store.v1",
+    "sda-python-in-memory-authority-resolver.v1",
+    "sda-python-in-memory-execution-observer.v1",
+    "sda-python-in-memory-semantic-executor.v1",
+    "sda-python-json-document-mechanics.v1",
+    "sda-python-json-schema-contract-validator.v1",
+    "sda-python-predicate-contract-validator.v1",
+    "sda-python-semantic-transformation.v1",
+    "sda-schema-contract-admission.v1",
+    "sda-wpf-ui.v1"
+  ],
+  "files": [
+    {
+      "path": "application-binding.csharp.json",
+      "executableOrigin": "PROJECTED",
+      "sha256": "5b6cb261822e2e10f8aefe9a47b72cf02c76942a18c405da69b4511ee43e7c49"
+    },
+    {
+      "path": "application-binding.json",
+      "executableOrigin": "PROJECTED",
+      "sha256": "d02f681799cc2e63666071f0c547dda5f6134347034fcf7ec9199fba736335f8"
+    },
+    {
+      "path": "application-binding.node.json",
+      "executableOrigin": "PROJECTED",
+      "sha256": "d02f681799cc2e63666071f0c547dda5f6134347034fcf7ec9199fba736335f8"
+    },
+    {
+      "path": "application-binding.python.json",
+      "executableOrigin": "PROJECTED",
+      "sha256": "5aec68228edeeae86ce4304fcfb40c25210186350a17e3f58e50d9de89be68e5"
+    },
+    {
+      "path": "capability.json",
+      "executableOrigin": "PROJECTED",
+      "sha256": "735d8164754d7d21a073386b9597b09317217a1a93dcef06a78ccfd6aa510c8c"
+    },
+    {
+      "path": "csharp/Directory.Build.props",
+      "executableOrigin": "PROJECTED",
+      "sha256": "21164aa97d62e96ac34203c0d02108e4f934f498d8df85ad5bcdfa3284467c9c"
+    },
+    {
+      "path": "csharp/Program.generated.cs",
+      "executableOrigin": "PROJECTED",
+      "sha256": "f90f5c3813eee6ac4d18e0303e54196cd36c6ea5fa72e9d8701a50ff91f7db88"
+    },
+    {
+      "path": "csharp/ProjectedConsumerCli.generated.csproj",
+      "executableOrigin": "PROJECTED",
+      "sha256": "00323e416b20f89995e59a61947f4e85dd0a84817cc3acd5cc6c7f747d2fdc57"
+    },
+    {
+      "path": "csharp/ProjectedConsumerClient.generated.cs",
+      "executableOrigin": "PROJECTED",
+      "sha256": "9176a9261d3b3b008fd26edf4cfa27eb680904588be4ba6c9cf251d8ee0b18e6"
+    },
+    {
+      "path": "csharp/ProjectedConsumerSdk.generated.csproj",
+      "executableOrigin": "PROJECTED",
+      "sha256": "a1c82de452f7cb06800145f29164cb85a45294b980d3bddb8ae10b787d891ecc"
+    },
+    {
+      "path": "execution-plans/consumer-execution-plan.node.json",
+      "executableOrigin": "PROJECTED",
+      "sha256": "ad5b009cdb0a7a3807cbb405c77eb693a95cfa5ba02c8cc00eb250201cf5653b"
+    },
+    {
+      "path": "fixtures/fixtures.json",
+      "executableOrigin": "PROJECTED",
+      "sha256": "1223198bcee4b1a838d62e3838620cb82adf8ebd9aa213cca693e3dce36908a6"
+    },
+    {
+      "path": "node/capability-runtime.generated.mjs",
+      "executableOrigin": "PROJECTED",
+      "sha256": "c9343f53e50bdc30721ef1fae20fcbfbb8c1977c2030958387f8421e06fd2f85"
+    },
+    {
+      "path": "node/capability.projected.test.mjs",
+      "executableOrigin": "PROJECTED",
+      "sha256": "923a802f55c743c8700c109ba2411fce45c4ffc744c5b3e4259b4e09d56050b2"
+    },
+    {
+      "path": "node/conformance-query.generated.mjs",
+      "executableOrigin": "PROJECTED",
+      "sha256": "742b5c072bcc01668db15dcc4dcc001c063afdef2b66488f7d1566c977f4dd70"
+    },
+    {
+      "path": "node/semantic-element-realization-cli.generated.mjs",
+      "executableOrigin": "PROJECTED",
+      "sha256": "5697f1eff93aaf36072c12cfe093938dc17590ac59ff302fdf9836f798b26381"
+    },
+    {
+      "path": "projection-conformance.json",
+      "executableOrigin": "PROJECTED",
+      "sha256": "eff29d9d763919b405a021fc126f66b5b0c552c3cbe74d8ddb85f9781e4b2eed"
+    },
+    {
+      "path": "python/consumer.generated.py",
+      "executableOrigin": "PROJECTED",
+      "sha256": "fa923fa52e33db166fe7293894dc7e3bfe3002fa405943661b3c68e452d9a4ea"
+    },
+    {
+      "path": "query/conformance-query.csharp.json",
+      "executableOrigin": "PROJECTED",
+      "sha256": "1db5fe412095a0d46d49b1a15596bec58d9a3588cdfaa3d258b00f1ebd66dc46"
+    },
+    {
+      "path": "query/conformance-query.json",
+      "executableOrigin": "PROJECTED",
+      "sha256": "71cefd8c86ae6c7e7a3c693d21f1610d40e9c9c0ede5f24a051e94dcae483c1f"
+    },
+    {
+      "path": "query/conformance-query.node.json",
+      "executableOrigin": "PROJECTED",
+      "sha256": "71cefd8c86ae6c7e7a3c693d21f1610d40e9c9c0ede5f24a051e94dcae483c1f"
+    },
+    {
+      "path": "query/conformance-query.python.json",
+      "executableOrigin": "PROJECTED",
+      "sha256": "b71f08370618eb17d4d753c1fad500af097a6e627142fedecb4e7c197ad0075a"
+    },
+    {
+      "path": "query/platform-mechanic-resolution.csharp.json",
+      "executableOrigin": "PROJECTED",
+      "sha256": "fa92c4c7a3108ece97530b3fb09c8f7b49b4cf3ffeb1184f177bbe1b44943155"
+    },
+    {
+      "path": "query/platform-mechanic-resolution.json",
+      "executableOrigin": "PROJECTED",
+      "sha256": "f079ed95c3a05ce983a39ecc5d9f5f36ca53b6fdca8afb8a6ef12f251a6f4b6c"
+    },
+    {
+      "path": "query/platform-mechanic-resolution.node.json",
+      "executableOrigin": "PROJECTED",
+      "sha256": "f079ed95c3a05ce983a39ecc5d9f5f36ca53b6fdca8afb8a6ef12f251a6f4b6c"
+    },
+    {
+      "path": "query/platform-mechanic-resolution.python.json",
+      "executableOrigin": "PROJECTED",
+      "sha256": "0dbdb93fa5184da763b8f0d2d5eb0d59ef310e8e6a927350179d62f29ff22383"
+    },
+    {
+      "path": "scenarios/project-semantic-element-realization.json",
+      "executableOrigin": "PROJECTED",
+      "sha256": "dc1867e39a1a10309d8d8ab0ad606c97f541ec8662293e2ddc6e3aa06e56cce9"
+    },
+    {
+      "path": "telemetry/expected-trace.json",
+      "executableOrigin": "PROJECTED",
+      "sha256": "a445a978f1f17c881c0195d58ca4f21649c515aa680cb7929a246f35d863aab4"
+    }
+  ]
+}

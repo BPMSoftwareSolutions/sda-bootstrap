@@ -1,0 +1,40 @@
+{
+  "evidenceType": "presentation-capability-candidate-calibration.v1",
+  "capabilityId": "project-semantic-element-realization",
+  "requestRef": "../agentic-harness/live/project-semantic-element-realization-004/model-request.json",
+  "responseRef": "../agentic-harness/artifacts/live/project-semantic-element-realization-004/model-response.json",
+  "providerAuthorityId": "primary-cognitive-provider",
+  "resolvedModel": "gemini-flash-latest",
+  "attemptCount": 1,
+  "requestHash": "sha256:f26d11d2aa696922239f70f416ec7181fb656b878a8775dd76e3def54c62108c",
+  "responseHash": "sha256:78be235be68d3697956d4db7c60ca1666a313113399abe87cf2be7e53b4f3f2e",
+  "requestFileHash": "sha256:9d4bbd4b485b47617aaf52d980437cba8adb1c0b69807e14710d942b04234cda",
+  "responseFileHash": "sha256:982fcb12a1f1aca9e10939236617bce7c59839768b920f35a836eb41d97a4e9d",
+  "structuredCandidateHash": "sha256:d7c22cd0347e6ad9b23b5f36401b63d55c0343d1ca7184b56c11c16932b132b3",
+  "rawResponseRetention": "RETAINED",
+  "completeFixedSlotEnvelope": true,
+  "semanticCoverage": {
+    "semanticKinds": ["INFORMATION", "ACTION", "INPUT", "NAVIGATION", "FEEDBACK", "REGION"],
+    "contentKinds": ["LITERAL", "READ_MODEL_REF"],
+    "listCardinalityPreserved": ["stateRefs", "eventRefs", "lineage"],
+    "projectionTargets": ["node", "python", "csharp"]
+  },
+  "findings": [
+    { "code": "CAPABILITY_AUTHORITY_ROOT_INVENTED", "logicalName": "capability.authority.json" },
+    { "code": "CONSUMER_WORKSPACE_ROOT_INVENTED", "logicalName": "consumer-workspace.authority.json" },
+    { "code": "SEMANTIC_GRAPH_ROOT_INVENTED", "logicalName": "semantic-graph.authority.json" },
+    { "code": "EXECUTION_AUTHORITY_ROOT_INVENTED", "logicalName": "execution-authorities.authority.json" },
+    { "code": "PROJECTION_AUTHORITY_ROOT_INVENTED", "logicalName": "projection-authorities.authority.json" },
+    { "code": "INTERFACE_AUTHORITY_ROOT_INVENTED", "logicalName": "interfaces.authority.json" },
+    { "code": "TRANSFORMATION_EXPRESSION_VOCABULARY_INVENTED", "logicalName": "semantic-transformation.authority.json" },
+    { "code": "FIXTURE_AUTHORITY_ROOT_INVENTED", "logicalName": "fixtures.authority.json" },
+    { "code": "CONTRACT_CATALOG_ROOT_INVENTED", "logicalName": "contracts/contract-catalog.json" },
+    { "code": "SCHEMA_ID_MISSING", "logicalName": "contracts/input.schema.json" },
+    { "code": "SCHEMA_ID_MISSING", "logicalName": "contracts/outcome.schema.json" }
+  ],
+  "curationDisposition": "REGENERATION_REQUIRED",
+  "workbenchDisposition": "NOT_DERIVED",
+  "projectionDisposition": "NOT_ATTEMPTED",
+  "promotionDisposition": "NOT_ATTEMPTED",
+  "disposition": "REJECTED"
+}

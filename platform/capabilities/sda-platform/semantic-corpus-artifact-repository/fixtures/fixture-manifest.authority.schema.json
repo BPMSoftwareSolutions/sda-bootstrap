@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/semantic-corpus/semantic-corpus-artifact-repository-fixture-manifest.authority.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "fixtureType", "lifecycle", "repositoryAuthorityRef", "repositoryAuthorityDigest", "carriers", "cases"],
+  "properties": {
+    "$schema": {"const": "fixture-manifest.authority.schema.json"},
+    "fixtureType": {"const": "semantic-corpus-artifact-repository-fixture-manifest.v1"},
+    "lifecycle": {"const": "ADMITTED"},
+    "repositoryAuthorityRef": {"const": "repository-authority.v1.json"},
+    "repositoryAuthorityDigest": {"$ref": "#/$defs/digest"},
+    "carriers": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["carrierRef", "carrierCanonicalDigest"],
+        "properties": {
+          "carrierRef": {"type": "string", "pattern": "^carriers/[a-z0-9.-]+\\.json$"},
+          "carrierCanonicalDigest": {"$ref": "#/$defs/digest"}
+        }
+      }
+    },
+    "cases": {
+      "type": "array",
+      "minItems": 12,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["fixtureId", "scenarioId", "carrierRefs", "setupFixtureIds", "mutation", "expectedDisposition", "expectedFindingCodes"],
+        "properties": {
+          "fixtureId": {"type": "string", "pattern": "^[a-z][a-z0-9-]*$"},
+          "scenarioId": {"enum": ["publish-immutable-semantic-corpus-artifact", "reject-semantic-corpus-artifact-publication-conflict", "read-immutable-semantic-corpus-artifact", "retain-referenced-semantic-corpus-snapshot", "update-current-semantic-corpus-pointer", "reject-open-semantic-corpus-pointer-update", "reproduce-semantic-corpus-artifact-address"]},
+          "carrierRefs": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^carriers/[a-z0-9.-]+\\.json$"}},
+          "setupFixtureIds": {"type": "array", "uniqueItems": true, "items": {"type": "string", "pattern": "^[a-z][a-z0-9-]*$"}},
+          "mutation": {"enum": ["NONE", "EXPECTED_DIGEST_MISMATCH", "OCCUPIED_ADDRESS_DIFFERENT_BYTES", "STORED_BYTES_CORRUPTED", "REPOSITORY_AUTHORITY_MISMATCH", "REPLAY_STALE_EXPECTATION", "CONCURRENT_IDENTICAL_CAS"]},
+          "expectedDisposition": {"enum": ["PUBLISHED", "ALREADY_PRESENT", "REJECTED", "READ", "MISSING", "CORRUPTED", "UNAUTHORIZED", "UPDATED", "CONFLICT", "SINGLE_WINNER"]},
+          "expectedFindingCodes": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+        }
+      }
+    }
+  },
+  "$defs": {"digest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"}}
+}

@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/semantic-carrier/scenario-semantic-carrier-validation-provider-conformance.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contractId", "lifecycle", "providerObservation", "authorityDigests", "fixtureManifestRef", "fixtureManifestDigest", "fixtureSetDigest", "partitions", "findings", "disposition", "receiptDigest", "receiptDigestAlgorithm"],
+  "properties": {
+    "contractId": {"const": "scenario-semantic-carrier-validation-provider-conformance.v1"},
+    "lifecycle": {"const": "ADMITTED"},
+    "providerObservation": {"$ref": "#/$defs/providerObservation"},
+    "authorityDigests": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["provider", "grammar", "managedGrammar"],
+      "properties": {
+        "provider": {"$ref": "#/$defs/digest"},
+        "grammar": {"$ref": "#/$defs/digest"},
+        "managedGrammar": {"$ref": "#/$defs/digest"}
+      }
+    },
+    "fixtureManifestRef": {"const": "capabilities/sda-platform/verify-scenario-semantic-carrier-validation-conformance/fixtures/fixture-manifest.authority.json"},
+    "fixtureManifestDigest": {"$ref": "#/$defs/digest"},
+    "fixtureSetDigest": {"$ref": "#/$defs/digest"},
+    "partitions": {
+      "type": "array",
+      "minItems": 9,
+      "maxItems": 9,
+      "items": {"$ref": "#/$defs/partition"}
+    },
+    "findings": {"type": "array", "maxItems": 0},
+    "disposition": {"const": "SDA_SCENARIO_SEMANTIC_CARRIER_VALIDATION_PROVIDER_CONFORMANT"},
+    "receiptDigest": {"$ref": "#/$defs/digest"},
+    "receiptDigestAlgorithm": {"const": "sha256 of canonical recursive-key-order JSON excluding receiptDigest"}
+  },
+  "$defs": {
+    "digest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "sourceBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceRef", "sourceDigest"],
+      "properties": {
+        "sourceRef": {"type": "string", "minLength": 1},
+        "sourceDigest": {"$ref": "#/$defs/digest"}
+      }
+    },
+    "providerObservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["disposition", "providerSourceSet", "implementationVersion", "registryBindingRef", "registryBindingDigest"],
+      "properties": {
+        "disposition": {"const": "SATISFIED"},
+        "providerSourceSet": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/sourceBinding"}},
+        "implementationVersion": {"const": "1.1.0"},
+        "registryBindingRef": {"const": "kernel/semantic-authority/consumer/node-mechanic-registrations/scenario-semantic-carrier-validation.registration.authority.json"},
+        "registryBindingDigest": {"$ref": "#/$defs/digest"}
+      }
+    },
+    "partition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["partitionId", "disposition", "evidenceDigests", "reason"],
+      "properties": {
+        "partitionId": {
+          "enum": [
+            "EXACT_SOURCE_IDENTITY",
+            "LITERAL_AST_ADMISSION",
+            "HIDDEN_EXECUTABLE_MEANING_REJECTION",
+            "SCHEMA_ADMISSION",
+            "SEMANTIC_REFERENCE_CLOSURE",
+            "MANAGED_V3_SCHEMA_AND_REFERENCE_CLOSURE",
+            "DETERMINISTIC_FINDINGS_AND_RECEIPTS",
+            "PROVIDER_AND_REGISTRY_BINDING",
+            "REAL_RUNTIME_INVOCATION"
+          ]
+        },
+        "disposition": {"const": "SATISFIED"},
+        "evidenceDigests": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/digest"}},
+        "reason": {"type": "null"}
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "$schema": "../../../schemas/node-mechanic-registration-authority.v1.schema.json",
+  "registrationAuthorityType": "node-mechanic-registration-authority.v1",
+  "authorityId": "node-scenario-semantic-carrier-extraction-registration.v1",
+  "platformCapabilityId": "sda-scenario-semantic-carrier-extraction-port.v1",
+  "kind": "direct",
+  "providerModule": "semantic-carrier-extractor-provider.mjs",
+  "providerExport": "invokeScenarioSemanticCarrierExtraction",
+  "invocation": "url-context",
+  "authorityDigestAlgorithm": "sha256 of canonical recursive-key-order JSON excluding authorityDigest",
+  "authorityDigest": "sha256:dd95fa2be40b479c19ea0d957f92d7445dd68848a03dbada7fc2dfcccd1b9c16"
+}

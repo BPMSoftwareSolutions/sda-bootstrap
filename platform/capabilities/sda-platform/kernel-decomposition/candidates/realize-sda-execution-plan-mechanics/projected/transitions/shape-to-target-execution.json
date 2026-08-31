@@ -1,0 +1,15 @@
+{
+  "transitionId": "shape-to-target-execution",
+  "from": {
+    "scenarioId": "shape-file-system-batch",
+    "outcomeId": "batch-file-system-shape-evidence",
+    "contractId": "batch-file-system-shape-evidence.v1"
+  },
+  "to": {
+    "scenarioId": "observe-governed-target-execution",
+    "inputId": "bounded-projected-target-execution-context",
+    "contractId": "bounded-projected-target-execution-context.v1"
+  },
+  "semanticProgress": "monotonic",
+  "bindingAuthorityId": "project-shape-to-target-execution"
+}

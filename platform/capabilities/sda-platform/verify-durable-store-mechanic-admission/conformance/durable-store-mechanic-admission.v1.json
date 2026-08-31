@@ -1,0 +1,129 @@
+{
+  "$schema": "durable-store-mechanic-admission.v1.schema.json",
+  "conformanceType": "durable-store-mechanic-admission.v1",
+  "lifecycle": "ADMITTED",
+  "phase": "PHASE_1_GENERIC_STORE_MECHANIC_ADMISSION",
+  "mechanicAuthorities": [
+    {
+      "mechanicFamilyId": "semantic-value-mechanics.v1",
+      "sourceRef": "kernel/semantic-authority/consumer/semantic-value-mechanics.authority.v1.json",
+      "sourceDigest": "sha256:0604d867c42c7eb9721449c0bc95200114cf6f7ce00924e1c4636eba224b911d",
+      "authorityDigest": "sha256:533b856ded71d2e6334dd2f4911b1ec5edb265c4cdc3e79620584fe4cdca1877",
+      "admittedMechanics": [
+        "canonical-json-byte-validation",
+        "retained-lineage-authorization",
+        "canonical-artifact-byte-planning"
+      ]
+    },
+    {
+      "mechanicFamilyId": "platform-effect-mechanics.v1",
+      "sourceRef": "kernel/semantic-authority/consumer/platform-effect-mechanics.authority.v1.json",
+      "sourceDigest": "sha256:526b4ee403120209fa446b1607f49b52bd2035f229917a2009447ca45b63a997",
+      "authorityDigest": "sha256:3b39afa785c925525086acddb65166fad1e52001ddcd6d66bc65448e5efe0bac",
+      "admittedMechanics": [
+        "exclusive-create-or-exact-match",
+        "atomic-current-pointer-compare-and-swap"
+      ]
+    }
+  ],
+  "registryBinding": {
+    "registryRef": "kernel/semantic-authority/consumer/node-mechanic-registry.authority.v1.json",
+    "registryDigest": "sha256:aaf47021fd633d4b16f32feb1a82c154934b1fa4b55bce03d0b8bfedbeb65d94",
+    "pinnedMechanicAuthorityDigests": [
+      "sha256:533b856ded71d2e6334dd2f4911b1ec5edb265c4cdc3e79620584fe4cdca1877",
+      "sha256:3b39afa785c925525086acddb65166fad1e52001ddcd6d66bc65448e5efe0bac"
+    ]
+  },
+  "predecessor": {
+    "priorReceiptDigest": "sha256:a25b18d7eac129d3436c24ba0abe64ba7ec978b327a9808f7c42aeb433401c95",
+    "priorRegistryDigest": "sha256:50fd95da4bb03e908651be5e070abcf2424fa8ed6762d610002afea5e099e158",
+    "reissueReason": "directed-graph-closure admitted to the pure semantic mechanic family; the semantic authority and node registry pins advanced. Chained from the prior generation; no prior receipt identity is claimed for the new bytes."
+  },
+  "partitions": [
+    {
+      "partitionId": "MECHANIC_AUTHORITIES_DECLARED",
+      "proves": "Both mechanic family authorities are ADMITTED, recompute their own canonical digests, satisfy the mechanic authority schema, and declare the four durable store mechanics with contracts and conformance references.",
+      "evidenceDigests": [
+        "sha256:0604d867c42c7eb9721449c0bc95200114cf6f7ce00924e1c4636eba224b911d",
+        "sha256:526b4ee403120209fa446b1607f49b52bd2035f229917a2009447ca45b63a997"
+      ],
+      "disposition": "SATISFIED"
+    },
+    {
+      "partitionId": "PURE_MECHANICS_DETERMINISTIC_COMPOSITION",
+      "proves": "canonical-json-byte-validation and retained-lineage-authorization compose from the admitted pure vocabulary with deterministic behavior and typed refusals: canonical round-trip stability, non-JSON refusal, non-canonical byte refusal, lineage-authorized and refused dispositions.",
+      "evidenceDigests": [
+        "sha256:4fbd1a616207b316a3116d740d2416a574c2732379a12163f283112ef08eda01",
+        "sha256:f8fb62123b3f2a6c6b7c20d9d772bc53971f658b0223bb12f824ee46459c1919"
+      ],
+      "disposition": "SATISFIED"
+    },
+    {
+      "partitionId": "EFFECT_MECHANICS_TESTIMONY_GOVERNED",
+      "proves": "exclusive-create-or-exact-match and atomic-current-pointer-compare-and-swap compose from admitted filesystem effects (existence check, staged temporary write, atomic rename) under testimony-governed determinism.",
+      "evidenceDigests": [
+        "sha256:3b39afa785c925525086acddb65166fad1e52001ddcd6d66bc65448e5efe0bac",
+        "sha256:f8fb62123b3f2a6c6b7c20d9d772bc53971f658b0223bb12f824ee46459c1919"
+      ],
+      "disposition": "SATISFIED"
+    },
+    {
+      "partitionId": "EXCLUSIVE_CREATE_NEVER_OVERWRITES",
+      "proves": "Exclusive create returns CREATED for an absent address, ALREADY_PRESENT for exact byte match, and REJECTED for occupied addresses with different bytes; the stored bytes are never overwritten by a conflict.",
+      "evidenceDigests": [
+        "sha256:f8fb62123b3f2a6c6b7c20d9d772bc53971f658b0223bb12f824ee46459c1919"
+      ],
+      "disposition": "SATISFIED"
+    },
+    {
+      "partitionId": "POINTER_CAS_EXACT_STATE_ONLY",
+      "proves": "The compare-and-swap replaces the pointer only when the complete expected state matches (generation and snapshot digest); a stale expected state reports the observed winner and mutates nothing.",
+      "evidenceDigests": [
+        "sha256:f8fb62123b3f2a6c6b7c20d9d772bc53971f658b0223bb12f824ee46459c1919"
+      ],
+      "disposition": "SATISFIED"
+    },
+    {
+      "partitionId": "GENERATION_IDENTITY_AUTHORITY_OWNED",
+      "proves": "The CAS mechanic receives the complete expected-current and proposed-next pointer states and performs compare plus atomic replace only; generation identity is never calculated by the mechanic.",
+      "evidenceDigests": [
+        "sha256:3b39afa785c925525086acddb65166fad1e52001ddcd6d66bc65448e5efe0bac",
+        "sha256:f8fb62123b3f2a6c6b7c20d9d772bc53971f658b0223bb12f824ee46459c1919"
+      ],
+      "disposition": "SATISFIED"
+    },
+    {
+      "partitionId": "REGISTRY_DIGESTS_PINNED",
+      "proves": "The node mechanic registry pins the current mechanic authority digests for both the pure and effect families.",
+      "evidenceDigests": [
+        "sha256:aaf47021fd633d4b16f32feb1a82c154934b1fa4b55bce03d0b8bfedbeb65d94"
+      ],
+      "disposition": "SATISFIED"
+    },
+    {
+      "partitionId": "CANONICAL_ADDRESS_PLANNING_DETERMINISTIC",
+      "proves": "Canonical content address derivation is a deterministic function of exact artifact bytes and the declared address layout: identical bytes always produce the identical digest and objects layout shard, independent of process, discovery order, timestamp, machine, user, or path.",
+      "evidenceDigests": [
+        "sha256:533b856ded71d2e6334dd2f4911b1ec5edb265c4cdc3e79620584fe4cdca1877",
+        "sha256:0604d867c42c7eb9721449c0bc95200114cf6f7ce00924e1c4636eba224b911d"
+      ],
+      "disposition": "SATISFIED"
+    },
+    {
+      "partitionId": "RECEIPT_SELF_DIGEST_REPRODUCES",
+      "proves": "The admission receipt recomputes its own canonical digest excluding the receipt digest fields.",
+      "evidenceDigests": [
+        "sha256:f8fb62123b3f2a6c6b7c20d9d772bc53971f658b0223bb12f824ee46459c1919"
+      ],
+      "disposition": "SATISFIED"
+    }
+  ],
+  "counts": {
+    "partitionCount": 9,
+    "admittedMechanicCount": 5
+  },
+  "findings": [],
+  "disposition": "SDA_DURABLE_STORE_MECHANICS_ADMITTED",
+  "receiptDigestAlgorithm": "sha256 of canonical recursive-key-order JSON excluding receiptDigest and receiptDigestAlgorithm",
+  "receiptDigest": "sha256:8fe0b1356cf85b0e03ad35d490a5ce08266c8ef4f1ae255cc57ad6a38ffbc6df"
+}

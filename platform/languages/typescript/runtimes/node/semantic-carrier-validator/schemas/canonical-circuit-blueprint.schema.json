@@ -1,0 +1,636 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentic-harness.local/contracts/canonical-circuit-blueprint.v1.schema.json",
+  "title": "canonical-circuit-blueprint.v1",
+  "description": "Normalized carrier for one capability's canonical circuit blueprint. Structural authority only: it constrains shape, closed vocabularies, and locally decidable field applicability. Graph-wide obligations - acyclicity outside declared bounded returns, complete branch variant coverage, jointly required fan-out membership, complete convergence requirement sets, monotonic advancement, and observability sufficiency - are owned by inspect-canonical-circuit-blueprint-candidate and prove-canonical-blueprint-geometry, not by this schema.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "carrierVersion",
+    "capability",
+    "sourceAuthority",
+    "blueprintAuthority",
+    "nodes",
+    "edges",
+    "projectionAuthorities"
+  ],
+  "properties": {
+    "$schema": { "type": "string" },
+
+    "carrierVersion": { "const": "canonical-circuit-blueprint.v1" },
+
+    "capability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["capabilityId", "version", "rootExperience"],
+      "properties": {
+        "capabilityId": { "$ref": "#/$defs/semanticIdentity" },
+        "version": { "type": "string", "minLength": 1 },
+        "rootExperience": { "type": "string", "minLength": 1 },
+        "capabilityAuthorityDigest": { "$ref": "#/$defs/digest" },
+        "capsuleDigest": { "$ref": "#/$defs/digest" }
+      }
+    },
+
+    "sourceAuthority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["disposition", "lineage"],
+      "properties": {
+        "disposition": {
+          "enum": ["CANDIDATE", "ADMITTED"],
+          "description": "Projection never upgrades a CANDIDATE carrier to ADMITTED."
+        },
+        "featureAuthorityRef": { "$ref": "#/$defs/authorityRef" },
+        "lineage": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/authorityRef" }
+        }
+      }
+    },
+
+    "blueprintAuthority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["blueprintId", "authorityDigest"],
+      "properties": {
+        "blueprintId": { "$ref": "#/$defs/semanticIdentity" },
+        "authorityDigest": { "$ref": "#/$defs/digest" }
+      }
+    },
+
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/node" }
+    },
+
+    "edges": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/edge" }
+    },
+
+    "structuralMapping": {
+      "$comment": "Governed C4 mappings to structural realization authority.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["context", "container", "component"],
+      "properties": {
+        "context": { "$ref": "#/$defs/c4Mapping" },
+        "container": { "$ref": "#/$defs/c4Mapping" },
+        "component": { "$ref": "#/$defs/c4Mapping" },
+        "code": {
+          "$comment": "Optional and always projected; never authored as structural authority.",
+          "$ref": "#/$defs/c4Mapping"
+        }
+      }
+    },
+
+    "serviceLevel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["indicators", "objectives"],
+      "properties": {
+        "indicators": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/sliDefinition" }
+        },
+        "objectives": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/sloDefinition" }
+        },
+        "agreements": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/slaBoundary" }
+        },
+        "crossApplyParity": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["targetId", "preservedIdentities"],
+            "properties": {
+              "targetId": { "$ref": "#/$defs/semanticIdentity" },
+              "preservedIdentities": {
+                "type": "array",
+                "minItems": 1,
+                "items": { "$ref": "#/$defs/semanticIdentity" }
+              },
+              "correlationRuleRef": { "$ref": "#/$defs/authorityRef" }
+            }
+          }
+        }
+      }
+    },
+
+    "projectionAuthorities": {
+      "$comment": "Profiles and views this blueprint permits. A projector may not emit a profile absent from this list.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["profiles", "views"],
+      "properties": {
+        "profiles": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/authorityRef" }
+        },
+        "views": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "enum": [
+              "SCENARIO",
+              "MONOTONIC",
+              "BRANCH",
+              "DEPENDENCY",
+              "ALTITUDE",
+              "PROVIDER",
+              "EVIDENCE",
+              "RUNTIME_PLAY",
+              "SEMANTIC_DIFF",
+              "C4",
+              "OBSERVABILITY",
+              "SERVICE_LEVEL"
+            ]
+          }
+        }
+      }
+    }
+  },
+
+  "$defs": {
+    "semanticIdentity": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*(\\.v[0-9]+)?$",
+      "description": "Stable kebab-case semantic identity, optionally version-suffixed. Never a filesystem path or generated symbol."
+    },
+
+    "digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+
+    "authorityRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authorityId", "digest"],
+      "properties": {
+        "authorityId": { "$ref": "#/$defs/semanticIdentity" },
+        "digest": { "$ref": "#/$defs/digest" }
+      }
+    },
+
+    "projectionOrdinal": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Deterministic display order for otherwise independent peers. Presentation authority only; carries no execution or precedence meaning."
+    },
+
+    "altitude": {
+      "enum": ["CAPABILITY", "OPERATION", "MECHANIC", "PROVIDER"],
+      "description": "CAPABILITY uses the scenario cell (Input/Event/Outcome). Lower altitudes retain the three-position protocol with their own semantic nouns and never acquire the promised experience."
+    },
+
+    "cell": {
+      "$comment": "The three-position protocol. Position nouns differ by altitude; the geometry does not.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["first", "energized", "result"],
+      "properties": {
+        "first": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["identity", "contract"],
+          "properties": {
+            "identity": { "$ref": "#/$defs/semanticIdentity" },
+            "contract": { "$ref": "#/$defs/authorityRef" }
+          }
+        },
+        "energized": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["identity", "authority"],
+          "properties": {
+            "identity": { "$ref": "#/$defs/semanticIdentity" },
+            "authority": { "$ref": "#/$defs/authorityRef" }
+          }
+        },
+        "result": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["identity", "contract"],
+          "properties": {
+            "identity": { "$ref": "#/$defs/semanticIdentity" },
+            "contract": { "$ref": "#/$defs/authorityRef" },
+            "variants": {
+              "$comment": "Declared Outcome variants. Decisionality is owned here, never by an inserted decision node.",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["variantId", "projectionOrdinal"],
+                "properties": {
+                  "variantId": {
+                    "type": "string",
+                    "pattern": "^[A-Z][A-Z0-9_]*$"
+                  },
+                  "projectionOrdinal": { "$ref": "#/$defs/projectionOrdinal" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["nodeId", "kind", "altitude", "projectionOrdinal"],
+      "properties": {
+        "nodeId": { "$ref": "#/$defs/semanticIdentity" },
+        "kind": {
+          "enum": [
+            "state",
+            "responsibility",
+            "outcome",
+            "junction",
+            "convergence",
+            "provider-slot",
+            "terminal"
+          ]
+        },
+        "altitude": { "$ref": "#/$defs/altitude" },
+        "projectionOrdinal": { "$ref": "#/$defs/projectionOrdinal" },
+        "cell": { "$ref": "#/$defs/cell" },
+        "requiredProducts": {
+          "$comment": "Complete set of upstream products a convergence node's Input contract demands. Jointly required, never alternatives.",
+          "type": "array",
+          "minItems": 2,
+          "items": { "$ref": "#/$defs/semanticIdentity" }
+        },
+        "terminalDisposition": { "type": "string", "minLength": 1 },
+        "providerSlot": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["portId", "mode"],
+          "properties": {
+            "portId": { "$ref": "#/$defs/semanticIdentity" },
+            "mode": { "$ref": "#/$defs/semanticIdentity" }
+          }
+        },
+        "observability": { "$ref": "#/$defs/observabilityContract" }
+      },
+      "allOf": [
+        {
+          "$comment": "A junction is an Outcome that declares more than one variant.",
+          "if": { "properties": { "kind": { "const": "junction" } }, "required": ["kind"] },
+          "then": {
+            "required": ["cell"],
+            "properties": {
+              "cell": {
+                "properties": {
+                  "result": {
+                    "required": ["variants"],
+                    "properties": { "variants": { "minItems": 2 } }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "convergence" } }, "required": ["kind"] },
+          "then": { "required": ["requiredProducts"] }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "terminal" } }, "required": ["kind"] },
+          "then": { "required": ["terminalDisposition"] }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "provider-slot" } }, "required": ["kind"] },
+          "then": { "required": ["providerSlot"] }
+        }
+      ]
+    },
+
+    "edge": {
+      "$comment": "Edge semantics are orthogonal. Topology, contract relation, semantic progress, and selecting variant answer different questions and are never collapsed into one relation enum.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "edgeId",
+        "from",
+        "to",
+        "topology",
+        "semanticPrecedence",
+        "projectionOrdinal",
+        "bindingAuthority"
+      ],
+      "properties": {
+        "edgeId": { "$ref": "#/$defs/semanticIdentity" },
+        "from": { "$ref": "#/$defs/semanticIdentity" },
+        "to": { "$ref": "#/$defs/semanticIdentity" },
+
+        "topology": {
+          "enum": [
+            "TRANSITION",
+            "BRANCH_ROUTE",
+            "FAN_OUT_MEMBER",
+            "CONVERGENCE_REQUIREMENT",
+            "ALTITUDE_DESCENT",
+            "BOUNDED_RETURN"
+          ]
+        },
+
+        "contractRelation": {
+          "enum": ["SATISFIES", "REQUIRES"],
+          "description": "How a product and an Input contract compose. Applicable only to contract edges."
+        },
+
+        "semanticProgress": {
+          "enum": ["NARROWS", "ESTABLISHES", "TERMINATES", "DESCENDS", "BOUNDED_RETURN"],
+          "description": "How meaning advances. Required for every executable forward transition and governed return."
+        },
+
+        "selectingVariant": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9_]*$",
+          "description": "The exact declared Outcome variant that selects this edge."
+        },
+
+        "semanticPrecedence": {
+          "enum": ["REQUIRED", "INDEPENDENT"],
+          "description": "REQUIRED imposes partial order. INDEPENDENT marks peers that need no arbitrary total order; their display order comes from projectionOrdinal alone."
+        },
+
+        "projectionOrdinal": { "$ref": "#/$defs/projectionOrdinal" },
+
+        "boundedReturn": {
+          "$comment": "A back edge is legitimate only with declared bounded repair, resumption, or iteration authority and an explicit bound.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "bound", "authority"],
+          "properties": {
+            "kind": { "enum": ["REPAIR", "RESUMPTION", "ITERATION"] },
+            "bound": { "type": "integer", "minimum": 1 },
+            "authority": { "$ref": "#/$defs/authorityRef" }
+          }
+        },
+
+        "fanOutSetId": {
+          "$comment": "Members sharing a fanOutSetId are jointly required; all must close.",
+          "$ref": "#/$defs/semanticIdentity"
+        },
+
+        "bindingAuthority": { "$ref": "#/$defs/authorityRef" },
+
+        "observability": { "$ref": "#/$defs/edgeObservabilityObligation" }
+      },
+
+      "allOf": [
+        {
+          "$comment": "A branch route names the exact variant that selected it.",
+          "if": { "properties": { "topology": { "const": "BRANCH_ROUTE" } }, "required": ["topology"] },
+          "then": { "required": ["selectingVariant", "semanticProgress"] }
+        },
+        {
+          "$comment": "Selecting variant is forbidden where no variant selects the edge.",
+          "if": {
+            "properties": {
+              "topology": {
+                "enum": ["TRANSITION", "FAN_OUT_MEMBER", "CONVERGENCE_REQUIREMENT", "ALTITUDE_DESCENT"]
+              }
+            },
+            "required": ["topology"]
+          },
+          "then": { "not": { "required": ["selectingVariant"] } }
+        },
+        {
+          "$comment": "Executable forward transitions must declare how meaning advances.",
+          "if": {
+            "properties": {
+              "topology": { "enum": ["TRANSITION", "FAN_OUT_MEMBER", "ALTITUDE_DESCENT"] }
+            },
+            "required": ["topology"]
+          },
+          "then": { "required": ["semanticProgress"] }
+        },
+        {
+          "$comment": "A convergence requirement is a contract edge, not an executable transition.",
+          "if": {
+            "properties": { "topology": { "const": "CONVERGENCE_REQUIREMENT" } },
+            "required": ["topology"]
+          },
+          "then": {
+            "required": ["contractRelation"],
+            "properties": { "contractRelation": { "const": "REQUIRES" } }
+          }
+        },
+        {
+          "$comment": "An altitude descent is the only topology that changes altitude.",
+          "if": {
+            "properties": { "topology": { "const": "ALTITUDE_DESCENT" } },
+            "required": ["topology"]
+          },
+          "then": {
+            "properties": { "semanticProgress": { "const": "DESCENDS" } }
+          }
+        },
+        {
+          "$comment": "A back edge without declared bounded authority is rejected.",
+          "if": {
+            "properties": { "topology": { "const": "BOUNDED_RETURN" } },
+            "required": ["topology"]
+          },
+          "then": {
+            "required": ["boundedReturn", "semanticProgress"],
+            "properties": { "semanticProgress": { "const": "BOUNDED_RETURN" } }
+          }
+        },
+        {
+          "$comment": "Fan-out membership is meaningless without its jointly required set.",
+          "if": {
+            "properties": { "topology": { "const": "FAN_OUT_MEMBER" } },
+            "required": ["topology"]
+          },
+          "then": { "required": ["fanOutSetId"] }
+        }
+      ]
+    },
+
+    "observabilityContract": {
+      "$comment": "Every executable cell binds its testimony before physical telemetry realization.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "checkpoints",
+        "semanticAddress",
+        "causalAddress",
+        "measurements",
+        "authorizedDimensions",
+        "sampling",
+        "evidenceDestination",
+        "authority"
+      ],
+      "properties": {
+        "checkpoints": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/semanticIdentity" }
+        },
+        "semanticAddress": { "type": "string", "minLength": 1 },
+        "causalAddress": { "type": "string", "minLength": 1 },
+        "measurements": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["measurementId", "unit"],
+            "properties": {
+              "measurementId": { "$ref": "#/$defs/semanticIdentity" },
+              "unit": { "type": "string", "minLength": 1 }
+            }
+          }
+        },
+        "authorizedDimensions": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/semanticIdentity" }
+        },
+        "sampling": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["strategy"],
+          "properties": {
+            "strategy": { "enum": ["ALWAYS", "RATE", "CONDITIONAL"] },
+            "rate": { "type": "number", "minimum": 0, "maximum": 1 },
+            "conditionRef": { "$ref": "#/$defs/authorityRef" }
+          }
+        },
+        "evidenceDestination": { "$ref": "#/$defs/semanticIdentity" },
+        "authority": { "$ref": "#/$defs/authorityRef" }
+      }
+    },
+
+    "edgeObservabilityObligation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["checkpoints", "authority"],
+      "properties": {
+        "checkpoints": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/semanticIdentity" }
+        },
+        "authority": { "$ref": "#/$defs/authorityRef" }
+      }
+    },
+
+    "sliDefinition": {
+      "$comment": "An SLI is constructed only from exact admitted testimony identities. An incidental implementation metric is not an indicator.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sliId",
+        "testimonyInputs",
+        "scope",
+        "calculation",
+        "window",
+        "freshness",
+        "unit",
+        "missingTestimonyDisposition"
+      ],
+      "properties": {
+        "sliId": { "$ref": "#/$defs/semanticIdentity" },
+        "testimonyInputs": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/semanticIdentity" }
+        },
+        "scope": { "type": "string", "minLength": 1 },
+        "calculation": { "type": "string", "minLength": 1 },
+        "dimensions": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/semanticIdentity" }
+        },
+        "window": { "type": "string", "minLength": 1 },
+        "freshness": { "type": "string", "minLength": 1 },
+        "unit": { "type": "string", "minLength": 1 },
+        "missingTestimonyDisposition": {
+          "enum": ["INCOMPLETE_EVIDENCE", "EXCLUDE", "FAIL_CLOSED"],
+          "description": "A partial evaluation window is never a satisfied production promise."
+        }
+      }
+    },
+
+    "sloDefinition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sloId", "sliId", "target", "evaluationWindow", "errorBudgetPolicy"],
+      "properties": {
+        "sloId": { "$ref": "#/$defs/semanticIdentity" },
+        "sliId": { "$ref": "#/$defs/semanticIdentity" },
+        "target": { "type": "string", "minLength": 1 },
+        "evaluationWindow": { "type": "string", "minLength": 1 },
+        "errorBudgetPolicy": { "$ref": "#/$defs/authorityRef" },
+        "childAllocations": {
+          "$comment": "Governed allocation profiles only. A child budget is never inferred from topology or observations.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["nodeId", "allocation", "authority"],
+            "properties": {
+              "nodeId": { "$ref": "#/$defs/semanticIdentity" },
+              "allocation": { "type": "string", "minLength": 1 },
+              "authority": { "$ref": "#/$defs/authorityRef" }
+            }
+          }
+        }
+      }
+    },
+
+    "slaBoundary": {
+      "$comment": "External service obligations bind only at declared boundaries. Contractual leakage into unbound internal mechanics is rejected.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["slaId", "authority", "serviceBoundary"],
+      "properties": {
+        "slaId": { "$ref": "#/$defs/semanticIdentity" },
+        "authority": { "$ref": "#/$defs/authorityRef" },
+        "serviceBoundary": {
+          "enum": [
+            "CAPABILITY",
+            "PRODUCT",
+            "INTERFACE",
+            "PLATFORM",
+            "PROVIDER",
+            "CUSTOMER_EXPERIENCE"
+          ]
+        },
+        "sloIds": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/semanticIdentity" }
+        }
+      }
+    },
+
+    "c4Mapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["elementId", "realizationAuthority"],
+      "properties": {
+        "elementId": { "$ref": "#/$defs/semanticIdentity" },
+        "realizationAuthority": { "$ref": "#/$defs/authorityRef" },
+        "nodeIds": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/semanticIdentity" }
+        }
+      }
+    }
+  }
+}

@@ -92,12 +92,19 @@ test("the installed package deterministically expands the real capsule estate", 
   const manifest = readJson(manifestPath);
   manifest.languageResolver.entryRef = "package:sda-bootstrap";
   manifest.languageResolver.entryDigest = sha256(fs.readFileSync(managerPath));
+  manifest.platform.rootRef = "package:sda-bootstrap/platform";
   writeJson(manifestPath, manifest);
 
   const verification = JSON.parse(run(process.execPath, [managerPath, "verify"], temporaryRoot));
   assert.equal(verification.capabilityCount, 210);
   assert.equal(verification.entryCount, 6672);
   assert.equal(verification.durableLayout.expandedCapabilityRoot, "ABSENT");
+  assert.deepEqual(JSON.parse(run(process.execPath, [managerPath, "resolve"], temporaryRoot)), {
+    declaredDependencies: 69,
+    present: 69,
+    toolRootsDeclared: 0,
+    toolRootsPresent: 0,
+  });
   const expectedMaterializedEntryCount = uniqueCapsuleEntryCount(temporaryRoot);
 
   const firstRoot = path.join(temporaryRoot, "expanded-a");
@@ -113,6 +120,29 @@ test("the installed package deterministically expands the real capsule estate", 
   assert.deepEqual(secondInventory, firstInventory);
   assert.equal(fs.existsSync(path.join(resolvedHarnessRoot, "capabilities")), false);
 
+  const selected = "validate-semantic-carrier,extract-semantic-carrier-graph";
+  const direct = JSON.parse(run(process.execPath, [managerPath, "direct", selected], temporaryRoot));
+  assert.deepEqual(direct, {
+    eligible: 2,
+    reconstructedEntryCount: expectedMaterializedEntryCount,
+    fixtureCount: 6,
+    tests: 8,
+    passed: 8,
+    failed: 0,
+    skipped: 0,
+    todo: 0,
+    broken: 0,
+  });
+
+  const fixtures = readJson(path.join(firstRoot, "capabilities", "validate-semantic-carrier", "fixtures.authority.json"));
+  const invocation = JSON.parse(run(
+    process.execPath,
+    [managerPath, "invoke", "validate-semantic-carrier", JSON.stringify(fixtures.fixtures[0].input)],
+    temporaryRoot,
+  ));
+  assert.equal(invocation.disposition, "terminated");
+  assert.equal(invocation.outcome.disposition, "CONFORMANT");
+
   context.diagnostic(JSON.stringify({
     package: `${packed[0].name}@${packed[0].version}`,
     packageIntegrity: packed[0].integrity,
@@ -121,5 +151,8 @@ test("the installed package deterministically expands the real capsule estate", 
     entryCount: first.entryCount,
     materializedFileCount: firstInventory.length,
     replay: "BYTE_IDENTICAL",
+    portablePlatform: "INSTALLED_PACKAGE",
+    directTests: direct.tests,
+    invocationDisposition: invocation.outcome.disposition,
   }));
 });

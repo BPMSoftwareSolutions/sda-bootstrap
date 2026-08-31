@@ -1,0 +1,29 @@
+{
+  "contractId": "profile-governed-proof-binding-evaluation-input.v1",
+  "payload": {
+    "evaluationCaseId": "stale-evidence-current-binding",
+    "profileId": "generic-proof-binding-evaluation-conformance-profile.v1",
+    "snapshotDigest": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "proofObligationId": "obligation:stale-evidence",
+    "subjectSemanticObjectId": "scenario:stale-evidence",
+    "authorityApplicability": "REQUIRED",
+    "bindingCandidates": [
+      {
+        "fromSemanticObjectId": "fixture:stale-evidence",
+        "relationshipKind": "FIXTURE_EXERCISES_SCENARIO",
+        "toSemanticObjectId": "scenario:stale-evidence",
+        "basis": "EXPLICIT_AUTHORITY",
+        "lineageState": "CURRENT"
+      }
+    ],
+    "evidenceState": "STALE",
+    "reproduction": {
+      "orderedInputDigest": "sha256:84323dea9891b203e651e91bacd60a87e828f35d6b1f184348ebe48d9a173137",
+      "evaluationRuleIds": [
+        "evaluation-order.v1",
+        "bind-fixture-scenario.v1",
+        "bind-evidence-subject.v1"
+      ]
+    }
+  }
+}

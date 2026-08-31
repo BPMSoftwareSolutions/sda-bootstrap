@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/consumer-platform-mechanic-resolution.v1.schema.json",
+  "title": "Consumer Platform Mechanic Resolution",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["resolutionType", "projectionTarget", "requirements", "resolutions", "disposition"],
+  "properties": {
+    "resolutionType": { "const": "consumer-platform-mechanic-resolution.v1" },
+    "projectionTarget": { "type": "string", "enum": ["node", "csharp", "python", "java", "go"] },
+    "requirements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["mechanicId", "capabilityKind", "requiredBy"],
+        "properties": {
+          "mechanicId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "capabilityKind": { "type": "string", "minLength": 1 },
+          "requiredBy": { "type": "string", "minLength": 1 },
+          "requestedCapabilityId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" }
+        }
+      }
+    },
+    "resolutions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["mechanicId", "capabilityKind", "requiredBy", "status"],
+        "properties": {
+          "mechanicId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "capabilityKind": { "type": "string", "minLength": 1 },
+          "requiredBy": { "type": "string", "minLength": 1 },
+          "requestedCapabilityId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "status": { "type": "string", "enum": ["AVAILABLE", "MISSING"] },
+          "capabilityId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "provider": { "type": "string", "minLength": 1 },
+          "implementationRef": { "type": "string", "minLength": 1 },
+          "conformanceRef": { "type": "string", "minLength": 1 },
+          "reason": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "disposition": { "type": "string", "enum": ["RESOLVED", "MISSING"] }
+  }
+}

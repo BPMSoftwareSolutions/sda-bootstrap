@@ -1,0 +1,32 @@
+{
+  "authorityType": "semantic-carrier-evaluation-profile.v1",
+  "authorityId": "semantic-carrier-compilation-evaluation-profile.v1",
+  "lifecycle": "ADMITTED",
+  "requiredEvidenceIds": [
+    "blackout-proof",
+    "blueprint-projection",
+    "fixture-origin-proof",
+    "geometry-proof",
+    "gherkin-projection",
+    "invalid-specimen-proof",
+    "mutation-proof",
+    "provider-target-qualification",
+    "realization-proof",
+    "replay-proof",
+    "route-contract-continuity-proof",
+    "semantic-projection",
+    "specimen-independence-proof",
+    "zero-inference-proof"
+  ],
+  "exactEvidenceCardinality": true,
+  "sameGraphLineageRequired": true,
+  "independentEvidenceOriginRequired": true,
+  "evaluatorManufacturedEvidenceAccepted": false,
+  "findingOrder": [
+    "stage",
+    "path",
+    "code",
+    "message"
+  ],
+  "authorityDigest": "sha256:ba9e1f0f4484793cef81507dcd541cc86fe7f6230f12ab69ccc512bf34fee67c"
+}

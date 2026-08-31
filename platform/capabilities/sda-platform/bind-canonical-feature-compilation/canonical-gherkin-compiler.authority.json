@@ -1,0 +1,34 @@
+{
+  "$schema": "contracts/canonical-gherkin-compiler.authority.schema.json",
+  "authorityType": "canonical-gherkin-compiler-authority.v1",
+  "authorityId": "canonical-gherkin-compiler.v1",
+  "authorityRef": "capabilities/sda-platform/bind-canonical-feature-compilation/canonical-gherkin-compiler.authority.json",
+  "authorityVersion": "1.0.0",
+  "authorityDigest": "sha256:8b91a7ab51b4a6977427597c54a71e1d94ca6cae76003043381ebcc098a7f196",
+  "providerSourceRef": "tools/src/gherkin/application/canonical-gherkin-compiler.ts",
+  "providerSourceDigest": "sha256:8118117d0fa3e8dac69c73061fe55d9f89c941903d239f90fbd2f2375fc4f6d3",
+  "grammarCapabilityId": "sda-canonical-gherkin-grammar.v1",
+  "profileId": "sda-annotated-gherkin-profile.v1",
+  "inputContracts": [
+    "canonical-gherkin-parse-request.v1",
+    "canonical-gherkin-case-compilation-request.v1",
+    "sda-annotated-gherkin-profile-admission-request.v1",
+    "canonical-feature-compilation-binding-request.v1"
+  ],
+  "outputContracts": [
+    "canonical-gherkin-parse-evidence.v1",
+    "canonical-gherkin-case-compilation-evidence.v1",
+    "sda-annotated-gherkin-profile-admission-evidence.v1",
+    "canonical-gherkin-compilation.v1",
+    "gherkin-semantic-ingestion-conformance.v1"
+  ],
+  "rules": [
+    "rule.exact-byte-source-retention.v1",
+    "rule.official-grammar-only.v1",
+    "rule.deterministic-document-local-identities.v1",
+    "rule.complete-ast-and-pickle-lineage.v1",
+    "rule.explicit-sda-profile-admission.v1",
+    "rule.digest-bound-compilation.v1",
+    "rule.no-downstream-authority-claims.v1"
+  ]
+}

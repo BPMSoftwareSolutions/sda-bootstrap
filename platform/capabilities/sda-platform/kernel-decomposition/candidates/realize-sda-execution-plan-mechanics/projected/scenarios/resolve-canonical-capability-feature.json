@@ -1,0 +1,37 @@
+{
+  "scenarioId": "resolve-canonical-capability-feature",
+  "input": {
+    "inputId": "capability-feature-authoring-request",
+    "contract": {
+      "contractId": "capability-feature-authoring-request.v1"
+    }
+  },
+  "event": {
+    "eventId": "resolve-canonical-capability-feature",
+    "executionAuthorityId": "resolve-canonical-capability-feature.v1"
+  },
+  "outcome": {
+    "outcomeId": "canonical-capability-feature",
+    "contract": {
+      "contractId": "canonical-capability-feature.v1"
+    },
+    "experience": {
+      "statement": "one bounded canonical feature representation is available"
+    }
+  },
+  "gherkin": {
+    "given": {
+      "semanticRef": "resolve-canonical-capability-feature.given",
+      "text": "a governed capability feature reference"
+    },
+    "when": {
+      "semanticRef": "resolve-canonical-capability-feature.when",
+      "text": "the canonical capability feature is resolved"
+    },
+    "then": {
+      "semanticRef": "resolve-canonical-capability-feature.then",
+      "text": "one bounded canonical feature representation is available"
+    }
+  },
+  "name": "Resolve a canonical capability feature"
+}

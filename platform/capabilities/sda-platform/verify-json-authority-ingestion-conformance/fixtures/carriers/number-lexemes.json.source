@@ -1,0 +1,8 @@
+{
+  "$schema": "schema:generic-json-authority.v1",
+  "documentType": "generic-json-authority.v1",
+  "id": "number-lexemes",
+  "value": "numbers are lexical evidence",
+  "numericValues": [-0, 1e+30, 9007199254740993, 0.0000000000000000000000001],
+  "references": []
+}

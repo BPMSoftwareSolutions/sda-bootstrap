@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/gherkin/canonical-gherkin-case-compilation-request.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contractId", "parseEvidence", "parseEvidenceDigest", "grammarBindingDigest"],
+  "properties": {
+    "contractId": {"const": "canonical-gherkin-case-compilation-request.v1"},
+    "parseEvidence": {"$ref": "https://schemas.scenario-driven.dev/gherkin/canonical-gherkin-parse-evidence.v1.schema.json"},
+    "parseEvidenceDigest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "grammarBindingDigest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"}
+  }
+}

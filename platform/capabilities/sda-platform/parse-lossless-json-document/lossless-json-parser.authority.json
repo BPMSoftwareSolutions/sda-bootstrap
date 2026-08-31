@@ -1,0 +1,38 @@
+{
+  "$schema": "contracts/lossless-json-parser.authority.schema.json",
+  "authorityType": "lossless-json-parser-authority.v1",
+  "authorityId": "lossless-json-parser.v1",
+  "authorityRef": "capabilities/sda-platform/parse-lossless-json-document/lossless-json-parser.authority.json",
+  "authorityVersion": "1.0.0",
+  "lifecycle": "ADMITTED",
+  "platformCapabilityId": "sda-lossless-json-document-parser.v1",
+  "authorityDigest": "sha256:1b864edeb8676b8ab842d15b648c469ba8c69c7ce34c41a28d7dc0cd020a2046",
+  "authorityDigestAlgorithm": "sha256 of canonical recursive-key-order JSON excluding authorityDigest",
+  "grammar": {
+    "specificationId": "rfc8259-json-text.v1",
+    "topLevelValues": "ANY_JSON_VALUE",
+    "duplicateMemberEquality": "DECODED_UNICODE_SCALAR_SEQUENCE",
+    "ambientRecoveryAllowed": false
+  },
+  "encoding": {
+    "textEncoding": "UTF-8",
+    "invalidUtf8": "REJECT",
+    "defaultByteOrderMarkPolicy": "REJECT",
+    "unicodeNormalization": "NONE"
+  },
+  "lexicalGuarantees": [
+    "exact-source-bytes-retained",
+    "source-digest-recomputed-before-parse",
+    "decoded-member-names-retained",
+    "duplicate-member-locations-retained",
+    "number-lexemes-retained-without-host-coercion",
+    "string-lexemes-and-decoded-values-retained",
+    "byte-line-column-locations-retained"
+  ],
+  "providerObservation": {
+    "disposition": "SATISFIED",
+    "providerSourceRef": "languages/typescript/runtimes/node/json-authority-ingestion-provider.mjs",
+    "providerSourceDigest": "sha256:dce62cdc3cfc1b5acefbccf5bd28196639e43763a18e188598b935bab6ff7b89",
+    "implementationVersion": "1.0.0"
+  }
+}

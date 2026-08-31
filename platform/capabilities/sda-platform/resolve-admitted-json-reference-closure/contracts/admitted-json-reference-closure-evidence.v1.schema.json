@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/json-ingestion/admitted-json-reference-closure-evidence.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contractId", "sourceRef", "sourceDigest", "resolverAuthorityDigest", "referenceScopeDigest", "resolvedReferences", "openReferences", "cycles", "diagnostics", "disposition", "evidenceDigest"],
+  "properties": {
+    "contractId": {"const": "admitted-json-reference-closure-evidence.v1"},
+    "sourceRef": {"type": "string", "minLength": 1},
+    "sourceDigest": {"$ref": "#/$defs/digest"},
+    "resolverAuthorityDigest": {"$ref": "#/$defs/digest"},
+    "referenceScopeDigest": {"$ref": "#/$defs/digest"},
+    "resolvedReferences": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/resolvedReference"}},
+    "openReferences": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "cycles": {"type": "array", "items": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}},
+    "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/diagnostic"}},
+    "disposition": {"enum": ["CLOSED", "OPEN", "REJECTED"]},
+    "evidenceDigest": {"$ref": "#/$defs/digest"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"disposition": {"const": "CLOSED"}}, "required": ["disposition"]},
+      "then": {"properties": {"openReferences": {"maxItems": 0}, "diagnostics": {"maxItems": 0}}}
+    },
+    {
+      "if": {"properties": {"disposition": {"const": "OPEN"}}, "required": ["disposition"]},
+      "then": {"properties": {"openReferences": {"minItems": 1}, "diagnostics": {"contains": {"properties": {"code": {"const": "JSON_REFERENCE_DANGLING"}}, "required": ["code"]}}}}
+    },
+    {
+      "if": {"properties": {"disposition": {"const": "REJECTED"}}, "required": ["disposition"]},
+      "then": {"properties": {"diagnostics": {"minItems": 1}}}
+    }
+  ],
+  "$defs": {
+    "digest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "resolvedReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["referenceRef", "subjectRef", "subjectDigest"],
+      "properties": {
+        "referenceRef": {"type": "string", "minLength": 1},
+        "subjectRef": {"type": "string", "minLength": 1},
+        "subjectDigest": {"$ref": "#/$defs/digest"}
+      }
+    },
+    "diagnostic": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "referenceRef", "message"],
+      "properties": {
+        "code": {"enum": ["JSON_REFERENCE_DANGLING", "JSON_REFERENCE_SCOPE_MISMATCH", "JSON_REFERENCE_AMBIENT_RESOLUTION_FORBIDDEN", "JSON_REFERENCE_CYCLE_REJECTED"]},
+        "referenceRef": {"type": "string", "minLength": 1},
+        "message": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

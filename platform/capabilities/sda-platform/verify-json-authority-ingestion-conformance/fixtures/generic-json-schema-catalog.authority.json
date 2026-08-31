@@ -1,0 +1,25 @@
+{
+  "catalogType": "generic-json-schema-catalog.v1",
+  "lifecycle": "PROPOSED",
+  "schemaDialect": "https://json-schema.org/draft/2020-12/schema",
+  "schemas": [
+    {
+      "schemaRef": "schema:generic-json-authority-definitions.v1",
+      "schemaId": "https://schemas.scenario-driven.dev/json-ingestion/fixtures/generic-json-authority-definitions.v1.schema.json",
+      "sourceRef": "schemas/generic-json-authority-definitions.v1.schema.json",
+      "sourceDigest": "sha256:851c4bb5d22751fa040b83116002af462050827427914e69ac73cff5231c2e4d",
+      "disposition": "DECLARED_FOR_FIXTURE_SCOPE"
+    },
+    {
+      "schemaRef": "schema:generic-json-authority.v1",
+      "schemaId": "https://schemas.scenario-driven.dev/json-ingestion/fixtures/generic-json-authority.v1.schema.json",
+      "sourceRef": "schemas/generic-json-authority.v1.schema.json",
+      "sourceDigest": "sha256:8a1f142041a602fd1037fb27bf7adc25bb62eaeafd8981c60f41e3780d980a9c",
+      "disposition": "DECLARED_FOR_FIXTURE_SCOPE"
+    }
+  ],
+  "ambientRemoteResolution": false,
+  "admissionClaims": {
+    "platformAdmission": "NOT_OBSERVABLE"
+  }
+}

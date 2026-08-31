@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/gherkin/sda-annotated-gherkin-profile-admission-evidence.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contractId", "sourceDigest", "astDigest", "caseDigest", "profileId", "profileDigest", "featureIdentity", "scenarioBindings", "diagnostics", "disposition", "admissionDigest"],
+  "properties": {
+    "contractId": {"const": "sda-annotated-gherkin-profile-admission-evidence.v1"},
+    "sourceDigest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "astDigest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "caseDigest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "profileId": {"const": "sda-annotated-gherkin-profile.v1"},
+    "profileDigest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "featureIdentity": {"type": ["object", "null"]},
+    "scenarioBindings": {"type": "array", "items": {"type": "object"}},
+    "diagnostics": {"type": "array", "items": {"type": "object"}},
+    "disposition": {"enum": ["PROFILE_ADMITTED", "PROFILE_HELD", "REJECTED"]},
+    "admissionDigest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"}
+  }
+}

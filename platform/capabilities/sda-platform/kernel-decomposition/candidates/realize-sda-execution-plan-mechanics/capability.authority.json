@@ -1,0 +1,22 @@
+{
+  "capabilityId": "realize-sda-execution-plan-mechanics",
+  "name": "Realize SDA execution-plan mechanics",
+  "mode": ["feature", "capability"],
+  "userStory": {
+    "actor": "SDA execution platform",
+    "intent": "realize admitted execution-plan mechanics through a target language",
+    "outcome": "capabilities can execute without language-specific semantic re-authoring"
+  },
+  "experience": {
+    "experienceType": "promised-experience.v1",
+    "experienceId": "execution-plan-mechanics-are-realized-from-authority",
+    "actor": "SDA execution platform",
+    "promise": "The projected capability returns an authority-derived realization envelope for every declared plan mechanic, or an attributable rejection, without inventing capability meaning in the target language.",
+    "observableConditions": [
+      {"conditionId": "carrier-and-language-are-admitted", "statement": "only the admitted request carrier and admitted target languages may enter realization"},
+      {"conditionId": "mechanics-come-from-mechanic-authority", "statement": "every required mechanic must be declared by the admitted semantic-value-mechanics.v1 or platform-effect-mechanics.v1 authority"},
+      {"conditionId": "realization-claims-nothing", "statement": "the realization envelope claims no projection, promotion, or behavioral conformance"}
+    ]
+  },
+  "rootScenarioId": "realize-sda-execution-plan-mechanics"
+}

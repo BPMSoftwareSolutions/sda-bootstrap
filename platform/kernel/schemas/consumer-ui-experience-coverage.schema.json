@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/consumer-ui-experience-coverage.v1.schema.json",
+  "title": "Consumer UI Experience Condition Coverage",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["coverageType", "authorityDigest", "vectorCorpusDigest", "conditions"],
+  "properties": {
+    "coverageType": { "const": "consumer-ui-experience-coverage.v1" },
+    "authorityDigest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "vectorCorpusDigest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "conditions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["conditionId", "vectorIds"],
+        "properties": {
+          "conditionId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "vectorIds": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" }
+          }
+        }
+      }
+    }
+  }
+}

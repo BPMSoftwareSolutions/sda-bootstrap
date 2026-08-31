@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/semantic-primitives.v1.schema.json",
+  "title": "Scenario Kernel Semantic Primitives",
+  "description": "Shared canonical primitives referenced by the rest of the Scenario Kernel schema family. This document is a $defs library and is not intended to be instantiated directly.",
+  "$defs": {
+    "semanticId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[a-z0-9][a-z0-9._:-]*$"
+    },
+    "semanticVersion": {
+      "type": "string",
+      "pattern": "^[1-9][0-9]*\\.[0-9]+\\.[0-9]+$"
+    },
+    "digest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "contractReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contractId"],
+      "properties": {
+        "contractId": { "$ref": "#/$defs/semanticId" },
+        "schemaId": { "type": "string", "minLength": 1 },
+        "version": { "$ref": "#/$defs/semanticVersion" },
+        "digest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "kernelSpecificationReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["specificationId", "version"],
+      "properties": {
+        "specificationId": { "$ref": "#/$defs/semanticId" },
+        "version": { "$ref": "#/$defs/semanticVersion" },
+        "digest": { "$ref": "#/$defs/digest" }
+      }
+    }
+  }
+}

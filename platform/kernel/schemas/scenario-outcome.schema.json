@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.scenario-driven.dev/kernel/scenario-outcome.v1.schema.json",
+  "title": "Scenario Outcome",
+  "description": "Canonical Scenario Kernel outcome definition. Separates the outcome's own identity from the contract authority it produces.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["outcomeId", "contract"],
+  "properties": {
+    "outcomeId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "contract": { "$ref": "semantic-primitives.schema.json#/$defs/contractReference" },
+    "experience": {
+      "description": "The resulting reality promised by Then; the contract describes only its observable representation.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["statement"],
+      "properties": {
+        "statement": { "type": "string", "minLength": 1 }
+      }
+    },
+    "semanticType": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+    "terminal": { "type": "boolean", "default": false }
+  }
+}
