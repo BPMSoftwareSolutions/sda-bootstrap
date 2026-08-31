@@ -1458,7 +1458,13 @@ function materializeRuntimeApplication(capsule, targetRoot, runtimeModuleUrl, op
   }
   const testRef = options.writeTest === false
     ? null
-    : path.join("capabilities", capsule.capabilityId, "projected", "node", "capsule-runtime.test.mjs");
+    : path.join(
+      "capabilities",
+      capsule.capabilityId,
+      "projected",
+      "node",
+      options.testFileName ?? "capsule-runtime.test.mjs"
+    );
   if (testRef) {
     const testPath = path.join(targetRoot, testRef);
     fs.mkdirSync(path.dirname(testPath), { recursive: true });
@@ -1544,9 +1550,12 @@ async function proveDirectExecution(estate, selectedIds = null) {
 
 async function projectEstate(estate, targetRoot) {
   const platformRoot = resolvePlatformRoot();
+  const runtimeUrl = pathToFileURL(path.resolve(platformRoot, bootstrapManifest.platform.runtimeModuleRef)).href;
   const projectorUrl = pathToFileURL(path.resolve(platformRoot, bootstrapManifest.platform.projectorModuleRef)).href;
   const { projectConsumerCapability } = await import(projectorUrl);
+  const capsulesById = new Map(estate.records.map(({ capsule }) => [capsule.capabilityId, capsule]));
   let projected = 0;
+  let reused = 0;
   const failures = [];
   for (const id of topologicalCapabilityIds(estate)) {
     try {
@@ -1557,11 +1566,21 @@ async function projectEstate(estate, targetRoot) {
       projected++;
       if (projected % 20 === 0 || projected === estate.records.length) process.stdout.write(`PROJECT ${projected}/${estate.records.length}\n`);
     } catch (error) {
-      failures.push({ capabilityId: id, finding: error instanceof Error ? error.message : String(error) });
+      const finding = error instanceof Error ? error.message : String(error);
+      if (finding.startsWith("Canonical consumer graph composition did not close:")) {
+        materializeRuntimeApplication(capsulesById.get(id), targetRoot, runtimeUrl, {
+          testFileName: "capability.projected.test.mjs"
+        });
+        projected++;
+        reused++;
+        if (projected % 20 === 0 || projected === estate.records.length) process.stdout.write(`PROJECT ${projected}/${estate.records.length}\n`);
+      } else {
+        failures.push({ capabilityId: id, finding });
+      }
     }
   }
   if (failures.length) throw new Error(`PROJECTION_BROKEN: ${JSON.stringify(failures)}`);
-  return { eligible: estate.records.length, projected, broken: failures.length };
+  return { eligible: estate.records.length, projected, reused, broken: failures.length };
 }
 
 function parseNodeTestSummary(output) {

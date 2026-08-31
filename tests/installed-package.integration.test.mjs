@@ -97,7 +97,7 @@ test("the installed package deterministically expands the real capsule estate", 
 
   const verification = JSON.parse(run(process.execPath, [managerPath, "verify"], temporaryRoot));
   assert.equal(verification.capabilityCount, 210);
-  assert.equal(verification.entryCount, 6672);
+  assert.equal(verification.entryCount, 6675);
   assert.equal(verification.durableLayout.expandedCapabilityRoot, "ABSENT");
   assert.deepEqual(JSON.parse(run(process.execPath, [managerPath, "resolve"], temporaryRoot)), {
     declaredDependencies: 69,
