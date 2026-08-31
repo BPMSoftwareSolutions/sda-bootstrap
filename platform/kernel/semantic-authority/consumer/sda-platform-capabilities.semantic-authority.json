@@ -103,6 +103,20 @@
       "conformanceRef": "tools/tests/consumer-projection/platform-capability-admission.test.js"
     },
     {
+      "capabilityId": "sda-managed-language-module-invocation-port.v1",
+      "kind": "event-port",
+      "status": "ADMITTED",
+      "projectionTarget": "node",
+      "provider": "ScenarioKernel.NodePlatform.Language.ManagedModuleInvocation",
+      "providesMechanics": [
+        "event-port-invocation",
+        "digest-checked-managed-javascript-module-resolution",
+        "capsule-contained-module-materialization"
+      ],
+      "implementationRef": "languages/typescript/runtimes/node/managed-language-module-provider.mjs",
+      "conformanceRef": "tools/tests/conformance/managed-language-module-provider.test.js"
+    },
+    {
       "capabilityId": "sda-json-authority-ingestion-port.v1",
       "kind": "event-port",
       "status": "ADMITTED",

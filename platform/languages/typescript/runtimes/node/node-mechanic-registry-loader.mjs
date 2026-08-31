@@ -55,6 +55,7 @@ function admitRegistrationAuthority(entry) {
 const registrationAuthorityRequiredCapabilities = new Set([
   "sda-json-authority-ingestion-port.v1",
   "sda-proof-binding-evaluation-port.v1",
+  "sda-managed-language-module-invocation-port.v1",
   "sda-scenario-semantic-carrier-validation-port.v1",
   "sda-scenario-semantic-carrier-extraction-port.v1",
   "sda-scenario-semantic-carrier-evaluation-port.v1",

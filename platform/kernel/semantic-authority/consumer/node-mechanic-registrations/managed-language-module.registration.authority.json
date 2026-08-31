@@ -1,0 +1,12 @@
+{
+  "$schema": "../../../schemas/node-mechanic-registration-authority.v1.schema.json",
+  "registrationAuthorityType": "node-mechanic-registration-authority.v1",
+  "authorityId": "node-managed-language-module-registration.v1",
+  "platformCapabilityId": "sda-managed-language-module-invocation-port.v1",
+  "kind": "direct",
+  "providerModule": "managed-language-module-provider.mjs",
+  "providerExport": "invokeManagedLanguageModule",
+  "invocation": "url-context",
+  "authorityDigestAlgorithm": "sha256 of canonical recursive-key-order JSON excluding authorityDigest",
+  "authorityDigest": "sha256:e2296bcbea7177c1c6d04125429d378a9824d442842541187633803f1d9b3913"
+}

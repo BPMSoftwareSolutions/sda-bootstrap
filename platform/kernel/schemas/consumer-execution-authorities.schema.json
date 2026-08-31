@@ -2,12 +2,46 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://schemas.scenario-driven.dev/kernel/consumer-execution-authorities.v1.schema.json",
   "title": "Consumer Execution Authorities",
-  "description": "Semantic instructions from which consumer runtime bodies are projected; contains no executable functions.",
+  "description": "Semantic instructions from which consumer runtime bodies are projected, plus optional digest-bound managed language modules carried as admitted capability implementation authority.",
   "type": "object",
   "additionalProperties": false,
   "required": ["authorityType", "executionAuthorities"],
   "properties": {
     "authorityType": { "const": "execution-authorities.v1" },
+    "languageModules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["authorityType", "moduleId", "language", "entry", "exports", "files"],
+        "properties": {
+          "authorityType": { "const": "managed-language-module-authority.v1" },
+          "moduleId": { "$ref": "semantic-primitives.schema.json#/$defs/semanticId" },
+          "language": { "const": "javascript-esm" },
+          "entry": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._/-]*$" },
+          "exports": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": { "type": "string", "pattern": "^[A-Za-z_$][A-Za-z0-9_$]*$" }
+          },
+          "files": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["path", "source", "sourceDigest"],
+              "properties": {
+                "path": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._/-]*$" },
+                "source": { "type": "string", "minLength": 1 },
+                "sourceDigest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }
+              }
+            }
+          }
+        }
+      }
+    },
     "executionAuthorities": {
       "type": "array",
       "minItems": 1,

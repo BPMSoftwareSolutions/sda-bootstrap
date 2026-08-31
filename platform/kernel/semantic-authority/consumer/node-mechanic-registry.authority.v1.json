@@ -100,6 +100,15 @@
       "registrationAuthorityDigest": "sha256:3149812f05dec95a5a8db991b9834a263af0cfc6e4a6d42fb2aab1947fd2d4a0"
     },
     {
+      "platformCapabilityId": "sda-managed-language-module-invocation-port.v1",
+      "kind": "direct",
+      "providerModule": "managed-language-module-provider.mjs",
+      "providerExport": "invokeManagedLanguageModule",
+      "invocation": "url-context",
+      "registrationAuthorityRef": "kernel/semantic-authority/consumer/node-mechanic-registrations/managed-language-module.registration.authority.json",
+      "registrationAuthorityDigest": "sha256:6771a4cb01c730e5c11e717c59a609d5f8208ff406694ef9f712014f2dc6e131"
+    },
+    {
       "platformCapabilityId": "sda-scenario-semantic-carrier-validation-port.v1",
       "kind": "direct",
       "providerModule": "semantic-carrier-validator/index.mjs",
