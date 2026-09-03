@@ -174,8 +174,12 @@ test("invokes explicitly bound provisional capability providers by exact capsule
         ],
       }],
       eventExecutionProjections: [],
-      mechanicCircuits: [],
-      providerCircuits: [],
+      mechanicCircuits: [{
+        projectionId: "mechanic:test", cells: [{ cellId: "m1", input: { dataType: "raw" }, mechanic: { mechanicId: "parse" }, result: { dataType: "parsed" } }], routes: [],
+      }],
+      providerCircuits: [{
+        projectionId: "provider:test", cells: [{ cellId: "p1", input: { dataType: "path" }, providerId: "filesystem-read", result: { dataType: "bytes" } }], routes: [],
+      }],
     }),
     "*/",
     "export {};",
@@ -255,6 +259,14 @@ test("invokes explicitly bound provisional capability providers by exact capsule
   assert.match(documentation, /## Feature: Subject feature/);
   assert.match(documentation, /Identity: `first`/);
   assert.match(documentation, /ROUTED_PIPELINE/);
+  assert.equal((documentation.match(/```mermaid/g) ?? []).length, 5);
+  assert.match(documentation, /## Blueprint diagrams/);
+  assert.match(documentation, /DATA \/ INPUT<br\/>unspecified/);
+  assert.match(documentation, /Mechanic descent: mechanic:test/);
+  assert.match(documentation, /MECHANIC<br\/>parse/);
+  assert.match(documentation, /Provider descent: provider:test/);
+  assert.match(documentation, /PROVIDER<br\/>filesystem-read/);
+  assert.match(documentation, /motif_0 --> motif_1/);
   assert.equal(revealed.execution.outcome.documentationArtifact.path, "output/reveal.md");
   assert.equal(revealed.execution.outcome.documentationArtifact.digest, sha256(documentationBytes));
   assert.equal(revealed.execution.outcome.documentationDigest, sha256(documentationBytes));

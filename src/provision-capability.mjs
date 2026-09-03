@@ -601,6 +601,65 @@ function markdownJson(value) {
   return `\n\`\`\`json\n${JSON.stringify(canonicalize(value), null, 2)}\n\`\`\`\n`;
 }
 
+function mermaidLabel(value) {
+  return String(value ?? "unspecified").replace(/["<>]/gu, "'").replace(/\r?\n/gu, " ");
+}
+
+function renderGraph(title, cells, routes, kind) {
+  const indexById = new Map(cells.map((cell, index) => [cell.cellId, index]));
+  const lines = [`### ${title}`, "", "```mermaid", "flowchart LR"];
+  for (const [index, cell] of cells.entries()) {
+    const action = cell.responsibility?.responsibilityId ?? cell.mechanic?.mechanicId ?? cell.provider?.providerId
+      ?? cell.providerId ?? cell.cellId;
+    lines.push(`  ${kind}_in_${index}["INPUT<br/>${mermaidLabel(cell.input?.dataType)}"]`);
+    lines.push(`  ${kind}_act_${index}(["${kind.toUpperCase()}<br/>${mermaidLabel(action)}"])`);
+    lines.push(`  ${kind}_out_${index}["RESULT<br/>${mermaidLabel(cell.result?.dataType)}"]`);
+    lines.push(`  ${kind}_in_${index} --> ${kind}_act_${index} --> ${kind}_out_${index}`);
+  }
+  for (const route of routes ?? []) {
+    const from = indexById.get(route.fromCellId);
+    const to = indexById.get(route.toCellId);
+    if (from !== undefined && to !== undefined) {
+      lines.push(`  ${kind}_out_${from} -->|"${mermaidLabel(route.semanticProgress ?? route.product)}"| ${kind}_in_${to}`);
+    }
+  }
+  lines.push("```", "");
+  return lines;
+}
+
+function renderBlueprintDiagrams(model, motifs) {
+  const lines = ["## Blueprint diagrams", "", "> These diagrams are projected from the declared semantic carriers in the supplied source.", ""];
+  for (const feature of model.features ?? []) {
+    for (const [index, scenario] of (feature.scenarios ?? []).entries()) {
+      lines.push(`### Scenario ${String(index + 1).padStart(2, "0")}: ${scenario.name ?? scenario.scenarioId}`, "", "```mermaid", "flowchart LR");
+      lines.push(`  input["DATA / INPUT<br/>${mermaidLabel(scenario.input?.dataType)}"]`);
+      lines.push(`  event(["EVENT / ACTION<br/>${mermaidLabel(scenario.event?.action?.actionId ?? scenario.event?.actionId ?? scenario.event?.eventId)}"])`);
+      lines.push(`  outcome["EXPERIENCE / OUTCOME<br/>${mermaidLabel(scenario.outcome?.experience)}<br/>PRODUCT: ${mermaidLabel(scenario.outcome?.product?.dataType)}"]`);
+      lines.push("  input --> event --> outcome", "```", "");
+      const routes = scenario.routes ?? [];
+      lines.push(routes.length === 0
+        ? "Declared product route: terminal."
+        : `Declared product routes: ${routes.map((route) => `${scenario.scenarioId} → ${route.targetScenarioId} (${route.semanticProgress})`).join("; ")}.`, "");
+    }
+  }
+  for (const projection of model.eventExecutionProjections ?? []) {
+    lines.push(...renderGraph(`Event execution: ${projection.actionId ?? projection.projectionId}`, projection.cells ?? [], projection.routes ?? [], "execution"));
+  }
+  for (const projection of model.mechanicCircuits ?? []) {
+    lines.push(...renderGraph(`Mechanic descent: ${projection.projectionId}`, projection.cells ?? [], projection.routes ?? [], "mechanic"));
+  }
+  for (const projection of model.providerCircuits ?? []) {
+    lines.push(...renderGraph(`Provider descent: ${projection.projectionId}`, projection.cells ?? [], projection.routes ?? [], "provider"));
+  }
+  for (const motif of motifs) {
+    lines.push(`### Motif: ${motif.motifType}`, "", "```mermaid", "flowchart LR");
+    for (const [index, nodeId] of motif.nodeIds.entries()) lines.push(`  motif_${index}["${mermaidLabel(nodeId)}"]`);
+    for (let index = 0; index < motif.nodeIds.length - 1; index += 1) lines.push(`  motif_${index} --> motif_${index + 1}`);
+    lines.push("```", "");
+  }
+  return lines;
+}
+
 function renderRevelationMarkdown(model, motifs, sourceDigest, sourcePath) {
   const capability = model.capability ?? {};
   const features = model.features ?? [];
@@ -628,6 +687,8 @@ function renderRevelationMarkdown(model, motifs, sourceDigest, sourcePath) {
     "",
     "## Capability",
     markdownJson(capability).trimEnd(),
+    "",
+    ...renderBlueprintDiagrams(model, motifs),
   ];
   for (const feature of features) {
     lines.push("", `## Feature: ${feature.name ?? feature.featureId}`, "", `Identity: \`${feature.featureId}\``);
