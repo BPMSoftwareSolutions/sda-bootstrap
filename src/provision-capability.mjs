@@ -8,20 +8,6 @@ import { IdGenerator, SourceMediaType } from "@cucumber/messages";
 
 const runtimeModuleRef = "languages/typescript/runtimes/node/admitted-consumer-platform.mjs";
 const sha256 = (bytes) => `sha256:${crypto.createHash("sha256").update(bytes).digest("hex")}`;
-const provisionedProviderDefinitions = new Map([
-  ["sda-bootstrap.provision-capability-token.v1", {
-    requestType: "capability-token-provisioning-request.v1",
-    operation: "PROVISION_CAPABILITY_TOKEN",
-  }],
-  ["sda-bootstrap.deliver-capability-token-provisioning-cli.v1", {
-    requestType: "capability-token-provisioning-cli-request.v1",
-    operation: "DELIVER_CAPABILITY_TOKEN_PROVISIONING_CLI",
-  }],
-  ["sda-bootstrap.reveal-semantic-model.v1", {
-    requestType: "reveal-semantic-model-request.v1",
-    operation: "REVEAL_SEMANTIC_MODEL",
-  }],
-]);
 
 function canonicalize(value) {
   if (Array.isArray(value)) return value.map(canonicalize);
@@ -84,10 +70,6 @@ function parseFeature(featureBytes, featureRef) {
   const featureTags = feature.tags ?? [];
   const requestedId = tagValue(featureTags, "@capability:");
   const capabilityId = requestedId ?? slug(feature.name);
-  const requestedProviderCapabilityId = tagValue(featureTags, "@provisioned-provider:");
-  const providerDefinition = requestedProviderCapabilityId
-    ? provisionedProviderDefinitions.get(requestedProviderCapabilityId) ?? null
-    : null;
   if (!/^[a-z0-9][a-z0-9-]*$/.test(capabilityId)) {
     throw new Error(`PROVISIONING_CAPABILITY_ID_INVALID: '${capabilityId}'.`);
   }
@@ -130,19 +112,11 @@ function parseFeature(featureBytes, featureRef) {
     featureName: feature.name,
     description: feature.description?.trim() ?? "",
     scenarioTopology: topology,
-    providerBinding: providerDefinition ? {
-      bindingType: "provisioned-platform-provider-binding.v1",
-      providerCapabilityId: requestedProviderCapabilityId,
-      implementationRef: `package:sda-bootstrap#${requestedProviderCapabilityId}`,
-      status: "AVAILABLE",
-      requestType: providerDefinition.requestType,
-      operation: providerDefinition.operation,
-    } : null,
-    openSlots: providerDefinition ? [] : topology.map((scenario) => ({
+    openSlots: topology.map((scenario) => ({
       slotId: `event-mechanic:${scenario.scenarioId}`,
       slotType: "EVENT_MECHANIC",
       requiredByScenarioId: scenario.scenarioId,
-      requestedProviderCapabilityId,
+      requestedProviderCapabilityId: null,
       disposition: "OPEN",
     })),
   };
@@ -171,8 +145,8 @@ function deriveProvisionedBlueprint(parsed) {
     outcomeContractId: scenario.outcomeContractId,
     mechanic: {
       mechanicId: scenario.eventAuthorityId ?? `event-mechanic:${scenario.scenarioId}`,
-      disposition: parsed.providerBinding ? "RESOLVED" : "OPEN",
-      providerCapabilityId: parsed.providerBinding?.providerCapabilityId ?? null,
+      disposition: "OPEN",
+      providerCapabilityId: null,
     },
   }));
   const edges = nodes.slice(1).map((node, index) => ({
@@ -228,7 +202,7 @@ function deriveExecutableScaffold(parsed, blueprint) {
 
 function buildProvisionedCapsule(featureBytes, featureRef) {
   const parsed = parseFeature(featureBytes, featureRef);
-  const { capabilityId, featureName, description, scenarioTopology, providerBinding, openSlots } = parsed;
+  const { capabilityId, featureName, description, scenarioTopology, openSlots } = parsed;
   const featureDigest = sha256(featureBytes);
   const blueprint = deriveProvisionedBlueprint(parsed);
   const blueprintBytes = canonicalJsonBytes(blueprint);
@@ -260,7 +234,7 @@ function buildProvisionedCapsule(featureBytes, featureRef) {
     },
     scenarioTopology,
     openSlots,
-    providerBindings: providerBinding ? [providerBinding] : [],
+    providerBindings: [],
     provisioningDisposition,
     managedAdmission: {
       disposition: "NOT_REQUESTED",
@@ -314,7 +288,7 @@ function buildProvisionedCapsule(featureBytes, featureRef) {
       queryId: "execute-provisioned-token",
       queryDigest: featureDigest,
       capabilityAuthorityDigest: authorityDigest,
-      mechanicResolutionDigest: sha256(Buffer.from("sda-bootstrap:provision-capability-token.v1", "utf8")),
+      mechanicResolutionDigest: sha256(Buffer.from("sda-schema-contract-admission.v1|sda-authority-transformation-port.v1", "utf8")),
     },
     rootNodeId: capabilityId,
     nodes: [
@@ -463,12 +437,6 @@ function buildProvisionedCapsule(featureBytes, featureRef) {
     lifecycleDisposition: "PROVISIONAL",
     declaredDependencies: [],
     externalToolRoots: [],
-    ...(providerBinding ? {
-      provisionedExecution: {
-        executionType: "provisioned-platform-provider-execution.v1",
-        providerBinding,
-      },
-    } : {}),
     runtimeBindings: [
       {
         runtimeBindingType: "capsule-runtime-binding.v1",
@@ -489,7 +457,6 @@ function buildProvisionedCapsule(featureBytes, featureRef) {
     blueprintDigest,
     executableScaffoldDigest,
     provisioningDisposition,
-    providerBinding,
   };
 }
 
@@ -516,32 +483,6 @@ function verifyProvisionedCapsule(capsule) {
   if (binding.executionPlanDigest !== entries.get(runtime.planEntryRef).entryDigest) {
     throw new Error("PROVISIONED_CAPSULE_PLAN_DIGEST_DIVERGED");
   }
-  if (capsule.provisionedExecution) {
-    const execution = capsule.provisionedExecution;
-    const provider = execution.providerBinding;
-    const definition = provisionedProviderDefinitions.get(provider?.providerCapabilityId);
-    const authorityRef = `capabilities/${capsule.capabilityId}/capability.authority.json`;
-    const authorityEntry = entries.get(authorityRef);
-    const authority = authorityEntry
-      ? JSON.parse(Buffer.from(authorityEntry.entryBytesBase64, "base64").toString("utf8"))
-      : null;
-    if (execution.executionType !== "provisioned-platform-provider-execution.v1"
-      || !definition
-      || provider.bindingType !== "provisioned-platform-provider-binding.v1"
-      || provider.status !== "AVAILABLE"
-      || provider.requestType !== definition.requestType
-      || provider.operation !== definition.operation
-      || provider.implementationRef !== `package:sda-bootstrap#${provider.providerCapabilityId}`) {
-      throw new Error("PROVISIONED_CAPSULE_PROVIDER_BINDING_INVALID");
-    }
-    if (!authority
-      || authority.capabilityId !== capsule.capabilityId
-      || authority.provisioningDisposition !== "PROVISIONED_EXECUTABLE"
-      || authority.openSlots?.length !== 0
-      || JSON.stringify(canonicalize(authority.providerBindings)) !== JSON.stringify(canonicalize([provider]))) {
-      throw new Error("PROVISIONED_CAPSULE_PROVIDER_AUTHORITY_DIVERGED");
-    }
-  }
   return { entryCount: capsule.entries.length, runtimeBindingCount: capsule.runtimeBindings.length };
 }
 
@@ -567,12 +508,12 @@ function materializeProvisionedRuntime(capsule, targetRoot) {
   return path.join(projectedRoot, "application-binding.node.json");
 }
 
-function terminatedProviderExecution(capsule, providerCapabilityId, outcome) {
+function terminatedProvisionedBoundaryExecution(capsule, outcome) {
   return {
     disposition: "terminated",
     outcome,
     executions: [{
-      executionId: `provisioned-provider:${providerCapabilityId}`,
+      executionId: "provisioned-open-slot-boundary",
       scenarioId: capsule.capabilityId,
       disposition: "terminated",
       outcome,
@@ -581,262 +522,8 @@ function terminatedProviderExecution(capsule, providerCapabilityId, outcome) {
   };
 }
 
-function deriveSemanticModelMotifs(model) {
-  return (model.features ?? []).flatMap((feature) => {
-    const scenarios = feature.scenarios ?? [];
-    const scenarioIds = scenarios.map((scenario) => scenario.scenarioId);
-    const routeIds = scenarios.flatMap((scenario) => (scenario.routes ?? []).map((route) => route.routeId));
-    return [{
-      motifId: `${model.capability?.capabilityId ?? "revealed"}:${feature.featureId}:scenario-pipeline`,
-      motifType: routeIds.length > 0 ? "ROUTED_PIPELINE" : "SCENARIO_SET",
-      featureId: feature.featureId,
-      nodeIds: scenarioIds,
-      edgeIds: routeIds,
-      derivation: "DECLARED_BLUEPRINT_TOPOLOGY",
-    }];
-  });
-}
-
-function markdownJson(value) {
-  return `\n\`\`\`json\n${JSON.stringify(canonicalize(value), null, 2)}\n\`\`\`\n`;
-}
-
-function mermaidLabel(value) {
-  return String(value ?? "unspecified").replace(/["<>]/gu, "'").replace(/\r?\n/gu, " ");
-}
-
-function renderGraph(title, cells, routes, kind) {
-  const indexById = new Map(cells.map((cell, index) => [cell.cellId, index]));
-  const lines = [`### ${title}`, "", "```mermaid", "flowchart LR"];
-  for (const [index, cell] of cells.entries()) {
-    const action = cell.responsibility?.responsibilityId ?? cell.mechanic?.mechanicId ?? cell.provider?.providerId
-      ?? cell.providerId ?? cell.cellId;
-    lines.push(`  ${kind}_in_${index}["INPUT<br/>${mermaidLabel(cell.input?.dataType)}"]`);
-    lines.push(`  ${kind}_act_${index}(["${kind.toUpperCase()}<br/>${mermaidLabel(action)}"])`);
-    lines.push(`  ${kind}_out_${index}["RESULT<br/>${mermaidLabel(cell.result?.dataType)}"]`);
-    lines.push(`  ${kind}_in_${index} --> ${kind}_act_${index} --> ${kind}_out_${index}`);
-  }
-  for (const route of routes ?? []) {
-    const from = indexById.get(route.fromCellId);
-    const to = indexById.get(route.toCellId);
-    if (from !== undefined && to !== undefined) {
-      lines.push(`  ${kind}_out_${from} -->|"${mermaidLabel(route.semanticProgress ?? route.product)}"| ${kind}_in_${to}`);
-    }
-  }
-  lines.push("```", "");
-  return lines;
-}
-
-function renderBlueprintDiagrams(model, motifs) {
-  const lines = ["## Blueprint diagrams", "", "> These diagrams are projected from the declared semantic carriers in the supplied source.", ""];
-  for (const feature of model.features ?? []) {
-    for (const [index, scenario] of (feature.scenarios ?? []).entries()) {
-      lines.push(`### Scenario ${String(index + 1).padStart(2, "0")}: ${scenario.name ?? scenario.scenarioId}`, "", "```mermaid", "flowchart LR");
-      lines.push(`  input["DATA / INPUT<br/>${mermaidLabel(scenario.input?.dataType)}"]`);
-      lines.push(`  event(["EVENT / ACTION<br/>${mermaidLabel(scenario.event?.action?.actionId ?? scenario.event?.actionId ?? scenario.event?.eventId)}"])`);
-      lines.push(`  outcome["EXPERIENCE / OUTCOME<br/>${mermaidLabel(scenario.outcome?.experience)}<br/>PRODUCT: ${mermaidLabel(scenario.outcome?.product?.dataType)}"]`);
-      lines.push("  input --> event --> outcome", "```", "");
-      const routes = scenario.routes ?? [];
-      lines.push(routes.length === 0
-        ? "Declared product route: terminal."
-        : `Declared product routes: ${routes.map((route) => `${scenario.scenarioId} → ${route.targetScenarioId} (${route.semanticProgress})`).join("; ")}.`, "");
-    }
-  }
-  for (const projection of model.eventExecutionProjections ?? []) {
-    lines.push(...renderGraph(`Event execution: ${projection.actionId ?? projection.projectionId}`, projection.cells ?? [], projection.routes ?? [], "execution"));
-  }
-  for (const projection of model.mechanicCircuits ?? []) {
-    lines.push(...renderGraph(`Mechanic descent: ${projection.projectionId}`, projection.cells ?? [], projection.routes ?? [], "mechanic"));
-  }
-  for (const projection of model.providerCircuits ?? []) {
-    lines.push(...renderGraph(`Provider descent: ${projection.projectionId}`, projection.cells ?? [], projection.routes ?? [], "provider"));
-  }
-  for (const motif of motifs) {
-    lines.push(`### Motif: ${motif.motifType}`, "", "```mermaid", "flowchart LR");
-    for (const [index, nodeId] of motif.nodeIds.entries()) lines.push(`  motif_${index}["${mermaidLabel(nodeId)}"]`);
-    for (let index = 0; index < motif.nodeIds.length - 1; index += 1) lines.push(`  motif_${index} --> motif_${index + 1}`);
-    lines.push("```", "");
-  }
-  return lines;
-}
-
-function renderRevelationMarkdown(model, motifs, sourceDigest, sourcePath) {
-  const capability = model.capability ?? {};
-  const features = model.features ?? [];
-  const projections = model.eventExecutionProjections ?? [];
-  const mechanics = model.mechanicCircuits ?? [];
-  const providers = model.providerCircuits ?? [];
-  const scenarioCount = features.reduce((count, feature) => count + (feature.scenarios ?? []).length, 0);
-  const lines = [
-    `# Reveal: ${capability.name ?? capability.capabilityId}`,
-    "",
-    "## Source identity",
-    "",
-    `- Path: \`${sourcePath}\``,
-    `- SHA-256: \`${sourceDigest}\``,
-    "",
-    "## Summary",
-    "",
-    `- Capability: \`${capability.capabilityId}\``,
-    `- Features: ${features.length}`,
-    `- Scenarios: ${scenarioCount}`,
-    `- Event execution projections: ${projections.length}`,
-    `- Mechanic circuits: ${mechanics.length}`,
-    `- Provider circuits: ${providers.length}`,
-    `- Blueprint-derived motifs: ${motifs.length}`,
-    "",
-    "## Capability",
-    markdownJson(capability).trimEnd(),
-    "",
-    ...renderBlueprintDiagrams(model, motifs),
-  ];
-  for (const feature of features) {
-    lines.push("", `## Feature: ${feature.name ?? feature.featureId}`, "", `Identity: \`${feature.featureId}\``);
-    for (const [index, scenario] of (feature.scenarios ?? []).entries()) {
-      lines.push(
-        "",
-        `### ${index + 1}. ${scenario.name ?? scenario.scenarioId}`,
-        "",
-        `Identity: \`${scenario.scenarioId}\``,
-        "",
-        "#### Input",
-        markdownJson(scenario.input ?? null).trimEnd(),
-        "",
-        "#### Event",
-        markdownJson(scenario.event ?? null).trimEnd(),
-        "",
-        "#### Outcome",
-        markdownJson(scenario.outcome ?? null).trimEnd(),
-      );
-      if ((scenario.routes ?? []).length > 0) {
-        lines.push("", "#### Routes", markdownJson(scenario.routes).trimEnd());
-      }
-    }
-  }
-  const sections = [
-    ["Event execution projections", projections],
-    ["Mechanic circuits", mechanics],
-    ["Provider circuits", providers],
-    ["Blueprint-derived motifs", motifs],
-  ];
-  for (const [heading, value] of sections) {
-    lines.push("", `## ${heading}`, markdownJson(value).trimEnd());
-  }
-  lines.push("");
-  return lines.join("\n");
-}
-
-function revealSemanticModel(repositoryRoot, input) {
-  if (typeof input.sourcePath !== "string" || input.sourcePath.trim() === "") {
-    throw new Error("REVELATION_SOURCE_REQUIRED");
-  }
-  const resolvedSourcePath = path.resolve(repositoryRoot, input.sourcePath);
-  if (!pathIsWithin(repositoryRoot, resolvedSourcePath)) {
-    throw new Error(`REVELATION_SOURCE_ESCAPES_REPOSITORY: '${resolvedSourcePath}'.`);
-  }
-  if (!fs.existsSync(resolvedSourcePath) || !fs.statSync(resolvedSourcePath).isFile()) {
-    throw new Error(`REVELATION_SOURCE_NOT_FOUND: '${resolvedSourcePath}'.`);
-  }
-  const sourceBytes = fs.readFileSync(resolvedSourcePath);
-  const sourceText = sourceBytes.toString("utf8");
-  const match = sourceText.match(/\/\* @reveal-semantic-model\/v2\s*([\s\S]*?)\*\//u);
-  if (!match) throw new Error("REVELATION_SEMANTIC_MODEL_REQUIRED");
-  let model;
-  try {
-    model = JSON.parse(match[1]);
-  } catch (error) {
-    throw new Error(`REVELATION_SEMANTIC_MODEL_INVALID: ${error.message}`);
-  }
-  if (model.schema !== "reveal.semantic-model.v2" || !model.capability?.capabilityId) {
-    throw new Error("REVELATION_SEMANTIC_MODEL_INVALID");
-  }
-  const sourceDigest = sha256(sourceBytes);
-  const sourcePath = path.relative(repositoryRoot, resolvedSourcePath).replaceAll("\\", "/");
-  const motifs = deriveSemanticModelMotifs(model);
-  const documentationBytes = Buffer.from(renderRevelationMarkdown(model, motifs, sourceDigest, sourcePath), "utf8");
-  let documentationArtifact = null;
-  if (input.outputPath !== undefined) {
-    if (typeof input.outputPath !== "string" || input.outputPath.trim() === "") {
-      throw new Error("REVELATION_OUTPUT_PATH_INVALID");
-    }
-    const resolvedOutputPath = path.resolve(repositoryRoot, input.outputPath);
-    if (!pathIsWithin(repositoryRoot, resolvedOutputPath)) {
-      throw new Error(`REVELATION_OUTPUT_ESCAPES_REPOSITORY: '${resolvedOutputPath}'.`);
-    }
-    if (path.extname(resolvedOutputPath).toLowerCase() !== ".md") {
-      throw new Error("REVELATION_OUTPUT_MUST_BE_MARKDOWN");
-    }
-    fs.mkdirSync(path.dirname(resolvedOutputPath), { recursive: true });
-    fs.writeFileSync(resolvedOutputPath, documentationBytes);
-    documentationArtifact = {
-      path: path.relative(repositoryRoot, resolvedOutputPath).replaceAll("\\", "/"),
-      digest: sha256(documentationBytes),
-    };
-  }
-  return {
-    outcomeType: "revealed-semantic-model.v1",
-    sourceDigest,
-    sourcePath,
-    capability: model.capability,
-    features: model.features ?? [],
-    eventExecutionProjections: model.eventExecutionProjections ?? [],
-    mechanicCircuits: model.mechanicCircuits ?? [],
-    providerCircuits: model.providerCircuits ?? [],
-    motifs,
-    documentationMarkdown: documentationBytes.toString("utf8"),
-    documentationDigest: sha256(documentationBytes),
-    documentationArtifact,
-    revelationDisposition: "REVEALED",
-  };
-}
-
-async function executeBoundProvisionedProvider(capsule, repositoryRoot, platformRoot, input) {
-  const provider = capsule.provisionedExecution.providerBinding;
-  const definition = provisionedProviderDefinitions.get(provider.providerCapabilityId);
-  if (!definition) throw new Error(`PROVISIONED_PROVIDER_NOT_AVAILABLE: '${provider.providerCapabilityId}'.`);
-  if (!input || typeof input !== "object" || Array.isArray(input)) {
-    throw new Error("PROVISIONED_CAPABILITY_INPUT_INVALID: expected one JSON object.");
-  }
-  if (input.requestType === "prove-provisioned-provider-availability.v1") {
-    return terminatedProviderExecution(capsule, provider.providerCapabilityId, {
-      outcomeType: "provisioned-provider-availability.v1",
-      capabilityId: capsule.capabilityId,
-      providerCapabilityId: provider.providerCapabilityId,
-      providerDisposition: "AVAILABLE",
-    });
-  }
-  if (input.requestType !== definition.requestType) {
-    throw new Error(`PROVISIONED_CAPABILITY_REQUEST_TYPE_INVALID: expected '${definition.requestType}'.`);
-  }
-  if (!repositoryRoot) throw new Error("PROVISIONED_CAPABILITY_REPOSITORY_ROOT_REQUIRED");
-  if (provider.providerCapabilityId === "sda-bootstrap.reveal-semantic-model.v1") {
-    return terminatedProviderExecution(
-      capsule,
-      provider.providerCapabilityId,
-      revealSemanticModel(repositoryRoot, input),
-    );
-  }
-  if (typeof input.featurePath !== "string" || input.featurePath.trim() === "") {
-    throw new Error("PROVISIONING_FEATURE_REQUIRED");
-  }
-  if (provider.providerCapabilityId === "sda-bootstrap.deliver-capability-token-provisioning-cli.v1"
-    && input.command !== "provision") {
-    throw new Error("PROVISIONING_CLI_COMMAND_INVALID: expected 'provision'.");
-  }
-  const outcome = await provisionCapability({
-    repositoryRoot,
-    platformRoot,
-    featurePath: input.featurePath,
-    input: input.executionInput ?? null,
-  });
-  return terminatedProviderExecution(capsule, provider.providerCapabilityId, outcome);
-}
-
-async function executeProvisionedCapsule(capsule, platformRoot, input, { repositoryRoot = null } = {}) {
+async function executeProvisionedCapsule(capsule, platformRoot, input) {
   verifyProvisionedCapsule(capsule);
-  if (capsule.provisionedExecution) {
-    return executeBoundProvisionedProvider(capsule, repositoryRoot, platformRoot, input);
-  }
   const executionRoot = fs.mkdtempSync(path.join(os.tmpdir(), "sda-provisioned-token-"));
   try {
     const bindingPath = materializeProvisionedRuntime(capsule, executionRoot);
@@ -862,20 +549,10 @@ export async function provisionCapability({ repositoryRoot, platformRoot, featur
   const featureRef = path.relative(resolvedRepositoryRoot, resolvedFeaturePath).replaceAll("\\", "/");
   const built = buildProvisionedCapsule(featureBytes, featureRef);
   const structuralProof = verifyProvisionedCapsule(built.capsule);
-  const request = input ?? (built.providerBinding
-    ? { requestType: "prove-provisioned-provider-availability.v1" }
-    : { requestType: "describe-provisioned-capability.v1", payload: {} });
-  const execution = await executeProvisionedCapsule(
-    built.capsule,
-    platformRoot,
-    request,
-    { repositoryRoot: resolvedRepositoryRoot },
-  );
-  const exactOutcomeProved = built.providerBinding
-    ? execution.outcome?.providerDisposition === "AVAILABLE"
-      && execution.outcome?.providerCapabilityId === built.providerBinding.providerCapabilityId
-    : execution.outcome?.provisioningDisposition === built.provisioningDisposition;
-  if (execution.disposition !== "terminated" || !exactOutcomeProved) {
+  const request = input ?? { requestType: "describe-provisioned-capability.v1", payload: {} };
+  const execution = await executeProvisionedCapsule(built.capsule, platformRoot, request);
+  if (execution.disposition !== "terminated"
+    || execution.outcome?.provisioningDisposition !== built.provisioningDisposition) {
     throw new Error(`PROVISIONED_CAPSULE_EXECUTION_FAILED: '${built.capsule.capabilityId}'.`);
   }
   const capsuleBytes = canonicalJsonBytes(built.capsule);
@@ -944,45 +621,29 @@ export async function invokeProvisionedCapability({ repositoryRoot, platformRoot
   if (path.basename(resolvedCapsulePath) !== expectedFile) {
     throw new Error(`PROVISIONED_CAPSULE_CONTENT_ADDRESS_DIVERGED: expected '${expectedFile}'.`);
   }
-  if (!capsule.provisionedExecution) {
-    if (!input || input.requestType !== "execute-provisioned-capability.v1") {
-      throw new Error("PROVISIONED_CAPABILITY_REQUEST_TYPE_INVALID: expected 'execute-provisioned-capability.v1'.");
-    }
-    const authorityEntry = capsule.entries.find((entry) => entry.entryId === "capability.authority.json");
-    const scaffoldEntry = capsule.entries.find((entry) => entry.entryId === "executable-scaffold.authority.json");
-    const authority = JSON.parse(Buffer.from(authorityEntry.entryBytesBase64, "base64").toString("utf8"));
-    const scaffold = JSON.parse(Buffer.from(scaffoldEntry.entryBytesBase64, "base64").toString("utf8"));
-    const outcome = {
-      outcomeType: "provisioned-capability-open-slot-outcome.v1",
-      capabilityId: capsule.capabilityId,
-      provisioningDisposition: authority.provisioningDisposition,
-      executionDisposition: "PROVIDER_REQUIRED",
-      reachedNodeId: scaffold.rootNodeId,
-      openSlots: scaffold.openSlots,
-      motifs: scaffold.motifs,
-    };
-    return {
-      operation: "PROVISIONED_CAPABILITY_INVOCATION",
-      capabilityId: capsule.capabilityId,
-      capsuleDigest,
-      capsulePath: path.relative(resolvedRepositoryRoot, resolvedCapsulePath).replaceAll("\\", "/"),
-      providerCapabilityId: null,
-      execution: terminatedProviderExecution(capsule, "open-slot-boundary", outcome),
-    };
+  if (!input || input.requestType !== "execute-provisioned-capability.v1") {
+    throw new Error("PROVISIONED_CAPABILITY_REQUEST_TYPE_INVALID: expected 'execute-provisioned-capability.v1'.");
   }
-  const execution = await executeProvisionedCapsule(
-    capsule,
-    platformRoot,
-    input,
-    { repositoryRoot: resolvedRepositoryRoot },
-  );
+  const authorityEntry = capsule.entries.find((entry) => entry.entryId === "capability.authority.json");
+  const scaffoldEntry = capsule.entries.find((entry) => entry.entryId === "executable-scaffold.authority.json");
+  const authority = JSON.parse(Buffer.from(authorityEntry.entryBytesBase64, "base64").toString("utf8"));
+  const scaffold = JSON.parse(Buffer.from(scaffoldEntry.entryBytesBase64, "base64").toString("utf8"));
+  const outcome = {
+    outcomeType: "provisioned-capability-open-slot-outcome.v1",
+    capabilityId: capsule.capabilityId,
+    provisioningDisposition: authority.provisioningDisposition,
+    executionDisposition: "PROVIDER_REQUIRED",
+    reachedNodeId: scaffold.rootNodeId,
+    openSlots: scaffold.openSlots,
+    motifs: scaffold.motifs,
+  };
   return {
     operation: "PROVISIONED_CAPABILITY_INVOCATION",
     capabilityId: capsule.capabilityId,
     capsuleDigest,
     capsulePath: path.relative(resolvedRepositoryRoot, resolvedCapsulePath).replaceAll("\\", "/"),
-    providerCapabilityId: capsule.provisionedExecution.providerBinding.providerCapabilityId,
-    execution,
+    providerCapabilityId: null,
+    execution: terminatedProvisionedBoundaryExecution(capsule, outcome),
   };
 }
 
