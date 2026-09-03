@@ -6,7 +6,7 @@ import os from "node:os";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { invokeProvisionedCapability, provisionCapability } from "./provision-capability.mjs";
+import { executeProvisionedCapsule, invokeProvisionedCapability, provisionCapability } from "./provision-capability.mjs";
 
 /* @reveal-semantic-model/v2
 {
@@ -1501,7 +1501,15 @@ function materializeRuntimeApplication(capsule, targetRoot, runtimeModuleUrl, op
 async function invokeCapability(capabilityId, input, estate = loadEstate()) {
   verifyEstate(estate);
   resolveEstate(estate);
-  capsuleRecord(estate, capabilityId);
+  const selected = capsuleRecord(estate, capabilityId);
+  if (selected.capsule.provisionedExecution) {
+    return executeProvisionedCapsule(
+      selected.capsule,
+      resolvePlatformRoot(),
+      input,
+      { repositoryRoot },
+    );
+  }
   const workspace = createExecutionWorkspace("capsule-invoke");
   const { targetRoot, platformRoot } = workspace;
   const runtimeUrl = pathToFileURL(path.resolve(platformRoot, platformRuntimeModuleRef)).href;

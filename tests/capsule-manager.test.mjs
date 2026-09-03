@@ -180,6 +180,48 @@ test("invokes explicitly bound provisional capability providers by exact capsule
   assert.equal(cliResult.execution.disposition, "terminated");
   assert.equal(cliResult.execution.outcome.operation, "TOKEN_PROVISIONING");
   assert.equal(cliResult.execution.outcome.capabilityId, "quote-order");
+
+  const managedTokens = [provisionerToken, cliToken].map((token) => {
+    const source = path.join(repositoryRoot, token.capsulePath);
+    const capsule = readJson(source);
+    const file = `${token.capabilityId}.sfxcap`;
+    fs.mkdirSync(path.join(repositoryRoot, "capsules"), { recursive: true });
+    fs.copyFileSync(source, path.join(repositoryRoot, "capsules", file));
+    return {
+      capabilityId: token.capabilityId,
+      file,
+      capsuleDigest: token.capsuleDigest,
+      capabilityAuthorityDigest: capsule.entries.find((entry) => entry.entryId === "capability.authority.json").entryDigest,
+    };
+  });
+  writeJson(path.join(repositoryRoot, "capsules", "capsule-estate.manifest.json"), {
+    estateManifestType: "sidefx-capsule-estate-manifest.v1",
+    capabilityCount: managedTokens.length,
+    capsules: managedTokens,
+  });
+
+  const managedProvisionerInvocation = run(
+    "invoke",
+    "provision-capability-token",
+    JSON.stringify({
+      requestType: "capability-token-provisioning-request.v1",
+      featurePath: "features/quote-order.feature",
+    }),
+  );
+  assert.equal(managedProvisionerInvocation.status, 0, managedProvisionerInvocation.stderr);
+  assert.equal(JSON.parse(managedProvisionerInvocation.stdout).outcome.operation, "TOKEN_PROVISIONING");
+
+  const managedCliInvocation = run(
+    "invoke",
+    "deliver-capability-token-provisioning-cli",
+    JSON.stringify({
+      requestType: "capability-token-provisioning-cli-request.v1",
+      command: "provision",
+      featurePath: "features/quote-order.feature",
+    }),
+  );
+  assert.equal(managedCliInvocation.status, 0, managedCliInvocation.stderr);
+  assert.equal(JSON.parse(managedCliInvocation.stdout).outcome.operation, "TOKEN_PROVISIONING");
 });
 
 test("rejects invalid feature authority before creating a provisioning landing zone", (context) => {
