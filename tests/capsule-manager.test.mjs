@@ -150,6 +150,37 @@ test("invokes explicitly bound provisional capability providers by exact capsule
     "    Then the quote is returned",
     "",
   ].join("\n"), "utf8");
+  fs.writeFileSync(path.join(featureRoot, "reveal.feature"), [
+    "@capability:reveal",
+    "@provisioned-provider:sda-bootstrap.reveal-semantic-model.v1",
+    "Feature: Reveal declared semantic models",
+    "  Scenario: Reveal one declared model",
+    "    Given a source carrying an explicit semantic model",
+    "    When the semantic model is revealed",
+    "    Then its blueprint-derived motifs are returned",
+    "",
+  ].join("\n"), "utf8");
+  fs.writeFileSync(path.join(repositoryRoot, "subject.ts"), [
+    "/* @reveal-semantic-model/v2",
+    JSON.stringify({
+      schema: "reveal.semantic-model.v2",
+      capability: { capabilityId: "subject", name: "Subject" },
+      features: [{
+        featureId: "subject-feature",
+        name: "Subject feature",
+        scenarios: [
+          { scenarioId: "first", routes: [{ routeId: "first-to-second", targetScenarioId: "second" }] },
+          { scenarioId: "second", routes: [] },
+        ],
+      }],
+      eventExecutionProjections: [],
+      mechanicCircuits: [],
+      providerCircuits: [],
+    }),
+    "*/",
+    "export {};",
+    "",
+  ].join("\n"), "utf8");
 
   const run = (...args) => spawnSync(process.execPath, [managerSource, ...args], {
     cwd: repositoryRoot,
@@ -198,6 +229,21 @@ test("invokes explicitly bound provisional capability providers by exact capsule
   assert.equal(cliResult.execution.disposition, "terminated");
   assert.equal(cliResult.execution.outcome.operation, "TOKEN_PROVISIONING");
   assert.equal(cliResult.execution.outcome.capabilityId, "quote-order");
+
+  const reveal = run("provision", "features/reveal.feature");
+  assert.equal(reveal.status, 0, reveal.stderr);
+  const revealToken = JSON.parse(reveal.stdout);
+  assert.equal(revealToken.provisioningDisposition, "PROVISIONED_EXECUTABLE");
+  const revealInvocation = run(
+    "invoke-provisioned",
+    revealToken.capsulePath,
+    JSON.stringify({ requestType: "reveal-semantic-model-request.v1", sourcePath: "subject.ts" }),
+  );
+  assert.equal(revealInvocation.status, 0, revealInvocation.stderr);
+  const revealed = JSON.parse(revealInvocation.stdout);
+  assert.equal(revealed.execution.outcome.revelationDisposition, "REVEALED");
+  assert.equal(revealed.execution.outcome.capability.capabilityId, "subject");
+  assert.equal(revealed.execution.outcome.motifs[0].motifType, "ROUTED_PIPELINE");
 
   const managedTokens = [provisionerToken, cliToken].map((token) => {
     const source = path.join(repositoryRoot, token.capsulePath);

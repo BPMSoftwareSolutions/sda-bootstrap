@@ -17,6 +17,10 @@ const provisionedProviderDefinitions = new Map([
     requestType: "capability-token-provisioning-cli-request.v1",
     operation: "DELIVER_CAPABILITY_TOKEN_PROVISIONING_CLI",
   }],
+  ["sda-bootstrap.reveal-semantic-model.v1", {
+    requestType: "reveal-semantic-model-request.v1",
+    operation: "REVEAL_SEMANTIC_MODEL",
+  }],
 ]);
 
 function canonicalize(value) {
@@ -577,6 +581,60 @@ function terminatedProviderExecution(capsule, providerCapabilityId, outcome) {
   };
 }
 
+function deriveSemanticModelMotifs(model) {
+  return (model.features ?? []).flatMap((feature) => {
+    const scenarios = feature.scenarios ?? [];
+    const scenarioIds = scenarios.map((scenario) => scenario.scenarioId);
+    const routeIds = scenarios.flatMap((scenario) => (scenario.routes ?? []).map((route) => route.routeId));
+    return [{
+      motifId: `${model.capability?.capabilityId ?? "revealed"}:${feature.featureId}:scenario-pipeline`,
+      motifType: routeIds.length > 0 ? "ROUTED_PIPELINE" : "SCENARIO_SET",
+      featureId: feature.featureId,
+      nodeIds: scenarioIds,
+      edgeIds: routeIds,
+      derivation: "DECLARED_BLUEPRINT_TOPOLOGY",
+    }];
+  });
+}
+
+function revealSemanticModel(repositoryRoot, input) {
+  if (typeof input.sourcePath !== "string" || input.sourcePath.trim() === "") {
+    throw new Error("REVELATION_SOURCE_REQUIRED");
+  }
+  const resolvedSourcePath = path.resolve(repositoryRoot, input.sourcePath);
+  if (!pathIsWithin(repositoryRoot, resolvedSourcePath)) {
+    throw new Error(`REVELATION_SOURCE_ESCAPES_REPOSITORY: '${resolvedSourcePath}'.`);
+  }
+  if (!fs.existsSync(resolvedSourcePath) || !fs.statSync(resolvedSourcePath).isFile()) {
+    throw new Error(`REVELATION_SOURCE_NOT_FOUND: '${resolvedSourcePath}'.`);
+  }
+  const sourceBytes = fs.readFileSync(resolvedSourcePath);
+  const sourceText = sourceBytes.toString("utf8");
+  const match = sourceText.match(/\/\* @reveal-semantic-model\/v2\s*([\s\S]*?)\*\//u);
+  if (!match) throw new Error("REVELATION_SEMANTIC_MODEL_REQUIRED");
+  let model;
+  try {
+    model = JSON.parse(match[1]);
+  } catch (error) {
+    throw new Error(`REVELATION_SEMANTIC_MODEL_INVALID: ${error.message}`);
+  }
+  if (model.schema !== "reveal.semantic-model.v2" || !model.capability?.capabilityId) {
+    throw new Error("REVELATION_SEMANTIC_MODEL_INVALID");
+  }
+  return {
+    outcomeType: "revealed-semantic-model.v1",
+    sourceDigest: sha256(sourceBytes),
+    sourcePath: path.relative(repositoryRoot, resolvedSourcePath).replaceAll("\\", "/"),
+    capability: model.capability,
+    features: model.features ?? [],
+    eventExecutionProjections: model.eventExecutionProjections ?? [],
+    mechanicCircuits: model.mechanicCircuits ?? [],
+    providerCircuits: model.providerCircuits ?? [],
+    motifs: deriveSemanticModelMotifs(model),
+    revelationDisposition: "REVEALED",
+  };
+}
+
 async function executeBoundProvisionedProvider(capsule, repositoryRoot, platformRoot, input) {
   const provider = capsule.provisionedExecution.providerBinding;
   const definition = provisionedProviderDefinitions.get(provider.providerCapabilityId);
@@ -596,6 +654,13 @@ async function executeBoundProvisionedProvider(capsule, repositoryRoot, platform
     throw new Error(`PROVISIONED_CAPABILITY_REQUEST_TYPE_INVALID: expected '${definition.requestType}'.`);
   }
   if (!repositoryRoot) throw new Error("PROVISIONED_CAPABILITY_REPOSITORY_ROOT_REQUIRED");
+  if (provider.providerCapabilityId === "sda-bootstrap.reveal-semantic-model.v1") {
+    return terminatedProviderExecution(
+      capsule,
+      provider.providerCapabilityId,
+      revealSemanticModel(repositoryRoot, input),
+    );
+  }
   if (typeof input.featurePath !== "string" || input.featurePath.trim() === "") {
     throw new Error("PROVISIONING_FEATURE_REQUIRED");
   }
