@@ -84,12 +84,18 @@ function parseFeature(featureBytes, featureRef) {
       text: step.text,
     }));
     const byType = (type) => steps.filter((step) => step.keywordType === type).map((step) => step.text);
+    const input = byType("Context");
+    const event = byType("Action");
+    const outcome = byType("Outcome");
+    if (input.length === 0 || event.length === 0 || outcome.length === 0) {
+      throw new Error(`PROVISIONING_SCENARIO_GEOMETRY_INVALID: '${scenarioId}' must declare Input, Event, and Outcome steps.`);
+    }
     return {
       scenarioId,
       name: scenario.name,
-      input: byType("Context"),
-      event: byType("Action"),
-      outcome: byType("Outcome"),
+      input,
+      event,
+      outcome,
       orderedSteps: steps,
     };
   });
@@ -455,6 +461,7 @@ export async function provisionCapability({ repositoryRoot, platformRoot, featur
     capsule: { file: capsuleFile, digest: capsuleDigest },
     proof: {
       structuralDisposition: "PASS",
+      scenarioGeometryDisposition: "PASS",
       entryCount: structuralProof.entryCount,
       exactTokenExecutionDisposition: execution.disposition,
       outcomeDigest: executionOutcomeDigest,

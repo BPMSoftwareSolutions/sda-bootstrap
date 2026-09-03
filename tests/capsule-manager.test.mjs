@@ -113,3 +113,25 @@ test("rejects invalid feature authority before creating a provisioning landing z
   assert.match(result.stderr, /PROVISIONING_SCENARIO_REQUIRED/);
   assert.equal(fs.existsSync(path.join(repositoryRoot, "provisioning")), false);
 });
+
+test("rejects incomplete Input Event Outcome geometry before collapse", (context) => {
+  const repositoryRoot = fs.mkdtempSync(path.join(os.tmpdir(), "sda-bootstrap-provision-geometry-"));
+  context.after(() => fs.rmSync(repositoryRoot, { recursive: true, force: true }));
+  const featurePath = path.join(repositoryRoot, "incomplete.feature");
+  fs.writeFileSync(featurePath, [
+    "Feature: Incomplete geometry",
+    "  Scenario: Missing an outcome",
+    "    Given an input",
+    "    When an event occurs",
+    "",
+  ].join("\n"), "utf8");
+
+  const result = spawnSync(process.execPath, [managerSource, "provision", featurePath], {
+    cwd: repositoryRoot,
+    env: process.env,
+    encoding: "utf8",
+  });
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /PROVISIONING_SCENARIO_GEOMETRY_INVALID/);
+  assert.equal(fs.existsSync(path.join(repositoryRoot, "provisioning")), false);
+});
