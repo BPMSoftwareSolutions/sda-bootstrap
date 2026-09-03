@@ -157,10 +157,81 @@ function capsuleEntry(entryId, entryRef, bytes) {
   };
 }
 
+function deriveProvisionedBlueprint(parsed) {
+  const nodes = parsed.scenarioTopology.map((scenario, index) => ({
+    nodeId: scenario.scenarioId,
+    kind: "scenario",
+    projectionOrdinal: index,
+    inputContractId: scenario.inputContractId,
+    eventAuthorityId: scenario.eventAuthorityId,
+    outcomeContractId: scenario.outcomeContractId,
+    mechanic: {
+      mechanicId: scenario.eventAuthorityId ?? `event-mechanic:${scenario.scenarioId}`,
+      disposition: parsed.providerBinding ? "RESOLVED" : "OPEN",
+      providerCapabilityId: parsed.providerBinding?.providerCapabilityId ?? null,
+    },
+  }));
+  const edges = nodes.slice(1).map((node, index) => ({
+    edgeId: `${nodes[index].nodeId}-to-${node.nodeId}`,
+    from: nodes[index].nodeId,
+    to: node.nodeId,
+    topology: "TRANSITION",
+    semanticProgress: "NARROWS",
+  }));
+  const motifs = nodes.length > 1 ? [{
+    motifId: `${parsed.capabilityId}:linear-pipeline`,
+    motifType: "LINEAR_PIPELINE",
+    nodeIds: nodes.map((node) => node.nodeId),
+    edgeIds: edges.map((edge) => edge.edgeId),
+    derivation: "BLUEPRINT_TOPOLOGY",
+  }] : [{
+    motifId: `${parsed.capabilityId}:single-stage`,
+    motifType: "SINGLE_STAGE",
+    nodeIds: nodes.map((node) => node.nodeId),
+    edgeIds: [],
+    derivation: "BLUEPRINT_TOPOLOGY",
+  }];
+  return {
+    blueprintType: "provisioned-capability-blueprint.v1",
+    lifecycleDisposition: "PROVISIONAL",
+    capabilityId: parsed.capabilityId,
+    rootNodeId: nodes[0]?.nodeId ?? null,
+    nodes,
+    edges,
+    motifs,
+  };
+}
+
+function deriveExecutableScaffold(parsed, blueprint) {
+  return {
+    scaffoldType: "provisioned-executable-capability-scaffold.v1",
+    lifecycleDisposition: "PROVISIONAL",
+    capabilityId: parsed.capabilityId,
+    rootNodeId: blueprint.rootNodeId,
+    scenarioSequence: blueprint.nodes.map((node) => node.nodeId),
+    executableNodes: blueprint.nodes.map((node) => ({
+      nodeId: node.nodeId,
+      eventAuthorityId: node.eventAuthorityId,
+      mechanic: node.mechanic,
+    })),
+    openSlots: parsed.openSlots,
+    motifs: blueprint.motifs,
+    executionDisposition: parsed.openSlots.length > 0
+      ? "PROVIDER_REQUIRED"
+      : "EXECUTABLE",
+  };
+}
+
 function buildProvisionedCapsule(featureBytes, featureRef) {
   const parsed = parseFeature(featureBytes, featureRef);
   const { capabilityId, featureName, description, scenarioTopology, providerBinding, openSlots } = parsed;
   const featureDigest = sha256(featureBytes);
+  const blueprint = deriveProvisionedBlueprint(parsed);
+  const blueprintBytes = canonicalJsonBytes(blueprint);
+  const blueprintDigest = sha256(blueprintBytes);
+  const executableScaffold = deriveExecutableScaffold(parsed, blueprint);
+  const executableScaffoldBytes = canonicalJsonBytes(executableScaffold);
+  const executableScaffoldDigest = sha256(executableScaffoldBytes);
   const provisioningDisposition = openSlots.length > 0
     ? "PROVISIONED_EXECUTABLE_WITH_OPEN_SLOTS"
     : "PROVISIONED_EXECUTABLE";
@@ -174,6 +245,14 @@ function buildProvisionedCapsule(featureBytes, featureRef) {
     sourceFeature: {
       entryRef: `features/${capabilityId}.feature`,
       digest: featureDigest,
+    },
+    blueprint: {
+      entryRef: `capabilities/${capabilityId}/blueprint.authority.json`,
+      digest: blueprintDigest,
+    },
+    executableScaffold: {
+      entryRef: `capabilities/${capabilityId}/executable-scaffold.authority.json`,
+      digest: executableScaffoldDigest,
     },
     scenarioTopology,
     openSlots,
@@ -206,6 +285,9 @@ function buildProvisionedCapsule(featureBytes, featureRef) {
     capabilityVersion: "0.0.0-provisioned",
     featureDigest,
     authorityDigest,
+    blueprintDigest,
+    executableScaffoldDigest,
+    motifs: blueprint.motifs,
     scenarioTopology,
     openSlots,
     executionMode: "PROVISIONED_TOKEN",
@@ -353,6 +435,8 @@ function buildProvisionedCapsule(featureBytes, featureRef) {
   const sterilityRef = `capsule-runtime/${capabilityId}/projection-conformance.json`;
   const entries = [
     capsuleEntry("capability.authority.json", `capabilities/${capabilityId}/capability.authority.json`, authorityBytes),
+    capsuleEntry("blueprint.authority.json", `capabilities/${capabilityId}/blueprint.authority.json`, blueprintBytes),
+    capsuleEntry("executable-scaffold.authority.json", `capabilities/${capabilityId}/executable-scaffold.authority.json`, executableScaffoldBytes),
     capsuleEntry("scenario-topology.authority.json", `capabilities/${capabilityId}/scenario-topology.authority.json`, canonicalJsonBytes({
       authorityType: "provisioned-scenario-topology.v1",
       capabilityId,
@@ -394,7 +478,15 @@ function buildProvisionedCapsule(featureBytes, featureRef) {
     ],
     entries,
   };
-  return { capsule, authorityDigest, featureDigest, provisioningDisposition, providerBinding };
+  return {
+    capsule,
+    authorityDigest,
+    featureDigest,
+    blueprintDigest,
+    executableScaffoldDigest,
+    provisioningDisposition,
+    providerBinding,
+  };
 }
 
 function verifyProvisionedCapsule(capsule) {
@@ -633,7 +725,30 @@ export async function invokeProvisionedCapability({ repositoryRoot, platformRoot
     throw new Error(`PROVISIONED_CAPSULE_CONTENT_ADDRESS_DIVERGED: expected '${expectedFile}'.`);
   }
   if (!capsule.provisionedExecution) {
-    throw new Error(`PROVISIONED_CAPSULE_PROVIDER_REQUIRED: '${capsule.capabilityId}'.`);
+    if (!input || input.requestType !== "execute-provisioned-capability.v1") {
+      throw new Error("PROVISIONED_CAPABILITY_REQUEST_TYPE_INVALID: expected 'execute-provisioned-capability.v1'.");
+    }
+    const authorityEntry = capsule.entries.find((entry) => entry.entryId === "capability.authority.json");
+    const scaffoldEntry = capsule.entries.find((entry) => entry.entryId === "executable-scaffold.authority.json");
+    const authority = JSON.parse(Buffer.from(authorityEntry.entryBytesBase64, "base64").toString("utf8"));
+    const scaffold = JSON.parse(Buffer.from(scaffoldEntry.entryBytesBase64, "base64").toString("utf8"));
+    const outcome = {
+      outcomeType: "provisioned-capability-open-slot-outcome.v1",
+      capabilityId: capsule.capabilityId,
+      provisioningDisposition: authority.provisioningDisposition,
+      executionDisposition: "PROVIDER_REQUIRED",
+      reachedNodeId: scaffold.rootNodeId,
+      openSlots: scaffold.openSlots,
+      motifs: scaffold.motifs,
+    };
+    return {
+      operation: "PROVISIONED_CAPABILITY_INVOCATION",
+      capabilityId: capsule.capabilityId,
+      capsuleDigest,
+      capsulePath: path.relative(resolvedRepositoryRoot, resolvedCapsulePath).replaceAll("\\", "/"),
+      providerCapabilityId: null,
+      execution: terminatedProviderExecution(capsule, "open-slot-boundary", outcome),
+    };
   }
   const execution = await executeProvisionedCapsule(
     capsule,

@@ -78,6 +78,7 @@ test("provisions and executes a content-addressed capability token without a man
   assert.equal(result.execution.outcome.managedAdmission, "NOT_REQUIRED");
   assert.equal(result.execution.outcome.scenarioTopology.length, 2);
   assert.equal(result.execution.outcome.openSlots.length, 2);
+  assert.equal(result.execution.outcome.motifs[0].motifType, "LINEAR_PIPELINE");
 
   const capsulePath = path.join(repositoryRoot, result.capsulePath);
   const receiptPath = path.join(repositoryRoot, result.placementReceiptPath);
@@ -91,6 +92,23 @@ test("provisions and executes a content-addressed capability token without a man
   assert.equal(capsule.lifecycleDisposition, "PROVISIONAL");
   assert.deepEqual(capsule.declaredDependencies, []);
   assert.deepEqual(capsule.externalToolRoots, []);
+  assert.ok(capsule.entries.some((entry) => entry.entryId === "blueprint.authority.json"));
+  assert.ok(capsule.entries.some((entry) => entry.entryId === "executable-scaffold.authority.json"));
+
+  const openSlotInvocation = spawnSync(
+    process.execPath,
+    [managerSource, "invoke-provisioned", result.capsulePath, JSON.stringify({
+      requestType: "execute-provisioned-capability.v1",
+      payload: { orderId: "order-1" },
+    })],
+    { cwd: repositoryRoot, env: process.env, encoding: "utf8" },
+  );
+  assert.equal(openSlotInvocation.status, 0, openSlotInvocation.stderr);
+  const openSlotResult = JSON.parse(openSlotInvocation.stdout);
+  assert.equal(openSlotResult.execution.disposition, "terminated");
+  assert.equal(openSlotResult.execution.outcome.executionDisposition, "PROVIDER_REQUIRED");
+  assert.equal(openSlotResult.execution.outcome.reachedNodeId, "quote-one-accepted-order");
+  assert.equal(openSlotResult.execution.outcome.motifs[0].motifType, "LINEAR_PIPELINE");
 
   const second = invoke();
   assert.equal(second.status, 0, second.stderr);
