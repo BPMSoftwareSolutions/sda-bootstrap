@@ -237,13 +237,27 @@ test("invokes explicitly bound provisional capability providers by exact capsule
   const revealInvocation = run(
     "invoke-provisioned",
     revealToken.capsulePath,
-    JSON.stringify({ requestType: "reveal-semantic-model-request.v1", sourcePath: "subject.ts" }),
+    JSON.stringify({
+      requestType: "reveal-semantic-model-request.v1",
+      sourcePath: "subject.ts",
+      outputPath: "output/reveal.md",
+    }),
   );
   assert.equal(revealInvocation.status, 0, revealInvocation.stderr);
   const revealed = JSON.parse(revealInvocation.stdout);
   assert.equal(revealed.execution.outcome.revelationDisposition, "REVEALED");
   assert.equal(revealed.execution.outcome.capability.capabilityId, "subject");
   assert.equal(revealed.execution.outcome.motifs[0].motifType, "ROUTED_PIPELINE");
+  const documentationPath = path.join(repositoryRoot, "output", "reveal.md");
+  const documentationBytes = fs.readFileSync(documentationPath);
+  const documentation = documentationBytes.toString("utf8");
+  assert.match(documentation, /^# Reveal: Subject/m);
+  assert.match(documentation, /## Feature: Subject feature/);
+  assert.match(documentation, /Identity: `first`/);
+  assert.match(documentation, /ROUTED_PIPELINE/);
+  assert.equal(revealed.execution.outcome.documentationArtifact.path, "output/reveal.md");
+  assert.equal(revealed.execution.outcome.documentationArtifact.digest, sha256(documentationBytes));
+  assert.equal(revealed.execution.outcome.documentationDigest, sha256(documentationBytes));
 
   const managedTokens = [provisionerToken, cliToken].map((token) => {
     const source = path.join(repositoryRoot, token.capsulePath);

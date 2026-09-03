@@ -597,6 +597,74 @@ function deriveSemanticModelMotifs(model) {
   });
 }
 
+function markdownJson(value) {
+  return `\n\`\`\`json\n${JSON.stringify(canonicalize(value), null, 2)}\n\`\`\`\n`;
+}
+
+function renderRevelationMarkdown(model, motifs, sourceDigest, sourcePath) {
+  const capability = model.capability ?? {};
+  const features = model.features ?? [];
+  const projections = model.eventExecutionProjections ?? [];
+  const mechanics = model.mechanicCircuits ?? [];
+  const providers = model.providerCircuits ?? [];
+  const scenarioCount = features.reduce((count, feature) => count + (feature.scenarios ?? []).length, 0);
+  const lines = [
+    `# Reveal: ${capability.name ?? capability.capabilityId}`,
+    "",
+    "## Source identity",
+    "",
+    `- Path: \`${sourcePath}\``,
+    `- SHA-256: \`${sourceDigest}\``,
+    "",
+    "## Summary",
+    "",
+    `- Capability: \`${capability.capabilityId}\``,
+    `- Features: ${features.length}`,
+    `- Scenarios: ${scenarioCount}`,
+    `- Event execution projections: ${projections.length}`,
+    `- Mechanic circuits: ${mechanics.length}`,
+    `- Provider circuits: ${providers.length}`,
+    `- Blueprint-derived motifs: ${motifs.length}`,
+    "",
+    "## Capability",
+    markdownJson(capability).trimEnd(),
+  ];
+  for (const feature of features) {
+    lines.push("", `## Feature: ${feature.name ?? feature.featureId}`, "", `Identity: \`${feature.featureId}\``);
+    for (const [index, scenario] of (feature.scenarios ?? []).entries()) {
+      lines.push(
+        "",
+        `### ${index + 1}. ${scenario.name ?? scenario.scenarioId}`,
+        "",
+        `Identity: \`${scenario.scenarioId}\``,
+        "",
+        "#### Input",
+        markdownJson(scenario.input ?? null).trimEnd(),
+        "",
+        "#### Event",
+        markdownJson(scenario.event ?? null).trimEnd(),
+        "",
+        "#### Outcome",
+        markdownJson(scenario.outcome ?? null).trimEnd(),
+      );
+      if ((scenario.routes ?? []).length > 0) {
+        lines.push("", "#### Routes", markdownJson(scenario.routes).trimEnd());
+      }
+    }
+  }
+  const sections = [
+    ["Event execution projections", projections],
+    ["Mechanic circuits", mechanics],
+    ["Provider circuits", providers],
+    ["Blueprint-derived motifs", motifs],
+  ];
+  for (const [heading, value] of sections) {
+    lines.push("", `## ${heading}`, markdownJson(value).trimEnd());
+  }
+  lines.push("");
+  return lines.join("\n");
+}
+
 function revealSemanticModel(repositoryRoot, input) {
   if (typeof input.sourcePath !== "string" || input.sourcePath.trim() === "") {
     throw new Error("REVELATION_SOURCE_REQUIRED");
@@ -621,16 +689,42 @@ function revealSemanticModel(repositoryRoot, input) {
   if (model.schema !== "reveal.semantic-model.v2" || !model.capability?.capabilityId) {
     throw new Error("REVELATION_SEMANTIC_MODEL_INVALID");
   }
+  const sourceDigest = sha256(sourceBytes);
+  const sourcePath = path.relative(repositoryRoot, resolvedSourcePath).replaceAll("\\", "/");
+  const motifs = deriveSemanticModelMotifs(model);
+  const documentationBytes = Buffer.from(renderRevelationMarkdown(model, motifs, sourceDigest, sourcePath), "utf8");
+  let documentationArtifact = null;
+  if (input.outputPath !== undefined) {
+    if (typeof input.outputPath !== "string" || input.outputPath.trim() === "") {
+      throw new Error("REVELATION_OUTPUT_PATH_INVALID");
+    }
+    const resolvedOutputPath = path.resolve(repositoryRoot, input.outputPath);
+    if (!pathIsWithin(repositoryRoot, resolvedOutputPath)) {
+      throw new Error(`REVELATION_OUTPUT_ESCAPES_REPOSITORY: '${resolvedOutputPath}'.`);
+    }
+    if (path.extname(resolvedOutputPath).toLowerCase() !== ".md") {
+      throw new Error("REVELATION_OUTPUT_MUST_BE_MARKDOWN");
+    }
+    fs.mkdirSync(path.dirname(resolvedOutputPath), { recursive: true });
+    fs.writeFileSync(resolvedOutputPath, documentationBytes);
+    documentationArtifact = {
+      path: path.relative(repositoryRoot, resolvedOutputPath).replaceAll("\\", "/"),
+      digest: sha256(documentationBytes),
+    };
+  }
   return {
     outcomeType: "revealed-semantic-model.v1",
-    sourceDigest: sha256(sourceBytes),
-    sourcePath: path.relative(repositoryRoot, resolvedSourcePath).replaceAll("\\", "/"),
+    sourceDigest,
+    sourcePath,
     capability: model.capability,
     features: model.features ?? [],
     eventExecutionProjections: model.eventExecutionProjections ?? [],
     mechanicCircuits: model.mechanicCircuits ?? [],
     providerCircuits: model.providerCircuits ?? [],
-    motifs: deriveSemanticModelMotifs(model),
+    motifs,
+    documentationMarkdown: documentationBytes.toString("utf8"),
+    documentationDigest: sha256(documentationBytes),
+    documentationArtifact,
     revelationDisposition: "REVEALED",
   };
 }
