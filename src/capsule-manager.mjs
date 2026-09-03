@@ -6,6 +6,7 @@ import os from "node:os";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { provisionCapability } from "./provision-capability.mjs";
 
 /* @reveal-semantic-model/v2
 {
@@ -1824,6 +1825,15 @@ async function main() {
     const encodedInput = process.argv[4] ?? (!process.stdin.isTTY ? fs.readFileSync(0, "utf8").trim() : "");
     if (!encodedInput) throw new Error("CAPABILITY_INPUT_REQUIRED: provide canonical JSON as the second argument or on stdin.");
     result = await invokeCapability(process.argv[3], JSON.parse(encodedInput));
+  } else if (command === "provision") {
+    if (!process.argv[3]) throw new Error("PROVISIONING_FEATURE_REQUIRED");
+    const encodedInput = process.argv[4] ?? (!process.stdin.isTTY ? fs.readFileSync(0, "utf8").trim() : "");
+    result = await provisionCapability({
+      repositoryRoot,
+      platformRoot: resolvePlatformRoot(),
+      featurePath: process.argv[3],
+      input: encodedInput ? JSON.parse(encodedInput) : null,
+    });
   } else if (command === "expand") {
     if (!process.argv[3]) throw new Error("EXPANSION_TARGET_REQUIRED");
     const targetRoot = path.resolve(process.argv[3]);
@@ -1840,7 +1850,7 @@ async function main() {
     result = fs.existsSync(marker) ? await proveCapsuleFirst() : await runSterileProof();
   }
   else if (command === "sterile-proof") result = await runSterileProof();
-  else throw new Error("Usage: capsule-manager <migrate-legacy|verify|resolve|list [query]|inspect <id>|test [ids]|direct [ids]|invoke <id> [json]|expand <root>|project <root>|proof|sterile-proof>");
+  else throw new Error("Usage: capsule-manager <migrate-legacy|verify|resolve|list [query]|inspect <id>|test [ids]|direct [ids]|invoke <id> [json]|provision <feature> [json]|expand <root>|project <root>|proof|sterile-proof>");
   process.stdout.write(`${JSON.stringify(result, null, 2)}\n`);
 }
 

@@ -1,6 +1,6 @@
 {
   "name": "sda-bootstrap",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Single portable bootstrap for SideFX capsule estate CLI, MCP, and HTTP delivery",
   "type": "module",
   "bin": {
@@ -10,6 +10,7 @@
   },
   "files": [
     "src/capsule-manager.mjs",
+    "src/provision-capability.mjs",
     "src/capsule-mcp.mjs",
     "src/realization-api.mjs",
     "platform/"
