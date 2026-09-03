@@ -98,6 +98,90 @@ test("provisions and executes a content-addressed capability token without a man
   assert.equal(fs.readdirSync(path.join(repositoryRoot, "provisioning")).length, 2);
 });
 
+test("invokes explicitly bound provisional capability providers by exact capsule path", (context) => {
+  const repositoryRoot = fs.mkdtempSync(path.join(os.tmpdir(), "sda-bootstrap-provider-"));
+  context.after(() => fs.rmSync(repositoryRoot, { recursive: true, force: true }));
+  const featureRoot = path.join(repositoryRoot, "features");
+  fs.mkdirSync(featureRoot, { recursive: true });
+  fs.writeFileSync(path.join(featureRoot, "provision-capability-token.feature"), [
+    "@capability:provision-capability-token",
+    "@provisioned-provider:sda-bootstrap.provision-capability-token.v1",
+    "Feature: Provision a capability token",
+    "  Scenario: Provision one token",
+    "    Given a capability feature path",
+    "    When token provisioning is requested",
+    "    Then an executable token is returned",
+    "",
+  ].join("\n"), "utf8");
+  fs.writeFileSync(path.join(featureRoot, "deliver-capability-token-provisioning-cli.feature"), [
+    "@capability:deliver-capability-token-provisioning-cli",
+    "@provisioned-provider:sda-bootstrap.deliver-capability-token-provisioning-cli.v1",
+    "Feature: Deliver the capability token provisioning CLI",
+    "  Scenario: Invoke provisioning through the CLI",
+    "    Given a provisioning command and feature path",
+    "    When the command is invoked",
+    "    Then an executable token is returned",
+    "",
+  ].join("\n"), "utf8");
+  fs.writeFileSync(path.join(featureRoot, "quote-order.feature"), [
+    "@capability:quote-order",
+    "Feature: Quote an order",
+    "  Scenario: Quote one order",
+    "    Given an order request",
+    "    When the order is quoted",
+    "    Then the quote is returned",
+    "",
+  ].join("\n"), "utf8");
+
+  const run = (...args) => spawnSync(process.execPath, [managerSource, ...args], {
+    cwd: repositoryRoot,
+    env: process.env,
+    encoding: "utf8",
+  });
+  const provisioner = run("provision", "features/provision-capability-token.feature");
+  assert.equal(provisioner.status, 0, provisioner.stderr);
+  const provisionerToken = JSON.parse(provisioner.stdout);
+  assert.equal(provisionerToken.provisioningDisposition, "PROVISIONED_EXECUTABLE");
+  assert.equal(provisionerToken.execution.outcome.providerDisposition, "AVAILABLE");
+
+  const directInvocation = run(
+    "invoke-provisioned",
+    provisionerToken.capsulePath,
+    JSON.stringify({
+      requestType: "capability-token-provisioning-request.v1",
+      featurePath: "features/quote-order.feature",
+    }),
+  );
+  assert.equal(directInvocation.status, 0, directInvocation.stderr);
+  const directResult = JSON.parse(directInvocation.stdout);
+  assert.equal(directResult.operation, "PROVISIONED_CAPABILITY_INVOCATION");
+  assert.equal(directResult.providerCapabilityId, "sda-bootstrap.provision-capability-token.v1");
+  assert.equal(directResult.execution.disposition, "terminated");
+  assert.equal(directResult.execution.outcome.operation, "TOKEN_PROVISIONING");
+  assert.equal(directResult.execution.outcome.capabilityId, "quote-order");
+
+  const cli = run("provision", "features/deliver-capability-token-provisioning-cli.feature");
+  assert.equal(cli.status, 0, cli.stderr);
+  const cliToken = JSON.parse(cli.stdout);
+  assert.equal(cliToken.provisioningDisposition, "PROVISIONED_EXECUTABLE");
+
+  const cliInvocation = run(
+    "invoke-provisioned",
+    cliToken.capsulePath,
+    JSON.stringify({
+      requestType: "capability-token-provisioning-cli-request.v1",
+      command: "provision",
+      featurePath: "features/quote-order.feature",
+    }),
+  );
+  assert.equal(cliInvocation.status, 0, cliInvocation.stderr);
+  const cliResult = JSON.parse(cliInvocation.stdout);
+  assert.equal(cliResult.providerCapabilityId, "sda-bootstrap.deliver-capability-token-provisioning-cli.v1");
+  assert.equal(cliResult.execution.disposition, "terminated");
+  assert.equal(cliResult.execution.outcome.operation, "TOKEN_PROVISIONING");
+  assert.equal(cliResult.execution.outcome.capabilityId, "quote-order");
+});
+
 test("rejects invalid feature authority before creating a provisioning landing zone", (context) => {
   const repositoryRoot = fs.mkdtempSync(path.join(os.tmpdir(), "sda-bootstrap-provision-invalid-"));
   context.after(() => fs.rmSync(repositoryRoot, { recursive: true, force: true }));

@@ -6,7 +6,7 @@ import os from "node:os";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { provisionCapability } from "./provision-capability.mjs";
+import { invokeProvisionedCapability, provisionCapability } from "./provision-capability.mjs";
 
 /* @reveal-semantic-model/v2
 {
@@ -1834,6 +1834,16 @@ async function main() {
       featurePath: process.argv[3],
       input: encodedInput ? JSON.parse(encodedInput) : null,
     });
+  } else if (command === "invoke-provisioned") {
+    if (!process.argv[3]) throw new Error("PROVISIONED_CAPSULE_PATH_REQUIRED");
+    const encodedInput = process.argv[4] ?? (!process.stdin.isTTY ? fs.readFileSync(0, "utf8").trim() : "");
+    if (!encodedInput) throw new Error("CAPABILITY_INPUT_REQUIRED: provide canonical JSON as the second argument or on stdin.");
+    result = await invokeProvisionedCapability({
+      repositoryRoot,
+      platformRoot: resolvePlatformRoot(),
+      capsulePath: process.argv[3],
+      input: JSON.parse(encodedInput),
+    });
   } else if (command === "expand") {
     if (!process.argv[3]) throw new Error("EXPANSION_TARGET_REQUIRED");
     const targetRoot = path.resolve(process.argv[3]);
@@ -1850,7 +1860,7 @@ async function main() {
     result = fs.existsSync(marker) ? await proveCapsuleFirst() : await runSterileProof();
   }
   else if (command === "sterile-proof") result = await runSterileProof();
-  else throw new Error("Usage: capsule-manager <migrate-legacy|verify|resolve|list [query]|inspect <id>|test [ids]|direct [ids]|invoke <id> [json]|provision <feature> [json]|expand <root>|project <root>|proof|sterile-proof>");
+  else throw new Error("Usage: capsule-manager <migrate-legacy|verify|resolve|list [query]|inspect <id>|test [ids]|direct [ids]|invoke <id> [json]|provision <feature> [json]|invoke-provisioned <capsule-path> [json]|expand <root>|project <root>|proof|sterile-proof>");
   process.stdout.write(`${JSON.stringify(result, null, 2)}\n`);
 }
 
@@ -1860,6 +1870,7 @@ export {
   expandEstate,
   inspectCapsule,
   invokeCapability,
+  invokeProvisionedCapability,
   listCapsules,
   loadEstate,
   projectEstate,

@@ -8,6 +8,16 @@ import { IdGenerator, SourceMediaType } from "@cucumber/messages";
 
 const runtimeModuleRef = "languages/typescript/runtimes/node/admitted-consumer-platform.mjs";
 const sha256 = (bytes) => `sha256:${crypto.createHash("sha256").update(bytes).digest("hex")}`;
+const provisionedProviderDefinitions = new Map([
+  ["sda-bootstrap.provision-capability-token.v1", {
+    requestType: "capability-token-provisioning-request.v1",
+    operation: "PROVISION_CAPABILITY_TOKEN",
+  }],
+  ["sda-bootstrap.deliver-capability-token-provisioning-cli.v1", {
+    requestType: "capability-token-provisioning-cli-request.v1",
+    operation: "DELIVER_CAPABILITY_TOKEN_PROVISIONING_CLI",
+  }],
+]);
 
 function canonicalize(value) {
   if (Array.isArray(value)) return value.map(canonicalize);
@@ -32,6 +42,11 @@ function slug(value) {
 
 function tagValue(tags, prefix) {
   return tags.map((tag) => tag.name).find((name) => name.startsWith(prefix))?.slice(prefix.length) ?? null;
+}
+
+function pathIsWithin(root, candidate) {
+  const relative = path.relative(root, candidate);
+  return relative === "" || (!relative.startsWith("..") && !path.isAbsolute(relative));
 }
 
 function scenariosFromChildren(children) {
@@ -65,6 +80,10 @@ function parseFeature(featureBytes, featureRef) {
   const featureTags = feature.tags ?? [];
   const requestedId = tagValue(featureTags, "@capability:");
   const capabilityId = requestedId ?? slug(feature.name);
+  const requestedProviderCapabilityId = tagValue(featureTags, "@provisioned-provider:");
+  const providerDefinition = requestedProviderCapabilityId
+    ? provisionedProviderDefinitions.get(requestedProviderCapabilityId) ?? null
+    : null;
   if (!/^[a-z0-9][a-z0-9-]*$/.test(capabilityId)) {
     throw new Error(`PROVISIONING_CAPABILITY_ID_INVALID: '${capabilityId}'.`);
   }
@@ -93,6 +112,9 @@ function parseFeature(featureBytes, featureRef) {
     return {
       scenarioId,
       name: scenario.name,
+      inputContractId: tagValue(combinedTags, "@input-contract:"),
+      eventAuthorityId: tagValue(combinedTags, "@event-authority:"),
+      outcomeContractId: tagValue(combinedTags, "@outcome-contract:"),
       input,
       event,
       outcome,
@@ -104,11 +126,19 @@ function parseFeature(featureBytes, featureRef) {
     featureName: feature.name,
     description: feature.description?.trim() ?? "",
     scenarioTopology: topology,
-    openSlots: topology.map((scenario) => ({
+    providerBinding: providerDefinition ? {
+      bindingType: "provisioned-platform-provider-binding.v1",
+      providerCapabilityId: requestedProviderCapabilityId,
+      implementationRef: `package:sda-bootstrap#${requestedProviderCapabilityId}`,
+      status: "AVAILABLE",
+      requestType: providerDefinition.requestType,
+      operation: providerDefinition.operation,
+    } : null,
+    openSlots: providerDefinition ? [] : topology.map((scenario) => ({
       slotId: `event-mechanic:${scenario.scenarioId}`,
       slotType: "EVENT_MECHANIC",
       requiredByScenarioId: scenario.scenarioId,
-      requestedProviderCapabilityId: null,
+      requestedProviderCapabilityId,
       disposition: "OPEN",
     })),
   };
@@ -129,7 +159,7 @@ function capsuleEntry(entryId, entryRef, bytes) {
 
 function buildProvisionedCapsule(featureBytes, featureRef) {
   const parsed = parseFeature(featureBytes, featureRef);
-  const { capabilityId, featureName, description, scenarioTopology, openSlots } = parsed;
+  const { capabilityId, featureName, description, scenarioTopology, providerBinding, openSlots } = parsed;
   const featureDigest = sha256(featureBytes);
   const provisioningDisposition = openSlots.length > 0
     ? "PROVISIONED_EXECUTABLE_WITH_OPEN_SLOTS"
@@ -147,6 +177,7 @@ function buildProvisionedCapsule(featureBytes, featureRef) {
     },
     scenarioTopology,
     openSlots,
+    providerBindings: providerBinding ? [providerBinding] : [],
     provisioningDisposition,
     managedAdmission: {
       disposition: "NOT_REQUESTED",
@@ -344,6 +375,12 @@ function buildProvisionedCapsule(featureBytes, featureRef) {
     lifecycleDisposition: "PROVISIONAL",
     declaredDependencies: [],
     externalToolRoots: [],
+    ...(providerBinding ? {
+      provisionedExecution: {
+        executionType: "provisioned-platform-provider-execution.v1",
+        providerBinding,
+      },
+    } : {}),
     runtimeBindings: [
       {
         runtimeBindingType: "capsule-runtime-binding.v1",
@@ -357,7 +394,7 @@ function buildProvisionedCapsule(featureBytes, featureRef) {
     ],
     entries,
   };
-  return { capsule, authorityDigest, featureDigest, provisioningDisposition };
+  return { capsule, authorityDigest, featureDigest, provisioningDisposition, providerBinding };
 }
 
 function verifyProvisionedCapsule(capsule) {
@@ -382,6 +419,32 @@ function verifyProvisionedCapsule(capsule) {
   const binding = JSON.parse(Buffer.from(entries.get(runtime.bindingEntryRef).entryBytesBase64, "base64").toString("utf8"));
   if (binding.executionPlanDigest !== entries.get(runtime.planEntryRef).entryDigest) {
     throw new Error("PROVISIONED_CAPSULE_PLAN_DIGEST_DIVERGED");
+  }
+  if (capsule.provisionedExecution) {
+    const execution = capsule.provisionedExecution;
+    const provider = execution.providerBinding;
+    const definition = provisionedProviderDefinitions.get(provider?.providerCapabilityId);
+    const authorityRef = `capabilities/${capsule.capabilityId}/capability.authority.json`;
+    const authorityEntry = entries.get(authorityRef);
+    const authority = authorityEntry
+      ? JSON.parse(Buffer.from(authorityEntry.entryBytesBase64, "base64").toString("utf8"))
+      : null;
+    if (execution.executionType !== "provisioned-platform-provider-execution.v1"
+      || !definition
+      || provider.bindingType !== "provisioned-platform-provider-binding.v1"
+      || provider.status !== "AVAILABLE"
+      || provider.requestType !== definition.requestType
+      || provider.operation !== definition.operation
+      || provider.implementationRef !== `package:sda-bootstrap#${provider.providerCapabilityId}`) {
+      throw new Error("PROVISIONED_CAPSULE_PROVIDER_BINDING_INVALID");
+    }
+    if (!authority
+      || authority.capabilityId !== capsule.capabilityId
+      || authority.provisioningDisposition !== "PROVISIONED_EXECUTABLE"
+      || authority.openSlots?.length !== 0
+      || JSON.stringify(canonicalize(authority.providerBindings)) !== JSON.stringify(canonicalize([provider]))) {
+      throw new Error("PROVISIONED_CAPSULE_PROVIDER_AUTHORITY_DIVERGED");
+    }
   }
   return { entryCount: capsule.entries.length, runtimeBindingCount: capsule.runtimeBindings.length };
 }
@@ -408,8 +471,60 @@ function materializeProvisionedRuntime(capsule, targetRoot) {
   return path.join(projectedRoot, "application-binding.node.json");
 }
 
-async function executeProvisionedCapsule(capsule, platformRoot, input) {
+function terminatedProviderExecution(capsule, providerCapabilityId, outcome) {
+  return {
+    disposition: "terminated",
+    outcome,
+    executions: [{
+      executionId: `provisioned-provider:${providerCapabilityId}`,
+      scenarioId: capsule.capabilityId,
+      disposition: "terminated",
+      outcome,
+    }],
+    observations: [],
+  };
+}
+
+async function executeBoundProvisionedProvider(capsule, repositoryRoot, platformRoot, input) {
+  const provider = capsule.provisionedExecution.providerBinding;
+  const definition = provisionedProviderDefinitions.get(provider.providerCapabilityId);
+  if (!definition) throw new Error(`PROVISIONED_PROVIDER_NOT_AVAILABLE: '${provider.providerCapabilityId}'.`);
+  if (!input || typeof input !== "object" || Array.isArray(input)) {
+    throw new Error("PROVISIONED_CAPABILITY_INPUT_INVALID: expected one JSON object.");
+  }
+  if (input.requestType === "prove-provisioned-provider-availability.v1") {
+    return terminatedProviderExecution(capsule, provider.providerCapabilityId, {
+      outcomeType: "provisioned-provider-availability.v1",
+      capabilityId: capsule.capabilityId,
+      providerCapabilityId: provider.providerCapabilityId,
+      providerDisposition: "AVAILABLE",
+    });
+  }
+  if (input.requestType !== definition.requestType) {
+    throw new Error(`PROVISIONED_CAPABILITY_REQUEST_TYPE_INVALID: expected '${definition.requestType}'.`);
+  }
+  if (!repositoryRoot) throw new Error("PROVISIONED_CAPABILITY_REPOSITORY_ROOT_REQUIRED");
+  if (typeof input.featurePath !== "string" || input.featurePath.trim() === "") {
+    throw new Error("PROVISIONING_FEATURE_REQUIRED");
+  }
+  if (provider.providerCapabilityId === "sda-bootstrap.deliver-capability-token-provisioning-cli.v1"
+    && input.command !== "provision") {
+    throw new Error("PROVISIONING_CLI_COMMAND_INVALID: expected 'provision'.");
+  }
+  const outcome = await provisionCapability({
+    repositoryRoot,
+    platformRoot,
+    featurePath: input.featurePath,
+    input: input.executionInput ?? null,
+  });
+  return terminatedProviderExecution(capsule, provider.providerCapabilityId, outcome);
+}
+
+async function executeProvisionedCapsule(capsule, platformRoot, input, { repositoryRoot = null } = {}) {
   verifyProvisionedCapsule(capsule);
+  if (capsule.provisionedExecution) {
+    return executeBoundProvisionedProvider(capsule, repositoryRoot, platformRoot, input);
+  }
   const executionRoot = fs.mkdtempSync(path.join(os.tmpdir(), "sda-provisioned-token-"));
   try {
     const bindingPath = materializeProvisionedRuntime(capsule, executionRoot);
@@ -425,6 +540,9 @@ async function executeProvisionedCapsule(capsule, platformRoot, input) {
 export async function provisionCapability({ repositoryRoot, platformRoot, featurePath, input = null }) {
   const resolvedRepositoryRoot = path.resolve(repositoryRoot);
   const resolvedFeaturePath = path.resolve(resolvedRepositoryRoot, featurePath);
+  if (!pathIsWithin(resolvedRepositoryRoot, resolvedFeaturePath)) {
+    throw new Error(`PROVISIONING_FEATURE_ESCAPES_REPOSITORY: '${resolvedFeaturePath}'.`);
+  }
   if (!fs.existsSync(resolvedFeaturePath) || !fs.statSync(resolvedFeaturePath).isFile()) {
     throw new Error(`PROVISIONING_FEATURE_NOT_FOUND: '${resolvedFeaturePath}'.`);
   }
@@ -432,9 +550,20 @@ export async function provisionCapability({ repositoryRoot, platformRoot, featur
   const featureRef = path.relative(resolvedRepositoryRoot, resolvedFeaturePath).replaceAll("\\", "/");
   const built = buildProvisionedCapsule(featureBytes, featureRef);
   const structuralProof = verifyProvisionedCapsule(built.capsule);
-  const request = input ?? { requestType: "describe-provisioned-capability.v1", payload: {} };
-  const execution = await executeProvisionedCapsule(built.capsule, platformRoot, request);
-  if (execution.disposition !== "terminated" || execution.outcome?.provisioningDisposition !== built.provisioningDisposition) {
+  const request = input ?? (built.providerBinding
+    ? { requestType: "prove-provisioned-provider-availability.v1" }
+    : { requestType: "describe-provisioned-capability.v1", payload: {} });
+  const execution = await executeProvisionedCapsule(
+    built.capsule,
+    platformRoot,
+    request,
+    { repositoryRoot: resolvedRepositoryRoot },
+  );
+  const exactOutcomeProved = built.providerBinding
+    ? execution.outcome?.providerDisposition === "AVAILABLE"
+      && execution.outcome?.providerCapabilityId === built.providerBinding.providerCapabilityId
+    : execution.outcome?.provisioningDisposition === built.provisioningDisposition;
+  if (execution.disposition !== "terminated" || !exactOutcomeProved) {
     throw new Error(`PROVISIONED_CAPSULE_EXECUTION_FAILED: '${built.capsule.capabilityId}'.`);
   }
   const capsuleBytes = canonicalJsonBytes(built.capsule);
@@ -482,6 +611,43 @@ export async function provisionCapability({ repositoryRoot, platformRoot, featur
     placementReceiptPath: `provisioning/${receiptFile}`,
     proof: receipt.proof,
     execution: executionSummary,
+  };
+}
+
+export async function invokeProvisionedCapability({ repositoryRoot, platformRoot, capsulePath, input }) {
+  const resolvedRepositoryRoot = path.resolve(repositoryRoot);
+  const provisioningRoot = path.resolve(resolvedRepositoryRoot, "provisioning");
+  const resolvedCapsulePath = path.resolve(resolvedRepositoryRoot, capsulePath);
+  if (!pathIsWithin(provisioningRoot, resolvedCapsulePath) || path.extname(resolvedCapsulePath) !== ".sfxcap") {
+    throw new Error(`PROVISIONED_CAPSULE_PATH_INVALID: '${resolvedCapsulePath}'.`);
+  }
+  if (!fs.existsSync(resolvedCapsulePath) || !fs.statSync(resolvedCapsulePath).isFile()) {
+    throw new Error(`PROVISIONED_CAPSULE_NOT_FOUND: '${resolvedCapsulePath}'.`);
+  }
+  const capsuleBytes = fs.readFileSync(resolvedCapsulePath);
+  const capsuleDigest = sha256(capsuleBytes);
+  const capsule = JSON.parse(capsuleBytes.toString("utf8"));
+  verifyProvisionedCapsule(capsule);
+  const expectedFile = `${capsule.capabilityId}-${capsuleDigest.slice("sha256:".length, "sha256:".length + 16)}.sfxcap`;
+  if (path.basename(resolvedCapsulePath) !== expectedFile) {
+    throw new Error(`PROVISIONED_CAPSULE_CONTENT_ADDRESS_DIVERGED: expected '${expectedFile}'.`);
+  }
+  if (!capsule.provisionedExecution) {
+    throw new Error(`PROVISIONED_CAPSULE_PROVIDER_REQUIRED: '${capsule.capabilityId}'.`);
+  }
+  const execution = await executeProvisionedCapsule(
+    capsule,
+    platformRoot,
+    input,
+    { repositoryRoot: resolvedRepositoryRoot },
+  );
+  return {
+    operation: "PROVISIONED_CAPABILITY_INVOCATION",
+    capabilityId: capsule.capabilityId,
+    capsuleDigest,
+    capsulePath: path.relative(resolvedRepositoryRoot, resolvedCapsulePath).replaceAll("\\", "/"),
+    providerCapabilityId: capsule.provisionedExecution.providerBinding.providerCapabilityId,
+    execution,
   };
 }
 
