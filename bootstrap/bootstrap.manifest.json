@@ -1,0 +1,66 @@
+{
+  "bootstrapManifestType": "capsule-first-bootstrap-manifest.v1",
+  "languageResolver": {
+    "target": "node",
+    "resolverType": "installed-package",
+    "packageName": "sda-bootstrap",
+    "packageVersion": "0.1.0",
+    "packageSource": "https://github.com/BPMSoftwareSolutions/sda-bootstrap/archive/c14e81535918f49967668e53867267b076af031f.tar.gz",
+    "packageIntegrity": "sha512-WFPYi3j7ynf54ve7SqT8pwByXBSB+W87ecP6iSzsJWDBK9DS6Pb4KFCv3a7aWNJXs1Jbg4SfxcE0by9daD9Iag==",
+    "executable": "sda-bootstrap",
+    "entryRef": "package:sda-bootstrap/src/capsule-manager.mjs",
+    "entryDigest": "sha256:1d1ef252f7685ab0272abef22637e1b76c54b215a249dd5de90be28af35e83c7",
+    "scope": "capsule-verification-resolution-execution-reconstruction-and-projection",
+    "capabilityLogicSource": "capsule-carried-authority-only"
+  },
+  "protocolResolvers": [
+    {
+      "target": "mcp-stdio",
+      "protocolVersion": "2025-11-25",
+      "entryRef": "bootstrap/deliver-capsule-estate-mcp/projected/node/deliver-capsule-estate-mcp-cli.generated.mjs",
+      "entryDigest": "sha256:05046063f7bc940d71b3e49ceafcfd1be6e0a9e0323779c868e8201d38d5cd23",
+      "interfaceAuthorityRef": "mcp/capsule-estate-mcp.interface.authority.json",
+      "interfaceAuthorityDigest": "sha256:4bf5d20a56dd6d757f309e4993e7b71f03f8ca2a46a449d1e2e65d87cd95253d",
+      "scope": "capsule-estate-verification-discovery-inspection-testing-and-invocation",
+      "capabilityLogicSource": "capsule-carried-authority-only"
+    },
+    {
+      "target": "http-realization",
+      "protocolVersion": "1",
+      "entryRef": "bootstrap/deliver-realization-api/projected/node/deliver-realization-api-cli.generated.mjs",
+      "entryDigest": "sha256:05046063f7bc940d71b3e49ceafcfd1be6e0a9e0323779c868e8201d38d5cd23",
+      "interfaceAuthorityRef": "api/sidefx-realization-api.interface.authority.json",
+      "interfaceAuthorityDigest": "sha256:ea090cb556658f462ad7ba16b035b5e784a98cff076c160a4b1df092906cd861",
+      "scope": "capsule-estate-discovery-inspection-realization-planning-projection-and-receipts",
+      "capabilityLogicSource": "capsule-carried-authority-only"
+    }
+  ],
+  "capsuleEstateRef": "capsules/capsule-estate.manifest.json",
+  "runtimeEntryRoot": "capsule-runtime",
+  "eligibleCapabilityCount": 210,
+  "ephemeralCapabilityRoot": "capabilities",
+  "platform": {
+    "rootRef": "package:sda-bootstrap/platform",
+    "runtimeModuleRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
+    "projectorModuleRef": "artifacts/tools/dist/interfaces/consumer-projection/project.js",
+    "externalBindings": [
+      {
+        "capabilityId": "bind-os-environment-credential",
+        "bindingRef": "package:sda-bootstrap/platform/capabilities/sda-platform/bind-os-environment-credential/projected/application-binding.node.json",
+        "projectedRootRef": "capabilities/sda-platform/bind-os-environment-credential/projected"
+      },
+      {
+        "capabilityId": "decide-tooling-migration",
+        "bindingRef": "package:sda-bootstrap/platform/capabilities/sda-tooling/projected-tools/decide-tooling-migration/projected/application-binding.node.json",
+        "projectedRootRef": "capabilities/sda-tooling/projected-tools/decide-tooling-migration/projected"
+      }
+    ]
+  },
+  "repositoryBootstrapRoots": [
+    "package.json",
+    "governance",
+    "authority",
+    "mcp",
+    "api"
+  ]
+}

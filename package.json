@@ -9,6 +9,7 @@
     "sidefx-api": "./src/realization-api.mjs"
   },
   "files": [
+    "bootstrap/",
     "src/capsule-manager.mjs",
     "src/provision-capability.mjs",
     "src/capsule-mcp.mjs",

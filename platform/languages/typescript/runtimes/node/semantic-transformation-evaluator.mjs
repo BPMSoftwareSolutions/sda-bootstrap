@@ -193,6 +193,17 @@ function directedGraphClosure(value) {
   };
 }
 
+// A declared value that is absent is an attributable finding, never text. Coercing it through
+// String() turns "the declared resource was not observed" into an unreadable failure many frames
+// away: an absent bootstrap manifest became String(undefined) -> "undefined", base64-decoded to
+// six replacement bytes, and surfaced only as a JSON syntax error.
+function requireText(value, op) {
+  if (value === undefined || value === null) {
+    throw new Error(`TRANSFORMATION_VALUE_ABSENT: '${op}' requires a declared value and observed none.`);
+  }
+  return String(value);
+}
+
 export function evaluateExpression(expression, scope) {
   if (expression === null || typeof expression !== "object" || Array.isArray(expression)) return expression;
   const evaluate = (value, nextScope = scope) => evaluateExpression(value, nextScope);
@@ -230,22 +241,24 @@ export function evaluateExpression(expression, scope) {
     }
     case "join": return evaluate(expression.value).join(expression.separator ?? "");
     case "format": return Object.entries(expression.values).reduce(
-      (text, [key, value]) => text.replaceAll(`{${key}}`, String(evaluate(value))),
+      (text, [key, value]) => text.replaceAll(`{${key}}`, requireText(evaluate(value), "format")),
       expression.template
     );
-    case "trim": return String(evaluate(expression.value)).trim();
-    case "lower-case": return String(evaluate(expression.value)).toLowerCase();
-    case "escape-html": return String(evaluate(expression.value))
+    case "trim": return requireText(evaluate(expression.value), "trim").trim();
+    case "lower-case": return requireText(evaluate(expression.value), "lower-case").toLowerCase();
+    case "escape-html": return requireText(evaluate(expression.value), "escape-html")
       .replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;")
       .replaceAll('"', "&quot;").replaceAll("'", "&#39;");
-    case "sha256": return crypto.createHash("sha256").update(String(evaluate(expression.value))).digest("hex");
-    case "base64-decode-utf8": return Buffer.from(String(evaluate(expression.value)), "base64").toString("utf8");
+    case "sha256": return crypto.createHash("sha256").update(requireText(evaluate(expression.value), "sha256")).digest("hex");
+    case "base64-decode-utf8": return Buffer.from(requireText(evaluate(expression.value), "base64-decode-utf8"), "base64").toString("utf8");
     case "json-stringify": return JSON.stringify(evaluate(expression.value));
     case "canonicalize": return canonicalize(evaluate(expression.value));
     case "directed-graph-closure": return directedGraphClosure(evaluate(expression.value));
-    case "parse-json": return JSON.parse(evaluate(expression.value));
+    case "parse-json": return JSON.parse(requireText(evaluate(expression.value), "parse-json"));
     case "try-parse-json": {
-      try { return { disposition: "PARSED", value: JSON.parse(evaluate(expression.value)) }; }
+      const text = evaluate(expression.value);
+      if (text === undefined || text === null) return { disposition: "NOT_PARSED", value: null };
+      try { return { disposition: "PARSED", value: JSON.parse(String(text)) }; }
       catch { return { disposition: "NOT_PARSED", value: null }; }
     }
     case "let": {
