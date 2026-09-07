@@ -8,7 +8,7 @@
     "packageSource": "https://github.com/BPMSoftwareSolutions/sda-bootstrap/archive/c14e81535918f49967668e53867267b076af031f.tar.gz",
     "packageIntegrity": "sha512-WFPYi3j7ynf54ve7SqT8pwByXBSB+W87ecP6iSzsJWDBK9DS6Pb4KFCv3a7aWNJXs1Jbg4SfxcE0by9daD9Iag==",
     "executable": "sda-bootstrap",
-    "entryRef": "package:sda-bootstrap/src/capsule-manager.mjs",
+    "entryRef": "node_modules/sda-bootstrap/src/capsule-manager.mjs",
     "entryDigest": "sha256:1d1ef252f7685ab0272abef22637e1b76c54b215a249dd5de90be28af35e83c7",
     "scope": "capsule-verification-resolution-execution-reconstruction-and-projection",
     "capabilityLogicSource": "capsule-carried-authority-only"
@@ -40,18 +40,18 @@
   "eligibleCapabilityCount": 210,
   "ephemeralCapabilityRoot": "capabilities",
   "platform": {
-    "rootRef": "package:sda-bootstrap/platform",
+    "rootRef": "node_modules/sda-bootstrap/platform",
     "runtimeModuleRef": "languages/typescript/runtimes/node/admitted-consumer-platform.mjs",
     "projectorModuleRef": "artifacts/tools/dist/interfaces/consumer-projection/project.js",
     "externalBindings": [
       {
         "capabilityId": "bind-os-environment-credential",
-        "bindingRef": "package:sda-bootstrap/platform/capabilities/sda-platform/bind-os-environment-credential/projected/application-binding.node.json",
+        "bindingRef": "node_modules/sda-bootstrap/platform/capabilities/sda-platform/bind-os-environment-credential/projected/application-binding.node.json",
         "projectedRootRef": "capabilities/sda-platform/bind-os-environment-credential/projected"
       },
       {
         "capabilityId": "decide-tooling-migration",
-        "bindingRef": "package:sda-bootstrap/platform/capabilities/sda-tooling/projected-tools/decide-tooling-migration/projected/application-binding.node.json",
+        "bindingRef": "node_modules/sda-bootstrap/platform/capabilities/sda-tooling/projected-tools/decide-tooling-migration/projected/application-binding.node.json",
         "projectedRootRef": "capabilities/sda-tooling/projected-tools/decide-tooling-migration/projected"
       }
     ]
