@@ -18,7 +18,7 @@
   ],
   "sdaPlatform": {
     "repository": "https://github.com/BPMSoftwareSolutions/scenario-driven-architecture.git",
-    "commit": "6fcb8b34f0b85c70a8984940cc21a20cfdb507dd",
+    "commit": "716811046f52dd2a67f9ff308a50d755571cbbad",
     "compatibilityAuthorityCommit": "398e4c6a9c8726829c9b58339a706d8afad4322c"
   },
   "scripts": {
