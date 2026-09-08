@@ -1,0 +1,50 @@
+{
+  "registryType": "python-mechanic-registry-authority.v1",
+  "authorityId": "python-mechanic-registry-authority.v1",
+  "authorityVersion": "1.0.0",
+  "language": "python",
+  "providerModuleRoot": "languages/python/src/scenario_kernel",
+  "graphProviderProfiles": [
+    {
+      "profileId": "python-deterministic-semantic-value-provider.v1",
+      "mechanicAuthorityRef": "kernel/semantic-authority/consumer/semantic-value-mechanics.authority.v1.json",
+      "mechanicAuthorityDigest": "sha256:533b856ded71d2e6334dd2f4911b1ec5edb265c4cdc3e79620584fe4cdca1877",
+      "providerModule": "adapters/semantic_transformation_evaluator.py",
+      "providerExport": "evaluate",
+      "effectClassification": "pure",
+      "testimonyRequired": true
+    },
+    {
+      "profileId": "python-profile-bound-physical-provider.v1",
+      "mechanicAuthorityRef": "kernel/semantic-authority/consumer/platform-effect-mechanics.authority.v1.json",
+      "mechanicAuthorityDigest": "sha256:3b39afa785c925525086acddb65166fad1e52001ddcd6d66bc65448e5efe0bac",
+      "providerModule": "platform/execution_graph.py",
+      "providerExport": "SemanticExecutionGraphScheduler",
+      "effectClassification": "effect",
+      "testimonyRequired": true
+    }
+  ],
+  "runtimeSupportImports": [
+    {
+      "name": "evaluate",
+      "providerModule": "adapters/semantic_transformation_evaluator.py"
+    },
+    {
+      "name": "value_at",
+      "providerModule": "adapters/semantic_transformation_evaluator.py"
+    },
+    {
+      "name": "canonicalize",
+      "providerModule": "adapters/semantic_transformation_evaluator.py"
+    },
+    {
+      "name": "directed_graph_closure",
+      "providerModule": "adapters/semantic_transformation_evaluator.py"
+    }
+  ],
+  "contractAdmissions": [],
+  "eventPorts": [],
+  "stateProjections": [],
+  "evidenceEvaluators": [],
+  "digestAlgorithm": "sha256 of canonical recursive-key-order JSON excluding authorityDigest"
+}

@@ -1,0 +1,42 @@
+{
+  "registryType": "csharp-mechanic-registry-authority.v1",
+  "authorityId": "csharp-mechanic-registry-authority.v1",
+  "authorityVersion": "1.0.0",
+  "language": "csharp",
+  "providerModuleRoot": "languages/csharp/src/ScenarioKernel.Adapters",
+  "graphProviderProfiles": [
+    {
+      "profileId": "csharp-deterministic-semantic-value-provider.v1",
+      "mechanicAuthorityRef": "kernel/semantic-authority/consumer/semantic-value-mechanics.authority.v1.json",
+      "mechanicAuthorityDigest": "sha256:533b856ded71d2e6334dd2f4911b1ec5edb265c4cdc3e79620584fe4cdca1877",
+      "providerModule": "Consumer/SemanticTransformationEngine.cs",
+      "providerExport": "SemanticTransformationEngine",
+      "effectClassification": "pure",
+      "testimonyRequired": true
+    },
+    {
+      "profileId": "csharp-profile-bound-physical-provider.v1",
+      "mechanicAuthorityRef": "kernel/semantic-authority/consumer/platform-effect-mechanics.authority.v1.json",
+      "mechanicAuthorityDigest": "sha256:3b39afa785c925525086acddb65166fad1e52001ddcd6d66bc65448e5efe0bac",
+      "providerModule": "Graph/SemanticExecutionGraphScheduler.cs",
+      "providerExport": "SemanticExecutionGraphScheduler",
+      "effectClassification": "effect",
+      "testimonyRequired": true
+    }
+  ],
+  "runtimeSupportImports": [
+    {
+      "name": "SemanticTransformationEngine",
+      "providerModule": "Consumer/SemanticTransformationEngine.cs"
+    },
+    {
+      "name": "SemanticTransformationRefusalException",
+      "providerModule": "Consumer/SemanticTransformationEngine.cs"
+    }
+  ],
+  "contractAdmissions": [],
+  "eventPorts": [],
+  "stateProjections": [],
+  "evidenceEvaluators": [],
+  "digestAlgorithm": "sha256 of canonical recursive-key-order JSON excluding authorityDigest"
+}
